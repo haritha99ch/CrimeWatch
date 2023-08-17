@@ -1,2 +1,2 @@
 ﻿namespace CrimeWatch.Domain.ValueObjects;
-public record WitnessId(Guid Id) : ValueObject(Id);
+public record WitnessId(Guid Value) : ValueObject(Value);
