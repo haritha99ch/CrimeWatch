@@ -7,6 +7,7 @@ public class Evidence : Entity<EvidenceId>
     public string Caption { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime DateTime { get; set; } = DateTime.Now;
+    public Location Location { get; set; } = default!;
     public List<WitnessId> StaredBy { get; set; } = new();
     public Status Status { get; set; } = Status.Pending;
     public string ModeratorComment { get; set; } = string.Empty;
@@ -21,6 +22,7 @@ public class Evidence : Entity<EvidenceId>
         string caption,
         string description,
         DateTime dateTime,
+        Location location,
         List<MediaItem> mediaItems
         ) => new()
         {
