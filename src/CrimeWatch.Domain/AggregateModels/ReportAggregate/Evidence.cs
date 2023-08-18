@@ -35,7 +35,11 @@ public class Evidence : Entity<EvidenceId>
             MediaItems = mediaItems
         };
 
-    public void Moderate(ModeratorId moderatorId) => ModeratorId = moderatorId;
+    public void Moderate(ModeratorId moderatorId)
+    {
+        ModeratorId = moderatorId;
+        Status = Status.UnderReview;
+    }
     public void Approve() => Status = Status.Approved;
     public void Decline() => Status = Status.Declined;
     public void Comment(string comment) => ModeratorComment = comment;
