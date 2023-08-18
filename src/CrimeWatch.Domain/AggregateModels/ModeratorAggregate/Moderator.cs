@@ -12,7 +12,8 @@ public class Moderator : AggregateRoot<ModeratorId>
     public User? User { get; set; }
     public Account? Account { get; set; }
 
-    public static Moderator Create(string firstName,
+    public static Moderator Create(
+        string firstName,
         string lastName,
         Gender gender,
         DateOnly dateOfBirth,
@@ -20,7 +21,8 @@ public class Moderator : AggregateRoot<ModeratorId>
         string policeId,
         string province,
         string email,
-        string password)
+        string password
+        )
     {
         User user = User.Create(firstName, lastName, gender, dateOfBirth, phoneNumber);
         Account account = Account.Create(email, password, true);
