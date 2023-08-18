@@ -1,38 +1,39 @@
-﻿namespace CrimeWatch.Domain.Models.ReportModel;
-public class Evidence : Entity<EvidenceId>
+﻿namespace CrimeWatch.Domain.AggregateModels.ReportAggregate;
+public class Report : AggregateRoot<ReportId>
 {
     public WitnessId AuthorId { get; set; } = default!;
     public ModeratorId ModeratorId { get; set; } = default!;
-    public ReportId ReportId { get; set; } = default!;
-    public string Caption { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public DateTime DateTime { get; set; } = DateTime.Now;
-    public List<WitnessId> StaredBy { get; set; } = new();
+    public DateTime Date { get; set; } = DateTime.UtcNow;
+    public Location Location { get; set; } = new();
     public Status Status { get; set; } = Status.Pending;
     public string ModeratorComment { get; set; } = string.Empty;
 
-    public Moderator? Moderator { get; set; }
     public Witness? Author { get; set; }
-    public List<MediaItem> MediaItems { get; set; } = new();
+    public Moderator? Moderator { get; set; }
+    public MediaItem? MediaItem { get; set; }
+    public List<Evidence> Evidences { get; set; } = new();
 
-    public static Evidence Create(
+    public static Report Create(
         WitnessId authorId,
-        ReportId reportId,
-        string caption,
+        string title,
         string description,
-        DateTime dateTime,
-        List<MediaItem> mediaItems
+        DateTime date,
+        Location location,
+        MediaItem mediaItem
         ) => new()
         {
             Id = new(new()),
             AuthorId = authorId,
-            ReportId = reportId,
-            Caption = caption,
+            Title = title,
             Description = description,
-            DateTime = dateTime,
-            MediaItems = mediaItems
+            Date = date,
+            Location = location,
+            MediaItem = mediaItem
         };
 
+    public void AddEvidence(Evidence evidence) => Evidences.Add(evidence);
     public void Moderate(ModeratorId moderatorId) => ModeratorId = moderatorId;
     public void Approve() => Status = Status.Approved;
     public void Decline() => Status = Status.Declined;

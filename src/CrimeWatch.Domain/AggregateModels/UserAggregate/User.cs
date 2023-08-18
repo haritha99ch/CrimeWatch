@@ -1,4 +1,4 @@
-﻿namespace CrimeWatch.Domain.Models.UserModel;
+﻿namespace CrimeWatch.Domain.AggregateModels.UserAggregate;
 public class User : AggregateRoot<UserId>
 {
     public string FirstName { get; set; } = string.Empty;

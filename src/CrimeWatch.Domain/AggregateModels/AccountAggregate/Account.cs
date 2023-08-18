@@ -1,4 +1,4 @@
-﻿namespace CrimeWatch.Domain.Models.AccountModel;
+﻿namespace CrimeWatch.Domain.AggregateModels.AccountAggregate;
 public class Account : AggregateRoot<AccountId>
 {
     public string Email { get; set; } = string.Empty;

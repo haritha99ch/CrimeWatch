@@ -1,7 +1,7 @@
-﻿using CrimeWatch.Domain.Models.AccountModel;
-using CrimeWatch.Domain.Models.UserModel;
+﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
+using CrimeWatch.Domain.AggregateModels.UserAggregate;
 
-namespace CrimeWatch.Domain.Models.WitnessModel;
+namespace CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 public class Witness : AggregateRoot<WitnessId>
 {
     public UserId UserId { get; set; } = default!;

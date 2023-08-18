@@ -1,7 +1,7 @@
-﻿using CrimeWatch.Domain.Models.AccountModel;
-using CrimeWatch.Domain.Models.UserModel;
+﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
+using CrimeWatch.Domain.AggregateModels.UserAggregate;
 
-namespace CrimeWatch.Domain.Models.ModeratorModel;
+namespace CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
 public class Moderator : AggregateRoot<ModeratorId>
 {
     public string PoliceId { get; set; } = string.Empty;

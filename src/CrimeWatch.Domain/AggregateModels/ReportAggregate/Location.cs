@@ -1,4 +1,4 @@
-﻿namespace CrimeWatch.Domain.Models.ReportModel;
+﻿namespace CrimeWatch.Domain.AggregateModels.ReportAggregate;
 public class Location
 {
     public string? No { get; set; } = string.Empty;

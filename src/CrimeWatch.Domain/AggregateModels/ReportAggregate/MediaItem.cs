@@ -1,4 +1,4 @@
-﻿namespace CrimeWatch.Domain.Models.ReportModel;
+﻿namespace CrimeWatch.Domain.AggregateModels.ReportAggregate;
 public class MediaItem : Entity<MediaItemId>
 {
     public ReportId? ReportId { get; set; }
