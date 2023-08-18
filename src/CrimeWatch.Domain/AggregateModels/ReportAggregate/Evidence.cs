@@ -31,6 +31,7 @@ public class Evidence : Entity<EvidenceId>
             ReportId = reportId,
             Caption = caption,
             Description = description,
+            Location = location,
             DateTime = dateTime,
             MediaItems = mediaItems
         };
