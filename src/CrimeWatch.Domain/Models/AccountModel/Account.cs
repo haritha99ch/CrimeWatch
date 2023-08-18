@@ -12,6 +12,7 @@ public class Account : AggregateRoot<AccountId>
             Id = new(new()),
             Email = email,
             Password = password,
+            IsModerator = isModerator
         };
     }
 }
