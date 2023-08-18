@@ -9,6 +9,7 @@ public class Account : AggregateRoot<AccountId>
     {
         return new()
         {
+            Id = new(new()),
             Email = email,
             Password = password,
         };
