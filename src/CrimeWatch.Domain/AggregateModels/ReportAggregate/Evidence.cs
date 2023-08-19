@@ -36,6 +36,7 @@ public class Evidence : Entity<EvidenceId>
             MediaItems = mediaItems
         };
 
+    public void AddMediaItem(MediaItem mediaItem) => MediaItems.Add(mediaItem);
     public void Moderate(ModeratorId moderatorId)
     {
         ModeratorId = moderatorId;
