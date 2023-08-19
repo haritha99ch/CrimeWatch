@@ -19,7 +19,6 @@ public class Report : AggregateRoot<ReportId>
         WitnessId authorId,
         string title,
         string description,
-        DateTime date,
         Location location,
         MediaItem mediaItem
         ) => new()
@@ -28,7 +27,6 @@ public class Report : AggregateRoot<ReportId>
             AuthorId = authorId,
             Title = title,
             Description = description,
-            Date = date,
             Location = location,
             MediaItem = mediaItem
         };

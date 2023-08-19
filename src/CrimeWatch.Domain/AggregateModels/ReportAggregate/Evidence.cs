@@ -21,7 +21,6 @@ public class Evidence : Entity<EvidenceId>
         ReportId reportId,
         string caption,
         string description,
-        DateTime dateTime,
         Location location,
         List<MediaItem> mediaItems
         ) => new()
@@ -32,7 +31,6 @@ public class Evidence : Entity<EvidenceId>
             Caption = caption,
             Description = description,
             Location = location,
-            DateTime = dateTime,
             MediaItems = mediaItems
         };
 

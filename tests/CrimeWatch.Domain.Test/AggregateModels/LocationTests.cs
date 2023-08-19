@@ -5,7 +5,7 @@ namespace CrimeWatch.Domain.Test.AggregateModels;
 public class LocationTests
 {
     [TestMethod]
-    public void Location_Create_ReturnsValidLocation()
+    public void LocationCreate_ReturnsValidLocation()
     {
         // Arrange
         string no = "123";
