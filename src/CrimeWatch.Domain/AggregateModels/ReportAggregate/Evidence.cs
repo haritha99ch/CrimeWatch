@@ -21,7 +21,6 @@ public class Evidence : Entity<EvidenceId>
         ReportId reportId,
         string caption,
         string description,
-        DateTime dateTime,
         Location location,
         List<MediaItem> mediaItems
         ) => new()
@@ -32,10 +31,10 @@ public class Evidence : Entity<EvidenceId>
             Caption = caption,
             Description = description,
             Location = location,
-            DateTime = dateTime,
             MediaItems = mediaItems
         };
 
+    public void AddMediaItem(MediaItem mediaItem) => MediaItems.Add(mediaItem);
     public void Moderate(ModeratorId moderatorId)
     {
         ModeratorId = moderatorId;
