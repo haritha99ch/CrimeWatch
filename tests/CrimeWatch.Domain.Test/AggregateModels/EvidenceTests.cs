@@ -31,7 +31,7 @@ public class EvidenceTests
     {
         // Arrange
         Evidence evidence = Evidence.Create(_authorId, _reportId, _caption, _description, _location, _mediaItems);
-        MediaItem _mediaItem = MediaItem.CreateForReport(MediaItemType.Image, "https://example.com/image.jpg", new(new()));
+        MediaItem _mediaItem = MediaItem.Create(MediaItemType.Image, "https://example.com/image.jpg");
 
         // Act
         evidence.AddMediaItem(_mediaItem);

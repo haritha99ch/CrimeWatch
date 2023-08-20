@@ -9,7 +9,7 @@ public class ReportTests
     private readonly string _title = "Suspicious Activity";
     private readonly string _description = "Report of suspicious activity in the neighborhood.";
     private readonly Location _location = Location.Create(null, "123 Main St", null, "Cityville", "Stateville");
-    private readonly MediaItem _mediaItem = MediaItem.CreateForReport(MediaItemType.Image, "https://example.com/image.jpg", new(new()));
+    private readonly MediaItem _mediaItem = MediaItem.Create(MediaItemType.Image, "https://example.com/image.jpg");
 
     [TestMethod]
     public void ReportCreate_ReturnsValidReport()
