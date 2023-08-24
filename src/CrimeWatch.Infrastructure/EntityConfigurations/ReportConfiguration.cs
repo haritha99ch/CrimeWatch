@@ -1,4 +1,6 @@
-﻿namespace CrimeWatch.Infrastructure.EntityConfigurations;
+﻿using Newtonsoft.Json;
+
+namespace CrimeWatch.Infrastructure.EntityConfigurations;
 internal class ReportConfiguration : IEntityTypeConfiguration<Report>
 {
     public void Configure(EntityTypeBuilder<Report> builder)
@@ -6,10 +8,10 @@ internal class ReportConfiguration : IEntityTypeConfiguration<Report>
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id).HasConversion(e => e.Value, e => new(e));
 
-        builder.HasOne(e => e.Witness).WithOne().HasForeignKey<Evidence>(w => w.WitnessId);
+        builder.HasOne(e => e.Witness).WithOne().HasForeignKey<Report>(w => w.WitnessId).OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.WitnessId).HasConversion(e => e.Value, value => new(value));
 
-        builder.HasOne(e => e.Moderator).WithOne().HasForeignKey<Evidence>(w => w.ModeratorId);
+        builder.HasOne(e => e.Moderator).WithOne().HasForeignKey<Report>(w => w.ModeratorId).OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.ModeratorId).HasConversion(e => e.Value, value => new(value));
 
         builder.Property(e => e.Caption).IsRequired();
@@ -18,13 +20,18 @@ internal class ReportConfiguration : IEntityTypeConfiguration<Report>
 
         builder.Property(e => e.DateTime).IsRequired();
 
-        builder.Property(e => e.Location).HasJsonPropertyName<Location>(nameof(Location));
+        builder.OwnsOne(e => e.Location, ownedNavigationBuilder => ownedNavigationBuilder.ToJson());
 
         builder.Property(e => e.Status).IsRequired();
 
-        builder.Property(e => e.StaredBy).HasJsonPropertyName<List<WitnessId>>(nameof(Report.StaredBy));
+        builder.Property(r => r.StaredBy)
+            .HasConversion(
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<List<WitnessId>>(v)!);
 
         builder.Property(e => e.ModeratorComment);
+
+        builder.HasOne(e => e.MediaItem);
 
         builder.HasMany(e => e.Evidences).WithOne().HasForeignKey(e => e.ReportId);
     }

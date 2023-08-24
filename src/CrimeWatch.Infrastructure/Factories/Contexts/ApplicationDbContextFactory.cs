@@ -1,16 +1,16 @@
-﻿namespace CrimeWatch.Infrastructure.Factories.Contexts;
-public class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
+﻿using CrimeWatch.AppSettings;
+using Microsoft.EntityFrameworkCore.Design;
+
+namespace CrimeWatch.Infrastructure.Factories.Contexts;
+public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 {
-    private readonly IConfiguration _configuration;
-
-    public ApplicationDbContextFactory(IConfiguration configuration)
+    public ApplicationDbContext CreateDbContext(string[] args)
     {
-        _configuration = configuration;
-    }
+        ConfigurationBuilder? builder = new();
+        builder.AddAppSettings();
+        IConfigurationRoot? configuration = builder.Build();
 
-    public ApplicationDbContext CreateDbContext()
-    {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection")!;
+        string connectionString = configuration.GetConnectionString("DefaultConnection")!;
 
         DbContextOptionsBuilder<ApplicationDbContext> dbBuilder = new();
         dbBuilder.UseSqlServer(connectionString);

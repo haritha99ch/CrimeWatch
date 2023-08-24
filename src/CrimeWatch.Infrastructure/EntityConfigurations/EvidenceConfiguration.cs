@@ -6,10 +6,10 @@ internal class EvidenceConfiguration : IEntityTypeConfiguration<Evidence>
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id).HasConversion(e => e.Value, e => new EvidenceId(e));
 
-        builder.HasOne(e => e.Witness).WithOne().HasForeignKey<Evidence>(w => w.WitnessId);
+        builder.HasOne(e => e.Witness).WithOne().HasForeignKey<Evidence>(w => w.WitnessId).OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.WitnessId).HasConversion(e => e.Value, value => new(value));
 
-        builder.HasOne(e => e.Moderator).WithOne().HasForeignKey<Evidence>(w => w.ModeratorId);
+        builder.HasOne(e => e.Moderator).WithOne().HasForeignKey<Evidence>(w => w.ModeratorId).OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.ModeratorId).HasConversion(e => e.Value, value => new(value));
 
         builder.Property(e => e.Caption).IsRequired();
@@ -18,7 +18,7 @@ internal class EvidenceConfiguration : IEntityTypeConfiguration<Evidence>
 
         builder.Property(e => e.DateTime).IsRequired();
 
-        builder.Property(e => e.Location).HasJsonPropertyName<Location>(nameof(Location));
+        builder.OwnsOne(e => e.Location, ownedNavigationBuilder => ownedNavigationBuilder.ToJson());
 
         builder.Property(e => e.Status).IsRequired();
 
