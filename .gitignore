@@ -3,6 +3,8 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+**/Migrations/
+
 # User-specific files
 *.rsuser
 *.suo
