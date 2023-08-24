@@ -8,7 +8,7 @@ public class Report : AggregateRoot<ReportId>
     public DateTime DateTime { get; set; } = DateTime.UtcNow;
     public Location Location { get; set; } = new();
     public Status Status { get; set; } = Status.Pending;
-    public List<WitnessId> StaredBy { get; set; } = new()
+    public List<WitnessId> StaredBy { get; set; } = new();
     public string ModeratorComment { get; set; } = string.Empty;
 
     public Witness? Witness { get; set; }

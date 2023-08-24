@@ -26,6 +26,6 @@ internal class ReportConfiguration : IEntityTypeConfiguration<Report>
 
         builder.Property(e => e.ModeratorComment);
 
-        builder.HasMany(e => e.Evidences).WithOne(e => e.Report).HasForeignKey(e => e.ReportId);
+        builder.HasMany(e => e.Evidences).WithOne().HasForeignKey(e => e.ReportId);
     }
 }
