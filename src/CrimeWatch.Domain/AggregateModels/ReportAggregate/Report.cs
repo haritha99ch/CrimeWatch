@@ -1,16 +1,17 @@
 ﻿namespace CrimeWatch.Domain.AggregateModels.ReportAggregate;
 public class Report : AggregateRoot<ReportId>
 {
-    public WitnessId AuthorId { get; set; } = default!;
+    public WitnessId WitnessId { get; set; } = default!;
     public ModeratorId ModeratorId { get; set; } = default!;
-    public string Title { get; set; } = string.Empty;
+    public string Caption { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public DateTime Date { get; set; } = DateTime.UtcNow;
+    public DateTime DateTime { get; set; } = DateTime.UtcNow;
     public Location Location { get; set; } = new();
     public Status Status { get; set; } = Status.Pending;
+    public List<WitnessId> StaredBy { get; set; } = new()
     public string ModeratorComment { get; set; } = string.Empty;
 
-    public Witness? Author { get; set; }
+    public Witness? Witness { get; set; }
     public Moderator? Moderator { get; set; }
     public MediaItem? MediaItem { get; set; }
     public List<Evidence> Evidences { get; set; } = new();
@@ -24,8 +25,8 @@ public class Report : AggregateRoot<ReportId>
         ) => new()
         {
             Id = new(new()),
-            AuthorId = authorId,
-            Title = title,
+            WitnessId = authorId,
+            Caption = title,
             Description = description,
             Location = location,
             MediaItem = mediaItem

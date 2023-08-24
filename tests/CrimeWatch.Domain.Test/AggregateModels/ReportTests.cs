@@ -19,7 +19,7 @@ public class ReportTests
 
         // Assert
         Assert.IsNotNull(report);
-        Assert.AreEqual(_title, report.Title);
+        Assert.AreEqual(_title, report.Caption);
         Assert.AreEqual(_description, report.Description);
         Assert.AreEqual(_location, report.Location);
         Assert.AreEqual(_mediaItem, report.MediaItem);

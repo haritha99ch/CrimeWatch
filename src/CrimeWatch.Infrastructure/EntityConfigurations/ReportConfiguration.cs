@@ -1,10 +1,10 @@
 ﻿namespace CrimeWatch.Infrastructure.EntityConfigurations;
-internal class EvidenceConfiguration : IEntityTypeConfiguration<Evidence>
+internal class ReportConfiguration : IEntityTypeConfiguration<Report>
 {
-    public void Configure(EntityTypeBuilder<Evidence> builder)
+    public void Configure(EntityTypeBuilder<Report> builder)
     {
         builder.HasKey(e => e.Id);
-        builder.Property(e => e.Id).HasConversion(e => e.Value, e => new EvidenceId(e));
+        builder.Property(e => e.Id).HasConversion(e => e.Value, e => new(e));
 
         builder.HasOne(e => e.Witness).WithOne().HasForeignKey<Evidence>(w => w.WitnessId);
         builder.Property(e => e.WitnessId).HasConversion(e => e.Value, value => new(value));
@@ -22,8 +22,10 @@ internal class EvidenceConfiguration : IEntityTypeConfiguration<Evidence>
 
         builder.Property(e => e.Status).IsRequired();
 
+        builder.Property(e => e.StaredBy).HasJsonPropertyName<List<WitnessId>>(nameof(Report.StaredBy));
+
         builder.Property(e => e.ModeratorComment);
 
-        builder.HasMany(e => e.MediaItems);
+        builder.HasMany(e => e.Evidences).WithOne(e => e.Report).HasForeignKey(e => e.ReportId);
     }
 }

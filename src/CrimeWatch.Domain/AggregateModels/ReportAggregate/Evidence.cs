@@ -3,7 +3,6 @@ public class Evidence : Entity<EvidenceId>
 {
     public WitnessId WitnessId { get; set; } = default!;
     public ModeratorId ModeratorId { get; set; } = default!;
-    public ReportId ReportId { get; set; } = default!;
     public string Caption { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime DateTime { get; set; } = DateTime.Now;
@@ -13,7 +12,6 @@ public class Evidence : Entity<EvidenceId>
 
     public Moderator? Moderator { get; set; }
     public Witness? Witness { get; set; }
-    public Report? Report { get; set; }
     public List<MediaItem> MediaItems { get; set; } = new();
 
     public static Evidence Create(
