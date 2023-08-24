@@ -1,7 +1,7 @@
 ﻿namespace CrimeWatch.Infrastructure.EntityConfigurations;
-internal class WitnessConfiguration : IEntityTypeConfiguration<Witness>
+internal class ModeratorConfiguration : IEntityTypeConfiguration<Moderator>
 {
-    public void Configure(EntityTypeBuilder<Witness> builder)
+    public void Configure(EntityTypeBuilder<Moderator> builder)
     {
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id).HasConversion(e => e.Value, value => new(value));
@@ -11,5 +11,10 @@ internal class WitnessConfiguration : IEntityTypeConfiguration<Witness>
 
         builder.HasOne(e => e.User).WithOne().HasForeignKey<Witness>(w => w.UserId);
         builder.Property(e => e.UserId).HasConversion(e => e.Value, value => new(value));
+
+        builder.Property(e => e.PoliceId).HasMaxLength(50).IsRequired();
+        builder.HasIndex(e => e.PoliceId).IsUnique();
+
+        builder.Property(e => e.Province).HasMaxLength(50).IsRequired();
     }
 }
