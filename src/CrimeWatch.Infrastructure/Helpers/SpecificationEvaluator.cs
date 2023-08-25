@@ -4,7 +4,7 @@ using CrimeWatch.Infrastructure.Primitives;
 namespace CrimeWatch.Infrastructure.Helpers;
 internal static class SpecificationEvaluator
 {
-    internal static IQueryable<T> GetQuery<T, V>(IQueryable<T> inputQuery, Specification<T, V> specification) where T : Entity<V> where V : ValueObject
+    internal static IQueryable<T> AddSpecification<T, V>(this IQueryable<T> inputQuery, Specification<T, V> specification) where T : Entity<V> where V : ValueObject
     {
         IQueryable<T> query = inputQuery;
 

@@ -22,9 +22,4 @@
     <ProjectReference Include="..\CrimeWatch.Domain\CrimeWatch.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\Repositories\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>
