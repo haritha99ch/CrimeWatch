@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CrimeWatch.Infrastructure.Contracts.Repositories;
+using CrimeWatch.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CrimeWatch.Infrastructure;
 public static class Configure
@@ -7,5 +9,7 @@ public static class Configure
     {
         services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(
             options => options.UseSqlServer(connectionString));
+
+        services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
     }
 }
