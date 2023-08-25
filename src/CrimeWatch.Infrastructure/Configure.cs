@@ -1,7 +1,4 @@
-﻿using CrimeWatch.Infrastructure.Contexts;
-using CrimeWatch.Infrastructure.Contracts.Contexts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace CrimeWatch.Infrastructure;
 public static class Configure
