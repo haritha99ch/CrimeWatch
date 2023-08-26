@@ -38,45 +38,6 @@ public class ReportRepositoryTests : RepositoryTests
         Assert.AreSame(report, addedReport);
     }
 
-    [TestMethod]
-    public async Task GetByIdAsync_Should_Return_Report_By_Id()
-    {
-        // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
-        report.WitnessId = testWitness!.Id;
-        await _repository.AddAsync(report);
-
-        // Act
-        Report? retrievedReport = await _repository.GetByIdAsync(report.Id);
-
-        // Assert
-        Assert.IsNotNull(retrievedReport);
-        Assert.AreEqual(report.Id, retrievedReport.Id);
-    }
-
-    [TestMethod]
-    public async Task GetAllAsync_Should_Return_All_Reports()
-    {
-        // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report1 = DataProvider.GetTestReports().FirstOrDefault()!;
-        report1.WitnessId = testWitness!.Id;
-
-        Report report2 = DataProvider.GetTestReports().FirstOrDefault()!;
-        report2.WitnessId = testWitness!.Id;
-
-        await _repository.AddAsync(report1);
-        await _repository.AddAsync(report2);
-
-        // Act
-        List<Report>? reports = await _repository.GetAllAsync();
-
-        // Assert
-        Assert.AreEqual(2, reports.Count);
-        Assert.IsTrue(reports.Any(r => r.Id == report1.Id));
-        Assert.IsTrue(reports.Any(r => r.Id == report2.Id));
-    }
 
     [TestMethod]
     public async Task CountAsync_Should_Return_Count_Of_Reports()
@@ -96,28 +57,7 @@ public class ReportRepositoryTests : RepositoryTests
         var count = await _repository.CountAsync();
 
         // Assert
-        Assert.AreEqual(5, count); // Including from all the other tests
-    }
-
-    [TestMethod]
-    public async Task UpdateAsync_Should_Update_Report_In_Context()
-    {
-        // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
-        report.WitnessId = testWitness!.Id;
-        report = await _repository.AddAsync(report);
-
-        Report? updatedReport = report;
-        updatedReport.Caption = "Updated Caption";
-        updatedReport.Description = "Updated Description";
-
-        // Act
-        var updatedEntity = await _repository.UpdateAsync(updatedReport);
-
-        // Assert
-        Assert.AreEqual(updatedReport.Caption, updatedEntity.Caption);
-        Assert.AreEqual(updatedReport.Description, updatedEntity.Description);
+        Assert.AreEqual(3, count); // Including from all the other tests
     }
 
     [TestMethod]
@@ -146,5 +86,67 @@ public class ReportRepositoryTests : RepositoryTests
 
         // Assert
         Assert.IsFalse(isDeleted);
+    }
+
+    [TestMethod]
+    public async Task GetAllAsync_Should_Return_All_Reports()
+    {
+        // Arrange
+        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        Report report1 = DataProvider.GetTestReports().FirstOrDefault()!;
+        report1.WitnessId = testWitness!.Id;
+
+        Report report2 = DataProvider.GetTestReports().FirstOrDefault()!;
+        report2.WitnessId = testWitness!.Id;
+
+        await _repository.AddAsync(report1);
+        await _repository.AddAsync(report2);
+
+        // Act
+        List<Report>? reports = await _repository.GetAllAsync();
+
+        // Assert
+        Assert.AreEqual(5, reports.Count);
+        Assert.IsTrue(reports.Any(r => r.Id == report1.Id));
+        Assert.IsTrue(reports.Any(r => r.Id == report2.Id));
+    }
+
+
+    [TestMethod]
+    public async Task GetByIdAsync_Should_Return_Report_By_Id()
+    {
+        // Arrange
+        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
+        report.WitnessId = testWitness!.Id;
+        await _repository.AddAsync(report);
+
+        // Act
+        Report? retrievedReport = await _repository.GetByIdAsync(report.Id);
+
+        // Assert
+        Assert.IsNotNull(retrievedReport);
+        Assert.AreEqual(report.Id, retrievedReport.Id);
+    }
+
+    [TestMethod]
+    public async Task UpdateAsync_Should_Update_Report_In_Context()
+    {
+        // Arrange
+        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
+        report.WitnessId = testWitness!.Id;
+        report = await _repository.AddAsync(report);
+
+        Report? updatedReport = report;
+        updatedReport.Caption = "Updated Caption";
+        updatedReport.Description = "Updated Description";
+
+        // Act
+        var updatedEntity = await _repository.UpdateAsync(updatedReport);
+
+        // Assert
+        Assert.AreEqual(updatedReport.Caption, updatedEntity.Caption);
+        Assert.AreEqual(updatedReport.Description, updatedEntity.Description);
     }
 }
