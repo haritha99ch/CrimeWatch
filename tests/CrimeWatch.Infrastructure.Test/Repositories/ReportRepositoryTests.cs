@@ -1,8 +1,5 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-using CrimeWatch.Infrastructure.Contracts.Contexts;
-using CrimeWatch.Infrastructure.Test.Helpers;
-using CrimeWatch.Infrastructure.Test.Primitives;
 
 namespace CrimeWatch.Infrastructure.Test.Repositories;
 [TestClass]
