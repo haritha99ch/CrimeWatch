@@ -23,6 +23,15 @@ public class ReportRepositoryTests : RepositoryTests
         await _dbContext.SaveChangesAsync();
     }
 
+    [TestCleanup]
+    public async Task TestCleanupAsync()
+    {
+        // Clean up the database after each test
+        _dbContext.Witness.RemoveRange(_dbContext.Witness);
+        _dbContext.Report.RemoveRange(_dbContext.Report);
+        await _dbContext.SaveChangesAsync();
+    }
+
     [TestMethod]
     public async Task AddAsync_Should_Add_Report_To_Context()
     {
@@ -57,7 +66,7 @@ public class ReportRepositoryTests : RepositoryTests
         var count = await _repository.CountAsync();
 
         // Assert
-        Assert.AreEqual(3, count); // Including from all the other tests
+        Assert.AreEqual(2, count);
     }
 
     [TestMethod]
@@ -106,7 +115,7 @@ public class ReportRepositoryTests : RepositoryTests
         List<Report>? reports = await _repository.GetAllAsync();
 
         // Assert
-        Assert.AreEqual(5, reports.Count);
+        Assert.AreEqual(2, reports.Count);
         Assert.IsTrue(reports.Any(r => r.Id == report1.Id));
         Assert.IsTrue(reports.Any(r => r.Id == report2.Id));
     }
