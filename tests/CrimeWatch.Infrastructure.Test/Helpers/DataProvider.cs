@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using CrimeWatch.Domain.AggregateModels.UserAggregate;
 using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 
 namespace CrimeWatch.Infrastructure.Test.Helpers;
@@ -21,6 +22,19 @@ internal static class DataProvider
                     null, Faker.Address.StreetAddress(), null, Faker.Address.City(), Faker.Address.State()), MediaItem.Create(
                         MediaItemType.Image, Faker.Image.PicsumUrl()))
         };
+    }
+
+    internal static List<User> GetTestUsers()
+    {
+        var userFaker = new Faker<User>()
+                .RuleFor(u => u.Id, f => new UserId(f.Random.Guid()))
+                .RuleFor(u => u.FirstName, f => f.Person.FirstName)
+                .RuleFor(u => u.LastName, f => f.Person.LastName)
+                .RuleFor(u => u.Gender, f => f.PickRandom<Gender>())
+                .RuleFor(u => u.DateOfBirth, f => f.Date.PastDateOnly())
+                .RuleFor(u => u.PhoneNumber, f => f.Phone.PhoneNumber());
+
+        return userFaker.Generate(2);
     }
 
     internal static List<Witness> GetTestWitness()
