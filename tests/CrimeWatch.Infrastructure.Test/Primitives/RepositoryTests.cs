@@ -24,4 +24,7 @@ public abstract class RepositoryTests
         }
         return service;
     }
+
+    [ClassCleanup]
+    public void ClassCleanUp() => _host.Dispose();
 }
