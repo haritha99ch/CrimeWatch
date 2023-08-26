@@ -25,7 +25,7 @@ public class Witness : AggregateRoot<WitnessId>
 
         return new()
         {
-            Id = new(new()),
+            Id = new(Guid.NewGuid()),
             User = user,
             Account = account
         };

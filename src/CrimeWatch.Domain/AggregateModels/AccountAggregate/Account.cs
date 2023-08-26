@@ -9,7 +9,7 @@ public class Account : AggregateRoot<AccountId>
     {
         return new()
         {
-            Id = new(new()),
+            Id = new(Guid.NewGuid()),
             Email = email,
             Password = password,
             IsModerator = isModerator

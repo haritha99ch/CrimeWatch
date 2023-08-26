@@ -2,7 +2,7 @@
 public class Evidence : Entity<EvidenceId>
 {
     public WitnessId WitnessId { get; set; } = default!;
-    public ModeratorId ModeratorId { get; set; } = default!;
+    public ModeratorId? ModeratorId { get; set; }
     public ReportId ReportId { get; set; } = default!;
     public string Caption { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
@@ -24,7 +24,7 @@ public class Evidence : Entity<EvidenceId>
         List<MediaItem> mediaItems
         ) => new()
         {
-            Id = new(new()),
+            Id = new(Guid.NewGuid()),
             WitnessId = authorId,
             ReportId = reportId,
             Caption = caption,

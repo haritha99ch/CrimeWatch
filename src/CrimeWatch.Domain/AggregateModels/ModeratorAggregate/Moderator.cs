@@ -29,7 +29,7 @@ public class Moderator : AggregateRoot<ModeratorId>
 
         return new Moderator
         {
-            Id = new(new()),
+            Id = new(Guid.NewGuid()),
             User = user,
             Account = account,
             PoliceId = policeId,

@@ -12,7 +12,7 @@ public class User : AggregateRoot<UserId>
     {
         return new()
         {
-            Id = new(new()),
+            Id = new(Guid.NewGuid()),
             FirstName = firstName,
             LastName = lastName,
             Gender = gender,

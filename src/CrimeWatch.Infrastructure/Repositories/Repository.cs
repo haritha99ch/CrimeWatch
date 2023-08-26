@@ -5,7 +5,7 @@ using CrimeWatch.Infrastructure.Primitives;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CrimeWatch.Infrastructure.Repositories;
-internal class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : ValueObject
+public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : ValueObject
 {
     private readonly IApplicationDbContext _context;
     private readonly DbSet<T> _dbSet;
@@ -28,7 +28,8 @@ internal class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V 
 
     public async Task<T> AddAsync(T entity, CancellationToken? cancellationToken = null)
     {
-        EntityEntry<T>? newEntity = await _dbSet.AddAsync(entity, cancellationToken ?? CancellationToken.None);
+        EntityEntry<T> newEntity = await _dbSet.AddAsync(entity, cancellationToken ?? CancellationToken.None);
+        await SaveChangesAsync();
         return newEntity.Entity;
     }
 

@@ -2,7 +2,7 @@
 public class Report : AggregateRoot<ReportId>
 {
     public WitnessId WitnessId { get; set; } = default!;
-    public ModeratorId ModeratorId { get; set; } = default!;
+    public ModeratorId? ModeratorId { get; set; }
     public string Caption { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime DateTime { get; set; } = DateTime.UtcNow;
@@ -24,7 +24,7 @@ public class Report : AggregateRoot<ReportId>
         MediaItem mediaItem
         ) => new()
         {
-            Id = new(new()),
+            Id = new(Guid.NewGuid()),
             WitnessId = authorId,
             Caption = title,
             Description = description,

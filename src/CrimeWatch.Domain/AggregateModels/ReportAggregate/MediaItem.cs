@@ -8,7 +8,7 @@ public class MediaItem : Entity<MediaItemId>
     {
         return new MediaItem
         {
-            Id = new(new()),
+            Id = new(Guid.NewGuid()),
             Type = type,
             Url = url
         };
