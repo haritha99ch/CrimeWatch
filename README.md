@@ -33,7 +33,7 @@ This is a web application that uses .NET and React. It is a full-stack solution 
 
     Install all the dependencies for [React project](./src/crimewatch.web.client/README.md#initial-setup)
 
-4. Build the project. This will build the angular frontend application to be served in the express server.
+4. Build the project. This will build the ASP.NET Core API alongside with the React frontend.
 
     ```shell
     dotnet build
