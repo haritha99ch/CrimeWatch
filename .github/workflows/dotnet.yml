@@ -6,6 +6,10 @@ name: .NET
 on:
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'docs/**'
+      - 'diagrams/**'
+      - '**/*.md'
 
 jobs:
   build:
