@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrimeWatch.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrimeWatch.AppSettings", "src\CrimeWatch.AppSettings\CrimeWatch.AppSettings.csproj", "{37D227A7-A68C-48A2-94DF-9EA757BE8BC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrimeWatch.Infrastructure.Test", "tests\CrimeWatch.Infrastructure.Test\CrimeWatch.Infrastructure.Test.csproj", "{45FAE3FF-A3EF-402E-BBA3-1A7D76DDF1F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrimeWatch.Infrastructure.Test", "tests\CrimeWatch.Infrastructure.Test\CrimeWatch.Infrastructure.Test.csproj", "{45FAE3FF-A3EF-402E-BBA3-1A7D76DDF1F6}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crimewatch.web.client", "src\CrimeWatch.Web.Client\crimewatch.web.client.esproj", "{77CCDAA4-8FE4-4261-B761-7685CA1900EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrimeWatch.Web.API", "src\CrimeWatch.Web.API\CrimeWatch.Web.API.csproj", "{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,16 @@ Global
 		{45FAE3FF-A3EF-402E-BBA3-1A7D76DDF1F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45FAE3FF-A3EF-402E-BBA3-1A7D76DDF1F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45FAE3FF-A3EF-402E-BBA3-1A7D76DDF1F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77CCDAA4-8FE4-4261-B761-7685CA1900EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77CCDAA4-8FE4-4261-B761-7685CA1900EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77CCDAA4-8FE4-4261-B761-7685CA1900EB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{77CCDAA4-8FE4-4261-B761-7685CA1900EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77CCDAA4-8FE4-4261-B761-7685CA1900EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77CCDAA4-8FE4-4261-B761-7685CA1900EB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +67,8 @@ Global
 		{D14661F4-38C0-495C-A75D-4A1FD31FDA89} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
 		{37D227A7-A68C-48A2-94DF-9EA757BE8BC1} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
 		{45FAE3FF-A3EF-402E-BBA3-1A7D76DDF1F6} = {5CB717E8-0631-4651-93A2-2B2B255E9CBC}
+		{77CCDAA4-8FE4-4261-B761-7685CA1900EB} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
+		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AE1AED4-0782-4AE3-9D95-86964C293034}
