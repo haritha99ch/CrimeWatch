@@ -34,8 +34,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
         
-    - name: Restore dependencies
+    - name: Restore dependencies .NET
       run: dotnet restore
+
+    - name: Restore dependencies npm
+      run: |
+        cd src/crimewatch.web.client/
+        npm install
       
     - name: Build
       run: dotnet build --no-restore
