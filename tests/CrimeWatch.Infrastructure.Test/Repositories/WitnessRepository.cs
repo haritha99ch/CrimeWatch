@@ -1,13 +1,12 @@
 ﻿using CrimeWatch.Domain.AggregateModels.UserAggregate;
 using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-using CrimeWatch.Infrastructure.Repositories;
 
 namespace CrimeWatch.Infrastructure.Test.Repositories;
 [TestClass]
 public class WitnessEntityRepositoryTests : RepositoryTests
 {
-    private IRepository<Witness, WitnessId> _repository;
-    private IApplicationDbContext _dbContext;
+    private readonly IRepository<Witness, WitnessId> _repository;
+    private readonly IApplicationDbContext _dbContext;
 
     public WitnessEntityRepositoryTests() : base("WitnessTesting")
     {
@@ -18,9 +17,6 @@ public class WitnessEntityRepositoryTests : RepositoryTests
     [TestInitialize]
     public async Task TestInitializeAsync()
     {
-
-        _repository = new Repository<Witness, WitnessId>(_dbContext);
-
         // Add test data to the in-memory database
         User testUser = DataProvider.GetTestUsers().FirstOrDefault()!;
         await _dbContext.User.AddAsync(testUser);
