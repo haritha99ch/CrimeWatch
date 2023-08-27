@@ -63,9 +63,11 @@ internal static class DataProvider
 
     internal static List<Witness> GetTestWitness()
     {
-        return new(){
-            Witness.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Male, new DateOnly(1990, 1, 1), Faker.Phone.PhoneNumber(), Faker.Internet.Email(), "password"),
-            Witness.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Female, new DateOnly(1985, 5, 15), Faker.Phone.PhoneNumber(), Faker.Internet.Email(), "password")
-        };
+        Faker<Witness> _faker = new Faker<Witness>()
+           .RuleFor(u => u.Id, f => new(f.Random.Guid()))
+           .RuleFor(m => m.User, User.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Female, new DateOnly(1985, 5, 15), Faker.Phone.PhoneNumber()))
+           .RuleFor(m => m.Account, Account.Create(Faker.Internet.Email(), "password", true));
+
+        return _faker.Generate(2);
     }
 }
