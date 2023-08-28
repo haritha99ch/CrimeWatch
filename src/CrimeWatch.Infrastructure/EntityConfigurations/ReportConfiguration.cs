@@ -12,7 +12,8 @@ internal class ReportConfiguration : IEntityTypeConfiguration<Report>
         builder.Property(e => e.WitnessId).HasConversion(e => e.Value, value => new(value));
 
         builder.HasOne(e => e.Moderator).WithOne().HasForeignKey<Report>(w => w.ModeratorId).OnDelete(DeleteBehavior.NoAction);
-        builder.Property(e => e.ModeratorId).HasConversion(e => e.Value, value => new(value));
+        builder.Property(e => e.ModeratorId)
+            .HasConversion(e => e != null ? e.Value : default, value => value != default ? new(value) : null);
 
         builder.Property(e => e.Caption).IsRequired();
 

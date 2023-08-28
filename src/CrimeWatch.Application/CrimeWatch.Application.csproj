@@ -15,8 +15,4 @@
     <ProjectReference Include="..\CrimeWatch.Infrastructure\CrimeWatch.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Specifications\" />
-  </ItemGroup>
-
 </Project>

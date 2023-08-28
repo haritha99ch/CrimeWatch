@@ -11,7 +11,7 @@ internal class EvidenceConfiguration : IEntityTypeConfiguration<Evidence>
 
         builder.HasOne(e => e.Moderator).WithOne().HasForeignKey<Evidence>(w => w.ModeratorId).OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.ModeratorId)
-            .HasConversion(e => e != null ? e.Value : default, value => value != default ? new ModeratorId(value) : null);
+            .HasConversion(e => e != null ? e.Value : default, value => value != default ? new(value) : null);
 
 
         builder.Property(e => e.Caption).IsRequired();
