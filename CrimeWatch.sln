@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrimeWatch.Infrastructure.T
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crimewatch.web.client", "src\CrimeWatch.Web.Client\crimewatch.web.client.esproj", "{77CCDAA4-8FE4-4261-B761-7685CA1900EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrimeWatch.Web.API", "src\CrimeWatch.Web.API\CrimeWatch.Web.API.csproj", "{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrimeWatch.Web.API", "src\CrimeWatch.Web.API\CrimeWatch.Web.API.csproj", "{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrimeWatch.Application", "src\CrimeWatch.Application\CrimeWatch.Application.csproj", "{486D750C-741A-4212-B952-A7484F77B7A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{486D750C-741A-4212-B952-A7484F77B7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486D750C-741A-4212-B952-A7484F77B7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486D750C-741A-4212-B952-A7484F77B7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486D750C-741A-4212-B952-A7484F77B7A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{45FAE3FF-A3EF-402E-BBA3-1A7D76DDF1F6} = {5CB717E8-0631-4651-93A2-2B2B255E9CBC}
 		{77CCDAA4-8FE4-4261-B761-7685CA1900EB} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
 		{42EB3AAC-CE3A-40F5-93DA-4FFD701052A9} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
+		{486D750C-741A-4212-B952-A7484F77B7A2} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AE1AED4-0782-4AE3-9D95-86964C293034}
