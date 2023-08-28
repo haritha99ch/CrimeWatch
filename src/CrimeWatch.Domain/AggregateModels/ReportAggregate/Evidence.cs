@@ -21,7 +21,7 @@ public class Evidence : Entity<EvidenceId>
         string caption,
         string description,
         Location location,
-        List<MediaItem> mediaItems
+        List<MediaItem>? mediaItems
         ) => new()
         {
             Id = new(Guid.NewGuid()),
@@ -30,7 +30,7 @@ public class Evidence : Entity<EvidenceId>
             Caption = caption,
             Description = description,
             Location = location,
-            MediaItems = mediaItems
+            MediaItems = mediaItems ?? new()
         };
 
     public void AddMediaItem(MediaItem mediaItem) => MediaItems.Add(mediaItem);
@@ -42,4 +42,14 @@ public class Evidence : Entity<EvidenceId>
     public void Approve() => Status = Status.Approved;
     public void Decline() => Status = Status.Declined;
     public void Comment(string comment) => ModeratorComment = comment;
+
+    public Evidence Update(string caption, string description, Location location, List<MediaItem> mediaItems)
+    {
+        Caption = caption;
+        Description = description;
+        Location = location;
+        MediaItems = mediaItems;
+
+        return this;
+    }
 }

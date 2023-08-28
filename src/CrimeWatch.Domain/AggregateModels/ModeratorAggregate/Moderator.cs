@@ -36,4 +36,28 @@ public class Moderator : AggregateRoot<ModeratorId>
             Province = province
         };
     }
+
+    public Moderator Update(
+        string firstName,
+        string lastName,
+        Gender gender,
+        DateOnly dateOfBirth,
+        string phoneNumber,
+        string policeId,
+        string province,
+        string email,
+        string password)
+    {
+        User!.FirstName = firstName;
+        User!.LastName = lastName;
+        User!.DateOfBirth = dateOfBirth;
+        User!.PhoneNumber = phoneNumber;
+        User!.Gender = gender;
+        Account!.Email = email;
+        Account!.Password = password;
+        PoliceId = policeId;
+        Province = province;
+
+        return this;
+    }
 }

@@ -30,4 +30,24 @@ public class Witness : AggregateRoot<WitnessId>
             Account = account
         };
     }
+
+    public Witness Update(
+        string firstName,
+        string lastName,
+        Gender gender,
+        DateOnly dateOfBirth,
+        string email,
+        string password,
+        string phoneNumber)
+    {
+        User!.FirstName = firstName;
+        User!.LastName = lastName;
+        User!.DateOfBirth = dateOfBirth;
+        User!.PhoneNumber = phoneNumber;
+        User!.Gender = gender;
+        Account!.Email = email;
+        Account!.Password = password;
+
+        return this;
+    }
 }

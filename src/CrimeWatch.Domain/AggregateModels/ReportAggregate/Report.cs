@@ -21,7 +21,8 @@ public class Report : AggregateRoot<ReportId>
         string title,
         string description,
         Location location,
-        MediaItem mediaItem
+        MediaItem mediaItem,
+        List<Evidence>? evidences = null
         ) => new()
         {
             Id = new(Guid.NewGuid()),
@@ -29,7 +30,8 @@ public class Report : AggregateRoot<ReportId>
             Caption = title,
             Description = description,
             Location = location,
-            MediaItem = mediaItem
+            MediaItem = mediaItem,
+            Evidences = evidences ?? new List<Evidence>()
         };
 
     public void AddEvidence(Evidence evidence) => Evidences.Add(evidence);
@@ -42,4 +44,13 @@ public class Report : AggregateRoot<ReportId>
     public void Approve() => Status = Status.Approved;
     public void Decline() => Status = Status.Declined;
     public void Comment(string comment) => ModeratorComment = comment;
+
+    public Report Update(string title, string description, Location location, MediaItem mediaItem)
+    {
+        Caption = title;
+        Description = description;
+        Location = location;
+        MediaItem = mediaItem;
+        return this;
+    }
 }

@@ -12,18 +12,20 @@ internal class UpdateWitnessCommandHandler : IRequestHandler<UpdateWitnessComman
 
     public async Task<Witness> Handle(UpdateWitnessCommand request, CancellationToken cancellationToken)
     {
-        GetWitnessByIdIncludingAll specification = new(request.Id);
+        WitnessByIdIncludingAll specification = new(request.Id);
 
         Witness witness = await _witnessRepository.GetByAsync(specification, cancellationToken)
             ?? throw new Exception("Witness not found");
 
-        witness.User!.FirstName = request.FirstName;
-        witness.User!.LastName = request.LastName;
-        witness.User!.Gender = request.Gender;
-        witness.User!.DateOfBirth = request.DateOfBirth;
-        witness.User!.PhoneNumber = request.PhoneNumber;
-        witness.Account!.Email = request.Email;
-        witness.Account!.Password = request.Password;
+        witness.Update(
+            request.FirstName,
+            request.LastName,
+            request.Gender,
+            request.DateOfBirth,
+            request.Email,
+            request.Password,
+            request.PhoneNumber
+            );
 
         return await _witnessRepository.UpdateAsync(witness, cancellationToken);
     }
