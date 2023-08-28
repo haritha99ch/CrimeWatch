@@ -40,14 +40,14 @@ public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : 
         return entities ?? new();
     }
 
-    public async Task<List<T>> GetAllByAsync(Specification<T, V> specification, CancellationToken? cancellationToken = null)
+    public async Task<List<T>> GetAllByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>
     {
         List<T>? entities = await _queryable.AddSpecification(specification).ToListAsync(cancellationToken ?? CancellationToken.None) ?? new();
         if (_isTracking) SetDefaults();
         return entities;
     }
 
-    public async Task<T?> GetByAsync(Specification<T, V> specification, CancellationToken? cancellationToken = null)
+    public async Task<T?> GetByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>
     {
         T? entities = await _queryable.AddSpecification(specification).SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None);
         if (_isTracking) SetDefaults();
@@ -68,14 +68,14 @@ public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : 
         return count;
     }
 
-    public async Task<bool> ExistsAsync(Specification<T, V> specification, CancellationToken? cancellationToken = null)
+    public async Task<bool> ExistsAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>
     {
         bool isExists = await _dbSet.AddSpecification(specification).AnyAsync(cancellationToken ?? CancellationToken.None);
         if (_isTracking) SetDefaults();
         return isExists;
     }
 
-    public async Task<int> CountByAsync(Specification<T, V> specification, CancellationToken? cancellationToken = null)
+    public async Task<int> CountByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>
     {
         int count = await _queryable.AddSpecification(specification).CountAsync(cancellationToken ?? CancellationToken.None);
         if (_isTracking) SetDefaults();
