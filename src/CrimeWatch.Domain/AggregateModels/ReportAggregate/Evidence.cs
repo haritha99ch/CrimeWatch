@@ -41,6 +41,7 @@ public class Evidence : Entity<EvidenceId>
     }
     public void Approve() => Status = Status.Approved;
     public void Decline() => Status = Status.Declined;
+    public void RevertToReview() => Status = Status.UnderReview;
     public void Comment(string comment) => ModeratorComment = comment;
 
     public Evidence Update(string caption, string description, Location location, List<MediaItem> mediaItems)

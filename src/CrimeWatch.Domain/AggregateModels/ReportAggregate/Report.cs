@@ -43,6 +43,7 @@ public class Report : AggregateRoot<ReportId>
 
     public void Approve() => Status = Status.Approved;
     public void Decline() => Status = Status.Declined;
+    public void RevertToReview() => Status = Status.UnderReview;
     public void Comment(string comment) => ModeratorComment = comment;
 
     public Report Update(string title, string description, Location location, MediaItem mediaItem)
