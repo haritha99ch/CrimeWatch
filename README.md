@@ -20,7 +20,7 @@ This is a web application that uses .NET and React. It is a full-stack solution 
 1. Clone the project.
 
     ```shell
-    git clone https://github.com/haritha99ch/Crime-Watch.git
+    git clone https://github.com/haritha99ch/CrimeWatch.git
     ```
 
 2. [Set Environment variables](./src/CrimeWatch.AppSettings/README.md#setting-environment-variables).
