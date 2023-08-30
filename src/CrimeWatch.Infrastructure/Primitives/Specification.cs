@@ -10,7 +10,7 @@ public abstract class Specification<T, V> where T : Entity<V> where V : ValueObj
     public Expression<Func<T, object>>? OrderBy { get; private set; }
     public Expression<Func<T, object>>? OrderByDescending { get; private set; }
 
-    protected Specification(Expression<Func<T, bool>> criteria) => Criteria = criteria;
+    protected Specification(Expression<Func<T, bool>>? criteria = null) => Criteria = criteria;
 
     protected void AddInclude(Func<IQueryable<T>, IIncludableQueryable<T, object?>> include
         ) => Includes.Add(include!);
