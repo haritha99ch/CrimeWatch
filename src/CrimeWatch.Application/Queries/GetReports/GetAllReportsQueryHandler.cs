@@ -1,15 +1,15 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
 namespace CrimeWatch.Application.Queries.GetReports;
-internal class GetAllReportsCommandHandler : IRequestHandler<GetAllReportsCommand, List<Report>>
+internal class GetAllReportsQueryHandler : IRequestHandler<GetAllReportsQuery, List<Report>>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 
-    public GetAllReportsCommandHandler(IRepository<Report, ReportId> reportRepository)
+    public GetAllReportsQueryHandler(IRepository<Report, ReportId> reportRepository)
     {
         _reportRepository = reportRepository;
     }
 
-    public async Task<List<Report>> Handle(GetAllReportsCommand request, CancellationToken cancellationToken)
+    public async Task<List<Report>> Handle(GetAllReportsQuery request, CancellationToken cancellationToken)
         => await _reportRepository.GetAllReportsWithMediaItemAndWitnessByAsync(cancellationToken);
 }

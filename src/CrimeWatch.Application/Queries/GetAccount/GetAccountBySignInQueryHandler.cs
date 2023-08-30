@@ -1,16 +1,16 @@
 ﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
 
 namespace CrimeWatch.Application.Queries.GetAccount;
-internal class GetAccountBySignInCommandHandler : IRequestHandler<GetAccountBySignInCommand, Account>
+internal class GetAccountBySignInQueryHandler : IRequestHandler<GetAccountBySignInQuery, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
 
-    public GetAccountBySignInCommandHandler(IRepository<Account, AccountId> accountRepository)
+    public GetAccountBySignInQueryHandler(IRepository<Account, AccountId> accountRepository)
     {
         _accountRepository = accountRepository;
     }
 
-    public async Task<Account> Handle(GetAccountBySignInCommand request, CancellationToken cancellationToken)
+    public async Task<Account> Handle(GetAccountBySignInQuery request, CancellationToken cancellationToken)
         => await _accountRepository.GetAccountBySignInAsync(request.Email, request.Password, cancellationToken)
         ?? throw new Exception("Account not found");
 }
