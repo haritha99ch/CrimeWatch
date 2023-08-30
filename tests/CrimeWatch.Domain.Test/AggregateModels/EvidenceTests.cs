@@ -20,7 +20,7 @@ public class EvidenceTests
 
         // Assert
         Assert.IsNotNull(evidence);
-        Assert.AreEqual(_caption, evidence.Caption);
+        Assert.AreEqual(_caption, evidence.Title);
         Assert.AreEqual(_description, evidence.Description);
         Assert.AreEqual(_location, evidence.Location);
         Assert.AreEqual(Status.Pending, evidence.Status);

@@ -78,4 +78,16 @@ internal static class DataProvider
         return Location.Create(
                        null, Faker.Address.StreetAddress(), null, Faker.Address.City(), Faker.Address.State());
     }
+
+    internal static List<Evidence> GetTestEvidence()
+    {
+        Faker<Evidence> _faker = new Faker<Evidence>()
+            .RuleFor(e => e.Id, f => new EvidenceId(f.Random.Guid()))
+            .RuleFor(e => e.WitnessId, f => new(f.Random.Guid()))
+            .RuleFor(e => e.Title, f => f.Lorem.Sentence())
+            .RuleFor(e => e.Description, f => f.Lorem.Sentence())
+            .RuleFor(e => e.Location, GetTestLocation());
+
+        return _faker.Generate(2);
+    }
 }

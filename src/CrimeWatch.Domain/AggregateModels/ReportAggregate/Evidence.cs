@@ -4,7 +4,7 @@ public class Evidence : Entity<EvidenceId>
     public WitnessId WitnessId { get; set; } = default!;
     public ModeratorId? ModeratorId { get; set; }
     public ReportId ReportId { get; set; } = default!;
-    public string Caption { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime DateTime { get; set; } = DateTime.Now;
     public Location Location { get; set; } = default!;
@@ -27,7 +27,7 @@ public class Evidence : Entity<EvidenceId>
             Id = new(Guid.NewGuid()),
             WitnessId = authorId,
             ReportId = reportId,
-            Caption = caption,
+            Title = caption,
             Description = description,
             Location = location,
             MediaItems = mediaItems ?? new()
@@ -46,7 +46,7 @@ public class Evidence : Entity<EvidenceId>
 
     public Evidence Update(string caption, string description, Location location, List<MediaItem> mediaItems)
     {
-        Caption = caption;
+        Title = caption;
         Description = description;
         Location = location;
         MediaItems = mediaItems;
