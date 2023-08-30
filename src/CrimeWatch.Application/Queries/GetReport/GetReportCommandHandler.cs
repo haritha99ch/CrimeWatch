@@ -11,6 +11,6 @@ internal class GetReportCommandHandler : IRequestHandler<GetReportCommand, Repor
     }
 
     public async Task<Report> Handle(GetReportCommand request, CancellationToken cancellationToken)
-        => await _reportRepository.ReportWithMediaItemAndWitnessByIdAsync(request.ReportId, cancellationToken)
+        => await _reportRepository.GetReportWithAllById(request.ReportId, cancellationToken)
         ?? throw new Exception("Report not found");
 }

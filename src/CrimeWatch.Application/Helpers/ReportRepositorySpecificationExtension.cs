@@ -20,4 +20,7 @@ internal static class ReportRepositorySpecificationExtension
 
     public static async Task<List<Report>> GetAllModeratorReportsAsync(this IRepository<Report, ReportId> repository, ModeratorId moderatorId, CancellationToken cancellationToken)
         => await repository.GetAllByAsync<ModeratorReportWithMediaItemAndWitness>(new(moderatorId), cancellationToken);
+
+    public static async Task<Report?> GetReportWithAllById(this IRepository<Report, ReportId> repository, ReportId reportId, CancellationToken cancellationToken)
+        => await repository.GetByAsync<ReportWithAllById>(new(reportId), cancellationToken);
 }
