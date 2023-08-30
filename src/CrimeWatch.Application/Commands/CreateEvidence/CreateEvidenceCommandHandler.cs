@@ -13,7 +13,7 @@ internal class CreateEvidenceCommandHandler : IRequestHandler<CreateEvidenceComm
     public async Task<Evidence> Handle(CreateEvidenceCommand request, CancellationToken cancellationToken)
     {
         Evidence evidence = Evidence.Create(
-            request.AuthorId,
+            request.WitnessId,
             request.ReportId,
             request.Caption,
             request.Description,

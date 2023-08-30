@@ -2,7 +2,7 @@
 
 namespace CrimeWatch.Application.Commands.AddEvidenceToReport;
 public sealed record CreateEvidenceCommand(
-        WitnessId AuthorId,
+        WitnessId WitnessId,
         ReportId ReportId,
         string Caption,
         string Description,

@@ -148,14 +148,14 @@ public class ReportRepositoryTests : RepositoryTests
         report = await _repository.AddAsync(report);
 
         Report? updatedReport = report;
-        updatedReport.Caption = "Updated Caption";
+        updatedReport.Title = "Updated Caption";
         updatedReport.Description = "Updated Description";
 
         // Act
         var updatedEntity = await _repository.UpdateAsync(updatedReport);
 
         // Assert
-        Assert.AreEqual(updatedReport.Caption, updatedEntity.Caption);
+        Assert.AreEqual(updatedReport.Title, updatedEntity.Title);
         Assert.AreEqual(updatedReport.Description, updatedEntity.Description);
     }
 }

@@ -13,7 +13,7 @@ internal class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand,
     public async Task<Report> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
     {
         Report report =
-            await _reportRepository.GetReportWithMediaItemByIdAsync(request.Id, cancellationToken)
+            await _reportRepository.AsTracking().GetReportWithMediaItemByIdAsync(request.Id, cancellationToken)
             ?? throw new Exception("Report not found");
 
         report.Update(

@@ -14,7 +14,7 @@ internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand,
     {
         Report report = Report
             .Create(
-                request.AuthorId,
+                request.WitnessId,
                 request.Title,
                 request.Description,
                 request.Location,

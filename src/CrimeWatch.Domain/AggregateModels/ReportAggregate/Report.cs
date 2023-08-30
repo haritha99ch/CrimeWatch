@@ -3,7 +3,7 @@ public class Report : AggregateRoot<ReportId>
 {
     public WitnessId WitnessId { get; set; } = default!;
     public ModeratorId? ModeratorId { get; set; }
-    public string Caption { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime DateTime { get; set; } = DateTime.UtcNow;
     public Location Location { get; set; } = new();
@@ -17,7 +17,7 @@ public class Report : AggregateRoot<ReportId>
     public List<Evidence> Evidences { get; set; } = new();
 
     public static Report Create(
-        WitnessId authorId,
+        WitnessId witnessId,
         string title,
         string description,
         Location location,
@@ -26,8 +26,8 @@ public class Report : AggregateRoot<ReportId>
         ) => new()
         {
             Id = new(Guid.NewGuid()),
-            WitnessId = authorId,
-            Caption = title,
+            WitnessId = witnessId,
+            Title = title,
             Description = description,
             Location = location,
             MediaItem = mediaItem,
@@ -48,7 +48,7 @@ public class Report : AggregateRoot<ReportId>
 
     public Report Update(string title, string description, Location location, MediaItem mediaItem)
     {
-        Caption = title;
+        Title = title;
         Description = description;
         Location = location;
         MediaItem = mediaItem;

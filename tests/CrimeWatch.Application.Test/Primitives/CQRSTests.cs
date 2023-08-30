@@ -11,7 +11,7 @@ public abstract class CQRSTests
     protected readonly IApplicationDbContext _dbContext;
     protected readonly IMediator _mediator;
 
-    protected CQRSTests(string databaseName = "TestDatabase")
+    protected CQRSTests(string databaseName)
     {
         _host = Host
            .CreateDefaultBuilder()

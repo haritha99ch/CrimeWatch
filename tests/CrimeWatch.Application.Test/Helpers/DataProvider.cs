@@ -72,4 +72,10 @@ internal static class DataProvider
 
         return _faker.Generate(2);
     }
+
+    internal static Location GetTestLocation()
+    {
+        return Location.Create(
+                       null, Faker.Address.StreetAddress(), null, Faker.Address.City(), Faker.Address.State());
+    }
 }

@@ -15,7 +15,7 @@ internal class ReportConfiguration : IEntityTypeConfiguration<Report>
         builder.Property(e => e.ModeratorId)
             .HasConversion(e => e != null ? e.Value : default, value => value != default ? new(value) : null);
 
-        builder.Property(e => e.Caption).IsRequired();
+        builder.Property(e => e.Title).IsRequired();
 
         builder.Property(e => e.Description).IsRequired();
 

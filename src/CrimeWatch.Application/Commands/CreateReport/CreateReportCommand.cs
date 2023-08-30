@@ -3,10 +3,10 @@
 namespace CrimeWatch.Application.Commands.CreateReport;
 public sealed record
     CreateReportCommand(
-        WitnessId AuthorId,
+        WitnessId WitnessId,
         string Title,
         string Description,
         Location Location,
         MediaItem MediaItem,
-        List<Evidence>? Evidences
+        List<Evidence>? Evidences = null
     ) : IRequest<Report>;
