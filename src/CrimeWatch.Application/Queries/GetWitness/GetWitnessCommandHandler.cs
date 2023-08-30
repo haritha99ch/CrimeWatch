@@ -11,6 +11,6 @@ internal class GetWitnessCommandHandler : IRequestHandler<GetWitnessCommand, Wit
     }
 
     public async Task<Witness> Handle(GetWitnessCommand request, CancellationToken cancellationToken)
-        => await _witnessRepository.GetByAsync<WitnessByIdIncludingAll>(new(request.WitnessId), cancellationToken)
+        => await _witnessRepository.GetWitnessWithAllByIdAsync(request.WitnessId, cancellationToken)
         ?? throw new Exception("Witness not found");
 }
