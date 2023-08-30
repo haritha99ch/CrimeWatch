@@ -1,18 +1,26 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using CrimeWatch.Infrastructure.Contracts.Contexts;
+using MediatR;
+using Microsoft.Extensions.Hosting;
 
-namespace CrimeWatch.Infrastructure.Test.Primitives;
+namespace CrimeWatch.Application.Test.Primitives;
 [TestClass]
-public abstract class RepositoryTests
+public abstract class CQRSTests
 {
     private IHost _host { get; }
 
-    protected RepositoryTests(string databaseName = "TestDatabase")
+    protected readonly IApplicationDbContext _dbContext;
+    protected readonly IMediator _mediator;
+
+    protected CQRSTests(string databaseName = "TestDatabase")
     {
         _host = Host
            .CreateDefaultBuilder()
-           .ConfigureServices(service => service.AddInfrastructure(
+           .ConfigureServices(service => service.AddApplication(
                options => options.UseInMemoryDatabase(databaseName)))
            .Build();
+
+        _dbContext = GetService<IApplicationDbContext>();
+        _mediator = GetService<IMediator>();
     }
 
     protected T GetService<T>() where T : class
