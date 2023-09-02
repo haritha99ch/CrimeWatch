@@ -13,6 +13,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\CrimeWatch.Application\CrimeWatch.Application.csproj" />
+		<ProjectReference Include="..\CrimeWatch.AppSettings\CrimeWatch.AppSettings.csproj" />
 		<ProjectReference Include="..\CrimeWatch.Web.Client\crimewatch.web.client.esproj">
 			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 		</ProjectReference>

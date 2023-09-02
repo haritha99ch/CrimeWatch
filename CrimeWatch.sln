@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrimeWatch.Application.Test
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "crimewatch.web.client", "src\CrimeWatch.Web.Client\crimewatch.web.client.esproj", "{865075C2-1E3D-4B9B-BE44-25E33329A9D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrimeWatch.Shared", "src\CrimeWatch.Shared\CrimeWatch.Shared.csproj", "{145D9324-3AD0-42E7-ADC9-E0B798940322}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{865075C2-1E3D-4B9B-BE44-25E33329A9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{865075C2-1E3D-4B9B-BE44-25E33329A9D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{865075C2-1E3D-4B9B-BE44-25E33329A9D8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{145D9324-3AD0-42E7-ADC9-E0B798940322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{145D9324-3AD0-42E7-ADC9-E0B798940322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{145D9324-3AD0-42E7-ADC9-E0B798940322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{145D9324-3AD0-42E7-ADC9-E0B798940322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{486D750C-741A-4212-B952-A7484F77B7A2} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
 		{2783BE19-222A-4457-A023-246C0CD5D9E9} = {5CB717E8-0631-4651-93A2-2B2B255E9CBC}
 		{865075C2-1E3D-4B9B-BE44-25E33329A9D8} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
+		{145D9324-3AD0-42E7-ADC9-E0B798940322} = {1A3F2DD5-9A1A-4A58-991C-335D775B5455}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AE1AED4-0782-4AE3-9D95-86964C293034}

@@ -1,3 +1,6 @@
+using CrimeWatch.Application;
+using CrimeWatch.AppSettings;
+using CrimeWatch.Web.API.Helpers;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Domain
+builder.Configuration.AddAppSettings();
+builder.Services.AddApplication(builder.Configuration["ConnectionStrings:DefaultConnection"]!);
+
+// Core
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
