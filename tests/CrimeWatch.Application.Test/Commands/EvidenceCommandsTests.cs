@@ -8,6 +8,7 @@ using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using CrimeWatch.Domain.Enums;
 
 namespace CrimeWatch.Application.Test.Commands;
+[TestClass]
 public class EvidenceCommandsTests : CQRSTests
 {
     public EvidenceCommandsTests() : base("Evidence") { }

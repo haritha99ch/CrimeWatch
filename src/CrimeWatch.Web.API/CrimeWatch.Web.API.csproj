@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<InvariantGlobalization>true</InvariantGlobalization>
+		<InvariantGlobalization>fales</InvariantGlobalization>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,6 +15,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\CrimeWatch.Application\CrimeWatch.Application.csproj" />
 		<ProjectReference Include="..\CrimeWatch.AppSettings\CrimeWatch.AppSettings.csproj" />
+		<ProjectReference Include="..\CrimeWatch.Shared\CrimeWatch.Shared.csproj" />
 		<ProjectReference Include="..\CrimeWatch.Web.Client\crimewatch.web.client.esproj">
 			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 		</ProjectReference>
