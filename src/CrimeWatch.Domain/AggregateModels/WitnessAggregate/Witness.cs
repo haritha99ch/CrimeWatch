@@ -14,7 +14,7 @@ public class Witness : AggregateRoot<WitnessId>
         string firstName,
         string lastName,
         Gender gender,
-        DateOnly dateOfBirth,
+        DateTime dateOfBirth,
         string phoneNumber,
         string email,
         string password
@@ -35,7 +35,7 @@ public class Witness : AggregateRoot<WitnessId>
         string firstName,
         string lastName,
         Gender gender,
-        DateOnly dateOfBirth,
+        DateTime dateOfBirth,
         string email,
         string password,
         string phoneNumber)

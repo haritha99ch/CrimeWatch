@@ -18,7 +18,7 @@ internal static class DataProvider
             .RuleFor(u => u.Id, f => new(f.Random.Guid()))
             .RuleFor(m => m.PoliceId, f => f.Random.AlphaNumeric(8))
             .RuleFor(m => m.Province, f => f.Address.State())
-            .RuleFor(m => m.User, User.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Female, new DateOnly(1985, 5, 15), Faker.Phone.PhoneNumber()))
+            .RuleFor(m => m.User, User.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Female, new(1985, 5, 15), Faker.Phone.PhoneNumber()))
             .RuleFor(m => m.Account, Account.Create(Faker.Internet.Email(), "password", true));
 
         return _faker.Generate(2);
@@ -57,7 +57,7 @@ internal static class DataProvider
                 .RuleFor(u => u.FirstName, f => f.Person.FirstName)
                 .RuleFor(u => u.LastName, f => f.Person.LastName)
                 .RuleFor(u => u.Gender, f => f.PickRandom<Gender>())
-                .RuleFor(u => u.DateOfBirth, f => f.Date.PastDateOnly())
+                .RuleFor(u => u.DateOfBirth, f => f.Date.Past())
                 .RuleFor(u => u.PhoneNumber, f => f.Phone.PhoneNumber());
 
         return userFaker.Generate(2);
@@ -67,7 +67,7 @@ internal static class DataProvider
     {
         Faker<Witness> _faker = new Faker<Witness>()
            .RuleFor(u => u.Id, f => new(f.Random.Guid()))
-           .RuleFor(m => m.User, User.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Female, new DateOnly(1985, 5, 15), Faker.Phone.PhoneNumber()))
+           .RuleFor(m => m.User, User.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Female, new(1985, 5, 15), Faker.Phone.PhoneNumber()))
            .RuleFor(m => m.Account, Account.Create(Faker.Internet.Email(), "password", true));
 
         return _faker.Generate(2);

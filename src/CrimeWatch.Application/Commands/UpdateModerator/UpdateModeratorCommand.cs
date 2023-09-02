@@ -7,7 +7,7 @@ public sealed record
         string FirstName,
         string LastName,
         Gender Gender,
-        DateOnly DateOfBirth,
+        DateTime DateOfBirth,
         string PhoneNumber,
         string PoliceId,
         string Province,

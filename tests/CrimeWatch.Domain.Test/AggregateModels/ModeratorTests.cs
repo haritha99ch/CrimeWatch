@@ -11,7 +11,7 @@ public class ModeratorTests
         string firstName = "Michael";
         string lastName = "Smith";
         Gender gender = Gender.Male;
-        DateOnly dateOfBirth = new(1988, 3, 25);
+        DateTime dateOfBirth = new(1988, 3, 25);
         string phoneNumber = "555-123-4567";
         string policeId = "P12345";
         string province = "California";

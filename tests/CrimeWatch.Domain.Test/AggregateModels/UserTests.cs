@@ -11,7 +11,7 @@ public class UserTests
         string firstName = "John";
         string lastName = "Doe";
         Gender gender = Gender.Male;
-        DateOnly dateOfBirth = new(1990, 1, 1);
+        DateTime dateOfBirth = new(1990, 1, 1);
         string phoneNumber = "123-456-7890";
 
         // Act

@@ -11,7 +11,7 @@ public class WitnessTests
         string firstName = "Alice";
         string lastName = "Johnson";
         Gender gender = Gender.Female;
-        DateOnly dateOfBirth = new(1995, 6, 15);
+        DateTime dateOfBirth = new(1995, 6, 15);
         string phoneNumber = "987-654-3210";
         string email = "alice@example.com";
         string password = "p@ssw0rd";
