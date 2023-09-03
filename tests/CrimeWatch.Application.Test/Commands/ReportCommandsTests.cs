@@ -6,11 +6,15 @@ using CrimeWatch.Application.Commands.RevertReportToReview;
 using CrimeWatch.Application.Commands.UpdateReport;
 using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using CrimeWatch.Domain.Enums;
+using CrimeWatch.Domain.ValueObjects;
 
 namespace CrimeWatch.Application.Test.Commands;
 [TestClass]
 public class ReportCommandsTests : CQRSTests
 {
+    private ReportId? ReportId { get; set; }
+    private MediaItemId? MediaItemId { get; set; }
+
     public ReportCommandsTests() : base("Reports") { }
 
     [TestInitialize]
@@ -20,6 +24,9 @@ public class ReportCommandsTests : CQRSTests
         var testWitness = DataProvider.GetTestWitness().FirstOrDefault()!;
         var testModerator = DataProvider.GetTestModerators().FirstOrDefault()!;
         var testReport = DataProvider.GetTestReports().FirstOrDefault()!;
+        testReport.WitnessId = testWitness.Id;
+        ReportId = testReport.Id;
+        MediaItemId = testReport.MediaItem!.Id;
         await _dbContext.Witness.AddAsync(testWitness);
         await _dbContext.Moderator.AddAsync(testModerator);
         await _dbContext.Report.AddAsync(testReport);
@@ -67,18 +74,17 @@ public class ReportCommandsTests : CQRSTests
     public async Task UpdateReportCommand_Should_Update_Report()
     {
         // Arrange
-        var report = await _dbContext.Report.FirstOrDefaultAsync();
         var newTitle = "Updated Title";
         var newDescription = "Updated Description";
         var newLocation = DataProvider.GetTestLocation();
-        var newMediaItem = MediaItem.Create(MediaItemType.Video, "url updated"); // Create a sample MediaItem if needed
+        var newMediaItem = MediaItem.Create(MediaItemType.Video, "url updated");
 
         UpdateReportCommand command = new(
-            Id: report!.Id,
+            Id: ReportId!,
             Title: newTitle,
             Description: newDescription,
             Location: newLocation,
-            MediaItem: newMediaItem
+            newMediaItem
         );
 
         // Act

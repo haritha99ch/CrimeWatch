@@ -84,6 +84,11 @@ public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : 
 
     public async Task<T> UpdateAsync(T entity, CancellationToken? cancellationToken = null)
     {
+        if (_dbSet.Local.Any(g => g.Id == entity.Id))
+        {
+            await SaveChangesAsync();
+            return entity;
+        }
         EntityEntry<T>? updatedEntity = _dbSet.Update(entity);
         await SaveChangesAsync();
         return updatedEntity.Entity;

@@ -18,8 +18,8 @@ internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand,
                 request.Title,
                 request.Description,
                 request.Location,
-                request.MediaItem,
-                request.Evidences);
+                request.MediaItem
+            );
 
         return await _reportRepository.AddAsync(report, cancellationToken);
     }

@@ -7,6 +7,5 @@ public sealed record
         string Title,
         string Description,
         Location Location,
-        MediaItem MediaItem,
-        List<Evidence>? Evidences = null
+        MediaItem MediaItem
     ) : IRequest<Report>;

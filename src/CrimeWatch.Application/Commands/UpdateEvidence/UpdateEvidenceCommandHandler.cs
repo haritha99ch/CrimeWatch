@@ -13,7 +13,7 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
     public async Task<Evidence> Handle(UpdateEvidenceCommand request, CancellationToken cancellationToken)
     {
         Evidence evidence =
-            await _evidenceRepository.AsTracking().GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
+            await _evidenceRepository.GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
             ?? throw new Exception("Evidence not found");
 
         evidence.Update(
