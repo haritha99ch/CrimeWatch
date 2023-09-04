@@ -112,4 +112,10 @@ public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : 
         _queryable = _dbSet.AsNoTracking();
         _isTracking = false;
     }
+
+    public async Task RemoveRangeAsync(List<T> entities, CancellationToken? cancellationToken = null)
+    {
+        _dbSet.RemoveRange(entities);
+        await SaveChangesAsync();
+    }
 }

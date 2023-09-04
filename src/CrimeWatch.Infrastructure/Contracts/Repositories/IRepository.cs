@@ -14,5 +14,6 @@ public interface IRepository<T, V> where T : Entity<V> where V : ValueObject
     Task<bool> ExistsAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
     Task<int> CountAsync(CancellationToken? cancellationToken = null);
     Task<int> CountByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
+    Task RemoveRangeAsync(List<T> entities, CancellationToken? cancellationToken = null);
     IRepository<T, V> AsTracking();
 }
