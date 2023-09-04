@@ -25,9 +25,12 @@ const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 export default defineConfig({
     plugins: [plugin()],
     resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
+        // alias: {
+        //     '@': fileURLToPath(new URL('./src', import.meta.url))
+        // },
+        alias:[{find:"@",replacement:path.resolve(__dirname,"src")//newly added 
+
+        }],
     },
     server: {
         proxy: {
