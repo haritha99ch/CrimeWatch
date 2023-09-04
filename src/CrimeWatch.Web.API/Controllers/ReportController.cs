@@ -36,8 +36,6 @@ public class ReportController : ControllerBase
             mediaItem
         );
         var newReport = await _mediator.Send(command);
-
-        // TODO: Post Evidence
         return Ok(newReport);
     }
 

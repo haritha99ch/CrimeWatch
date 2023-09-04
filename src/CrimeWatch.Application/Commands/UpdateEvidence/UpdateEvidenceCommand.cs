@@ -4,8 +4,9 @@ namespace CrimeWatch.Application.Commands.UpdateEvidence;
 public sealed record
     UpdateEvidenceCommand(
         EvidenceId Id,
-        string Caption,
+        string Title,
         string Description,
         Location Location,
-        List<MediaItem>? MediaItems = null
+        List<MediaItem> MediaItems,
+        List<MediaItem> NewMediaItems
     ) : IRequest<Evidence>;

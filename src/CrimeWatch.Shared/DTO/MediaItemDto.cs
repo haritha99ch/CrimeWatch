@@ -1,2 +1,2 @@
 ﻿namespace CrimeWatch.Shared.DTO;
-public record MediaItemDto(string Content, MediaItemType Type);
+public record MediaItemDto(MediaItemId? Id, string Content, MediaItemType Type);

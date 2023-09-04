@@ -34,6 +34,14 @@ public class Evidence : Entity<EvidenceId>
         };
 
     public void AddMediaItem(MediaItem mediaItem) => MediaItems.Add(mediaItem);
+
+    public List<MediaItem> RemoveMediaItemByExistingItems(List<MediaItemId> mediaItemIds)
+    {
+        var itemsToRemove = MediaItems.Where(item => !mediaItemIds.Contains(item.Id)).ToList();
+        MediaItems.RemoveAll(item => !mediaItemIds.Contains(item.Id));
+        return itemsToRemove;
+    }
+
     public void Moderate(ModeratorId moderatorId)
     {
         ModeratorId = moderatorId;

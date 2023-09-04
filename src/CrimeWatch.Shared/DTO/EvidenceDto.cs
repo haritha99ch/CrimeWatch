@@ -1,12 +1,13 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using CrimeWatch.Domain.ValueObjects;
 
 namespace CrimeWatch.Shared.DTO;
 public record EvidenceDto(
-    WitnessId WitnessId,
+    EvidenceId Id,
+    WitnessId? WitnessId,
     ReportId? ReportId,
-    string Caption,
+    string Title,
     string Description,
     Location Location,
-    List<MediaItemDto>? MediaItems
+    List<MediaItemDto>? MediaItems,
+    List<MediaItemDto>? NewMediaItems
 );

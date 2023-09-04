@@ -80,7 +80,7 @@ public class EvidenceCommandsTests : CQRSTests
         var newCaption = "Updated Caption";
         var newDescription = "Updated Description";
         var newLocation = DataProvider.GetTestLocation();
-        UpdateEvidenceCommand command = new(evidence!.Id, newCaption, newDescription, newLocation);
+        UpdateEvidenceCommand command = new(evidence!.Id, newCaption, newDescription, newLocation, new(), new());
 
         // Act
         var updatedEvidence = await _mediator.Send(command);
