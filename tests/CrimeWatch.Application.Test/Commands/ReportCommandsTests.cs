@@ -7,7 +7,6 @@ using CrimeWatch.Application.Commands.UpdateReport;
 using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using CrimeWatch.Domain.Enums;
 using CrimeWatch.Domain.ValueObjects;
-using CrimeWatch.Shared.DTO;
 
 namespace CrimeWatch.Application.Test.Commands;
 [TestClass]
@@ -49,7 +48,7 @@ public class ReportCommandsTests : CQRSTests
     {
         // Arrange
         var witness = await _dbContext.Witness.FirstOrDefaultAsync();
-        var mediaItem = new MediaItemDto("url", MediaItemType.Image);
+        var mediaItem = DataProvider.GetTestFile();
 
         CreateReportCommand command = new(
             WitnessId: witness!.Id,

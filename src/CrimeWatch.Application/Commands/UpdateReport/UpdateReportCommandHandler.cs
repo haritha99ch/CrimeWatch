@@ -25,8 +25,7 @@ internal class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand,
         if (request.MediaItem == null && request.NewMediaItem != null)
         {
             await _fileStorageService.DeleteFileByUrlAsync(report.MediaItem!.Url, report.WitnessId, cancellationToken);
-            var (mediaItem, blockBlobClient, blockIds) =
-                await _fileStorageService.SaveFileAsync(request.NewMediaItem, report.WitnessId, cancellationToken);
+            var mediaItem = await _fileStorageService.SaveFileAsync(request.NewMediaItem, report.WitnessId, cancellationToken);
 
             report.Update(
                 request.Title,
@@ -34,9 +33,6 @@ internal class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand,
                 request.Location,
                 mediaItem
             );
-
-            await blockBlobClient.CommitBlockListAsync(blockIds);
-
         }
         else
         {

@@ -24,7 +24,7 @@ internal class BlobStorageService : IFileStorageService
         return await blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken);
     }
 
-    public async Task<(MediaItem, BlockBlobClient, List<string>)> SaveFileAsync(IFormFile file, WitnessId witnessId, CancellationToken cancellationToken)
+    public async Task<MediaItem> SaveFileAsync(IFormFile file, WitnessId witnessId, CancellationToken cancellationToken)
     {
         BlobContainerClient clientContainer = _blobServiceClient.GetBlobContainerClient(witnessId.Value.ToString());
 
@@ -41,29 +41,11 @@ internal class BlobStorageService : IFileStorageService
             _ => throw new ArgumentException("Invalid file type")
         };
 
+        // Save file to blob storage and get url
         BlockBlobClient blockBlobClient = clientContainer.GetBlockBlobClient(fileName);
-
-        // Upload the file in blocks
-        List<string> blockIds = new();
-        using (Stream stream = file.OpenReadStream())
-        {
-            int blockSize = 256 * 1024;
-            byte[] buffer = new byte[blockSize];
-            int bytesRead;
-            while ((bytesRead = await stream.ReadAsync(buffer.AsMemory(0, blockSize), cancellationToken)) > 0)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                string blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-                blockIds.Add(blockId);
-                using MemoryStream memoryStream = new(buffer, 0, bytesRead);
-                await blockBlobClient.StageBlockAsync(blockId, memoryStream, cancellationToken: cancellationToken);
-            }
-        }
-
-        // Get url
+        await blockBlobClient.UploadAsync(file.OpenReadStream(), cancellationToken: cancellationToken);
         string url = blockBlobClient.Uri.AbsoluteUri;
 
-        return (MediaItem.Create(mediaItemType, url), blockBlobClient, blockIds);
+        return MediaItem.Create(mediaItemType, url);
     }
 }

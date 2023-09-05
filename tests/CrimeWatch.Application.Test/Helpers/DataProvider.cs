@@ -6,6 +6,9 @@ using CrimeWatch.Domain.AggregateModels.UserAggregate;
 using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 using CrimeWatch.Domain.Enums;
 using CrimeWatch.Domain.ValueObjects;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using System.Text;
 
 namespace CrimeWatch.Application.Test.Helpers;
 internal static class DataProvider
@@ -89,5 +92,17 @@ internal static class DataProvider
             .RuleFor(e => e.Location, GetTestLocation());
 
         return _faker.Generate(2);
+    }
+
+    internal static IFormFile GetTestFile()
+    {
+        var stream = new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file"));
+        var file = new FormFile(stream, 0, stream.Length, "Data", "dummy.png")
+        {
+            Headers = new HeaderDictionary(),
+            ContentType = "image/png"
+        };
+
+        return file;
     }
 }

@@ -1,5 +1,8 @@
-﻿using CrimeWatch.Infrastructure.Contracts.Contexts;
+﻿using CrimeWatch.Application.Contracts.Services;
+using CrimeWatch.Application.Test.Services;
+using CrimeWatch.Infrastructure.Contracts.Contexts;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace CrimeWatch.Application.Test.Primitives;
@@ -15,8 +18,12 @@ public abstract class CQRSTests
     {
         _host = Host
            .CreateDefaultBuilder()
-           .ConfigureServices(service => service.AddApplication(
-               options => options.UseInMemoryDatabase(databaseName)))
+           .ConfigureServices(service =>
+           {
+               service.AddApplication(
+                options => options.UseInMemoryDatabase(databaseName));
+               service.AddTransient<IFileStorageService, InMemoryBlobStorageService>();
+           })
            .Build();
 
         _dbContext = GetService<IApplicationDbContext>();

@@ -17,7 +17,7 @@ internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand,
 
     public async Task<Report> Handle(CreateReportCommand request, CancellationToken cancellationToken)
     {
-        var (mediaItem, blockBlobClient, blockIds) =
+        var mediaItem =
             await _fileStorageService.SaveFileAsync(request.MediaItem, request.WitnessId, cancellationToken);
 
         Report report = Report
@@ -30,8 +30,6 @@ internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand,
             );
 
         var result = await _reportRepository.AddAsync(report, cancellationToken);
-
-        await blockBlobClient.CommitBlockListAsync(blockIds);
 
         return result;
     }

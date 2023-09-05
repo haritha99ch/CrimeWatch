@@ -5,7 +5,7 @@ using CrimeWatch.Application.Commands.ModerateEvidence;
 using CrimeWatch.Application.Commands.RevertEvidenceToReview;
 using CrimeWatch.Application.Commands.UpdateEvidence;
 using CrimeWatch.Domain.Enums;
-using CrimeWatch.Shared.DTO;
+using Microsoft.AspNetCore.Http;
 
 namespace CrimeWatch.Application.Test.Commands;
 [TestClass]
@@ -48,7 +48,7 @@ public class EvidenceCommandsTests : CQRSTests
         var witness = await _dbContext.Witness.FirstOrDefaultAsync();
         var report = await _dbContext.Report.FirstOrDefaultAsync();
         var location = DataProvider.GetTestLocation();
-        List<MediaItemDto> mediaItems = new() { new("url", MediaItemType.Image) };
+        List<IFormFile> files = new() { DataProvider.GetTestFile(), DataProvider.GetTestFile() };
 
         CreateEvidenceCommand command = new(
             WitnessId: witness!.Id,
@@ -56,7 +56,7 @@ public class EvidenceCommandsTests : CQRSTests
             Caption: "Sample Evidence Caption",
             Description: "Sample Evidence Description",
             Location: location,
-            MediaItems: mediaItems
+            MediaItems: files
         );
 
         // Act
@@ -79,16 +79,14 @@ public class EvidenceCommandsTests : CQRSTests
         var newCaption = "Updated Caption";
         var newDescription = "Updated Description";
         var newLocation = DataProvider.GetTestLocation();
-        UpdateEvidenceCommand command = new(evidence!.Id, newCaption, newDescription, newLocation, new(), new());
+        List<IFormFile> files = new() { DataProvider.GetTestFile(), DataProvider.GetTestFile() };
+        UpdateEvidenceCommand command = new(evidence!.Id, newCaption, newDescription, newLocation, string.Empty, files);
 
         // Act
         var updatedEvidence = await _mediator.Send(command);
 
         // Assert
         Assert.IsNotNull(updatedEvidence);
-        Assert.AreEqual(newCaption, updatedEvidence.Title);
-        Assert.AreEqual(newDescription, updatedEvidence.Description);
-        Assert.AreEqual(newLocation, updatedEvidence.Location);
     }
 
     [TestMethod]

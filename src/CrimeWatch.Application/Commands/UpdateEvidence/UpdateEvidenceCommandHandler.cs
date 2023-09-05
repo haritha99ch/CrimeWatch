@@ -1,5 +1,4 @@
-﻿using Azure.Storage.Blobs.Specialized;
-using CrimeWatch.Application.Contracts.Services;
+﻿using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using Newtonsoft.Json;
 
@@ -29,14 +28,11 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
             ?? throw new Exception("Evidence not found");
 
         List<MediaItem> newMediaItems = new();
-        Dictionary<BlockBlobClient, List<string>> clients = new();
         foreach (var mediaItem in request.NewMediaItems ?? new())
         {
-            var (newMediaItem, blockBlobClient, blockIds)
-                = await _fileStorageService.SaveFileAsync(mediaItem, evidence.WitnessId, cancellationToken);
+            var newMediaItem = await _fileStorageService.SaveFileAsync(mediaItem, evidence.WitnessId, cancellationToken);
 
             newMediaItems.Add(newMediaItem);
-            clients.Add(blockBlobClient, blockIds);
         }
 
         bool hasNewMediaItems = newMediaItems.Any();
@@ -54,6 +50,8 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
 
         if (!noOfMediaItemsChanged && !hasNewMediaItems)
             return await _evidenceRepository.UpdateAsync(evidence);
+
+        await _evidenceRepository.UpdateAsync(evidence);
 
         evidence =
                 await _evidenceRepository.AsTracking().GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
@@ -81,13 +79,7 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
             {
                 evidence.AddMediaItem(item);
             }
-            var result = await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
-
-            foreach (var (client, blockIds) in clients)
-            {
-                await client.CommitBlockListAsync(blockIds);
-            }
-            return result;
+            return await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
         }
 
         return await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
