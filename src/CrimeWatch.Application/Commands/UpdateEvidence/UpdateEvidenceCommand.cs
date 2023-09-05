@@ -8,5 +8,5 @@ public sealed record
         string Description,
         Location Location,
         List<MediaItem> MediaItems,
-        List<MediaItem> NewMediaItems
+        List<MediaItemDto> NewMediaItems
     ) : IRequest<Evidence>;

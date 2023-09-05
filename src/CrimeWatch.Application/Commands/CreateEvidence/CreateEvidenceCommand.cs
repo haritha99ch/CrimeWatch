@@ -7,5 +7,5 @@ public sealed record CreateEvidenceCommand(
         string Caption,
         string Description,
         Location Location,
-        List<MediaItem>? MediaItems
+        List<MediaItemDto> MediaItems
     ) : IRequest<Evidence>;

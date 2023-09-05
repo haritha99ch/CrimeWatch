@@ -12,13 +12,21 @@ internal class CreateEvidenceCommandHandler : IRequestHandler<CreateEvidenceComm
 
     public async Task<Evidence> Handle(CreateEvidenceCommand request, CancellationToken cancellationToken)
     {
+        List<MediaItem> mediaItems = new();
+
+        foreach (var mediaItem in request.MediaItems)
+        {
+            // TODO: File hosting operation
+            mediaItems.Add(MediaItem.Create(mediaItem.Type, "url from file"));
+        }
+
         Evidence evidence = Evidence.Create(
             request.WitnessId,
             request.ReportId,
             request.Caption,
             request.Description,
             request.Location,
-            request.MediaItems
+            mediaItems
         );
 
         return await _evidenceRepository.AddAsync(evidence, cancellationToken);

@@ -1,5 +1,4 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using CrimeWatch.Domain.ValueObjects;
 
 namespace CrimeWatch.Shared.DTO;
 public record ReportDto(

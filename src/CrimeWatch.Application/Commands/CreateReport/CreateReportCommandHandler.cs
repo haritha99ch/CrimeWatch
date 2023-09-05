@@ -12,13 +12,14 @@ internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand,
 
     public async Task<Report> Handle(CreateReportCommand request, CancellationToken cancellationToken)
     {
+        var mediaItem = MediaItem.Create(request.MediaItem.Type, "url from file");
         Report report = Report
             .Create(
                 request.WitnessId,
                 request.Title,
                 request.Description,
                 request.Location,
-                request.MediaItem
+                mediaItem
             );
 
         return await _reportRepository.AddAsync(report, cancellationToken);

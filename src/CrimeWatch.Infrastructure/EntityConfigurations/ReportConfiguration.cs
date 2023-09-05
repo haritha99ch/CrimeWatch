@@ -8,10 +8,10 @@ internal class ReportConfiguration : IEntityTypeConfiguration<Report>
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id).HasConversion(e => e.Value, e => new(e));
 
-        builder.HasOne(e => e.Witness).WithOne().HasForeignKey<Report>(w => w.WitnessId).OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne(e => e.Witness).WithMany().HasForeignKey(w => w.WitnessId).OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.WitnessId).HasConversion(e => e.Value, value => new(value));
 
-        builder.HasOne(e => e.Moderator).WithOne().HasForeignKey<Report>(w => w.ModeratorId).OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne(e => e.Moderator).WithMany().HasForeignKey(w => w.ModeratorId).OnDelete(DeleteBehavior.NoAction);
         builder.Property(e => e.ModeratorId)
             .HasConversion(e => e != null ? e.Value : default, value => value != default ? new(value) : null);
 

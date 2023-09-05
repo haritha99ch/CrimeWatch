@@ -21,29 +21,9 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ActionResult<Evidence>> Create([FromBody] EvidenceDto evidence)
+    public async Task<ActionResult<Evidence>> Create([FromBody] CreateEvidenceCommand command)
     {
         // Authorize
-        List<MediaItem> mediaItems = new();
-
-        if (evidence.MediaItems != null)
-        {
-            foreach (var mediaItem in evidence.MediaItems)
-            {
-                // TODO: File hosting operation
-                mediaItems.Add(MediaItem.Create(mediaItem.Type, "url from file"));
-            }
-        }
-
-        CreateEvidenceCommand command = new(
-                evidence.WitnessId!,
-                evidence.ReportId!,
-                evidence.Title,
-                evidence.Description,
-                evidence.Location,
-                mediaItems
-            );
-
         var newEvidence = await _mediator.Send(command);
 
         return Ok(newEvidence);
@@ -66,40 +46,9 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPatch("Update")]
-    public async Task<ActionResult<Report>> Update([FromBody] EvidenceDto evidence)
+    public async Task<ActionResult<Report>> Update([FromBody] UpdateEvidenceCommand command)
     {
         // Authorized
-        List<MediaItem> newMediaItems = new();
-        if (evidence.NewMediaItems != null)
-        {
-            foreach (var mediaItem in evidence.NewMediaItems)
-            {
-                // TODO: Hosting action
-                MediaItem item = MediaItem.Create(mediaItem.Type, "New Url");
-                newMediaItems.Add(item);
-            }
-        }
-
-        List<MediaItem> existingMediaItems = new();
-        if (evidence.MediaItems != null)
-        {
-            foreach (var mediaItem in evidence.MediaItems)
-            {
-                // TODO: Hosting action
-                MediaItem item = MediaItem.Create(mediaItem.Type, "New Url");
-                item.Id = mediaItem.Id!;
-                existingMediaItems.Add(item);
-            }
-        }
-
-        UpdateEvidenceCommand command = new(
-                evidence.Id!,
-                evidence.Title,
-                evidence.Description,
-                evidence.Location,
-                existingMediaItems,
-                newMediaItems
-            );
         var updatedEvidence = await _mediator.Send(command);
 
         return Ok(updatedEvidence);

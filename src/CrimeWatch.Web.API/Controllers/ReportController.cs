@@ -22,19 +22,9 @@ public class ReportController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ActionResult<Report>> Create([FromBody] ReportDto report)
+    public async Task<ActionResult<Report>> Create([FromBody] CreateReportCommand command)
     {
         // Authorized
-        // TODO: File hosting operation
-        var mediaItem = MediaItem.Create(report.MediaItem.Type, "url from file");
-
-        CreateReportCommand command = new(
-            report.WitnessId,
-            report.Title,
-            report.Description,
-            report.Location,
-            mediaItem
-        );
         var newReport = await _mediator.Send(command);
         return Ok(newReport);
     }

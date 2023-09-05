@@ -7,6 +7,7 @@ using CrimeWatch.Application.Commands.UpdateReport;
 using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using CrimeWatch.Domain.Enums;
 using CrimeWatch.Domain.ValueObjects;
+using CrimeWatch.Shared.DTO;
 
 namespace CrimeWatch.Application.Test.Commands;
 [TestClass]
@@ -48,7 +49,7 @@ public class ReportCommandsTests : CQRSTests
     {
         // Arrange
         var witness = await _dbContext.Witness.FirstOrDefaultAsync();
-        var mediaItem = MediaItem.Create(MediaItemType.Image, "url");
+        var mediaItem = new MediaItemDto("url", MediaItemType.Image);
 
         CreateReportCommand command = new(
             WitnessId: witness!.Id,
@@ -67,7 +68,6 @@ public class ReportCommandsTests : CQRSTests
         Assert.AreEqual(command.Title, report.Title);
         Assert.AreEqual(command.Description, report.Description);
         Assert.AreEqual(command.Location, report.Location);
-        Assert.AreEqual(command.MediaItem, report.MediaItem);
     }
 
     [TestMethod]

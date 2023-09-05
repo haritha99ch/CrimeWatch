@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CrimeWatch.Infrastructure\CrimeWatch.Infrastructure.csproj" />
+    <ProjectReference Include="..\CrimeWatch.Shared\CrimeWatch.Shared.csproj" />
   </ItemGroup>
 
 </Project>

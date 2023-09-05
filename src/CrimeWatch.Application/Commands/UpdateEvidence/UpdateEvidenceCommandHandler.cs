@@ -16,6 +16,16 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
 
     public async Task<Evidence> Handle(UpdateEvidenceCommand request, CancellationToken cancellationToken)
     {
+        List<MediaItem> newMediaItems = new();
+        foreach (var mediaItem in request.NewMediaItems)
+        {
+            // TODO: Hosting action
+            MediaItem item = MediaItem.Create(mediaItem.Type, "New Url");
+            newMediaItems.Add(item);
+        }
+
+        bool hasNewMediaItems = newMediaItems.Any();
+
         var existingMediaItemIds = request.MediaItems.Select(e => e.Id).ToList();
         Evidence evidence =
             await _evidenceRepository.GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
@@ -30,7 +40,7 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
             request.MediaItems
         );
 
-        if (!noOfMediaItemsChanged && !request.NewMediaItems.Any())
+        if (!noOfMediaItemsChanged && !hasNewMediaItems)
             return await _evidenceRepository.UpdateAsync(evidence);
 
         await _evidenceRepository.UpdateAsync(evidence);
@@ -42,7 +52,7 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
         if (noOfMediaItemsChanged)
         {
             var itemsToRemove = evidence.RemoveMediaItemByExistingItems(existingMediaItemIds);
-            if (!request.NewMediaItems.Any())
+            if (!hasNewMediaItems)
             {
                 var updatedEvidence = await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
                 await _mediaItemRepository.RemoveRangeAsync(itemsToRemove, cancellationToken);
@@ -50,7 +60,7 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
         }
 
 
-        foreach (var item in request.NewMediaItems)
+        foreach (var item in newMediaItems)
         {
             evidence.AddMediaItem(item);
         }

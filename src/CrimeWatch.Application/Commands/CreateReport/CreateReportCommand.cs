@@ -7,5 +7,5 @@ public sealed record
         string Title,
         string Description,
         Location Location,
-        MediaItem MediaItem
+        MediaItemDto MediaItem
     ) : IRequest<Report>;

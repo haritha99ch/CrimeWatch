@@ -4,8 +4,8 @@ using CrimeWatch.Application.Commands.DeclineEvidence;
 using CrimeWatch.Application.Commands.ModerateEvidence;
 using CrimeWatch.Application.Commands.RevertEvidenceToReview;
 using CrimeWatch.Application.Commands.UpdateEvidence;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using CrimeWatch.Domain.Enums;
+using CrimeWatch.Shared.DTO;
 
 namespace CrimeWatch.Application.Test.Commands;
 [TestClass]
@@ -48,7 +48,7 @@ public class EvidenceCommandsTests : CQRSTests
         var witness = await _dbContext.Witness.FirstOrDefaultAsync();
         var report = await _dbContext.Report.FirstOrDefaultAsync();
         var location = DataProvider.GetTestLocation();
-        var mediaItems = new List<MediaItem> { MediaItem.Create(MediaItemType.Image, "Url") };
+        List<MediaItemDto> mediaItems = new() { new("url", MediaItemType.Image) };
 
         CreateEvidenceCommand command = new(
             WitnessId: witness!.Id,
@@ -69,7 +69,6 @@ public class EvidenceCommandsTests : CQRSTests
         Assert.AreEqual(command.Caption, evidence.Title);
         Assert.AreEqual(command.Description, evidence.Description);
         Assert.AreEqual(command.Location, evidence.Location);
-        CollectionAssert.AreEqual(command.MediaItems, evidence.MediaItems);
     }
 
     [TestMethod]
