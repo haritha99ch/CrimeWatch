@@ -22,7 +22,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ActionResult<Report>> Create([FromBody] CreateReportCommand command)
+    public async Task<ActionResult<Report>> Create([FromForm] CreateReportCommand command)
     {
         // Authorized
         var newReport = await _mediator.Send(command);
@@ -53,7 +53,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpPatch("Update")]
-    public async Task<ActionResult<Report>> Update([FromBody] UpdateReportCommand command)
+    public async Task<ActionResult<Report>> Update([FromForm] UpdateReportCommand command)
     {
         // Authorized
         GetReportQuery getReportQuery = new(command.Id);

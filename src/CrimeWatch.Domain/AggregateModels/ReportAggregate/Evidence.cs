@@ -52,12 +52,12 @@ public class Evidence : Entity<EvidenceId>
     public void RevertToReview() => Status = Status.UnderReview;
     public void Comment(string comment) => ModeratorComment = comment;
 
-    public Evidence Update(string caption, string description, Location location, List<MediaItem> mediaItems)
+    public Evidence Update(string caption, string description, Location location, List<MediaItem>? mediaItems)
     {
         Title = caption;
         Description = description;
         Location = location;
-        MediaItems = mediaItems;
+        MediaItems = mediaItems ?? new();
 
         return this;
     }

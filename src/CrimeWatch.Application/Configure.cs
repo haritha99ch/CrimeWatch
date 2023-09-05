@@ -1,12 +1,23 @@
-﻿using CrimeWatch.Infrastructure;
+﻿using CrimeWatch.Application.Contracts.Services;
+using CrimeWatch.Application.Services;
+using CrimeWatch.Infrastructure;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CrimeWatch.Application;
 public static class Configure
 {
-    public static void AddApplication(this IServiceCollection services, string connectionString)
+    public static void AddApplication(this IServiceCollection services, string dbConnectionString, string storageConnectionString)
     {
-        services.AddInfrastructure(connectionString);
+        services.AddInfrastructure(dbConnectionString);
+        services.AddAzureClients(builder => builder.AddBlobServiceClient(storageConnectionString));
+        services.AddTransient<IFileStorageService, BlobStorageService>();
+        services.AddCQRS();
+    }
+
+    public static void AddApplication(this IServiceCollection services, string dbConnectionString)
+    {
+        services.AddInfrastructure(dbConnectionString);
         services.AddCQRS();
     }
 

@@ -1,4 +1,5 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using Microsoft.AspNetCore.Http;
 
 namespace CrimeWatch.Application.Commands.UpdateEvidence;
 public sealed record
@@ -7,6 +8,6 @@ public sealed record
         string Title,
         string Description,
         Location Location,
-        List<MediaItem> MediaItems,
-        List<MediaItemDto> NewMediaItems
+        string? MediaItems,
+        List<IFormFile>? NewMediaItems
     ) : IRequest<Evidence>;

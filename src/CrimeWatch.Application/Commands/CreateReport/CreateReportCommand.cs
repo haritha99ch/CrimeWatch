@@ -1,4 +1,5 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using Microsoft.AspNetCore.Http;
 
 namespace CrimeWatch.Application.Commands.CreateReport;
 public sealed record
@@ -7,5 +8,5 @@ public sealed record
         string Title,
         string Description,
         Location Location,
-        MediaItemDto MediaItem
+        IFormFile MediaItem
     ) : IRequest<Report>;

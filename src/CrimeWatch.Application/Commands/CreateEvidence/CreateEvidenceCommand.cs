@@ -1,4 +1,5 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using Microsoft.AspNetCore.Http;
 
 namespace CrimeWatch.Application.Commands.AddEvidenceToReport;
 public sealed record CreateEvidenceCommand(
@@ -7,5 +8,5 @@ public sealed record CreateEvidenceCommand(
         string Caption,
         string Description,
         Location Location,
-        List<MediaItemDto> MediaItems
+        List<IFormFile> MediaItems
     ) : IRequest<Evidence>;

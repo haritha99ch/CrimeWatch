@@ -1,49 +1,59 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+﻿using Azure.Storage.Blobs.Specialized;
+using CrimeWatch.Application.Contracts.Services;
+using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using Newtonsoft.Json;
 
 namespace CrimeWatch.Application.Commands.UpdateEvidence;
 internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceCommand, Evidence>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
     private readonly IRepository<MediaItem, MediaItemId> _mediaItemRepository;
+    private readonly IFileStorageService _fileStorageService;
 
     public UpdateEvidenceCommandHandler(
         IRepository<Evidence, EvidenceId> evidenceRepository,
-        IRepository<MediaItem, MediaItemId> mediaItemRepository)
+        IRepository<MediaItem, MediaItemId> mediaItemRepository,
+        IFileStorageService fileStorageService)
     {
         _evidenceRepository = evidenceRepository;
         _mediaItemRepository = mediaItemRepository;
+        _fileStorageService = fileStorageService;
     }
 
     public async Task<Evidence> Handle(UpdateEvidenceCommand request, CancellationToken cancellationToken)
     {
-        List<MediaItem> newMediaItems = new();
-        foreach (var mediaItem in request.NewMediaItems)
-        {
-            // TODO: Hosting action
-            MediaItem item = MediaItem.Create(mediaItem.Type, "New Url");
-            newMediaItems.Add(item);
-        }
+        List<MediaItem> MediaItems = JsonConvert.DeserializeObject<List<MediaItem>>(request.MediaItems ?? string.Empty) ?? new();
 
-        bool hasNewMediaItems = newMediaItems.Any();
-
-        var existingMediaItemIds = request.MediaItems.Select(e => e.Id).ToList();
         Evidence evidence =
             await _evidenceRepository.GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
             ?? throw new Exception("Evidence not found");
 
-        bool noOfMediaItemsChanged = !evidence.MediaItems.Count.Equals(existingMediaItemIds.Count);
+        List<MediaItem> newMediaItems = new();
+        Dictionary<BlockBlobClient, List<string>> clients = new();
+        foreach (var mediaItem in request.NewMediaItems ?? new())
+        {
+            var (newMediaItem, blockBlobClient, blockIds)
+                = await _fileStorageService.SaveFileAsync(mediaItem, evidence.WitnessId, cancellationToken);
+
+            newMediaItems.Add(newMediaItem);
+            clients.Add(blockBlobClient, blockIds);
+        }
+
+        bool hasNewMediaItems = newMediaItems.Any();
+
+        var existingMediaItemIds = MediaItems?.Select(e => e.Id).ToList();
+
+        bool noOfMediaItemsChanged = !evidence.MediaItems.Count.Equals(existingMediaItemIds?.Count);
 
         evidence.Update(
             request.Title,
             request.Description,
             request.Location,
-            request.MediaItems
+            MediaItems
         );
 
         if (!noOfMediaItemsChanged && !hasNewMediaItems)
             return await _evidenceRepository.UpdateAsync(evidence);
-
-        await _evidenceRepository.UpdateAsync(evidence);
 
         evidence =
                 await _evidenceRepository.AsTracking().GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
@@ -51,20 +61,43 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
 
         if (noOfMediaItemsChanged)
         {
-            var itemsToRemove = evidence.RemoveMediaItemByExistingItems(existingMediaItemIds);
+            var itemsToRemove = evidence.RemoveMediaItemByExistingItems(existingMediaItemIds ?? new());
             if (!hasNewMediaItems)
             {
-                var updatedEvidence = await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
+                var result = await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
+
                 await _mediaItemRepository.RemoveRangeAsync(itemsToRemove, cancellationToken);
+                await RemoveItemsFromStorage(evidence, itemsToRemove, cancellationToken);
+
+                return result;
             }
+            await _mediaItemRepository.RemoveRangeAsync(itemsToRemove, cancellationToken);
+
+            await RemoveItemsFromStorage(evidence, itemsToRemove, cancellationToken);
         }
-
-
-        foreach (var item in newMediaItems)
+        if (hasNewMediaItems)
         {
-            evidence.AddMediaItem(item);
+            foreach (var item in newMediaItems)
+            {
+                evidence.AddMediaItem(item);
+            }
+            var result = await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
+
+            foreach (var (client, blockIds) in clients)
+            {
+                await client.CommitBlockListAsync(blockIds);
+            }
+            return result;
         }
 
         return await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
+    }
+
+    private async Task RemoveItemsFromStorage(Evidence evidence, List<MediaItem> itemsToRemove, CancellationToken cancellationToken)
+    {
+        foreach (var item in itemsToRemove)
+        {
+            await _fileStorageService.DeleteFileByUrlAsync(item.Url, evidence.WitnessId, cancellationToken);
+        }
     }
 }

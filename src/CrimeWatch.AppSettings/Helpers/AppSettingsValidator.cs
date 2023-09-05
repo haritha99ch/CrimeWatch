@@ -14,9 +14,6 @@ internal static class AppSettingsValidator
         if (_config.GetConnectionString("Storage:DefaultConnection") == null)
             errors.Add("Missing ConnectionStrings:Storage:DefaultConnection");
 
-        if (_config.GetConnectionString("Storage:Key") == null)
-            errors.Add("Missing ConnectionStrings:Storage:Key");
-
         if (errors.Count == 0) return;
         string message = $"Missing User Secrets. Use 'dotnet user-secrets set' to configure user secrets.\n";
         message = $"{message}{string.Join("\n", errors)}";

@@ -21,7 +21,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ActionResult<Evidence>> Create([FromBody] CreateEvidenceCommand command)
+    public async Task<ActionResult<Evidence>> Create([FromForm] CreateEvidenceCommand command)
     {
         // Authorize
         var newEvidence = await _mediator.Send(command);
@@ -46,7 +46,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPatch("Update")]
-    public async Task<ActionResult<Report>> Update([FromBody] UpdateEvidenceCommand command)
+    public async Task<ActionResult<Evidence>> Update([FromForm] UpdateEvidenceCommand command)
     {
         // Authorized
         var updatedEvidence = await _mediator.Send(command);

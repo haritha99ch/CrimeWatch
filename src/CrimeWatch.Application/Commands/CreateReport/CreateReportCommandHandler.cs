@@ -1,18 +1,25 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+﻿using CrimeWatch.Application.Contracts.Services;
+using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
 namespace CrimeWatch.Application.Commands.CreateReport;
 internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, Report>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
+    private readonly IFileStorageService _fileStorageService;
 
-    public CreateReportCommandHandler(IRepository<Report, ReportId> reportRepository)
+    public CreateReportCommandHandler(
+        IRepository<Report, ReportId> reportRepository,
+        IFileStorageService fileStorageService)
     {
         _reportRepository = reportRepository;
+        _fileStorageService = fileStorageService;
     }
 
     public async Task<Report> Handle(CreateReportCommand request, CancellationToken cancellationToken)
     {
-        var mediaItem = MediaItem.Create(request.MediaItem.Type, "url from file");
+        var (mediaItem, blockBlobClient, blockIds) =
+            await _fileStorageService.SaveFileAsync(request.MediaItem, request.WitnessId, cancellationToken);
+
         Report report = Report
             .Create(
                 request.WitnessId,
@@ -22,6 +29,10 @@ internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand,
                 mediaItem
             );
 
-        return await _reportRepository.AddAsync(report, cancellationToken);
+        var result = await _reportRepository.AddAsync(report, cancellationToken);
+
+        await blockBlobClient.CommitBlockListAsync(blockIds);
+
+        return result;
     }
 }
