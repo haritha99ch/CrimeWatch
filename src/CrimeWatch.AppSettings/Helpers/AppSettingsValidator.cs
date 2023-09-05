@@ -8,8 +8,14 @@ internal static class AppSettingsValidator
         IConfigurationRoot? _config = config.Build();
         List<string> errors = new();
 
-        if (_config.GetConnectionString("DefaultConnection") == null)
-            errors.Add("Missing ConnectionStrings:DefaultConnection");
+        if (_config.GetConnectionString("Database:DefaultConnection") == null)
+            errors.Add("Missing ConnectionStrings:Database:DefaultConnection");
+
+        if (_config.GetConnectionString("Storage:DefaultConnection") == null)
+            errors.Add("Missing ConnectionStrings:Storage:DefaultConnection");
+
+        if (_config.GetConnectionString("Storage:Key") == null)
+            errors.Add("Missing ConnectionStrings:Storage:Key");
 
         if (errors.Count == 0) return;
         string message = $"Missing User Secrets. Use 'dotnet user-secrets set' to configure user secrets.\n";

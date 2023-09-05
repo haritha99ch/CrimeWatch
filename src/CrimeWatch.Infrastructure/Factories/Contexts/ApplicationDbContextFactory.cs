@@ -10,7 +10,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
         builder.AddAppSettings();
         IConfigurationRoot? configuration = builder.Build();
 
-        string connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        string connectionString = configuration.GetConnectionString("Database:DefaultConnection")!;
 
         DbContextOptionsBuilder<ApplicationDbContext> dbBuilder = new();
         dbBuilder.UseSqlServer(connectionString);

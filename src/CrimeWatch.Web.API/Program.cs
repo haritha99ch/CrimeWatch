@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 // Domain
 builder.Configuration.AddAppSettings();
-builder.Services.AddApplication(builder.Configuration["ConnectionStrings:DefaultConnection"]!);
+builder.Services.AddApplication(builder.Configuration.GetConnectionString("Database:DefaultConnection")!);
 
 // Core
 builder.Services.ConfigureServices();
