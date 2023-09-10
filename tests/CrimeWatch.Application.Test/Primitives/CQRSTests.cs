@@ -1,6 +1,7 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Application.Test.Services;
 using CrimeWatch.Infrastructure.Contracts.Contexts;
+using CrimeWatch.Web.API.OptionConfigurations;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +24,7 @@ public abstract class CQRSTests
                service.AddApplication(
                 options => options.UseInMemoryDatabase(databaseName));
                service.AddTransient<IFileStorageService, InMemoryBlobStorageService>();
+               service.ConfigureOptions<JwtOptionsConfiguration>();
            })
            .Build();
 

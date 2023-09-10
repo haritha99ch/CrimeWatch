@@ -70,7 +70,7 @@ internal static class DataProvider
         Faker<Witness> _faker = new Faker<Witness>()
            .RuleFor(u => u.Id, f => new(f.Random.Guid()))
            .RuleFor(m => m.User, User.Create(Faker.Name.FirstName(), Faker.Name.LastName(), Gender.Female, new(1985, 5, 15), Faker.Phone.PhoneNumber()))
-           .RuleFor(m => m.Account, Account.Create(Faker.Internet.Email(), "password", true));
+           .RuleFor(m => m.Account, Account.Create(Faker.Internet.Email(), "password", false));
 
         return _faker.Generate(2);
     }

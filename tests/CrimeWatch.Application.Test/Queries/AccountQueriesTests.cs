@@ -11,9 +11,7 @@ public class AccountQueriesTests : CQRSTests
     {
         // Add test data to the in-memory database
         var testWitness = DataProvider.GetTestWitness().FirstOrDefault()!;
-        var testModerator = DataProvider.GetTestModerators().FirstOrDefault()!;
         await _dbContext.Witness.AddAsync(testWitness);
-        await _dbContext.Moderator.AddAsync(testModerator);
         await _dbContext.SaveChangesAsync();
     }
 
