@@ -1,9 +1,9 @@
-﻿using CrimeWatch.Application.Commands.ApproveReport;
-using CrimeWatch.Application.Commands.CreateReport;
-using CrimeWatch.Application.Commands.DeclineReport;
-using CrimeWatch.Application.Commands.ModerateReport;
-using CrimeWatch.Application.Commands.RevertReportToReview;
-using CrimeWatch.Application.Commands.UpdateReport;
+﻿using CrimeWatch.Application.Commands.ReportCommands.ApproveReport;
+using CrimeWatch.Application.Commands.ReportCommands.CreateReport;
+using CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
+using CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
+using CrimeWatch.Application.Commands.ReportCommands.RevertReportToReview;
+using CrimeWatch.Application.Commands.ReportCommands.UpdateReport;
 using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using CrimeWatch.Domain.Enums;
 using CrimeWatch.Domain.ValueObjects;

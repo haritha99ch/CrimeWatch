@@ -1,7 +1,7 @@
-﻿using CrimeWatch.Application.Commands.CreateModerator;
-using CrimeWatch.Application.Commands.CreateWitness;
-using CrimeWatch.Application.Commands.UpdateModerator;
-using CrimeWatch.Application.Commands.UpdateWitness;
+﻿using CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
+using CrimeWatch.Application.Commands.ModeratorCommands.UpdateModerator;
+using CrimeWatch.Application.Commands.WitnessCommands.CreateWitness;
+using CrimeWatch.Application.Commands.WitnessCommands.UpdateWitness;
 using CrimeWatch.Domain.Enums;
 
 namespace CrimeWatch.Application.Test.Commands;

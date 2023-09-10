@@ -1,12 +1,12 @@
-﻿using CrimeWatch.Application.Commands.AddCommentToEvidence;
-using CrimeWatch.Application.Commands.AddEvidenceToReport;
-using CrimeWatch.Application.Commands.ApproveEvidence;
-using CrimeWatch.Application.Commands.DeclineEvidence;
-using CrimeWatch.Application.Commands.DeleteEvidence;
-using CrimeWatch.Application.Commands.ModerateEvidence;
-using CrimeWatch.Application.Commands.RevertEvidenceToReview;
-using CrimeWatch.Application.Commands.UpdateEvidence;
-using CrimeWatch.Application.Queries.GetEvidences;
+﻿using CrimeWatch.Application.Commands.EvidenceCommands.AddCommentToEvidence;
+using CrimeWatch.Application.Commands.EvidenceCommands.ApproveEvidence;
+using CrimeWatch.Application.Commands.EvidenceCommands.CreateEvidence;
+using CrimeWatch.Application.Commands.EvidenceCommands.DeclineEvidence;
+using CrimeWatch.Application.Commands.EvidenceCommands.DeleteEvidence;
+using CrimeWatch.Application.Commands.EvidenceCommands.ModerateEvidence;
+using CrimeWatch.Application.Commands.EvidenceCommands.RevertEvidenceToReview;
+using CrimeWatch.Application.Commands.EvidenceCommands.UpdateEvidence;
+using CrimeWatch.Application.Queries.EvidenceQueries.GetEvidences;
 
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]

@@ -1,4 +1,4 @@
-﻿using CrimeWatch.Application.Queries.GetReports;
+﻿using CrimeWatch.Application.Queries.ReportQueries.GetReports;
 
 namespace CrimeWatch.Application.Test.Queries;
 [TestClass]

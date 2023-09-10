@@ -1,4 +1,4 @@
-﻿using CrimeWatch.Application.Queries.GetAccount;
+﻿using CrimeWatch.Application.Queries.AccountQueries.GetAccount;
 
 namespace CrimeWatch.Application.Test.Queries;
 [TestClass]

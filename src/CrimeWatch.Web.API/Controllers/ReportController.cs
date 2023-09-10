@@ -1,13 +1,13 @@
-﻿using CrimeWatch.Application.Commands.AddCommentToReport;
-using CrimeWatch.Application.Commands.ApproveReport;
-using CrimeWatch.Application.Commands.CreateReport;
-using CrimeWatch.Application.Commands.DeclineReport;
-using CrimeWatch.Application.Commands.DeleteReport;
-using CrimeWatch.Application.Commands.ModerateReport;
-using CrimeWatch.Application.Commands.RevertReportToReview;
-using CrimeWatch.Application.Commands.UpdateReport;
-using CrimeWatch.Application.Queries.GetReport;
-using CrimeWatch.Application.Queries.GetReports;
+﻿using CrimeWatch.Application.Commands.ReportCommands.AddCommentToReport;
+using CrimeWatch.Application.Commands.ReportCommands.ApproveReport;
+using CrimeWatch.Application.Commands.ReportCommands.CreateReport;
+using CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
+using CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
+using CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
+using CrimeWatch.Application.Commands.ReportCommands.RevertReportToReview;
+using CrimeWatch.Application.Commands.ReportCommands.UpdateReport;
+using CrimeWatch.Application.Queries.ReportQueries.GetReport;
+using CrimeWatch.Application.Queries.ReportQueries.GetReports;
 
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]

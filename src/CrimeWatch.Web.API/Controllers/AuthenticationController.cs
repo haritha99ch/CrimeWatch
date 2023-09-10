@@ -1,8 +1,8 @@
-﻿using CrimeWatch.Application.Commands.CreateModerator;
-using CrimeWatch.Application.Commands.CreateWitness;
-using CrimeWatch.Application.Queries.GetAccount;
-using CrimeWatch.Application.Queries.GetModerator;
-using CrimeWatch.Application.Queries.GetWitness;
+﻿using CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
+using CrimeWatch.Application.Commands.WitnessCommands.CreateWitness;
+using CrimeWatch.Application.Queries.AccountQueries.GetAccount;
+using CrimeWatch.Application.Queries.ModeratorQueries.GetModerator;
+using CrimeWatch.Application.Queries.WitnessQueries.GetWitness;
 
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]

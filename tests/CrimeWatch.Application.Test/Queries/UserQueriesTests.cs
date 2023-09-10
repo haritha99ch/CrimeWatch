@@ -1,5 +1,5 @@
-﻿using CrimeWatch.Application.Queries.GetModerator;
-using CrimeWatch.Application.Queries.GetWitness;
+﻿using CrimeWatch.Application.Queries.ModeratorQueries.GetModerator;
+using CrimeWatch.Application.Queries.WitnessQueries.GetWitness;
 
 namespace CrimeWatch.Application.Test.Queries;
 [TestClass]
