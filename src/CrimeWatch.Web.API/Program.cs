@@ -1,6 +1,7 @@
 using CrimeWatch.Application;
 using CrimeWatch.AppSettings;
 using CrimeWatch.Web.API.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
 // Domain
 builder.Configuration.AddAppSettings();
@@ -16,6 +18,7 @@ builder.Services.AddApplication(
     builder.Configuration.GetConnectionString("Storage:DefaultConnection")!);
 
 // Core
+builder.Services.ConfigureOptions();
 builder.Services.ConfigureServices();
 
 var app = builder.Build();
@@ -44,6 +47,8 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

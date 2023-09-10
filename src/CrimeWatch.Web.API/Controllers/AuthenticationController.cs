@@ -1,8 +1,6 @@
 ﻿using CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
 using CrimeWatch.Application.Commands.WitnessCommands.CreateWitness;
 using CrimeWatch.Application.Queries.AccountQueries.GetAccount;
-using CrimeWatch.Application.Queries.ModeratorQueries.GetModerator;
-using CrimeWatch.Application.Queries.WitnessQueries.GetWitness;
 
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]
@@ -34,18 +32,7 @@ public class AuthenticationController : ControllerBase
     public async Task<ActionResult> SignIn([FromBody] GetAccountBySignInQuery query)
     {
         var result = await _mediator.Send(query);
-        if (result is null) return NotFound("Account Not found!");
-
-        if (result.IsModerator)
-        {
-            var getModerator = new GetModeratorByAccountIdQuery(result.Id);
-            var moderator = await _mediator.Send(getModerator);
-            return Ok(moderator);
-        }
-
-        var getWitness = new GetWitnessByAccountIdQuery(result.Id);
-        var witness = await _mediator.Send(getWitness);
-        return Ok(witness);
+        return result is null ? NotFound("Account Not found!") : Ok(result);
     }
 
 }

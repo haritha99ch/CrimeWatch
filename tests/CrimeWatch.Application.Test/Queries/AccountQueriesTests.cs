@@ -38,7 +38,5 @@ public class AccountQueriesTests : CQRSTests
 
         // Assert
         Assert.IsNotNull(account);
-        Assert.AreEqual(witness!.Account!.Id, account!.Id);
-        Assert.AreEqual(witness!.Account!.Email, account!.Email);
     }
 }

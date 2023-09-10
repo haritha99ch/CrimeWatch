@@ -1,5 +1,3 @@
-﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
-
-namespace CrimeWatch.Application.Queries.AccountQueries.GetAccount;
+﻿namespace CrimeWatch.Application.Queries.AccountQueries.GetAccount;
 public sealed record GetAccountBySignInQuery
-    (string Email, string Password) : IRequest<Account>;
+    (string Email, string Password) : IRequest<string>;

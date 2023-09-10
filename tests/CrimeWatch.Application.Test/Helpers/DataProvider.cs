@@ -7,7 +7,6 @@ using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 using CrimeWatch.Domain.Enums;
 using CrimeWatch.Domain.ValueObjects;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using System.Text;
 
 namespace CrimeWatch.Application.Test.Helpers;
