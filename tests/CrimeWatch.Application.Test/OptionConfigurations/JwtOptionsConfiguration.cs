@@ -1,6 +1,7 @@
 ﻿using CrimeWatch.Application.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using System.Security.Cryptography;
 
 namespace CrimeWatch.Web.API.OptionConfigurations;
 public class JwtOptionsConfiguration : IConfigureOptions<JwtOptions>
@@ -14,6 +15,11 @@ public class JwtOptionsConfiguration : IConfigureOptions<JwtOptions>
 
     public void Configure(JwtOptions options)
     {
-        options.Secret = "7H15_15_4_R4ND0M_53CR37_K3Y_F0R_T35T1N9";
+        // Generate a random string as secret key for testing.
+        var secretKey = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(secretKey);
+        options.Secret = Convert.ToBase64String(secretKey);
+
     }
 }
