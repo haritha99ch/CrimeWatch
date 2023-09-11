@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace CrimeWatch.Web.API.OptionConfigurations;
-public class JwtBearerOptionsConfiguration : IConfigureOptions<JwtBearerOptions>
+public class JwtBearerOptionsConfiguration : IConfigureNamedOptions<JwtBearerOptions>
 {
     private readonly JwtOptions _jwtOptions;
 
@@ -16,6 +16,10 @@ public class JwtBearerOptionsConfiguration : IConfigureOptions<JwtBearerOptions>
 
     public void Configure(JwtBearerOptions options)
     {
+        options.Audience = _jwtOptions.Audience;
+        options.ClaimsIssuer = _jwtOptions.Issuer;
+        options.Authority = _jwtOptions.Issuer;
+        options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new()
         {
             ValidateIssuer = true,
@@ -26,5 +30,10 @@ public class JwtBearerOptionsConfiguration : IConfigureOptions<JwtBearerOptions>
             ValidAudience = _jwtOptions.Audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret))
         };
+    }
+
+    public void Configure(string? name, JwtBearerOptions options)
+    {
+        Configure(options);
     }
 }

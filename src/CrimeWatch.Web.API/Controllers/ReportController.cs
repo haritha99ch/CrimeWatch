@@ -12,6 +12,7 @@ using CrimeWatch.Application.Queries.ReportQueries.GetReports;
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ReportController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -30,6 +31,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpGet("Get")]
+    [AllowAnonymous]
     public async Task<ActionResult<List<Report>>> Get()
     {
         // Authorized
@@ -41,6 +43,7 @@ public class ReportController : ControllerBase
     }
 
     [HttpGet("Get/{reportId}")]
+    [AllowAnonymous]
     public async Task<ActionResult<Report>> Get([FromRoute] Guid reportId)
     {
         // Authorized
