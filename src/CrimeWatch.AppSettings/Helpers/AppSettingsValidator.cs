@@ -14,6 +14,15 @@ internal static class AppSettingsValidator
         if (_config.GetConnectionString("Storage:DefaultConnection") == null)
             errors.Add("Missing ConnectionStrings:Storage:DefaultConnection");
 
+        if (_config["Jwt:Secret"] == null)
+            errors.Add("Missing Jwt: Secret");
+
+        if (_config["Jwt:Issuer"] == null)
+            errors.Add("Missing Jwt:Issuer");
+
+        if (_config["Jwt:Audience"] == null)
+            errors.Add("Missing Jwt:Audience");
+
         if (errors.Count == 0) return;
         string message = $"Missing User Secrets. Use 'dotnet user-secrets set' to configure user secrets.\n";
         message = $"{message}{string.Join("\n", errors)}";
