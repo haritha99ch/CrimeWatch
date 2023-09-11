@@ -44,7 +44,7 @@ jobs:
     - name: Restore dependencies npm
       run: |
         cd src/crimewatch.web.client/
-        npm install
+        npm install --legacy-peer-deps
       
     - name: Build
       run: dotnet build --no-restore
