@@ -7,11 +7,10 @@ CrimeWatch/src/CrimeWatch.AppSettings >
     ```shell
     dotnet user-secrets set "ConnectionStrings:Database:DefaultConnection" CONNECTIONSTRINGS_DEFAULTCONNECTION
     ```
-2. Set Azure Blob Storage Connection String (Required for hosting ML model).
+2. Set Azure Blob Storage Connection String.
 
     ```shell
     dotnet user-secrets set "ConnectionStrings:Storage:DefaultConnection" CONNECTIONSTRINGS_STORAGECONNECTION
-    dotnet user-secrets set "ConnectionStrings:Storage:Key" CONNECTIONSTRINGS_STORAGECONNECTION_KEY
     ```
 
     [Learn more about Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction)\
