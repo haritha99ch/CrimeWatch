@@ -50,7 +50,7 @@ internal class GetAccountBySignInQueryHandler : IRequestHandler<GetAccountBySign
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Role, isModerator ? "Moderator" : "Witness"),
+            new Claim(ClaimTypes.Role, isModerator ? nameof(Moderator) : nameof(Witness)),
             new Claim(JwtRegisteredClaimNames.Sub, id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, email),
         };
