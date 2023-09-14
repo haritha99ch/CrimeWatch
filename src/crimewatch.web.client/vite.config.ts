@@ -30,9 +30,14 @@ export default defineConfig({
         }
     },
     server: {
-        proxy: {
-            '^/weatherforecast': {
-                target: 'https://localhost:5001/',
+        proxy: process.env.NODE_ENV === 'development' ? {
+            '^/api': {
+                target: 'https://localhost:7018/',
+                secure: false
+            }
+        } : { 
+            '^/api': {
+                target: import.meta.url,
                 secure: false
             }
         },
