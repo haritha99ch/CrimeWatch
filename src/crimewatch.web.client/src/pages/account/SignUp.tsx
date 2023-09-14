@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Gender } from "../../enums/Gender"
 import { WitnessDto } from "../../models/Witness";
+import { CreateAccountForWitness } from "../../services/AccountServices";
+import { ModeratorDto } from "../../models/Moderator";
 
 const SignUp = () => {
+  const [isModerator, setIsModerator] = useState<boolean>(false);
+
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [gender, setGender] = useState<Gender>(Gender.Male);
@@ -11,16 +15,30 @@ const SignUp = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [policeId, setPoliceId] = useState<string>("");
+  const [province, setProvince] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const baseURL = import.meta.env.BASE_URL;
-    console.log(baseURL);
     if (password !== confirmPassword) {
       alert("Password and Confirm Password do not match");
       return;
     }
-
+    if(isModerator){
+      const moderator: ModeratorDto ={
+        firstName: firstName,
+        lastName: lastName,
+        gender:gender,
+        birthDate: new Date(dateOfBirth),
+        phoneNumber: phoneNumber,
+        email: email,
+        password: password,
+        policeId: policeId,
+        province: province,
+      }
+      const createdModerator = await CreateAccountForWitness(moderator);
+      console.log(createdModerator);
+    }else{
     const witness : WitnessDto = {
       firstName: firstName,
       lastName: lastName,
@@ -30,7 +48,11 @@ const SignUp = () => {
       email: email,
       password: password,
     }
-    console.log(witness);
+    const createdWitness = await CreateAccountForWitness(witness);
+    console.log(createdWitness);
+  }
+    // TODO: Handle error
+    // TODO: Redirect to login/ index page
   }
 
   const content : JSX.Element = <>
@@ -96,6 +118,31 @@ const SignUp = () => {
           onChange={e=>setConfirmPassword(e.target.value)}
           value={confirmPassword} />
         </div>
+        <div id="form-switchType">
+          <input  className="toggle-btn"
+            type="checkbox"
+            checked={isModerator}
+            onChange={()=>setIsModerator(!isModerator)}
+            role="switch"
+            id="flexSwitchCheckDefault" />
+          <label  className="inline-block pl-[0.15rem] hover:cursor-pointer" htmlFor="flexSwitchCheckDefault" >Create an Account for Moderator</label>
+        </div>
+        {isModerator &&
+        <>
+        <div id="form-policeId" className="form-group">
+          <label htmlFor="policeId">Police Id: </label>
+          <input required type="text" name="policeId" id="policeId" className="form-input"
+            onChange={e=>setPoliceId(e.target.value)} 
+            value={policeId}/>
+        </div>
+        <div id="form-province" className="form-group">
+          <label htmlFor="province">Police Id: </label>
+          <input required type="text" name="province" id="province" className="form-input"
+            onChange={e=>setProvince(e.target.value)} 
+            value={province}/>
+        </div>
+        </>
+        }
         <div id="form-submit" className="form-group flex gap-x-5">
           <label></label>
           <button type="submit" className="px-3 py-3" >Signup</button>
