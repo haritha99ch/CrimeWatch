@@ -14,7 +14,8 @@ const SignUp = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const baseURL = import.meta.env.BASE_URL;
+    console.log(baseURL);
     if (password !== confirmPassword) {
       alert("Password and Confirm Password do not match");
       return;

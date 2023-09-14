@@ -30,12 +30,12 @@ export default defineConfig({
         }
     },
     server: {
-        proxy: {
-            '^/weatherforecast': {
-                target: 'https://localhost:5001/',
+        proxy: process.env.NODE_ENV === 'development' ? {
+            '^/api': {
+                target: 'https://localhost:7018/',
                 secure: false
             }
-        },
+        } : {},
         port: 5173,
         https: {
             key: fs.readFileSync(keyFilePath),

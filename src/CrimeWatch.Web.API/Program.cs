@@ -41,21 +41,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    // Workaround for client app not being served in development mode
-    FileServerOptions options = new()
-    {
-        FileProvider = new PhysicalFileProvider(
-            Path.Combine(Directory.GetCurrentDirectory(), "../crimewatch.web.client/dist"))
-    };
-    options.DefaultFilesOptions.DefaultFileNames.Clear();
-    options.DefaultFilesOptions.DefaultFileNames.Add("index.html");
+    // Workaround for Vite + React client app not being served in development mode
+    string clientAppPath = Path.Combine(Directory.GetCurrentDirectory(), "../crimewatch.web.client/dist");
+    PhysicalFileProvider fileProvider = new(clientAppPath);
 
-    app.UseFileServer(options);
+    app.UseFileServer(new FileServerOptions() { FileProvider = fileProvider });
+    app.MapFallbackToFile("index.html", new StaticFileOptions { FileProvider = fileProvider });
 }
 else
 {
     app.UseDefaultFiles();
     app.UseStaticFiles();
+    app.MapFallbackToFile("index.html");
 }
 
 app.UseHttpsRedirection();
