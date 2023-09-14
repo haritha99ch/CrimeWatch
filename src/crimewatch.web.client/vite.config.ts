@@ -35,7 +35,12 @@ export default defineConfig({
                 target: 'https://localhost:7018/',
                 secure: false
             }
-        } : {},
+        } : { 
+            '^/api': {
+                target: import.meta.url,
+                secure: false
+            }
+        },
         port: 5173,
         https: {
             key: fs.readFileSync(keyFilePath),
