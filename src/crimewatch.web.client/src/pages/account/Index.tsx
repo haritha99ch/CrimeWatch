@@ -10,29 +10,29 @@ const Index = () => {
             </div>
             <div className="mt-6 border-t border-gray-100">
                 <dl className="divide-y divide-gray-100">
-                    <div className="account-description-list-group">
-                        <dt className="account-description">Full name</dt>
-                        <dd className="account-description-value">Margot Foster</dd>
+                    <div className="description-list-group">
+                        <dt className="description">Full name</dt>
+                        <dd className="description-value">Margot Foster</dd>
                     </div>
-                    <div className="account-description-list-group">
-                        <dt className="account-description">Gender</dt>
-                        <dd className="account-description-value">Male</dd>
+                    <div className="description-list-group">
+                        <dt className="description">Gender</dt>
+                        <dd className="description-value">Male</dd>
                     </div>
-                    <div className="account-description-list-group">
-                        <dt className="account-description">Age</dt>
-                        <dd className="account-description-value">23</dd>
+                    <div className="description-list-group">
+                        <dt className="description">Age</dt>
+                        <dd className="description-value">23</dd>
                     </div>
-                    <div className="account-description-list-group">
-                        <dt className="account-description">Date Of Birth</dt>
-                        <dd className="account-description-value">1999/06/18</dd>
+                    <div className="description-list-group">
+                        <dt className="description">Date Of Birth</dt>
+                        <dd className="description-value">1999/06/18</dd>
                     </div>
-                    <div className="account-description-list-group">
-                        <dt className="account-description">Email</dt>
-                        <dd className="account-description-value">haritha.cr@outlook.com</dd>
+                    <div className="description-list-group">
+                        <dt className="description">Email</dt>
+                        <dd className="description-value">haritha.cr@outlook.com</dd>
                     </div>
-                    <div className="account-description-list-group">
-                        <dt className="account-description">Phone Number</dt>
-                        <dd className="account-description-value">070 5924 764</dd>
+                    <div className="description-list-group">
+                        <dt className="description">Phone Number</dt>
+                        <dd className="description-value">070 5924 764</dd>
                     </div>
                 </dl>
             </div>
