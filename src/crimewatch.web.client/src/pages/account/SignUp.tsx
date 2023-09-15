@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Gender } from "../../enums/Gender"
 import { WitnessDto } from "../../models/Witness";
-import { CreateAccountForWitness } from "../../services/AccountServices";
+import { CreateAccountForModerator, CreateAccountForWitness } from "../../services/AccountServices";
 import { ModeratorDto } from "../../models/Moderator";
 
 const SignUp = () => {
@@ -36,7 +36,7 @@ const SignUp = () => {
         policeId: policeId,
         province: province,
       }
-      const createdModerator = await CreateAccountForWitness(moderator);
+      const createdModerator = await CreateAccountForModerator(moderator);
       console.log(createdModerator);
     }else{
     const witness : WitnessDto = {
@@ -136,7 +136,7 @@ const SignUp = () => {
             value={policeId}/>
         </div>
         <div id="form-province" className="form-group">
-          <label htmlFor="province">Police Id: </label>
+          <label htmlFor="province">Province: </label>
           <input required type="text" name="province" id="province" className="form-input"
             onChange={e=>setProvince(e.target.value)} 
             value={province}/>
