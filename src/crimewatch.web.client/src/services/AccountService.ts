@@ -1,6 +1,7 @@
 import Api from "../configurations/ApiConfiguration"
 import Moderator, { ModeratorDto } from "../models/Moderator";
 import Witness, { WitnessDto } from "../models/Witness"
+import { deleteToken, saveToken } from "./AuthenticationService";
 
 const controller = '/api/Authentication';
 
@@ -19,5 +20,10 @@ export const CreateAccountForModerator = async (Moderator: ModeratorDto) : Promi
 export const SingIn = async (email: string, password: string) : Promise<string> => {
     const response = await Api.post<string>(`${controller}/SignIn`, {email, password});
     const token = response.data;
+    await saveToken(token);
     return token;
+}
+
+export const SignOut = async () : Promise<void> => {
+    await deleteToken();
 }
