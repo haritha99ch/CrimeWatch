@@ -110,7 +110,7 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
-    [HttpDelete("Delete")]
+    [HttpDelete("Delete/{reportId}")]
     public async Task<ActionResult<bool>> Delete([FromRoute] Guid reportId)
     {
         DeleteReportCommand command = new(new(reportId));

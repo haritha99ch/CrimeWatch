@@ -98,9 +98,10 @@ public class EvidenceController : ControllerBase
         return Ok(evidence);
     }
 
-    [HttpDelete("Delete")]
-    public async Task<ActionResult<bool>> Delete([FromBody] DeleteEvidenceCommand command)
+    [HttpDelete("Delete/{evidenceId}")]
+    public async Task<ActionResult<bool>> Delete([FromRoute] Guid evidenceId)
     {
+        DeleteEvidenceCommand command = new(new(evidenceId));
         var result = await _mediator.Send(command);
         return Ok(result);
     }

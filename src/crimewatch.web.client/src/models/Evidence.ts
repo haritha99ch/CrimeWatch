@@ -7,7 +7,25 @@ import MediaItem from "./MediaItem";
 import Moderator from "./Moderator";
 import Witness from "./Witness";
 
-export interface Evidence {
+export interface UpdateEvidenceDto {
+    id: EvidenceId;
+    title: string;
+    description: string;
+    location: Location;
+    mediaItems?: string;
+    newMediaItems?: File[];
+}
+
+export interface CreateEvidenceDto {
+    witnessId: WitnessId;
+    reportId: ReportId;
+    caption: string;
+    description: string;
+    location: Location;
+    mediaItems: File[];
+}
+
+export default interface Evidence {
     evidenceId: EvidenceId;
     witnessId: WitnessId;
     moderatorId: ModeratorId | null;

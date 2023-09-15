@@ -1,5 +1,5 @@
 import Api from "../configurations/ApiConfiguration";
-import Report, { ReportUpdateDto } from "../models/Report";
+import Report, { UpdateReportDto } from "../models/Report";
 import ModeratorId from "../valueObjects/ModeratorId";
 import ReportId from "../valueObjects/ReportId";
 
@@ -17,8 +17,8 @@ export const GetReportById = async (id: number) : Promise<Report> => {
     return report;
 }
 
-export const UpdateReport = async (report: ReportUpdateDto) : Promise<Report> => {
-    const response = await Api.patch<Report>(`${controller}/Update`, report);
+export const UpdateReport = async (report: UpdateReportDto) : Promise<Report> => {
+    const response = await Api.patch<Report>(`${controller}/Update`, {report});
     const updatedReport : Report = response.data;
     return updatedReport;
 }
@@ -30,19 +30,19 @@ export const ModerateReport = async (reportId: ReportId, moderatorId: ModeratorI
 }
 
 export const ApproveReport = async (reportId: ReportId) : Promise<Report> => {
-    const response = await Api.patch<Report>(`${controller}/Approve`, reportId);
+    const response = await Api.patch<Report>(`${controller}/Approve`, {reportId});
     const approvedReport : Report = response.data;
     return approvedReport;
 }
 
 export const DeclineReport = async (reportId: ReportId) : Promise<Report> => {
-    const response = await Api.patch<Report>(`${controller}/Decline`, reportId);
+    const response = await Api.patch<Report>(`${controller}/Decline`, {reportId});
     const declinedReport : Report = response.data;
     return declinedReport;
 }
 
 export const RevertReport = async (reportId: ReportId) : Promise<Report> => {
-    const response = await Api.patch<Report>(`${controller}/Revert`, reportId);
+    const response = await Api.patch<Report>(`${controller}/Revert`, {reportId});
     const revertedReport : Report = response.data;
     return revertedReport;
 }

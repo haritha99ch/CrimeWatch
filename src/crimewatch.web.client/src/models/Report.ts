@@ -2,22 +2,22 @@ import { Status } from "../enums/Status";
 import ModeratorId from "../valueObjects/ModeratorId";
 import ReportId from "../valueObjects/ReportId";
 import WitnessId from "../valueObjects/WitnessId";
-import { Evidence } from "./Evidence";
+import Evidence from "./Evidence";
 import MediaItem from "./MediaItem";
 import Moderator from "./Moderator";
 import Witness from "./Witness";
 
-export interface ReportUpdateDto {
-    Id: ReportId;
-    Title: string;
-    Description: string;
-    Location: Location;
-    MediaItem?: MediaItem;
-    NewMediaItem?: File;
+export interface UpdateReportDto {
+    id: ReportId;
+    title: string;
+    description: string;
+    location: Location;
+    mediaItem?: MediaItem;
+    newMediaItem?: File;
 }
 
 export default interface Report {
-    reportId: ReportId;
+    id: ReportId;
     witnessId: WitnessId;
     moderatorId: ModeratorId | null;
     title: string;
