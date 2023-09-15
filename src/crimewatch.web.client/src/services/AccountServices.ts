@@ -15,3 +15,9 @@ export const CreateAccountForModerator = async (Moderator: ModeratorDto) : Promi
     const createdModerator = response.data;
     return createdModerator;
 }
+
+export const SingIn = async (email: string, password: string) : Promise<string> => {
+    const response = await Api.post<string>(`${controller}/SignIn`, {email, password});
+    const token = response.data;
+    return token;
+}
