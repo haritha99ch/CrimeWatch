@@ -1,11 +1,11 @@
 import Api from "../configurations/ApiConfiguration"
 import Moderator, { ModeratorDto } from "../models/Moderator";
-import Witness, { WitnessDto } from "../models/Witness"
+import Witness, { CreateWitnessDto } from "../models/Witness"
 import { deleteToken, saveToken } from "./AuthenticationService";
 
 const controller = '/api/Authentication';
 
-export const CreateAccountForWitness = async (witness: WitnessDto) : Promise<Witness> => {
+export const CreateAccountForWitness = async (witness: CreateWitnessDto) : Promise<Witness> => {
     const response = await Api.post<Witness>(`${controller}/Witness/SignUp`, {witness});
     const createdWitness = response.data;
     return createdWitness;

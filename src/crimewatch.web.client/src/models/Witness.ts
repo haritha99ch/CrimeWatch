@@ -5,7 +5,18 @@ import WitnessId from "../valueObjects/WitnessId";
 import Account from "./Account";
 import User from "./User";
 
-export interface WitnessDto {
+export interface UpdateWitnessDto {
+    id: WitnessId;
+    firstName: string;
+    lastName: string;
+    gender: Gender;
+    dateOfBirth: Date;
+    phoneNumber: string;
+    email: string;
+    Password: string;
+}
+
+export interface CreateWitnessDto {
     firstName: string;
     lastName: string;
     gender: Gender;

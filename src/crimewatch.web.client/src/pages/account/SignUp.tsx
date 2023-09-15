@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Gender } from "../../enums/Gender"
-import { WitnessDto } from "../../models/Witness";
+import { CreateWitnessDto } from "../../models/Witness";
 import { CreateAccountForModerator, CreateAccountForWitness } from "../../services/AccountService";
 import { ModeratorDto } from "../../models/Moderator";
 
@@ -39,7 +39,7 @@ const SignUp = () => {
       const createdModerator = await CreateAccountForModerator(moderator);
       console.log(createdModerator);
     }else{
-    const witness : WitnessDto = {
+    const witness : CreateWitnessDto = {
       firstName: firstName,
       lastName: lastName,
       gender:gender,
