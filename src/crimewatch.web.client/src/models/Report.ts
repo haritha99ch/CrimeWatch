@@ -7,7 +7,16 @@ import MediaItem from "./MediaItem";
 import Moderator from "./Moderator";
 import Witness from "./Witness";
 
-export interface Report {
+export interface ReportUpdateDto {
+    Id: ReportId;
+    Title: string;
+    Description: string;
+    Location: Location;
+    MediaItem?: MediaItem;
+    NewMediaItem?: File;
+}
+
+export default interface Report {
     reportId: ReportId;
     witnessId: WitnessId;
     moderatorId: ModeratorId | null;

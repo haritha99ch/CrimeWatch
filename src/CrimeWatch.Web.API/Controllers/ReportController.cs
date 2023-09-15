@@ -111,8 +111,9 @@ public class ReportController : ControllerBase
     }
 
     [HttpDelete("Delete")]
-    public async Task<ActionResult<bool>> Delete([FromBody] DeleteReportCommand command)
+    public async Task<ActionResult<bool>> Delete([FromRoute] Guid reportId)
     {
+        DeleteReportCommand command = new(new(reportId));
         var result = await _mediator.Send(command);
         return Ok(result);
     }
