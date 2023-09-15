@@ -3,7 +3,8 @@ import Home from './Components/Home'
 import About from './Components/About'
 import Support from './Components/Support'
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import SignUp from './pages/account/SignUp';
+import AccountSignUp from './pages/account/SignUp';
+import AccountIndex from './pages/account/Index';
 
 const App = () => {
   return (
@@ -18,7 +19,8 @@ const App = () => {
             <Support/>
           </>
           }/>
-        <Route path="/Account/SignUp" element={<SignUp/>}/>
+        <Route path="/Account/SignUp" element={<AccountSignUp/>}/>
+        <Route path="/Account/Index" element={<AccountIndex/>}/>
       </Routes>
     </BrowserRouter>
     </>
