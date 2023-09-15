@@ -12,7 +12,6 @@ using CrimeWatch.Application.Queries.ReportQueries.GetReports;
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class ReportController : ControllerBase
 {
     private readonly IMediator _mediator;

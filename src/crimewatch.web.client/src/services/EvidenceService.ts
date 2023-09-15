@@ -7,7 +7,7 @@ import ReportId from "../valueObjects/ReportId";
 const controller = '/api/Evidence';
 
 export const CreateEvidence = async (evidence: CreateEvidenceDto) : Promise<Evidence> => {
-    const response = await Api.post<Evidence>(`${controller}/Create`, {evidence});
+    const response = await Api.post<Evidence>(`${controller}/Create`, evidence);
     const createdEvidence = response.data;
     return createdEvidence;
 }
@@ -19,7 +19,7 @@ export const GetEvidenceForReport = async (reportId: ReportId) : Promise<Evidenc
 }
 
 export const UpdateEvidence = async (evidence: UpdateEvidenceDto) : Promise<Evidence> => {
-    const response = await Api.put<Evidence>(`${controller}/Update`, {evidence});
+    const response = await Api.put<Evidence>(`${controller}/Update`, evidence);
     const updatedEvidence = response.data;
     return updatedEvidence;
 }

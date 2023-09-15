@@ -5,8 +5,21 @@ import UserId from "../valueObjects/UserId";
 import Account from "./Account";
 import User from "./User";
 
+export interface UpdateModeratorDto {
+    id: ModeratorId;
+    firstName: string;
+    lastName: string;
+    gender: Gender;
+    dateOfBirth: Date;
+    phoneNumber: string;
+    policeId: string;
+    province: string;
+    email: string;
+    password: string;
+}
 
-export interface ModeratorDto {
+
+export interface CreateModeratorDto {
     firstName: string;
     lastName: string;
     gender: Gender;

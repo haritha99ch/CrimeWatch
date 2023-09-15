@@ -43,7 +43,7 @@ public class ModeratorController : ControllerBase
         return Ok(moderator);
     }
 
-    [HttpDelete("Delete/{witnessId}")]
+    [HttpDelete("Delete/{moderatorId}")]
     public async Task<ActionResult<bool>> Delete([FromRoute] Guid moderatorId)
     {
         DeleteModeratorCommand command = new(new(moderatorId));

@@ -18,7 +18,7 @@ export const GetReportById = async (id: number) : Promise<Report> => {
 }
 
 export const UpdateReport = async (report: UpdateReportDto) : Promise<Report> => {
-    const response = await Api.patch<Report>(`${controller}/Update`, {report});
+    const response = await Api.patch<Report>(`${controller}/Update`, report);
     const updatedReport : Report = response.data;
     return updatedReport;
 }

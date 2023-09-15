@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Gender } from "../../enums/Gender"
 import { CreateWitnessDto } from "../../models/Witness";
 import { CreateAccountForModerator, CreateAccountForWitness } from "../../services/AccountService";
-import { ModeratorDto } from "../../models/Moderator";
+import { CreateModeratorDto } from "../../models/Moderator";
 
 const SignUp = () => {
   const [isModerator, setIsModerator] = useState<boolean>(false);
@@ -25,7 +25,7 @@ const SignUp = () => {
       return;
     }
     if(isModerator){
-      const moderator: ModeratorDto ={
+      const moderator: CreateModeratorDto ={
         firstName: firstName,
         lastName: lastName,
         gender:gender,
