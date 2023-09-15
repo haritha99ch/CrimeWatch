@@ -1,5 +1,7 @@
 # Crime Watch
 
+>This project is primarily an educational endeavor. The main objective is to delve deep into software architecture, exploring concepts such as Domain-Driven Design, design patterns, and industry-standard software engineering practices. By implementing these principles in a practical application, we aim to gain a comprehensive understanding and hands-on experience.
+
 Crime Watch is an innovative web application that offers a unique solution to the problem of crime. It allows citizens to report any criminal activities or illegal incidents they witness directly to the proper authorities for investigation and judgment. This provides an effective way for law enforcement officials to investigate and judge the outcome of these reported crimes, as well as providing peace of mind for those who have witnessed them.
 
 The Crime Watch system works by allowing users to upload photos, videos, or descriptions related to their incident in order provide evidence and details about what happened. The information is then sent immediately into a secure database maintained by the police department and notify the online police officers ensuring it gets seen right away so appropriate action can be taken swiftly if necessary.
