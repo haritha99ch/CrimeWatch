@@ -1,9 +1,9 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
 namespace CrimeWatch.Application.Specifications;
-internal class ModeratorReportWithMediaItemAndWitness : Specification<Report, ReportId>
+internal class ModeratorReportWithMediaItemModeratorAndWitness : Specification<Report, ReportId>
 {
-    public ModeratorReportWithMediaItemAndWitness(ModeratorId moderatorId)
+    public ModeratorReportWithMediaItemModeratorAndWitness(ModeratorId moderatorId)
         : base(r => r.ModeratorId == moderatorId)
     {
         AddInclude(e => e.Include(e => e.MediaItem));

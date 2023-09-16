@@ -7,19 +7,19 @@ internal static class ReportRepositorySpecificationExtension
         => await repository.GetAllByAsync<WitnessReportWithMediaItemAndWitness>(new(witnessId), cancellationToken);
 
     public static async Task<List<Report>> GetAllModeratedReportsAsync(this IRepository<Report, ReportId> repository, CancellationToken cancellationToken)
-        => await repository.GetAllByAsync<ModeratedReportWithMediaItemAndWitness>(new(), cancellationToken);
+        => await repository.GetAllByAsync<ModeratedReportWithMediaItemModeratorAndWitness>(new(), cancellationToken);
 
-    public static async Task<List<Report>> GetAllReportsWithMediaItemAndWitnessByAsync(this IRepository<Report, ReportId> repository, CancellationToken cancellationToken)
-        => await repository.GetAllByAsync<ReportWithMediaItemAndWitness>(new(), cancellationToken);
+    public static async Task<List<Report>> GetAllReportsWithMediaItemModeratorAndWitnessByAsync(this IRepository<Report, ReportId> repository, CancellationToken cancellationToken)
+        => await repository.GetAllByAsync<ReportWithMediaItemModeratorAndWitness>(new(), cancellationToken);
 
     public static async Task<Report?> ReportWithMediaItemAndWitnessByIdAsync(this IRepository<Report, ReportId> repository, ReportId reportId, CancellationToken cancellationToken)
-        => await repository.GetByAsync<ReportWithMediaItemAndWitness>(new(reportId), cancellationToken);
+        => await repository.GetByAsync<ReportWithMediaItemModeratorAndWitness>(new(reportId), cancellationToken);
 
     public static async Task<Report?> GetReportWithMediaItemByIdAsync(this IRepository<Report, ReportId> repository, ReportId reportId, CancellationToken cancellationToken)
         => await repository.GetByAsync<ReportWithMediaItemById>(new(reportId), cancellationToken);
 
     public static async Task<List<Report>> GetAllModeratorReportsAsync(this IRepository<Report, ReportId> repository, ModeratorId moderatorId, CancellationToken cancellationToken)
-        => await repository.GetAllByAsync<ModeratorReportWithMediaItemAndWitness>(new(moderatorId), cancellationToken);
+        => await repository.GetAllByAsync<ModeratorReportWithMediaItemModeratorAndWitness>(new(moderatorId), cancellationToken);
 
     public static async Task<Report?> GetReportWithAllById(this IRepository<Report, ReportId> repository, ReportId reportId, CancellationToken cancellationToken)
         => await repository.GetByAsync<ReportWithAllById>(new(reportId), cancellationToken);

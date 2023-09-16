@@ -8,13 +8,14 @@ import AccountIndex from './pages/account/Index';
 import ReportCreate from './pages/report/Create';
 import ThemeContextProvider from './providers/ThemeContextProvider';
 import ThemeSwitch from './Components/ThemeSwitch';
+import ReportIndex from './pages/report/Index';
 
 const App = () => {
   return (
     <>
     <ThemeContextProvider>
       <Navbar/>
-        <div className='dark:dark-mode-bg-primary'>
+        <div className='dark:dark-mode-bg-primary h-screen'>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={
@@ -27,6 +28,7 @@ const App = () => {
               <Route path="/Account/SignUp" element={<AccountSignUp/>}/>
               <Route path="/Account/Index" element={<AccountIndex/>}/>
               <Route path="/Report/Create" element={<ReportCreate/>}/>
+              <Route path="/Report/Index" element={<ReportIndex/>}/>
             </Routes>
           </BrowserRouter>
           <ThemeSwitch/>

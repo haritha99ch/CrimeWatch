@@ -11,5 +11,5 @@ internal class GetAllReportsQueryHandler : IRequestHandler<GetAllReportsQuery, L
     }
 
     public async Task<List<Report>> Handle(GetAllReportsQuery request, CancellationToken cancellationToken)
-        => await _reportRepository.GetAllReportsWithMediaItemAndWitnessByAsync(cancellationToken);
+        => await _reportRepository.GetAllReportsWithMediaItemModeratorAndWitnessByAsync(cancellationToken);
 }
