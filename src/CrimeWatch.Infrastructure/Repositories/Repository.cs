@@ -3,6 +3,7 @@ using CrimeWatch.Infrastructure.Contracts.Repositories;
 using CrimeWatch.Infrastructure.Helpers;
 using CrimeWatch.Infrastructure.Primitives;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace CrimeWatch.Infrastructure.Repositories;
 public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : ValueObject
@@ -40,9 +41,23 @@ public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : 
         return entities ?? new();
     }
 
+    public async Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null)
+    {
+        List<TResult> results = await _dbSet.Select(selector).ToListAsync(cancellationToken ?? CancellationToken.None);
+        if (_isTracking) SetDefaults();
+        return results ?? new();
+    }
+
     public async Task<List<T>> GetAllByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>
     {
         List<T>? entities = await _queryable.AddSpecification(specification).ToListAsync(cancellationToken ?? CancellationToken.None) ?? new();
+        if (_isTracking) SetDefaults();
+        return entities;
+    }
+
+    public async Task<List<TResult>> GetAllByAsync<S, TResult>(S specification, Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null) where S : Specification<T, V>
+    {
+        List<TResult>? entities = await _queryable.AddSpecification(specification).Select(selector).ToListAsync(cancellationToken ?? CancellationToken.None) ?? new();
         if (_isTracking) SetDefaults();
         return entities;
     }
@@ -54,11 +69,25 @@ public class Repository<T, V> : IRepository<T, V> where T : Entity<V> where V : 
         return entities;
     }
 
+    public async Task<TResult?> GetByAsync<S, TResult>(S specification, Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null) where S : Specification<T, V>
+    {
+        TResult? entities = await _queryable.AddSpecification(specification).Select(selector).SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None);
+        if (_isTracking) SetDefaults();
+        return entities;
+    }
+
     public async Task<T?> GetByIdAsync(V id, CancellationToken? cancellationToken = null)
     {
         T? entity = await _dbSet.FindAsync(id, cancellationToken ?? CancellationToken.None);
         if (_isTracking) SetDefaults();
         return entity;
+    }
+
+    public async Task<TResult?> GetByIdAsync<TResult>(V id, Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null)
+    {
+        TResult? result = await _dbSet.Where(e => e.Id.Equals(id)).Select(selector).SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None);
+        if (_isTracking) SetDefaults();
+        return result;
     }
 
     public async Task<int> CountAsync(CancellationToken? cancellationToken = null)
