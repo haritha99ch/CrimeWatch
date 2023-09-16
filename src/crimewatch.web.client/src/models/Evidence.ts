@@ -6,6 +6,7 @@ import WitnessId from "../valueObjects/WitnessId";
 import MediaItem from "./MediaItem";
 import Moderator from "./Moderator";
 import Witness from "./Witness";
+import Location from "./Location";
 
 export interface UpdateEvidenceDto {
     id: EvidenceId;

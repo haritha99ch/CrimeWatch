@@ -14,21 +14,23 @@ const App = () => {
     <>
     <ThemeContextProvider>
       <Navbar/>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Home/>
-              <About/>
-              <Support/>
-            </>
-            }/>
-          <Route path="/Account/SignUp" element={<AccountSignUp/>}/>
-          <Route path="/Account/Index" element={<AccountIndex/>}/>
-          <Route path="/Report/Create" element={<ReportCreate/>}/>
-        </Routes>
-      </BrowserRouter>
-      <ThemeSwitch/>
+        <div className='dark:dark-mode-bg-primary'>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <Home/>
+                  <About/>
+                  <Support/>
+                </>
+                }/>
+              <Route path="/Account/SignUp" element={<AccountSignUp/>}/>
+              <Route path="/Account/Index" element={<AccountIndex/>}/>
+              <Route path="/Report/Create" element={<ReportCreate/>}/>
+            </Routes>
+          </BrowserRouter>
+          <ThemeSwitch/>
+        </div>
     </ThemeContextProvider>
     </>
 

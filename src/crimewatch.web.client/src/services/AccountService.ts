@@ -1,7 +1,7 @@
 import Api from "../configurations/ApiConfiguration"
 import Moderator, { CreateModeratorDto } from "../models/Moderator";
 import Witness, { CreateWitnessDto } from "../models/Witness"
-import { deleteToken, saveToken } from "./AuthenticationService";
+import { deleteToken, getBearerToken, saveToken } from "./AuthenticationService";
 
 const controller = '/api/Authentication';
 
@@ -20,10 +20,16 @@ export const CreateAccountForModerator = async (Moderator: CreateModeratorDto) :
 export const SingIn = async (email: string, password: string) : Promise<string> => {
     const response = await Api.post<string>(`${controller}/SignIn`, {email, password});
     const token = response.data;
-    await saveToken(token);
+    saveToken(token);
     return token;
 }
 
-export const SignOut = async () : Promise<void> => {
-    await deleteToken();
+export const GetCurrentUser = async () : Promise<Moderator | Witness> => {
+    const response = await Api.get<Moderator | Witness>(`${controller}/GetCurrentUser`, getBearerToken())
+    const user = response.data;
+    return user;
+}
+
+export const SignOut = () : void => {
+    deleteToken();
 }

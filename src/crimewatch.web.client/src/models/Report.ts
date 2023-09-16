@@ -6,6 +6,15 @@ import Evidence from "./Evidence";
 import MediaItem from "./MediaItem";
 import Moderator from "./Moderator";
 import Witness from "./Witness";
+import Location from "./Location";
+
+export interface CreateReportDto {
+    witnessId: WitnessId;
+    title: string;
+    description: string;
+    location: Location;
+    mediaItem?: File;
+}
 
 export interface UpdateReportDto {
     id: ReportId;
