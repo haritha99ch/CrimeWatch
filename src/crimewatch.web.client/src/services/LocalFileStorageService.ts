@@ -1,11 +1,11 @@
-export const saveItem = async (key: string, item: string): Promise<void> => {
+export const saveItem = (key: string, item: string): void => {
     localStorage.setItem(key, item);
 }
 
-export const getItem = async (key: string): Promise<string | null> => {
-    return localStorage.getItem(key);
+export const getItem = <T>(key: string): T | null => {
+    return localStorage.getItem(key) as T;
 }
 
-export const deleteItem = async (key: string): Promise<void> => {
+export const deleteItem = (key: string): void => {
     localStorage.removeItem(key);
 }

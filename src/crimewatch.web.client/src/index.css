@@ -11,6 +11,36 @@
     @apply text-white border bg-red-600 border-red-600
     hover:bg-transparent hover:text-red-600 rounded-md;
   }
+
+  .dark-mode-bg-primary{
+    @apply bg-[#484848] transition;
+  }
+
+  .dark-mode-bg-secondary{
+    @apply bg-[#303030] transition;
+  }
+
+  .dark-mode-bg-tertiary{
+    @apply bg-[#1a1a1a] transition;
+  }
+
+  .dark-mode-text-primary{
+    @apply text-gray-50 transition;
+  }
+
+  .dark-mode-text-secondary{
+    @apply text-gray-200 transition;
+  }
+
+  .dark-mode-text-tertiary{
+    @apply text-gray-300 transition;
+  }
+}
+
+
+
+.theme-switcher {
+  @apply fixed bottom-5 right-5 bg-white w-[3rem] h-[3rem] bg-opacity-80 backdrop-blur-[0.5rem] border border-white border-opacity-40 shadow-2xl rounded-full flex items-center justify-center hover:scale-[1.15] active:scale-105 transition-all dark:dark-mode-bg-secondary text-gray-900 dark:dark-mode-text-primary;
 }
 
 .form-input {

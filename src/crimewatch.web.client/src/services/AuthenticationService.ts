@@ -2,22 +2,22 @@ import { saveItem, getItem, deleteItem } from './LocalFileStorageService';
 
 const TOKEN_KEY = 'jwt';
 
-export const saveToken = async (token: string): Promise<void> => {
-    await saveItem(TOKEN_KEY, token);
+export const saveToken = (token: string): void => {
+    saveItem(TOKEN_KEY, token);
 }
 
-export const deleteToken = async (): Promise<void> => {
-    await deleteItem(TOKEN_KEY);
+export const deleteToken = (): void => {
+    deleteItem(TOKEN_KEY);
 }
 
-export const getBearerToken = async (): Promise<{ headers: { Authorization: string } } | undefined> => {
-    const token = await getToken();
+export const getBearerToken = (): { headers: { Authorization: string } } | undefined => {
+    const token = getToken();
     if(token == null || token === "") return undefined;
     return {
         headers: { Authorization: `Bearer ${token}` }
     };
 }
 
-const getToken = async (): Promise<string | null> => {
-    return await getItem(TOKEN_KEY);
+const getToken = (): string | null => {
+    return getItem<string>(TOKEN_KEY);
 }

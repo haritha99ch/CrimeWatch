@@ -6,25 +6,30 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import AccountSignUp from './pages/account/SignUp';
 import AccountIndex from './pages/account/Index';
 import ReportCreate from './pages/report/Create';
+import ThemeContextProvider from './providers/ThemeContextProvider';
+import ThemeSwitch from './Components/ThemeSwitch';
 
 const App = () => {
   return (
     <>
-    <Navbar/>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Home/>
-            <About/>
-            <Support/>
-          </>
-          }/>
-        <Route path="/Account/SignUp" element={<AccountSignUp/>}/>
-        <Route path="/Account/Index" element={<AccountIndex/>}/>
-        <Route path="/Report/Create" element={<ReportCreate/>}/>
-      </Routes>
-    </BrowserRouter>
+    <ThemeContextProvider>
+      <Navbar/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Home/>
+              <About/>
+              <Support/>
+            </>
+            }/>
+          <Route path="/Account/SignUp" element={<AccountSignUp/>}/>
+          <Route path="/Account/Index" element={<AccountIndex/>}/>
+          <Route path="/Report/Create" element={<ReportCreate/>}/>
+        </Routes>
+      </BrowserRouter>
+      <ThemeSwitch/>
+    </ThemeContextProvider>
     </>
 
   )

@@ -5,6 +5,7 @@ import { CreateAccountForModerator, CreateAccountForWitness } from "../../servic
 import { CreateModeratorDto } from "../../models/Moderator";
 
 const SignUp = () => {
+
   const [isModerator, setIsModerator] = useState<boolean>(false);
 
   const [firstName, setFirstName] = useState<string>("");

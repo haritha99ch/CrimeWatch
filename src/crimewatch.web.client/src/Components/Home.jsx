@@ -9,7 +9,7 @@ import {
 import backgroundImage from "../assets/banner.jpg";
 function Home() {
   return (
-    <div className="w-full h-screen bg-zinc-200 flex flex-col justify-between">
+    <div className="w-full h-screen bg-zinc-200 dark:dark-mode-bg-primary dark:dark-mode-text-secondary flex flex-col justify-between">
       <div className="grid md:grid-cols-2 max-w-[1240px] m-auto ">
         <div className="flex flex-col justify-center md:items-start w-full px-2 py-8">
           <p className="text-2xl">Unique Sequencing & Production</p>
@@ -22,7 +22,7 @@ function Home() {
         <div>
           <img className="w-full" src={backgroundImage} alt="img" />
         </div>
-        <div className="absolute flex flex-col py-8 md:min-w-[760px] bottom-[5%] mx-1 md:left-1/2 transform md:-translate-x-1/2 bg-zinc-200 border border-slate-300 rounded-xl text-center shadow-xl">
+        <div className="absolute flex flex-col py-8 md:min-w-[760px] bottom-[5%] mx-1 md:left-1/2 transform md:-translate-x-1/2 bg-zinc-200 border border-slate-300 rounded-xl text-center shadow-xl dark:dark-mode-bg-secondary ">
           <p>Our  Services</p>
           <div className="flex justify-between flex-wrap px-4">
             <p className="flex px-4 py-2 text-slate-500"><UserCircleIcon className="h-6 text-red-600"/>Create an Account</p>
