@@ -5,6 +5,7 @@ public static class AppConfigurator
 {
     public static void ConfigureServices(this IServiceCollection services)
     {
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 
     public static void ConfigureOptions(this IServiceCollection services)

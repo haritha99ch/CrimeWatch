@@ -1,18 +1,18 @@
 import { FormEvent, useState } from "react";
 import { CreateReportDto } from "../../models/Report";
-import { GetCurrentUser } from "../../services/AccountService";
-import Witness from "../../models/Witness";
+// import { GetCurrentUser } from "../../services/AccountService";
+// import Witness from "../../models/Witness";
 import { CreateReport } from "../../services/ReportService";
 
 // TODO: current user context
-const currentUser = await GetCurrentUser();
+// const currentUser = await GetCurrentUser();
 
 const Create = () => {
 
     // If the user is not logged in, redirect to the login page.
-    if (!currentUser) {
-        // window.location.href = "/Account/SignIn";
-    }
+    // if (!currentUser) {
+    //     // window.location.href = "/Account/SignIn";
+    // }
 
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
@@ -26,10 +26,11 @@ const Create = () => {
     const handleSubmit = async(e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
-        if (currentUser.account!.isModerator) return;
+        // if (currentUser.account!.isModerator) return;
 
         const report: CreateReportDto = {
-            witnessId: (currentUser as Witness).witnessId ?? undefined,
+            witnessId: {value: null!},
+            // witnessId: (currentUser as Witness).witnessId ?? undefined,
             title: title,
             description: description,
             location: {

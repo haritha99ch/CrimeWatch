@@ -12,6 +12,7 @@ public static class Configure
         services.AddInfrastructure(dbConnectionString);
         services.AddAzureClients(builder => builder.AddBlobServiceClient(storageConnectionString));
         services.AddTransient<IFileStorageService, BlobStorageService>();
+        services.AddTransient<IAuthenticationService, AuthenticationService>();
         services.AddCQRS();
     }
 
