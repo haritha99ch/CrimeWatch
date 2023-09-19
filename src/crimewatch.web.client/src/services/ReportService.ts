@@ -18,7 +18,7 @@ export const GetAllReports = async () : Promise<Report[]> => {
     return reports;
 }
 
-export const GetReportById = async (id: number) : Promise<Report> => {
+export const GetReportById = async (id: string) : Promise<Report> => {
     const response = await Api.get<Report>(`${controller}/Get/${id}`, getBearerToken());
     const report : Report = response.data;
     return report;

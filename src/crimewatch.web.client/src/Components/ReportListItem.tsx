@@ -1,6 +1,7 @@
 import { MdLocationPin } from "react-icons/md"
 import Report from "../models/Report"
 import { Status } from "../enums/Status"
+import { Link } from "react-router-dom"
 
 const ReportListItem = ({report}:{report:Report}) => {
 
@@ -13,6 +14,7 @@ const ReportListItem = ({report}:{report:Report}) => {
 
     const content :JSX.Element = <>
     <article className="group bg-gray-100 max-w-full border border-black/5 overflow-hidden max-h-[15rem] sm:pr-8 relative sm:h-[20rem] mb-3 sm:mb-8 last:mb-0 hover:bg-gray-50/5 transition rounded-lg dark:dark-mode-bg-secondary dark:dark-mode-text-primary">
+        <Link to={`/Report/Deatils/${report.id.value}`}>
         <div id="moderation-section">
             <div className="flex justify-start">
                 {statusElement} {report.moderator && <p>By {report.moderator?.user?.firstName} {report.moderator?.user?.lastName}</p>}
@@ -29,6 +31,7 @@ const ReportListItem = ({report}:{report:Report}) => {
             <p className="mt-2 leading-relaxed sm:h-1/2 z-50">{report.description}</p>
         </div>
         <img src={report.mediaItem?.url} alt="dffd" className="absolute top-8 -right-10 h-full group-hover:top-0 group-hover:-right-0 rounded-t-lg shadow-2xl -z-9 transition-all"/>
+        </Link>
     </article>
     </>
   return content

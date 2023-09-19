@@ -27,7 +27,7 @@ export interface CreateEvidenceDto {
 }
 
 export default interface Evidence {
-    evidenceId: EvidenceId;
+    id: EvidenceId;
     witnessId: WitnessId;
     moderatorId: ModeratorId | null;
     reportId: ReportId;

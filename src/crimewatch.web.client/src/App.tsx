@@ -9,6 +9,7 @@ import ReportCreate from './pages/report/Create';
 import ThemeContextProvider from './providers/ThemeContextProvider';
 import ThemeSwitch from './Components/ThemeSwitch';
 import ReportIndex from './pages/report/Index';
+import ReportDetails from './pages/report/Details';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
               <Route path="/Account/Index" element={<AccountIndex/>}/>
               <Route path="/Report/Create" element={<ReportCreate/>}/>
               <Route path="/Report/Index" element={<ReportIndex/>}/>
+              <Route path="/Report/Deatils/:id" element={<ReportDetails/>}/>
             </Routes>
           </BrowserRouter>
           <ThemeSwitch/>
