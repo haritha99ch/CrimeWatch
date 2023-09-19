@@ -10,13 +10,14 @@ import ThemeContextProvider from './providers/ThemeContextProvider';
 import ThemeSwitch from './Components/ThemeSwitch';
 import ReportIndex from './pages/report/Index';
 import ReportDetails from './pages/report/Details';
+import AccountSignIn from './pages/account/SignIn';
 
 const App = () => {
   return (
     <>
     <ThemeContextProvider>
       <Navbar/>
-        <div className='dark:dark-mode-bg-primary h-screen'>
+        <div className='dark:dark-mode-bg-primary min-h-screen'>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={
@@ -27,6 +28,7 @@ const App = () => {
                 </>
                 }/>
               <Route path="/Account/SignUp" element={<AccountSignUp/>}/>
+              <Route path="/Account/SignIn" element={<AccountSignIn/>}/>
               <Route path="/Account/Index" element={<AccountIndex/>}/>
               <Route path="/Report/Create" element={<ReportCreate/>}/>
               <Route path="/Report/Index" element={<ReportIndex/>}/>

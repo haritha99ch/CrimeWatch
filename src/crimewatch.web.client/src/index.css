@@ -56,7 +56,7 @@
 }
 
 .form-group > label {
-  @apply block sm:inline-block w-32 text-gray-700 text-sm font-bold mb-2;
+  @apply block sm:inline-block w-32 text-gray-700 dark:dark-mode-text-primary text-sm font-bold mb-2;
 }
 
 /* https://tailwind-elements.com/docs/standard/forms/switch/ */
@@ -82,4 +82,8 @@
 
 .report-form-label{
   @apply block text-sm font-medium leading-6 text-gray-900 dark:dark-mode-text-primary;
+}
+
+.hyperlink{
+  @apply font-semibold leading-6 text-indigo-600 dark:text-indigo-300 hover:text-indigo-500 dark:hover:text-indigo-200;
 }

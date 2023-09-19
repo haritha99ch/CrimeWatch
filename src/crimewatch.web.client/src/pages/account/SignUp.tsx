@@ -58,10 +58,10 @@ const SignUp = () => {
 
   const content : JSX.Element = <>
   <div className="h-[80px]"></div>
-  <div className="h-[80px]">
+  <div>
     <h1 className="text-4xl text-center">Sign Up</h1>
     <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-      <form id="formSection" className="border border-black/5 p-5"
+      <form id="formSection" className="border border-black/5 p-5 dark:dark-mode-bg-secondary rounded-2xl"
         onSubmit={handleSubmit} >
         <div id="form-firstName" className="form-group">
           <label htmlFor="firstName">First Name: </label>
@@ -77,13 +77,13 @@ const SignUp = () => {
           <label htmlFor="gender">Gender: </label>
           <div id="form-gender-content" className="flex gap-x-5">
             <div>
-              <label htmlFor="gender-male">Male </label>
+              <label htmlFor="gender-male" className="dark:dark-mode-text-secondary">Male </label>
               <input required aria-label="Male" type="radio" name="gender" value={Gender.Male}
                 onChange={e=>setGender(Number(e.target.value))}
                 checked={gender === Gender.Male} />
             </div>
             <div>
-              <label htmlFor="gender-male">Female </label>
+              <label htmlFor="gender-male" className="dark:dark-mode-text-secondary">Female </label>
               <input required aria-label="Female" type="radio" name="gender" value={Gender.Female}
                 onChange={e=>setGender(Number(e.target.value))}
                 checked={gender === Gender.Female} />

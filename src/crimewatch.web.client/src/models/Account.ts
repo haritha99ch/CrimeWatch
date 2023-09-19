@@ -6,3 +6,8 @@ export default interface Account {
     password: string;
     isModerator: boolean;
 }
+
+export interface SignInDto{
+    email: string,
+    password: string
+}
