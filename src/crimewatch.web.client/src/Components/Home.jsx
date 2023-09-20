@@ -7,9 +7,11 @@ import {
   OfficeBuildingIcon
 } from "@heroicons/react/outline";
 import backgroundImage from "../assets/banner.jpg";
+import About from "./About";
+import Support from "./Support";
 function Home() {
   return (
-    <div className="w-full h-screen bg-zinc-200 flex flex-col justify-between">
+    <><div className="w-full h-screen bg-zinc-200 flex flex-col justify-between">
       <div className="grid md:grid-cols-2 max-w-[1240px] m-auto ">
         <div className="flex flex-col justify-center md:items-start w-full px-2 py-8">
           <p className="text-2xl">Unique Sequencing & Production</p>
@@ -25,15 +27,17 @@ function Home() {
         <div className="absolute flex flex-col py-8 md:min-w-[760px] bottom-[5%] mx-1 md:left-1/2 transform md:-translate-x-1/2 bg-zinc-200 border border-slate-300 rounded-xl text-center shadow-xl">
           <p>Our  Services</p>
           <div className="flex justify-between flex-wrap px-4">
-            <p className="flex px-4 py-2 text-slate-500"><UserCircleIcon className="h-6 text-red-600"/>Create an Account</p>
-            <p className="flex px-4 py-2 text-slate-500"><FolderOpenIcon className="h-6 text-red-600"/>Create a Report</p>
-            <p className="flex px-4 py-2 text-slate-500"><PhotographIcon className="h-6 text-red-600"/>Upload Evidence</p>
-            <p className="flex px-4 py-2 text-slate-500"><LocationMarkerIcon className="h-6 text-red-600"/>Mark the Location</p>
-            <p className="flex px-4 py-2 text-slate-500"><OfficeBuildingIcon className="h-6 text-red-600"/>Make it Happen</p>
+            <p className="flex px-4 py-2 text-slate-500"><UserCircleIcon className="h-6 text-red-600" />Create an Account</p>
+            <p className="flex px-4 py-2 text-slate-500"><FolderOpenIcon className="h-6 text-red-600" />Create a Report</p>
+            <p className="flex px-4 py-2 text-slate-500"><PhotographIcon className="h-6 text-red-600" />Upload Evidence</p>
+            <p className="flex px-4 py-2 text-slate-500"><LocationMarkerIcon className="h-6 text-red-600" />Mark the Location</p>
+            <p className="flex px-4 py-2 text-slate-500"><OfficeBuildingIcon className="h-6 text-red-600" />Make it Happen</p>
           </div>
         </div>
       </div>
-    </div>
+    </div><About />
+    <Support/>
+    </>
   );
 }
 
