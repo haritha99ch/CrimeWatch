@@ -1,13 +1,16 @@
+import { AxiosRequestConfig } from "axios";
 import Api from "../configurations/ApiConfiguration";
 import Report, { CreateReportDto, UpdateReportDto } from "../models/Report";
 import ModeratorId from "../valueObjects/ModeratorId";
 import ReportId from "../valueObjects/ReportId";
-import { getBearerToken } from "./AuthenticationService";
+import { getBearerToken, getToken } from "./AuthenticationService";
 
 const controller = '/api/Report';
 
-export const CreateReport = async (report: CreateReportDto) : Promise<Report> => {
-    const response = await Api.post<Report>(`${controller}/Create`, report, getBearerToken());
+export const CreateReport = async (report: CreateReportDto) : Promise<Report | null> => {
+    const config: AxiosRequestConfig = {headers: {'Content-Type': 'multipart/form-data', Authorization: `bearer ${getToken()}`}};
+    const response = await Api.post<Report>(`${controller}/Create`, report, config).catch(()=>null);
+    if (!response) return null;
     const createdReport : Report = response.data;
     return createdReport;
 }

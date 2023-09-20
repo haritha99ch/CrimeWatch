@@ -1,13 +1,9 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { CreateReportDto } from "../../models/Report";
-// import { GetCurrentUser } from "../../services/AccountService";
-// import Witness from "../../models/Witness";
 import { CreateReport } from "../../services/ReportService";
 import { UseAuthenticationContextProvider } from "../../providers/AuthenticationContextProvider";
 import { useNavigate } from "react-router-dom";
-
-// TODO: current user context
-// const currentUser = await GetCurrentUser();
+import Witness from "../../models/Witness";
 
 const Create = () => {
   const { currentUser, currentUserLoading } =
@@ -17,35 +13,51 @@ const Create = () => {
     navigate("/Account/SignIn");
   }
 
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [addressNo, setAddressNo] = useState<string>("");
-  const [addressStreet1, setAddressStreet1] = useState<string>("");
-  const [addressStreet2, setAddressStreet2] = useState<string>("");
-  const [addressCity, setAddressCity] = useState<string>("");
-  const [addressProvince, setAddressProvince] = useState<string>("");
-  const [mediaItem, setMediaItem] = useState<File | null>(null);
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    addressNo: "",
+    addressStreet1: "",
+    addressStreet2: "",
+    addressCity: "",
+    addressProvince: "",
+    mediaItem: new File([], ""),
+  });
+
+  const handleInput = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if ((event.target as HTMLInputElement).files) {
+      const file = (event.target as HTMLInputElement).files![0];
+      setForm(() => ({
+        ...form,
+        [event.target.name]: file,
+      }));
+      return;
+    }
+    setForm(() => ({
+      ...form,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-
-    // if (currentUser.account!.isModerator) return;
-
     const report: CreateReportDto = {
-      witnessId: { value: null! },
-      // witnessId: (currentUser as Witness).witnessId ?? undefined,
-      title: title,
-      description: description,
+      witnessId: (currentUser as Witness).id,
+      title: form.title,
+      description: form.description,
       location: {
-        no: addressNo,
-        street1: addressStreet1,
-        street2: addressStreet2,
-        city: addressCity,
-        province: addressProvince,
+        no: form.addressNo,
+        street1: form.addressStreet1,
+        street2: form.addressStreet2,
+        city: form.addressCity,
+        province: form.addressProvince,
       },
-      mediaItem: mediaItem ?? undefined,
+      mediaItem: form.mediaItem ?? undefined,
     };
     await CreateReport(report);
+    // TODO: Navigate to add Evidence
   };
 
   const content: JSX.Element = (
@@ -79,8 +91,8 @@ const Create = () => {
                         id="title"
                         placeholder="Report Tile"
                         required
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
+                        value={form.title}
+                        onChange={handleInput}
                       />
                     </dd>
                   </div>
@@ -100,8 +112,8 @@ const Create = () => {
                         id="description"
                         placeholder="Report Description"
                         required
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
+                        value={form.description}
+                        onChange={handleInput}
                       />
                     </dd>
                   </div>
@@ -121,13 +133,13 @@ const Create = () => {
                             <input
                               className="form-input"
                               type="text"
-                              name="address-no"
-                              id="address-no"
+                              name="addressNo"
+                              id="addressNo"
                               placeholder="No"
                               autoComplete="address-level1"
                               required
-                              value={addressNo}
-                              onChange={e => setAddressNo(e.target.value)}
+                              value={form.addressNo}
+                              onChange={handleInput}
                             />
                           </div>
                         </div>
@@ -141,13 +153,13 @@ const Create = () => {
                             <input
                               className="form-input"
                               type="text"
-                              name="address-street1"
-                              id="address-street1"
+                              name="addressStreet1"
+                              id="addressStreet1"
                               placeholder="Street 1"
                               autoComplete="address-level2"
                               required
-                              value={addressStreet1}
-                              onChange={e => setAddressStreet1(e.target.value)}
+                              value={form.addressStreet1}
+                              onChange={handleInput}
                             />
                           </div>
                         </div>
@@ -161,13 +173,13 @@ const Create = () => {
                             <input
                               className="form-input"
                               type="text"
-                              name="address-street2"
-                              id="address-street2"
+                              name="addressStreet2"
+                              id="addressStreet2"
                               placeholder="Street 2"
                               autoComplete="address-level3"
                               required
-                              value={addressStreet2}
-                              onChange={e => setAddressStreet2(e.target.value)}
+                              value={form.addressStreet2}
+                              onChange={handleInput}
                             />
                           </div>
                         </div>
@@ -183,13 +195,13 @@ const Create = () => {
                             <input
                               className="form-input"
                               type="text"
-                              name="address-city"
-                              id="address-city"
+                              name="addressCity"
+                              id="addressCity"
                               placeholder="City"
-                              autoComplete="address-level4"
+                              autoComplete="address-level2"
                               required
-                              value={addressCity}
-                              onChange={e => setAddressCity(e.target.value)}
+                              value={form.addressCity}
+                              onChange={handleInput}
                             />
                           </div>
                         </div>
@@ -203,12 +215,12 @@ const Create = () => {
                             <input
                               className="form-input"
                               type="text"
-                              name="address-province"
-                              id="address-city"
+                              name="addressProvince"
+                              id="addressProvince"
                               placeholder="Province"
                               required
-                              value={addressProvince}
-                              onChange={e => setAddressProvince(e.target.value)}
+                              value={form.addressProvince}
+                              onChange={handleInput}
                             />
                           </div>
                         </div>
@@ -231,7 +243,7 @@ const Create = () => {
                         name="mediaItem"
                         id="mediaItem"
                         required
-                        onChange={e => setMediaItem(e.target.files![0])}
+                        onChange={handleInput}
                       />
                     </dt>
                   </div>

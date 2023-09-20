@@ -12,7 +12,7 @@ export const CreateAccountForWitness = async (witness: CreateWitnessDto) : Promi
 }
 
 export const CreateAccountForModerator = async (Moderator: CreateModeratorDto) : Promise<Moderator> => {
-    const response = await Api.post<Moderator>(`${controller}/Moderator/SignUp`, {Moderator});
+    const response = await Api.post<Moderator>(`${controller}/Moderator/SignUp`, Moderator);
     const createdModerator = response.data;
     return createdModerator;
 }

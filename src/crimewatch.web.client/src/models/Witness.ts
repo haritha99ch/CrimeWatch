@@ -27,7 +27,7 @@ export interface CreateWitnessDto {
 }
 
 export default interface Witness {
-    witnessId: WitnessId;
+    id: WitnessId;
     userId: UserId;
     accountId: AccountId;
     account: Account | null;

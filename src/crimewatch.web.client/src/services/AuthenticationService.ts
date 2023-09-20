@@ -14,10 +14,10 @@ export const getBearerToken = (): { headers: { Authorization: string } } | undef
     const token = getToken();
     if(token == null || token === "") return undefined;
     return {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}`}
     };
 }
 
-const getToken = (): string | null => {
+export const getToken = (): string | null => {
     return getItem<string>(TOKEN_KEY);
 }
