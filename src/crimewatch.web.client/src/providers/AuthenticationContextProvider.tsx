@@ -12,22 +12,21 @@ const AuthenticationContextProvider = ({
   const [currentUser, setCurrentUser] = useState<Witness | Moderator | null>(
     null
   );
+  const [currentUserLoading, setCurrentUserLoading] = useState<boolean>(true);
 
   const GetCurrentUser = async () => {
     const user = await GetCurrentUserFromApi();
     setCurrentUser(user);
+    setCurrentUserLoading(false);
   };
 
   useEffect(() => {
     GetCurrentUser();
-    if (process.env.NODE_ENV === "development") {
-      if (currentUser) console.log(currentUser);
-    }
-  }, [currentUser]);
+  }, []);
 
   const provider: JSX.Element = (
     <>
-      <AuthenticationContext.Provider value={{ currentUser, setCurrentUser }}>
+      <AuthenticationContext.Provider value={{ currentUser, setCurrentUser , currentUserLoading}}>
         {children}
       </AuthenticationContext.Provider>
     </>

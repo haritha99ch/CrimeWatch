@@ -1,14 +1,22 @@
 import { ChangeEvent, useState } from "react";
 import { SignInDto } from "../../models/Account";
 import { Link } from "react-router-dom";
+import { UseAuthenticationContextProvider } from "../../providers/AuthenticationContextProvider";
+import {
+  GetCurrentUser as GetCurrentUserFromAPI,
+  SingIn,
+} from "../../services/AccountService";
 
 const SignIn = () => {
   const [signIn, setSignIn] = useState<SignInDto>({
     email: "",
     password: "",
   });
+  const [invalid, setInvalid] = useState<boolean>(false);
+  const { setCurrentUser } = UseAuthenticationContextProvider();
 
   const handelChanged = (event: ChangeEvent<HTMLInputElement>): void => {
+    setInvalid(false);
     setSignIn(() => {
       return {
         ...signIn,
@@ -17,10 +25,25 @@ const SignIn = () => {
     });
   };
 
+  const GetWitness = async () => {
+    const token = await SingIn(signIn.email, signIn.password);
+    if (!token) return;
+    const user = await GetCurrentUserFromAPI();
+    if (!user) return;
+    return user;
+  };
+
+  const InvalidSignIn = () => setInvalid(true);
+
   const handelSubmit = async (
     event: ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
+    const user = await GetWitness();
+    if (!user) return InvalidSignIn();
+    setCurrentUser(user);
+    // Redirect to home
+    window.location.href = "/";
   };
 
   const content: JSX.Element = (
@@ -73,6 +96,12 @@ const SignIn = () => {
                 />
               </div>
             </div>
+
+            {invalid && (
+              <div className="text-sm text-red-600 dark:text-red-500">
+                Invalid email or password
+              </div>
+            )}
 
             <div>
               <button

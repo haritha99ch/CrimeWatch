@@ -4,7 +4,7 @@ import { SupportIcon, ShieldExclamationIcon } from "@heroicons/react/solid";
 import SupportImg from "../assets/support.jpeg";
 function Support() {
   return (
-    <div className="w-full h-screen mt-24">
+    <div className="w-full h-screen mt-24" id="Support">
       <div className="w-full h-[720px] bg-gray-900/90 absolute">
         <img
           src={SupportImg}

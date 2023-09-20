@@ -17,15 +17,19 @@ export const CreateAccountForModerator = async (Moderator: CreateModeratorDto) :
     return createdModerator;
 }
 
-export const SingIn = async (email: string, password: string) : Promise<string> => {
-    const response = await Api.post<string>(`${controller}/SignIn`, {email, password});
+export const SingIn = async (email: string, password: string) : Promise<string | null> => {
+    const response = await Api.post<string>(`${controller}/SignIn`, {email, password}).catch(() =>{return null});
+    if(!response) return null;
     const token = response.data;
     saveToken(token);
     return token;
 }
 
-export const GetCurrentUser = async () : Promise<Moderator | Witness> => {
-    const response = await Api.get<Moderator | Witness>(`${controller}/GetCurrentUser`, getBearerToken())
+export const GetCurrentUser = async () : Promise<Moderator | Witness | null> => {
+    const bearerToken = getBearerToken();
+    if(!bearerToken) return null;
+    const response = await Api.get<Moderator | Witness>(`${controller}/GetCurrentUser`, bearerToken).catch(() =>{return null})
+    if(!response) return null;
     const user = response.data;
     return user;
 }
