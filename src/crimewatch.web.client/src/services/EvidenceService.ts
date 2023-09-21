@@ -1,14 +1,32 @@
+import { AxiosRequestConfig } from "axios";
 import Api from "../configurations/ApiConfiguration";
 import Evidence, { CreateEvidenceDto, UpdateEvidenceDto } from "../models/Evidence";
 import EvidenceId from "../valueObjects/EvidenceId";
 import ModeratorId from "../valueObjects/ModeratorId";
 import ReportId from "../valueObjects/ReportId";
-import { getBearerToken } from "./AuthenticationService";
+import { getBearerToken, getToken } from "./AuthenticationService";
 
 const controller = '/api/Evidence';
 
 export const CreateEvidence = async (evidence: CreateEvidenceDto) : Promise<Evidence> => {
-    const response = await Api.post<Evidence>(`${controller}/Create`, evidence, getBearerToken());
+    const formData = new FormData();
+    formData.append('caption', evidence.caption);
+    formData.append('description', evidence.description);
+    formData.append('Location.No', evidence.location.no);
+    formData.append('Location.Street1', evidence.location.street1);
+    formData.append('Location.Street2', evidence.location.street2);
+    formData.append('Location.City', evidence.location.city);
+    formData.append('WitnessId.Value', evidence.witnessId.value);
+    formData.append('ReportId.Value', evidence.reportId.value);
+    for (const mediaItem of evidence.mediaItems) {
+        formData.append(`MediaItems`, mediaItem);
+    }  
+    
+    console.log(evidence.mediaItems);
+    
+    
+    const config: AxiosRequestConfig = {headers: {'Content-Type': 'multipart/form-data', Authorization: `bearer ${getToken()}`}};
+    const response = await Api.post<Evidence>(`${controller}/Create`, formData, config);
     const createdEvidence = response.data;
     return createdEvidence;
 }

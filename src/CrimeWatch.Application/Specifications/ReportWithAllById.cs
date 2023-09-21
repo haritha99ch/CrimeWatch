@@ -12,10 +12,6 @@ internal class ReportWithAllById : Specification<Report, ReportId>
         AddInclude(e => e.Include(e => e.Moderator).ThenInclude(e => e!.User)
             .Include(e => e.Moderator).ThenInclude(e => e!.Account));
 
-        AddInclude(e => e.Include(e => e.Evidences).ThenInclude(e => e.Witness)
-            .ThenInclude(e => e!.User)
-            .Include(e => e!.Witness).ThenInclude(e => e!.Account));
-
         AddInclude(e => e.AsNoTracking().Include(e => e.MediaItem));
     }
 }

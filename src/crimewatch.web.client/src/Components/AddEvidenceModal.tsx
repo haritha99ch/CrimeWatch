@@ -1,7 +1,59 @@
 import { createPortal } from "react-dom";
 import AddEvidenceModalType from "../types/AddEvidenceModalType";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { CreateEvidenceDto } from "../models/Evidence";
+import { CreateEvidence } from "../services/EvidenceService";
 
 const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
+  const [form, setForm] = useState({
+    title: "",
+    description: "",
+    addressNo: "",
+    addressStreet1: "",
+    addressStreet2: "",
+    addressCity: "",
+    addressProvince: "",
+    mediaItems: [],
+  });
+
+  const handleInput = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if ((event.target as HTMLInputElement).files) {
+      setForm(() => ({
+        ...form,
+        [event.target.name]: (event.target as HTMLInputElement).files,
+      }));
+      return;
+    }
+    setForm(() => ({
+      ...form,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    const evidence: CreateEvidenceDto = {
+      reportId: modal.reportId!,
+      witnessId: modal.witnessId!,
+      caption: form.title,
+      description: form.description,
+      location: {
+        no: form.addressNo,
+        street1: form.addressStreet1,
+        street2: form.addressStreet2,
+        city: form.addressCity,
+        province: form.addressProvince,
+      },
+      mediaItems: form.mediaItems,
+    };
+    const newEvidence = await CreateEvidence(evidence);
+    if (!newEvidence) return; // TODO: Something went wrong.
+    modal.onSubmit(newEvidence);
+    modal.closeModal();
+  };
+
   const formContent: JSX.Element = (
     <>
       <div className="h-screen overflow-auto">
@@ -16,7 +68,7 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                 Evidence details.
               </p>
             </div>
-            <form className="report-form">
+            <form className="report-form" onSubmit={handleSubmit}>
               <div className="mt-6 border-t border-gray-100">
                 <dl className="divide-y divide-gray-100">
                   <div className="report-description-list-group">
@@ -33,6 +85,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                         id="title"
                         placeholder="Evidence Tile"
                         required
+                        onChange={handleInput}
+                        value={form.title}
                       />
                     </dd>
                   </div>
@@ -52,6 +106,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                         id="description"
                         placeholder="Evidence Description"
                         required
+                        onChange={handleInput}
+                        value={form.description}
                       />
                     </dd>
                   </div>
@@ -75,7 +131,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                               id="addressNo"
                               placeholder="No"
                               autoComplete="address-level1"
-                              required
+                              onChange={handleInput}
+                              value={form.addressNo}
                             />
                           </div>
                         </div>
@@ -94,6 +151,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                               placeholder="Street 1"
                               autoComplete="address-level2"
                               required
+                              onChange={handleInput}
+                              value={form.addressStreet1}
                             />
                           </div>
                         </div>
@@ -111,7 +170,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                               id="addressStreet2"
                               placeholder="Street 2"
                               autoComplete="address-level3"
-                              required
+                              onChange={handleInput}
+                              value={form.addressStreet2}
                             />
                           </div>
                         </div>
@@ -132,6 +192,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                               placeholder="City"
                               autoComplete="address-level2"
                               required
+                              onChange={handleInput}
+                              value={form.addressCity}
                             />
                           </div>
                         </div>
@@ -149,6 +211,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                               id="addressProvince"
                               placeholder="Province"
                               required
+                              onChange={handleInput}
+                              value={form.addressProvince}
                             />
                           </div>
                         </div>
@@ -158,7 +222,7 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                   </div>
                   <div className="report-description-list-group">
                     <dt className="description">
-                      <label htmlFor="mediaItem" className="report-form-label">
+                      <label htmlFor="mediaItems" className="report-form-label">
                         Images
                       </label>
                       <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500 dark:dark-mode-text-tertiary">
@@ -174,6 +238,8 @@ const AddEvidenceModal = ({ modal }: { modal: AddEvidenceModalType }) => {
                         placeholder="Media Items"
                         required
                         multiple
+                        accept="image/png, image/jpeg"
+                        onChange={handleInput}
                       />
                     </dt>
                   </div>

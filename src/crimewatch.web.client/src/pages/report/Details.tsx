@@ -6,6 +6,9 @@ import EvidenceListItem from "../../Components/EvidenceListItem";
 import { UseAuthenticationContextProvider } from "../../providers/AuthenticationContextProvider";
 import AddEvidenceModalType from "../../types/AddEvidenceModalType";
 import AddEvidenceModal from "../../Components/AddEvidenceModal";
+import Witness from "../../models/Witness";
+import Evidence from "../../models/Evidence";
+import { GetEvidenceForReport } from "../../services/EvidenceService";
 
 const notfoundContent = (
   <>
@@ -19,6 +22,7 @@ const Details = () => {
     UseAuthenticationContextProvider();
   const { id } = useParams<{ id: string }>();
   const [report, setReport] = useState<Report | null>(null);
+  const [evidences, setEvidences] = useState<Evidence[]>([]);
   const [notFound, setNotFound] = useState<boolean>(true);
 
   const CloseAddEvidenceModal = () => {
@@ -31,8 +35,17 @@ const Details = () => {
     useState<AddEvidenceModalType>({
       isOpen: false,
       reportId: report?.id ?? null,
-      newEvidence: null,
+      witnessId: (currentUser as Witness)?.id ?? null,
       closeModal: CloseAddEvidenceModal,
+      onSubmit: (evidence: Evidence) => {
+        setReport(pre => {
+          if (!pre) return pre;
+          return {
+            ...pre,
+            evidences: [...(pre?.evidences ?? []), evidence],
+          };
+        });
+      },
     });
 
   const getReport = async () => {
@@ -43,10 +56,23 @@ const Details = () => {
     setNotFound(false);
   };
 
+  const getEvidences = async () => {
+    if (!id) return;
+    const evidences = await GetEvidenceForReport({ value: id });
+    if (!evidences) return;
+    setEvidences(evidences);
+  };
+  useEffect(() => {
+    getReport();
+    getEvidences();
+  }, [id]);
+
   const OpenAddEvidenceModal = () => {
     setAddEvidenceModal(() => ({
       ...addEvidenceModal,
       isOpen: true,
+      reportId: report?.id ?? null,
+      witnessId: (currentUser as Witness)?.id ?? null,
     }));
   };
 
@@ -69,14 +95,10 @@ const Details = () => {
     );
   };
 
-  useEffect(() => {
-    getReport();
-  }, []);
-
   const content: JSX.Element = (
     <>
       <div className="h-[80px]"></div>
-      <div className="flex md:flex-row flex-col">
+      <div className="flex md:flex-row flex-col md:gap-4">
         <div
           className="basis-1/2 rounded-2xl border-gray-600/50 dark:border-gray-300/50 border-2 p-4"
           id="report-details">
@@ -119,7 +141,7 @@ const Details = () => {
             </h3>
             <AddEvidenceModal modal={addEvidenceModal} />
           </div>
-          {report?.evidences.map(evidence => (
+          {evidences.map(evidence => (
             <EvidenceListItem key={evidence.id.value} evidence={evidence} />
           ))}
         </div>
