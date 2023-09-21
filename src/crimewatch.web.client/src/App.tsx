@@ -12,7 +12,6 @@ import ReportIndex from "./pages/report/Index";
 import ReportDetails from "./pages/report/Details";
 import AccountSignIn from "./pages/account/SignIn";
 import AuthenticationContextProvider from "./providers/AuthenticationContextProvider";
-import CreateReportWidget from "./Components/CreateReportWidget";
 
 const App = () => {
   return (
@@ -41,7 +40,6 @@ const App = () => {
                 <Route path="/Report/Deatils/:id" element={<ReportDetails />} />
               </Routes>
               <ThemeSwitch />
-              <CreateReportWidget />
             </div>
           </BrowserRouter>
         </ThemeContextProvider>
