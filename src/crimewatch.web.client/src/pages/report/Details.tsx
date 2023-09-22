@@ -38,13 +38,7 @@ const Details = () => {
       witnessId: (currentUser as Witness)?.id ?? null,
       closeModal: CloseAddEvidenceModal,
       onSubmit: (evidence: Evidence) => {
-        setReport(pre => {
-          if (!pre) return pre;
-          return {
-            ...pre,
-            evidences: [...(pre?.evidences ?? []), evidence],
-          };
-        });
+        setEvidences(evidences => [...evidences, evidence]);
       },
     });
 
@@ -62,6 +56,7 @@ const Details = () => {
     if (!evidences) return;
     setEvidences(evidences);
   };
+
   useEffect(() => {
     getReport();
     getEvidences();
@@ -100,7 +95,7 @@ const Details = () => {
       <div className="h-[80px]"></div>
       <div className="flex md:flex-row flex-col md:gap-4">
         <div
-          className="basis-1/2 rounded-2xl border-gray-600/50 dark:border-gray-300/50 border-2 p-4"
+          className="basis-1/2 rounded-2xl border-gray-600/50 dark:border-gray-300/50 border-2 p-4 dark:dark-mode-text-primary"
           id="report-details">
           <div className="px-4 sm:px-0">
             <h3 className="text-base font-semibold leading-7 text-gray-900 dark:dark-mode-text-primary">

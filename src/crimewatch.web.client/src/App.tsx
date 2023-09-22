@@ -37,7 +37,7 @@ const App = () => {
                 <Route path="/Account/Index" element={<AccountIndex />} />
                 <Route path="/Report/Create" element={<ReportCreate />} />
                 <Route path="/Report/Index" element={<ReportIndex />} />
-                <Route path="/Report/Deatils/:id" element={<ReportDetails />} />
+                <Route path="/Report/Details/:id" element={<ReportDetails />} />
               </Routes>
               <ThemeSwitch />
             </div>

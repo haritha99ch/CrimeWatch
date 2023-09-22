@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 
 namespace CrimeWatch.Infrastructure.EntityConfigurations;
 internal class ReportConfiguration : IEntityTypeConfiguration<Report>
@@ -28,7 +29,11 @@ internal class ReportConfiguration : IEntityTypeConfiguration<Report>
         builder.Property(r => r.StaredBy)
             .HasConversion(
                 v => JsonConvert.SerializeObject(v),
-                v => JsonConvert.DeserializeObject<List<WitnessId>>(v)!);
+                v => JsonConvert.DeserializeObject<List<WitnessId>>(v)!)
+            .Metadata.SetValueComparer(new ValueComparer<List<WitnessId>>(
+                (c1, c2) => (c1 == null && c2 == null) || (c1 != null && c2 != null && c1.SequenceEqual(c2)),
+                c => c != null ? c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())) : 0,
+                c => new List<WitnessId>(c ?? new List<WitnessId>())));
 
         builder.Property(e => e.ModeratorComment);
 

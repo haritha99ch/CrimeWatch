@@ -26,10 +26,14 @@ function Navbar() {
       </>
     ) : (
       <>
+      <Link to={"/Account/SignIn"}>
         <button className="border-none bg-transparent text-black dark:dark-mode-text-primary mr-4">
           SignIn
         </button>
-        <button className="px-8 py-3">Signup</button>
+      </Link>
+      <Link to={"/Account/SignUp"}>
+        <button className="px-8 py-3">SignUp</button>
+      </Link>
       </>
     );
   };
@@ -53,7 +57,7 @@ function Navbar() {
             <li>News</li>
           </ul>
         </div>
-        <div className="hidden md:flex pr-4">{RenderSessionControl()}</div>
+        <div className="hidden md:flex pr-4 items-center">{RenderSessionControl()}</div>
         <div className="md:hidden mr-4" onClick={handleClick}>
           {!nav ? <MenuIcon className="w-5" /> : <XIcon className="w-5" />}
         </div>

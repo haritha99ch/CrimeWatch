@@ -5,14 +5,16 @@ const EvidenceListItem = ({ evidence }: { evidence: Evidence }) => {
 
   return (
     <>
-      <div className="border-gray-400 border-2 rounded-2xl p-4 mb-2">
+      <div className="border-gray-400 border-2 rounded-2xl p-4 mb-2 dark:dark-mode-text-primary">
         <p key={evidence.id.value}>{evidence.title}</p>
         <p>
           {evidence.location.no}, {evidence?.location.street1},{" "}
           {evidence.location.street2}, {evidence?.location.city},{" "}
           {evidence.location.province}
         </p>
-        <p>{new Date(evidence.dateTime).toLocaleString()}</p>
+        <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500 dark:dark-mode-text-tertiary">
+          {new Date(evidence.dateTime).toLocaleString()}
+        </p>
         <p>
           {evidence.witness?.user?.firstName} {evidence.witness?.user?.lastName}
         </p>

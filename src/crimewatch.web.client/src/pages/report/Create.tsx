@@ -56,8 +56,9 @@ const Create = () => {
       },
       mediaItem: form.mediaItem ?? undefined,
     };
-    await CreateReport(report);
-    // TODO: Navigate to add Evidence
+    const newReport = await CreateReport(report);
+    if (!newReport) return; // TODO: Something went wrong
+    navigate(`/Report/Details/${newReport.id.value}`);
   };
 
   const content: JSX.Element = (
