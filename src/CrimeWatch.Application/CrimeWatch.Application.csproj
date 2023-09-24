@@ -19,4 +19,8 @@
     <ProjectReference Include="..\CrimeWatch.Shared\CrimeWatch.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Permissions\" />
+  </ItemGroup>
+
 </Project>
