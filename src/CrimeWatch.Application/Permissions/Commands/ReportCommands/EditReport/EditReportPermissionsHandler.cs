@@ -1,20 +1,17 @@
 ﻿namespace CrimeWatch.Application.Permissions.Commands.ReportCommands.EditReport;
-internal class EditReportPermissionsHandler : IRequestHandler<EditReportPermissions, ReportPermissions>
+internal class EditReportPermissionsHandler : RequestPermissions, IRequestHandler<EditReportPermissions, ReportPermissions>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
-    private readonly IHttpContextAccessor _contextAccessor;
-    private HttpContext _httpContext => _contextAccessor.HttpContext ?? throw new Exception("Not an API");
-    private UserClaims _userClaims = default!;
 
-    public EditReportPermissionsHandler(IRepository<Report, ReportId> reportRepository, IHttpContextAccessor contextAccessor)
+    public EditReportPermissionsHandler(
+        IHttpContextAccessor httpContextAccessor,
+        IRepository<Report, ReportId> reportRepository) : base(httpContextAccessor)
     {
         _reportRepository = reportRepository;
-        _contextAccessor = contextAccessor;
     }
 
     public async Task<ReportPermissions> Handle(EditReportPermissions request, CancellationToken cancellationToken)
     {
-        _userClaims = _httpContext.GetUserClaims();
         return _userClaims.UserType switch
         {
             UserType.Moderator => await GetModeratorPermissions(request, cancellationToken),
