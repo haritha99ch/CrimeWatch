@@ -2,8 +2,8 @@ import React from "react";
 import AboutImg from "../../../assets/about.jpg"
 function Aboutus() {
   return (
-    <div className=" grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-          <div className="w-full h-full mt-12 mb-0  bg-gray-900/90 absolute">
+    <div className=" grid grid-cols-1 sm:grid-cols-2 h-screen w-full pt-20 ">
+          <div className="w-full h-full mb-0  bg-gray-900/90 absolute">
         <img src={AboutImg} 
         className="w-full h-full object-cover mix-blend-overlay"
         alt="img" />
