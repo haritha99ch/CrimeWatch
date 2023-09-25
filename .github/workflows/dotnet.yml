@@ -33,18 +33,26 @@ jobs:
     - name: Cache NuGet packages
       uses: actions/cache@v3
       with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-        
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Restore dependencies .NET
       run: dotnet restore
+
+    - name: Cache npm dependencies
+      uses: actions/cache@v3
+      with:
+        path: src/crimewatch.web.client/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('src/crimewatch.web.client/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
     - name: Restore dependencies npm
       run: |
         cd src/crimewatch.web.client/
-        npm install --legacy-peer-deps
+        npm install
       
     - name: Build
       run: dotnet build --no-restore
