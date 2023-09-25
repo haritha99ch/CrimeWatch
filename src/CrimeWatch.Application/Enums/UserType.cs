@@ -1,5 +1,6 @@
 ﻿namespace CrimeWatch.Application.Enums;
-internal enum UserType
+
+public enum UserType
 {
     Guest,
     Witness,

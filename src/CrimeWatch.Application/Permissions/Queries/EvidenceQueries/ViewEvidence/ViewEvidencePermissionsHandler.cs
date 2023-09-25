@@ -13,7 +13,7 @@ internal class ViewEvidencePermissionsHandler : RequestPermissions, IRequestHand
     public async Task<EvidencePermissions> Handle(ViewEvidencePermissions request, CancellationToken cancellationToken)
     {
         if (request.EvidenceId != null) return await GetPermissionToViewEvidenceById(request.EvidenceId, cancellationToken);
-        return _userClaims.UserType switch
+        return UserClaims.UserType switch
         {
             UserType.Guest => EvidencePermissions.Moderated,
             UserType.Witness => EvidencePermissions.Moderated,
@@ -26,10 +26,10 @@ internal class ViewEvidencePermissionsHandler : RequestPermissions, IRequestHand
     {
         var report = await _evidenceRepository.GetByIdAsync(evidenceId, e => new { e.Status, e.WitnessId }, cancellationToken);
         if (report == null) return EvidencePermissions.Denied;
-        return _userClaims.UserType switch
+        return UserClaims.UserType switch
         {
             UserType.Witness =>
-                report.WitnessId.Equals(_userClaims.WitnessId) ?
+                report.WitnessId.Equals(UserClaims.WitnessId) ?
                     EvidencePermissions.Granted :
                     report.Status.Equals(Status.UnderReview) || report.Status.Equals(Status.Approved) ? EvidencePermissions.Granted : EvidencePermissions.Denied,
             UserType.Moderator => EvidencePermissions.Granted,

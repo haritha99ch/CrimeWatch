@@ -13,7 +13,7 @@ internal class ViewReportPermissionsHandler : RequestPermissions, IRequestHandle
     public async Task<ReportPermissions> Handle(GetReportPermissions request, CancellationToken cancellationToken)
     {
         if (request.ReportId != null) return await GetPermissionsToViewReportById(request.ReportId, cancellationToken);
-        return _userClaims.UserType switch
+        return UserClaims.UserType switch
         {
             UserType.Moderator => ReportPermissions.FullAccess,
             _ => ReportPermissions.Moderated
@@ -24,10 +24,10 @@ internal class ViewReportPermissionsHandler : RequestPermissions, IRequestHandle
     {
         var report = await _reportRepository.GetByIdAsync(reportId, e => new { e.Status, e.WitnessId }, cancellationToken);
         if (report == null) return ReportPermissions.Denied;
-        return _userClaims.UserType switch
+        return UserClaims.UserType switch
         {
             UserType.Witness =>
-                report.WitnessId.Equals(_userClaims.WitnessId) ?
+                report.WitnessId.Equals(UserClaims.WitnessId) ?
                     ReportPermissions.Granted :
                     report.Status.Equals(Status.UnderReview) || report.Status.Equals(Status.Approved) ? ReportPermissions.Granted : ReportPermissions.Denied,
             UserType.Moderator => ReportPermissions.Granted,

@@ -12,7 +12,7 @@ internal class EditReportPermissionsHandler : RequestPermissions, IRequestHandle
 
     public async Task<ReportPermissions> Handle(EditReportPermissions request, CancellationToken cancellationToken)
     {
-        return _userClaims.UserType switch
+        return UserClaims.UserType switch
         {
             UserType.Moderator => await GetModeratorPermissions(request, cancellationToken),
             UserType.Witness => await GetWitnessPermissions(request, cancellationToken),
@@ -24,7 +24,7 @@ internal class EditReportPermissionsHandler : RequestPermissions, IRequestHandle
     {
         var report = await _reportRepository.GetByIdAsync(request.ReportId, e => new { e.WitnessId }, cancellationToken);
         if (report == null) return ReportPermissions.Denied;
-        return report.WitnessId.Equals(_userClaims.WitnessId) ? ReportPermissions.Granted : ReportPermissions.Denied;
+        return report.WitnessId.Equals(UserClaims.WitnessId) ? ReportPermissions.Granted : ReportPermissions.Denied;
     }
 
     private async Task<ReportPermissions> GetModeratorPermissions(EditReportPermissions request, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ internal class EditReportPermissionsHandler : RequestPermissions, IRequestHandle
         var report = await _reportRepository.GetByIdAsync(request.ReportId, e => new { e.ModeratorId }, cancellationToken);
         if (report == null) return ReportPermissions.Denied;
         if (report.ModeratorId == null) return ReportPermissions.Granted;
-        return report.ModeratorId.Equals(_userClaims.ModeratorId) ? ReportPermissions.Granted : ReportPermissions.Denied;
+        return report.ModeratorId.Equals(UserClaims.ModeratorId) ? ReportPermissions.Granted : ReportPermissions.Denied;
         throw new NotImplementedException();
     }
 }

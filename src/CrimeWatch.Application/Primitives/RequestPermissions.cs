@@ -1,13 +1,13 @@
 ﻿namespace CrimeWatch.Application.Primitives;
-internal abstract class RequestPermissions
+public abstract class RequestPermissions
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    protected UserClaims _userClaims;
-    private HttpContext _httpContext => _httpContextAccessor.HttpContext ?? throw new Exception("Not an API");
+    protected readonly UserClaims UserClaims;
+    private HttpContext HttpContext => _httpContextAccessor.HttpContext ?? throw new Exception("Not an API");
 
-    public RequestPermissions(IHttpContextAccessor httpContextAccessor)
+    protected RequestPermissions(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
-        _userClaims = _httpContext.GetUserClaims();
+        UserClaims = HttpContext.GetUserClaims();
     }
 }
