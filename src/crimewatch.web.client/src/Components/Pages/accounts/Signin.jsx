@@ -4,11 +4,10 @@ import SignInImg from "../../../assets/account.jpg";
 function Signin() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-      {/* <div className="grid grid-cols-1 h-screen w-full sm:grid-cols-2"> */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:block mt-2">
         <img className="w-full h-full object-cover" src={SignInImg} alt="" />
       </div>
-      <div className="bg-gray-100 flex flex-col justify-center">
+      <div className="bg-gray-100 flex flex-col justify-center ">
         <form action="" className="max-w-[400px] w-full mx-auto bg-white p-4">
           <h2 className="text-4xl font-bold text-center py-6">CRIME.</h2>
           <div className="flex flex-col py-2">
@@ -36,8 +35,7 @@ function Signin() {
           </div>
         </form>
       </div>
-      {/* </div> */}
-    </div>
+     </div> 
   );
 }
 

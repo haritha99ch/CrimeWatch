@@ -38,12 +38,12 @@ function Support() {
                 error cupiditate repelle.
               </p>
             </div>
-          <div className="bg-slate-100 pl-8 py-4">
-            <p className="flex items-center text-red-600">
-              Contact Us
-              <ArrowSmRightIcon className="w-5 ml-2" />
-            </p>
-          </div>
+            <div className="bg-slate-100 pl-8 py-4">
+              <p className="flex items-center text-red-600">
+                Contact Us
+                <ArrowSmRightIcon className="w-5 ml-2" />
+              </p>
+            </div>
           </div>
           <div className="bg-white rounded-xl shadow-2xl">
             <div className="p-8">
@@ -55,12 +55,12 @@ function Support() {
                 error cupiditate repelle.
               </p>
             </div>
-          <div className="bg-slate-100 pl-8 py-4">
-            <p className="flex items-center text-red-600">
-              Contact Us
-              <ArrowSmRightIcon className="w-5 ml-2" />
-            </p>
-          </div>
+            <div className="bg-slate-100 pl-8 py-4">
+              <p className="flex items-center text-red-600">
+                Contact Us
+                <ArrowSmRightIcon className="w-5 ml-2" />
+              </p>
+            </div>
           </div>
           <div className="bg-white rounded-xl shadow-2xl">
             <div className="p-8">
@@ -72,12 +72,12 @@ function Support() {
                 error cupiditate repelle.
               </p>
             </div>
-          <div className="bg-slate-100 pl-8 py-4">
-            <p className="flex items-center text-red-600">
-              Contact Us
-              <ArrowSmRightIcon className="w-5 ml-2" />
-            </p>
-          </div>
+            <div className="bg-slate-100 pl-8 py-4">
+              <p className="flex items-center text-red-600">
+                Contact Us
+                <ArrowSmRightIcon className="w-5 ml-2" />
+              </p>
+            </div>
           </div>
         </div>
       </div>

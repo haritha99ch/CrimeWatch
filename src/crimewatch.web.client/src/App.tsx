@@ -6,10 +6,12 @@ import Signin from "./Components/Pages/accounts/Signin";
 import Signup from "./Components/Pages/accounts/Signup";
 import Support from "./Components/Pages/Support/Support";
 import Aboutus from "./Components/Pages/Aboutus/Aboutus";
+
 const App = () => {
   return (
     <div>
       <Navbar />
+      <div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Signin" element={<Signin />} />
@@ -17,6 +19,7 @@ const App = () => {
         <Route path="/Aboutus" element={<Aboutus />} />
         <Route path="/Support" element={<Support />} />
       </Routes>
+      </div>
       <Footer />
     </div>
   );
