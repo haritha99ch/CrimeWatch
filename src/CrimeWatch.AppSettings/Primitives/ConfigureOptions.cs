@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using System.Configuration;
 
 namespace CrimeWatch.AppSettings.Primitives;
 public class ConfigureOptions<T> : IConfigureOptions<T>, IPostConfigureOptions<T> where T : class
@@ -22,7 +21,7 @@ public class ConfigureOptions<T> : IConfigureOptions<T>, IPostConfigureOptions<T
         }
         catch (Exception e)
         {
-            throw new ConfigurationErrorsException(
+            throw new(
                 $"\nCheck the following properties of section {typeof(T).Name}, section in user secrets:\n{e.Message}");
         }
     }
