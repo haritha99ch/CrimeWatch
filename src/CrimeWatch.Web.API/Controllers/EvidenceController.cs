@@ -55,7 +55,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPatch("Moderate")]
-    public async Task<ActionResult<Report>> Moderate([FromBody] ModerateEvidenceCommand command)
+    public async Task<ActionResult<Evidence>> Moderate([FromBody] ModerateEvidenceCommand command)
     {
         // Authorize
         var evidence = await _mediator.Send(command);
@@ -63,7 +63,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPatch("Approve")]
-    public async Task<ActionResult<Report>> Approve([FromBody] ApproveEvidenceCommand command)
+    public async Task<ActionResult<Evidence>> Approve([FromBody] ApproveEvidenceCommand command)
     {
         // Authorize
         var evidence = await _mediator.Send(command);
@@ -72,7 +72,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPatch("Decline")]
-    public async Task<ActionResult<Report>> Decline([FromBody] DeclineEvidenceCommand command)
+    public async Task<ActionResult<Evidence>> Decline([FromBody] DeclineEvidenceCommand command)
     {
         // Authorize
         var evidence = await _mediator.Send(command);
@@ -81,7 +81,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPatch("Revert")]
-    public async Task<ActionResult<Report>> Revert([FromBody] RevertEvidenceToReviewCommand command)
+    public async Task<ActionResult<Evidence>> Revert([FromBody] RevertEvidenceToReviewCommand command)
     {
         // Authorize
         var evidence = await _mediator.Send(command);
@@ -90,7 +90,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpPost("Comment")]
-    public async Task<ActionResult<Report>> Comment([FromBody] AddCommentToEvidenceCommand command)
+    public async Task<ActionResult<Evidence>> Comment([FromBody] AddCommentToEvidenceCommand command)
     {
         // Authorize
         var evidence = await _mediator.Send(command);

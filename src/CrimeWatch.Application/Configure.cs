@@ -1,5 +1,7 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Application.Services;
+using CrimeWatch.AppSettings;
+using CrimeWatch.AppSettings.Options;
 using CrimeWatch.Infrastructure;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,27 +9,27 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CrimeWatch.Application;
 public static class Configure
 {
-    public static void AddApplication(this IServiceCollection services, string dbConnectionString, string storageConnectionString)
+    public static void AddApplication(this IServiceCollection services)
     {
-        services.AddInfrastructure(dbConnectionString);
-        services.AddAzureClients(builder => builder.AddBlobServiceClient(storageConnectionString));
+        services.AddInfrastructure();
+        services.AddBlobService();
         services.AddTransient<IFileStorageService, BlobStorageService>();
         services.AddTransient<IAuthenticationService, AuthenticationService>();
-        services.AddCQRS();
-    }
-
-    public static void AddApplication(this IServiceCollection services, string dbConnectionString)
-    {
-        services.AddInfrastructure(dbConnectionString);
-        services.AddCQRS();
+        services.AddCqrs();
     }
 
     public static void AddApplication(this IServiceCollection services, Action<DbContextOptionsBuilder> options)
     {
         services.AddInfrastructure(options);
-        services.AddCQRS();
+        services.AddCqrs();
     }
 
-    private static void AddCQRS(this IServiceCollection services)
+    private static void AddCqrs(this IServiceCollection services)
         => services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AssemblyReference>());
+
+    private static void AddBlobService(this IServiceCollection services)
+    {
+        var blobStorageOptions = services.GetOptions<BlobStorageOptions>();
+        services.AddAzureClients(builder => builder.AddBlobServiceClient(blobStorageOptions.ConnectionString));
+    }
 }

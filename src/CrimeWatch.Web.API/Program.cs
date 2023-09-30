@@ -12,26 +12,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
-// Domain
 builder.Configuration.AddAppSettings();
-builder.Services.AddApplication(
-    builder.Configuration.GetConnectionString("Database:DefaultConnection")!,
-    builder.Configuration.GetConnectionString("Storage:DefaultConnection")!);
+builder.Services.ConfigureOptions();
+
+// Domain
+builder.Services.AddApplication();
 
 // Core
-builder.Services.ConfigureOptions();
 builder.Services.ConfigureServices();
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+builder.Services.AddSwaggerGen(
+    options =>
     {
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
+        options.AddSecurityDefinition(
+            name: "oauth2",
+            new()
+            {
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey
+            });
+        options.OperationFilter<SecurityRequirementsOperationFilter>();
     });
-    options.OperationFilter<SecurityRequirementsOperationFilter>();
-});
 
 var app = builder.Build();
 
@@ -42,11 +44,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
     // Workaround for Vite + React client app not being served in development mode
-    string clientAppPath = Path.Combine(Directory.GetCurrentDirectory(), "../crimewatch.web.client/dist");
+    var clientAppPath = Path.Combine(Directory.GetCurrentDirectory(), path2: "../crimewatch.web.client/dist");
     PhysicalFileProvider fileProvider = new(clientAppPath);
 
-    app.UseFileServer(new FileServerOptions() { FileProvider = fileProvider });
-    app.MapFallbackToFile("index.html", new StaticFileOptions { FileProvider = fileProvider });
+    app.UseFileServer(new FileServerOptions { FileProvider = fileProvider });
+    app.MapFallbackToFile(filePath: "index.html", new() { FileProvider = fileProvider });
 }
 else
 {

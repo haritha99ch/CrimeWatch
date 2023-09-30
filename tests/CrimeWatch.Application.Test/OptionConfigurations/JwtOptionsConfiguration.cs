@@ -1,9 +1,9 @@
-﻿using CrimeWatch.Application.Options;
+﻿using CrimeWatch.AppSettings.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
 
-namespace CrimeWatch.Web.API.OptionConfigurations;
+namespace CrimeWatch.Application.Test.OptionConfigurations;
 public class JwtOptionsConfiguration : IConfigureOptions<JwtOptions>
 {
     private readonly IConfiguration _configuration;

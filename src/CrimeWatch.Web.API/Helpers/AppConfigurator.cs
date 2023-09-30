@@ -1,4 +1,6 @@
-﻿using CrimeWatch.Web.API.OptionConfigurations;
+﻿using CrimeWatch.AppSettings.Options;
+using CrimeWatch.AppSettings.Primitives;
+using CrimeWatch.Web.API.OptionsConfigurations;
 
 namespace CrimeWatch.Web.API.Helpers;
 public static class AppConfigurator
@@ -10,7 +12,9 @@ public static class AppConfigurator
 
     public static void ConfigureOptions(this IServiceCollection services)
     {
-        services.ConfigureOptions<JwtOptionsConfiguration>();
+        services.ConfigureOptions<ConfigureOptions<JwtOptions>>();
         services.ConfigureOptions<JwtBearerOptionsConfiguration>();
+        services.ConfigureOptions<ConfigureOptions<SqlServerOptions>>();
+        services.ConfigureOptions<ConfigureOptions<BlobStorageOptions>>();
     }
 }
