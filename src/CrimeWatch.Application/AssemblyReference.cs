@@ -1,2 +1,2 @@
 ﻿namespace CrimeWatch.Application;
-internal class AssemblyReference { }
+public class AssemblyReference { }

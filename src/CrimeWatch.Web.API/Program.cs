@@ -1,6 +1,7 @@
 using CrimeWatch.Application;
 using CrimeWatch.AppSettings;
 using CrimeWatch.Web.API.Helpers;
+using CrimeWatch.Web.API.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
@@ -58,6 +59,8 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ValidationExceptionHandlingMiddleware>();
 
 app.UseAuthentication();
 
