@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace CrimeWatch.Web.API.OptionsConfigurations;
+namespace CrimeWatch.Application.OptionsConfigurations;
 public class JwtBearerOptionsConfiguration : IConfigureNamedOptions<JwtBearerOptions>
 {
     private readonly JwtOptions _jwtOptions;

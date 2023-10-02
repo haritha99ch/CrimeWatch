@@ -23,20 +23,21 @@ public class ValidationExceptionHandlingMiddleware : IMiddleware
                 }
             ).ToList();
 
-            string response;
-            context.Response.ContentType = "application/json";
-
             if (problems.Count == 1)
             {
                 var problem = problems.First();
                 context.Response.StatusCode = (int)problem.Status!;
-                response = JsonSerializer.Serialize(new { problem.Title, problem.Detail, problem.Type });
             }
             else
             {
-                context.Response.StatusCode = 400;
-                response = JsonSerializer.Serialize(problems);
+                var problem = problems.First();
+                var status = problem.Status;
+                if (problems.Any(problemDetail => problemDetail.Status != status)) status = 400;
+                context.Response.StatusCode = (int)status!;
             }
+
+            context.Response.ContentType = "application/json";
+            var response = JsonSerializer.Serialize(problems);
             await context.Response.WriteAsync(response);
         }
     }

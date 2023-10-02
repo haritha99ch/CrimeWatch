@@ -1,8 +1,10 @@
 ﻿using CrimeWatch.Application.Behaviors;
 using CrimeWatch.Application.Contracts.Services;
+using CrimeWatch.Application.OptionsConfigurations;
 using CrimeWatch.Application.Services;
 using CrimeWatch.AppSettings;
 using CrimeWatch.AppSettings.Options;
+using CrimeWatch.AppSettings.Primitives;
 using CrimeWatch.Infrastructure;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +27,17 @@ public static class Configure
     {
         services.AddInfrastructure(options);
         services.AddCqrs();
+    }
+
+    public static void AddApplicationValidators(this IServiceCollection services)
+        => services.AddValidatorsFromAssemblyContaining<AssemblyReference>();
+
+    public static void AddApplicationOptions(this IServiceCollection services)
+    {
+        services.ConfigureOptions<ConfigureOptions<JwtOptions>>();
+        services.ConfigureOptions<JwtBearerOptionsConfiguration>();
+        services.ConfigureOptions<ConfigureOptions<SqlServerOptions>>();
+        services.ConfigureOptions<ConfigureOptions<BlobStorageOptions>>();
     }
 
     private static void AddCqrs(this IServiceCollection services)

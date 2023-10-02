@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace CrimeWatch.Application.Behaviors;
+﻿namespace CrimeWatch.Application.Behaviors;
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
@@ -24,7 +22,6 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             .SelectMany(e => e.Errors)
             .Where(e => e != null)
             .ToList();
-
 
         if (failures.Any()) throw new ValidationException(failures);
         return await next();

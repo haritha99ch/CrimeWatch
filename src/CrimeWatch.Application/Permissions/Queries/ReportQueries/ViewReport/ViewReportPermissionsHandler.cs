@@ -1,6 +1,8 @@
-﻿
+﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+
 namespace CrimeWatch.Application.Permissions.Queries.ReportQueries.ViewReport;
-internal class ViewReportPermissionsHandler : RequestPermissions, IRequestHandler<GetReportPermissions, ReportPermissions>
+internal class ViewReportPermissionsHandler : RequestPermissions,
+    IRequestHandler<GetReportPermissions, ReportPermissions>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
     public ViewReportPermissionsHandler(
@@ -20,16 +22,19 @@ internal class ViewReportPermissionsHandler : RequestPermissions, IRequestHandle
         };
     }
 
-    private async Task<ReportPermissions> GetPermissionsToViewReportById(ReportId reportId, CancellationToken cancellationToken)
+    private async Task<ReportPermissions> GetPermissionsToViewReportById(ReportId reportId,
+        CancellationToken cancellationToken)
     {
-        var report = await _reportRepository.GetByIdAsync(reportId, e => new { e.Status, e.WitnessId }, cancellationToken);
+        var report =
+            await _reportRepository.GetByIdAsync(reportId, e => new { e.Status, e.WitnessId }, cancellationToken);
         if (report == null) return ReportPermissions.Denied;
         return UserClaims.UserType switch
         {
             UserType.Witness =>
                 report.WitnessId.Equals(UserClaims.WitnessId) ?
                     ReportPermissions.Granted :
-                    report.Status.Equals(Status.UnderReview) || report.Status.Equals(Status.Approved) ? ReportPermissions.Granted : ReportPermissions.Denied,
+                    report.Status.Equals(Status.UnderReview) || report.Status.Equals(Status.Approved) ?
+                        ReportPermissions.Granted : ReportPermissions.Denied,
             UserType.Moderator => ReportPermissions.Granted,
             _ => ReportPermissions.Denied
         };

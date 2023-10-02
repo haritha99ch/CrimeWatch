@@ -18,6 +18,6 @@ public static class Configure
         throw new InvalidOperationException(
             $"No configuration found for {typeof(T).Name}. "
             + $"Please ensure that services.ConfigureOptions<ConfigureOptions<{typeof(T).Name}>>() "
-            + $"is called in {Assembly.GetEntryAssembly()?.GetName().Name}.");
+            + $"is called in {Assembly.GetCallingAssembly().GetName().Name}.");
     }
 }
