@@ -1,16 +1,14 @@
-﻿using CrimeWatch.Application.Primitives;
-
-namespace CrimeWatch.Application.Helpers;
+﻿namespace CrimeWatch.Application.Helpers;
 internal static class HttpContextClaimsExtension
 {
     public static UserClaims GetUserClaims(this HttpContext context)
     {
-        ArgumentNullException.ThrowIfNull(context, "Not an API");
-        var claims = context.User.Claims;
+        ArgumentNullException.ThrowIfNull(context, paramName: "Not an API");
+        var claims = context.User.Claims.ToList();
 
-        var UserId = claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.NameIdentifier));
-        var UserRole = claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Role));
+        var userId = claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.NameIdentifier));
+        var userRole = claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Role));
 
-        return new(UserId?.Value, UserRole?.Value ?? "");
+        return new(userId?.Value, userRole?.Value ?? "");
     }
 }
