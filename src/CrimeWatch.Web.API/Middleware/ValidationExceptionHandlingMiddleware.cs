@@ -19,7 +19,6 @@ public class ValidationExceptionHandlingMiddleware : IMiddleware
                     Title = "Validation Error",
                     Detail = error.ErrorMessage,
                     Type = "Server Error"
-
                 }
             ).ToList();
 

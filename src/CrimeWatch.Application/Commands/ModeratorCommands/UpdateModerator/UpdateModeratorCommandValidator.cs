@@ -10,5 +10,5 @@ public class UpdateModeratorCommandValidator : HttpContextValidator<UpdateModera
     }
 
     private Task<bool> HasPermission(ModeratorId moderatorId, CancellationToken cancellationToken)
-        => Task.FromResult(UserClaims.ModeratorId != null && !UserClaims.ModeratorId.Equals(moderatorId));
+        => Task.FromResult(UserClaims.ModeratorId != null && UserClaims.ModeratorId.Equals(moderatorId));
 }

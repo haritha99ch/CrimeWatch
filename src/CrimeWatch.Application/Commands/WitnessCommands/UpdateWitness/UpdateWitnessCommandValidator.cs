@@ -10,5 +10,5 @@ public class UpdateWitnessCommandValidator : HttpContextValidator<UpdateWitnessC
     }
 
     private Task<bool> HasPermissions(WitnessId witnessId, CancellationToken cancellationToken)
-        => Task.FromResult(UserClaims.WitnessId != null && !UserClaims.WitnessId.Equals(witnessId));
+        => Task.FromResult(UserClaims.WitnessId != null && UserClaims.WitnessId.Equals(witnessId));
 }
