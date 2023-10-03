@@ -40,4 +40,14 @@ internal static class ReportRepositorySpecificationExtension
         if (report == null) return false;
         return !witnessId.Equals(report.WitnessId);
     }
+
+    public static async Task<bool> HasPermissionsToModerate(this IRepository<Report, ReportId> reportRepository,
+        ReportId reportId, ModeratorId? moderatorId, CancellationToken cancellationToken)
+    {
+        var report = await reportRepository.GetByIdAsync(reportId, e => new { e.ModeratorId, e.Status },
+            cancellationToken);
+        if (report is null) return false;
+        if (report.Status.Equals(Status.Pending)) return true;
+        return report.ModeratorId is null || report.ModeratorId.Equals(moderatorId);
+    }
 }
