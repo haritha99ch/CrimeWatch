@@ -1,7 +1,7 @@
 using CrimeWatch.Application;
 using CrimeWatch.AppSettings;
 using CrimeWatch.Web.API.Helpers;
-using CrimeWatch.Web.API.Middleware;
+using CrimeWatch.Web.API.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;

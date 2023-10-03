@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System.Text.Json;
 
-namespace CrimeWatch.Web.API.Middleware;
+namespace CrimeWatch.Web.API.Middlewares;
 public class ValidationExceptionHandlingMiddleware : IMiddleware
 {
 

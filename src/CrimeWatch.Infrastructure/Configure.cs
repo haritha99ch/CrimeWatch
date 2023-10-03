@@ -9,9 +9,7 @@ public static class Configure
 {
     public static void AddInfrastructure(this IServiceCollection services)
     {
-        var sqlServerOptions = services.GetOptions<SqlServerOptions>();
-        services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(
-            options => options.UseSqlServer(sqlServerOptions.ConnectionString));
+        services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(UseSqlServerFromOptions);
         services.AddRepositories();
     }
 
@@ -26,4 +24,16 @@ public static class Configure
 
     private static void AddRepositories(this IServiceCollection services)
         => services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+
+    private static void UseSqlServerFromOptions(IServiceProvider serviceProvider, DbContextOptionsBuilder builder)
+    {
+        var sqlServerOptions = serviceProvider.GetOptions<SqlServerOptions>();
+        builder.UseSqlServer(sqlServerOptions.ConnectionString, options =>
+        {
+            options.EnableRetryOnFailure(sqlServerOptions.MaxRetryCount);
+            options.CommandTimeout(sqlServerOptions.CommandTimeout);
+        });
+        builder.EnableSensitiveDataLogging(sqlServerOptions.EnableSensitiveDataLogging);
+        builder.EnableDetailedErrors(sqlServerOptions.EnableDetailedErrors);
+    }
 }
