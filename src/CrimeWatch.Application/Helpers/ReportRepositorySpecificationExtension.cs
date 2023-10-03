@@ -41,7 +41,7 @@ internal static class ReportRepositorySpecificationExtension
         return !witnessId.Equals(report.WitnessId);
     }
 
-    public static async Task<bool> HasPermissionsToModerate(this IRepository<Report, ReportId> reportRepository,
+    public static async Task<bool> HasPermissionsToModerateAsync(this IRepository<Report, ReportId> reportRepository,
         ReportId reportId, ModeratorId? moderatorId, CancellationToken cancellationToken)
     {
         var report = await reportRepository.GetByIdAsync(reportId, e => new { e.ModeratorId, e.Status },

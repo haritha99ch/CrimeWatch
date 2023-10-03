@@ -20,7 +20,7 @@ public class ApproveReportCommandValidator : HttpContextValidator<ApproveReportC
     {
         if (!UserClaims.UserType.Equals(UserType.Moderator)) return false;
         return
-            await _reportRepository.HasPermissionsToModerate(command.ReportId, UserClaims.ModeratorId,
+            await _reportRepository.HasPermissionsToModerateAsync(command.ReportId, UserClaims.ModeratorId,
                 cancellationToken);
 
     }

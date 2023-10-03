@@ -1,11 +1,11 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
 namespace CrimeWatch.Application.Commands.ReportCommands.AddCommentToReport;
-public class AddCommentToReportValidator : HttpContextValidator<AddCommentToReportCommand>
+public class AddCommentToReportCommandValidator : HttpContextValidator<AddCommentToReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 
-    public AddCommentToReportValidator(
+    public AddCommentToReportCommandValidator(
         IHttpContextAccessor httpContextAccessor,
         IRepository<Report, ReportId> reportRepository) : base(httpContextAccessor)
     {
@@ -20,7 +20,7 @@ public class AddCommentToReportValidator : HttpContextValidator<AddCommentToRepo
     {
         if (!UserClaims.UserType.Equals(UserType.Moderator)) return false;
         return
-            await _reportRepository.HasPermissionsToModerate(command.ReportId, UserClaims.ModeratorId,
+            await _reportRepository.HasPermissionsToModerateAsync(command.ReportId, UserClaims.ModeratorId,
                 cancellationToken);
 
     }
