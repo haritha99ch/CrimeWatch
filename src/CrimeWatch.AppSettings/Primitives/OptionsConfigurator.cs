@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Options;
 
 namespace CrimeWatch.AppSettings.Primitives;
-public class ConfigureOptions<T> : IConfigureOptions<T>, IPostConfigureOptions<T> where T : class
+public class OptionsConfigurator<T> : IConfigureOptions<T>, IPostConfigureOptions<T> where T : class
 {
     private readonly IConfiguration _configuration;
 
-    public ConfigureOptions(IConfiguration configuration)
+    public OptionsConfigurator(IConfiguration configuration)
     {
         _configuration = configuration;
     }

@@ -25,7 +25,7 @@ public static class Configure
         if (options != null) return options;
         throw new InvalidOperationException(
             $"No configuration found for {typeof(T).Name}. "
-            + $"Please ensure that services.ConfigureOptions<ConfigureOptions<{typeof(T).Name}>>() "
+            + $"Please ensure that services.ConfigureOptions<OptionsConfigurator<{typeof(T).Name}>>() "
             + $"is called in {Assembly.GetCallingAssembly().GetName().Name}.");
     }
 }

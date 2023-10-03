@@ -20,6 +20,6 @@ public static class AppConfigurator
     public static void ConfigureOptions(this IServiceCollection services)
     {
         services.AddApplicationOptions();
-        services.ConfigureOptions<ConfigureOptions<AppOptions>>();
+        services.ConfigureOptions<OptionsConfigurator<AppOptions>>();
     }
 }

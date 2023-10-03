@@ -1,11 +1,7 @@
-﻿using CrimeWatch.AppSettings.Options;
-using CrimeWatch.Domain.AggregateModels.AccountAggregate;
+﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
 using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
 using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 
 namespace CrimeWatch.Application.Queries.AccountQueries.GetAccount;
 internal class GetAccountBySignInQueryHandler : IRequestHandler<GetAccountBySignInQuery, string>

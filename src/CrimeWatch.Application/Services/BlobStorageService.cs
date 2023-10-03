@@ -3,6 +3,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using Microsoft.AspNetCore.Http;
 
 namespace CrimeWatch.Application.Services;
 internal class BlobStorageService : IFileStorageService

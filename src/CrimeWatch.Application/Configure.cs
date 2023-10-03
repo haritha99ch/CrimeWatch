@@ -3,7 +3,6 @@ using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Application.OptionsConfigurations;
 using CrimeWatch.Application.Services;
 using CrimeWatch.AppSettings;
-using CrimeWatch.AppSettings.Options;
 using CrimeWatch.AppSettings.Primitives;
 using CrimeWatch.Infrastructure;
 using Microsoft.Extensions.Azure;
@@ -14,6 +13,7 @@ namespace CrimeWatch.Application;
 public static class Configure
 {
     private static Assembly Assembly => typeof(Configure).Assembly;
+
     public static void AddApplication(this IServiceCollection services)
     {
         services.AddInfrastructure();
@@ -34,10 +34,10 @@ public static class Configure
 
     public static void AddApplicationOptions(this IServiceCollection services)
     {
-        services.ConfigureOptions<ConfigureOptions<JwtOptions>>();
+        services.ConfigureOptions<OptionsConfigurator<JwtOptions>>();
         services.ConfigureOptions<JwtBearerOptionsConfiguration>();
-        services.ConfigureOptions<ConfigureOptions<SqlServerOptions>>();
-        services.ConfigureOptions<ConfigureOptions<BlobStorageOptions>>();
+        services.ConfigureOptions<OptionsConfigurator<SqlServerOptions>>();
+        services.ConfigureOptions<OptionsConfigurator<BlobStorageOptions>>();
     }
 
     private static void AddCqrs(this IServiceCollection services)

@@ -22,6 +22,5 @@ public class AddCommentToEvidenceCommandValidator : HttpContextValidator<AddComm
         return
             await _evidenceRepository.HasPermissionsToModerateAsync(command.EvidenceId, UserClaims.ModeratorId,
                 cancellationToken);
-
     }
 }

@@ -1,4 +1,8 @@
-﻿namespace CrimeWatch.Application.Helpers;
+﻿using CrimeWatch.Application.Primitives;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+
+namespace CrimeWatch.Application.Helpers;
 internal static class HttpContextClaimsExtension
 {
     public static UserClaims GetUserClaims(this HttpContext context)
