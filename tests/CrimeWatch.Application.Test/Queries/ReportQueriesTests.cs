@@ -1,4 +1,7 @@
-﻿using CrimeWatch.Application.Queries.ReportQueries.GetReports;
+﻿using CrimeWatch.Application.Queries.ReportQueries.GetAllModeratedReports;
+using CrimeWatch.Application.Queries.ReportQueries.GetAllReports;
+using CrimeWatch.Application.Queries.ReportQueries.GetModeratorReports;
+using CrimeWatch.Application.Queries.ReportQueries.GetWitnessReports;
 
 namespace CrimeWatch.Application.Test.Queries;
 [TestClass]
@@ -70,7 +73,7 @@ public class ReportQueriesTests : CQRSTests
         await _dbContext.SaveChangesAsync();
 
         // Act
-        var resultReports = await _mediator.Send(new GetWitnessReportQuery(witness.Id));
+        var resultReports = await _mediator.Send(new GetWitnessReportsQuery(witness.Id));
 
         // Assert
         Assert.AreEqual(1, resultReports.Count);

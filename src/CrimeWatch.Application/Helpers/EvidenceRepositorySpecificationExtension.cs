@@ -20,8 +20,7 @@ internal static class EvidenceRepositorySpecificationExtension
     {
         var report = await repository.GetByIdAsync(evidenceId, e => new { e.WitnessId }, cancellationToken);
 
-        if (report == null) return false;
-        return !witnessId.Equals(report.WitnessId);
+        return report != null && witnessId.Equals(report.WitnessId);
     }
 
     public static async Task<bool> HasPermissionsToModerateAsync(

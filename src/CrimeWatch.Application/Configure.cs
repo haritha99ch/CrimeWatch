@@ -38,6 +38,8 @@ public static class Configure
         services.ConfigureOptions<JwtBearerOptionsConfiguration>();
         services.ConfigureOptions<OptionsConfigurator<SqlServerOptions>>();
         services.ConfigureOptions<OptionsConfigurator<BlobStorageOptions>>();
+        services.ConfigureOptions<OptionsConfigurator<AppOptions>>();
+
     }
 
     private static void AddCqrs(this IServiceCollection services)

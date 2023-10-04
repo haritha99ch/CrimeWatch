@@ -1,6 +1,6 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
-namespace CrimeWatch.Application.Queries.ReportQueries.GetReports;
+namespace CrimeWatch.Application.Queries.ReportQueries.GetAllReports;
 internal class GetAllReportsQueryHandler : IRequestHandler<GetAllReportsQuery, List<Report>>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
@@ -11,5 +11,5 @@ internal class GetAllReportsQueryHandler : IRequestHandler<GetAllReportsQuery, L
     }
 
     public async Task<List<Report>> Handle(GetAllReportsQuery request, CancellationToken cancellationToken)
-        => await _reportRepository.GetAllReportsWithMediaItemModeratorAndWitnessByAsync(cancellationToken);
+        => await _reportRepository.GetAllAsync(cancellationToken);
 }

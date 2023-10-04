@@ -1,6 +1,6 @@
 ﻿using CrimeWatch.Application.Commands.WitnessCommands.DeleteWitness;
 using CrimeWatch.Application.Commands.WitnessCommands.UpdateWitness;
-using CrimeWatch.Application.Queries.ReportQueries.GetReports;
+using CrimeWatch.Application.Queries.ReportQueries.GetWitnessReports;
 using CrimeWatch.Application.Queries.WitnessQueries.GetWitness;
 
 namespace CrimeWatch.Web.API.Controllers;
@@ -28,7 +28,7 @@ public class WitnessController : ControllerBase
     [HttpGet("GetReports/{witnessId}")]
     public async Task<ActionResult<List<Report>>> GetReports([FromRoute] Guid witnessId)
     {
-        GetWitnessReportQuery query = new(new(witnessId));
+        GetWitnessReportsQuery query = new(new(witnessId));
         var reports = await _mediator.Send(query);
         return Ok(reports);
     }

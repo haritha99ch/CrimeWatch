@@ -1,8 +1,7 @@
 ﻿using CrimeWatch.Application;
 using CrimeWatch.AppSettings;
-using CrimeWatch.AppSettings.Primitives;
+using CrimeWatch.AppSettings.Options;
 using CrimeWatch.Web.API.Middlewares;
-using CrimeWatch.Web.API.Options;
 
 namespace CrimeWatch.Web.API.Helpers;
 public static class AppConfigurator
@@ -20,6 +19,5 @@ public static class AppConfigurator
     public static void ConfigureOptions(this IServiceCollection services)
     {
         services.AddApplicationOptions();
-        services.ConfigureOptions<OptionsConfigurator<AppOptions>>();
     }
 }

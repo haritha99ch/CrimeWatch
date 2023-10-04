@@ -1,7 +1,7 @@
 ﻿using CrimeWatch.Application.Commands.ModeratorCommands.DeleteModerator;
 using CrimeWatch.Application.Commands.ModeratorCommands.UpdateModerator;
 using CrimeWatch.Application.Queries.ModeratorQueries.GetModerator;
-using CrimeWatch.Application.Queries.ReportQueries.GetReports;
+using CrimeWatch.Application.Queries.ReportQueries.GetModeratorReports;
 
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]

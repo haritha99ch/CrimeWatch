@@ -6,8 +6,8 @@ using CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
 using CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
 using CrimeWatch.Application.Commands.ReportCommands.RevertReportToReview;
 using CrimeWatch.Application.Commands.ReportCommands.UpdateReport;
+using CrimeWatch.Application.Queries.ReportQueries.GetAllReports;
 using CrimeWatch.Application.Queries.ReportQueries.GetReport;
-using CrimeWatch.Application.Queries.ReportQueries.GetReports;
 
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]

@@ -22,6 +22,10 @@
 		</ProjectReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Options\" />
+	</ItemGroup>
+
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Debug'">
 		<Exec Command="npm --prefix ..\crimewatch.web.client\ run build" />
 	</Target>
