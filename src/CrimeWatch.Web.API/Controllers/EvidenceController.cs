@@ -6,7 +6,7 @@ using CrimeWatch.Application.Commands.EvidenceCommands.DeleteEvidence;
 using CrimeWatch.Application.Commands.EvidenceCommands.ModerateEvidence;
 using CrimeWatch.Application.Commands.EvidenceCommands.RevertEvidenceToReview;
 using CrimeWatch.Application.Commands.EvidenceCommands.UpdateEvidence;
-using CrimeWatch.Application.Queries.EvidenceQueries.GetEvidences;
+using CrimeWatch.Application.Queries.EvidenceQueries.GetAllEvidencesForReport;
 
 namespace CrimeWatch.Web.API.Controllers;
 [Route("api/[controller]")]
@@ -40,10 +40,7 @@ public class EvidenceController : ControllerBase
     }
 
     [HttpGet("Get/{evidenceId}")]
-    public Task<ActionResult<Evidence>> Get([FromRoute] Guid evidenceId)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<ActionResult<Evidence>> Get([FromRoute] Guid evidenceId) => throw new NotImplementedException();
 
     [HttpPatch("Update")]
     public async Task<ActionResult<Evidence>> Update([FromForm] UpdateEvidenceCommand command)
@@ -105,6 +102,4 @@ public class EvidenceController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
-
-
 }

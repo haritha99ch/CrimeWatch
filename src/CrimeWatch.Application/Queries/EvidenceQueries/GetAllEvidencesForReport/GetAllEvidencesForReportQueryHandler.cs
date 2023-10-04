@@ -1,7 +1,8 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
-namespace CrimeWatch.Application.Queries.EvidenceQueries.GetEvidences;
-internal class GetAllEvidencesForReportQueryHandler : IRequestHandler<GetAllEvidencesForReportQuery, List<Evidence>>
+namespace CrimeWatch.Application.Queries.EvidenceQueries.GetAllEvidencesForReport;
+internal sealed class
+    GetAllEvidencesForReportQueryHandler : IRequestHandler<GetAllEvidencesForReportQuery, List<Evidence>>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
 

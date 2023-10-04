@@ -1,7 +1,9 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
-namespace CrimeWatch.Application.Queries.EvidenceQueries.GetEvidences;
-internal class GetAllModeratedEvidenceForReportQueryHandler : IRequestHandler<GetAllModeratedEvidenceForReportQuery, List<Evidence>>
+namespace CrimeWatch.Application.Queries.EvidenceQueries.GetAllModeratedEvidenceForReport;
+internal class
+    GetAllModeratedEvidenceForReportQueryHandler : IRequestHandler<GetAllModeratedEvidenceForReportQuery,
+        List<Evidence>>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
 
@@ -10,6 +12,7 @@ internal class GetAllModeratedEvidenceForReportQueryHandler : IRequestHandler<Ge
         _evidenceRepository = evidenceRepository;
     }
 
-    public async Task<List<Evidence>> Handle(GetAllModeratedEvidenceForReportQuery request, CancellationToken cancellationToken)
+    public async Task<List<Evidence>> Handle(GetAllModeratedEvidenceForReportQuery request,
+        CancellationToken cancellationToken)
         => await _evidenceRepository.GetModeratedEvidencesWithAllForReportAsync(request.ReportId, cancellationToken);
 }
