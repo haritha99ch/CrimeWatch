@@ -1,9 +1,11 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Application.Queries.ModeratorQueries.GetModerator;
 using CrimeWatch.Application.Queries.WitnessQueries.GetWitness;
+using CrimeWatch.Application.Shared;
 
 namespace CrimeWatch.Application.Queries.AccountQueries.GetCurrentUser;
-internal class GetCurrentUserCommandHandler : IRequestHandler<GetCurrentUserCommand, object>
+internal class GetCurrentUserCommandHandler
+    : IRequestHandler<GetCurrentUserCommand, ModeratorOrWitness>
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IMediator _mediator;
@@ -15,7 +17,8 @@ internal class GetCurrentUserCommandHandler : IRequestHandler<GetCurrentUserComm
         _authenticationService = authenticationService;
     }
 
-    public async Task<object> Handle(GetCurrentUserCommand request, CancellationToken cancellationToken)
+    public async Task<ModeratorOrWitness> Handle(GetCurrentUserCommand request,
+        CancellationToken cancellationToken)
     {
         var result = _authenticationService.Authenticate();
         if (result.Item1)

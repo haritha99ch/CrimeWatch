@@ -41,10 +41,7 @@ public class AuthenticationController : ControllerBase
     public async Task<ActionResult> GetCurrentUser()
     {
         var result = await _mediator.Send(new GetCurrentUserCommand());
-        if (result is null) return NotFound("Account Not found!");
-        if (result is Witness witness) return Ok(witness);
-        if (result is Moderator moderator) return Ok(moderator);
-        return BadRequest("Invalid Account Type");
+        return result.Match<ActionResult>(Ok, Ok);
     }
 
 }
