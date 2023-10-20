@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.Common;
-using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore.Query;
 
 namespace CrimeWatch.Infrastructure.Common;
 public abstract class Specification<TEntity, TValueObject>
