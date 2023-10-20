@@ -12,7 +12,7 @@ internal class CreateModeratorCommandHandler : IRequestHandler<CreateModeratorCo
 
     public async Task<Moderator> Handle(CreateModeratorCommand request, CancellationToken cancellationToken)
     {
-        Moderator moderator = Moderator
+        var moderator = Moderator
             .Create(
                 request.FirstName,
                 request.LastName,

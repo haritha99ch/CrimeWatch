@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.DeclineEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.DeclineEvidence;
 internal class DeclineEvidenceCommandHandler : IRequestHandler<DeclineEvidenceCommand, Evidence>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
@@ -13,9 +11,9 @@ internal class DeclineEvidenceCommandHandler : IRequestHandler<DeclineEvidenceCo
     public async Task<Evidence> Handle(DeclineEvidenceCommand request, CancellationToken cancellationToken)
     {
 
-        Evidence evidence =
+        var evidence =
             await _evidenceRepository.GetByIdAsync(request.EvidenceId, cancellationToken)
-            ?? throw new Exception($"Evidence with id {request.EvidenceId} not found.");
+            ?? throw new($"Evidence with id {request.EvidenceId} not found.");
 
         evidence.Decline();
 

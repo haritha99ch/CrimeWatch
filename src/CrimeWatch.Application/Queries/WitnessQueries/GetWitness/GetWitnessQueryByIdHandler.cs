@@ -12,5 +12,5 @@ internal class GetWitnessQueryByIdHandler : IRequestHandler<GetWitnessByIdQuery,
 
     public async Task<Witness> Handle(GetWitnessByIdQuery request, CancellationToken cancellationToken)
         => await _witnessRepository.GetWitnessWithAllByIdAsync(request.WitnessId, cancellationToken)
-        ?? throw new Exception("Witness not found");
+            ?? throw new("Witness not found");
 }

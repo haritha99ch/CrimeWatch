@@ -1,5 +1,4 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
 namespace CrimeWatch.Application.Commands.ReportCommands.UpdateReport;
 internal class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand, Report>
@@ -17,15 +16,16 @@ internal class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand,
 
     public async Task<Report> Handle(UpdateReportCommand request, CancellationToken cancellationToken)
     {
-        Report report =
+        var report =
             await _reportRepository.GetReportWithMediaItemByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception("Report not found");
+            ?? throw new("Report not found");
 
 
         if (request.MediaItem == null && request.NewMediaItem != null)
         {
             await _fileStorageService.DeleteFileByUrlAsync(report.MediaItem!.Url, report.WitnessId, cancellationToken);
-            var mediaItem = await _fileStorageService.SaveFileAsync(request.NewMediaItem, report.WitnessId, cancellationToken);
+            var mediaItem =
+                await _fileStorageService.SaveFileAsync(request.NewMediaItem, report.WitnessId, cancellationToken);
 
             report.Update(
                 request.Title,
@@ -37,11 +37,11 @@ internal class UpdateReportCommandHandler : IRequestHandler<UpdateReportCommand,
         else
         {
             report.Update(
-                    request.Title,
-                    request.Description,
-                    request.Location,
-                    request.MediaItem!
-                );
+                request.Title,
+                request.Description,
+                request.Location,
+                request.MediaItem!
+            );
         }
         return await _reportRepository.UpdateAsync(report, cancellationToken);
     }

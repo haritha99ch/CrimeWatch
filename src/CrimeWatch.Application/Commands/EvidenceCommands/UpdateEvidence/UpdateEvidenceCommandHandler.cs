@@ -1,5 +1,4 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 using Newtonsoft.Json;
 
 namespace CrimeWatch.Application.Commands.EvidenceCommands.UpdateEvidence;
@@ -21,25 +20,26 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
 
     public async Task<Evidence> Handle(UpdateEvidenceCommand request, CancellationToken cancellationToken)
     {
-        List<MediaItem> MediaItems = JsonConvert.DeserializeObject<List<MediaItem>>(request.MediaItems ?? string.Empty) ?? new();
+        var MediaItems = JsonConvert.DeserializeObject<List<MediaItem>>(request.MediaItems ?? string.Empty) ?? new();
 
-        Evidence evidence =
+        var evidence =
             await _evidenceRepository.GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception("Evidence not found");
+            ?? throw new("Evidence not found");
 
         List<MediaItem> newMediaItems = new();
         foreach (var mediaItem in request.NewMediaItems ?? new())
         {
-            var newMediaItem = await _fileStorageService.SaveFileAsync(mediaItem, evidence.WitnessId, cancellationToken);
+            var newMediaItem =
+                await _fileStorageService.SaveFileAsync(mediaItem, evidence.WitnessId, cancellationToken);
 
             newMediaItems.Add(newMediaItem);
         }
 
-        bool hasNewMediaItems = newMediaItems.Any();
+        var hasNewMediaItems = newMediaItems.Any();
 
         var existingMediaItemIds = MediaItems?.Select(e => e.Id).ToList();
 
-        bool noOfMediaItemsChanged = !evidence.MediaItems.Count.Equals(existingMediaItemIds?.Count);
+        var noOfMediaItemsChanged = !evidence.MediaItems.Count.Equals(existingMediaItemIds?.Count);
 
         evidence.Update(
             request.Title,
@@ -54,8 +54,8 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
         await _evidenceRepository.UpdateAsync(evidence);
 
         evidence =
-                await _evidenceRepository.AsTracking().GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
-                ?? throw new Exception("Evidence not found");
+            await _evidenceRepository.AsTracking().GetEvidenceWithMediaItemsByIdAsync(request.Id, cancellationToken)
+            ?? throw new("Evidence not found");
 
         if (noOfMediaItemsChanged)
         {
@@ -85,7 +85,8 @@ internal class UpdateEvidenceCommandHandler : IRequestHandler<UpdateEvidenceComm
         return await _evidenceRepository.UpdateAsync(evidence, cancellationToken);
     }
 
-    private async Task RemoveItemsFromStorage(Evidence evidence, List<MediaItem> itemsToRemove, CancellationToken cancellationToken)
+    private async Task RemoveItemsFromStorage(Evidence evidence, List<MediaItem> itemsToRemove,
+        CancellationToken cancellationToken)
     {
         foreach (var item in itemsToRemove)
         {

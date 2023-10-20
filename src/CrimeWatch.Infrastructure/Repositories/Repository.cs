@@ -1,8 +1,6 @@
-﻿using CrimeWatch.Domain.Common;
+﻿using CrimeWatch.Infrastructure.Common;
 using CrimeWatch.Infrastructure.Contracts.Repositories;
 using CrimeWatch.Infrastructure.Helpers;
-using CrimeWatch.Infrastructure.Common;
-using System.Linq.Expressions;
 
 namespace CrimeWatch.Infrastructure.Repositories;
 public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObject> where TEntity : Entity<TValueObject>
@@ -115,7 +113,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     }
 
-    public async Task<List<TEntity>> GetAllAsync<TSpecification>(TValueObject id,
+    public async Task<List<TEntity>> GetAllAsync<TSpecification>(
         CancellationToken? cancellationToken = null)
         where TSpecification : Specification<TEntity, TValueObject>
     {

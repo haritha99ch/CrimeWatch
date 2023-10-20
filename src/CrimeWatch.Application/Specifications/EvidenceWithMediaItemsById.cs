@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Specifications;
+﻿namespace CrimeWatch.Application.Specifications;
 internal class EvidenceWithMediaItemsById : Specification<Evidence, EvidenceId>
 {
     public EvidenceWithMediaItemsById(EvidenceId id) : base(e => e.Id.Equals(id))

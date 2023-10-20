@@ -1,4 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+﻿using CrimeWatch.Application.Selectors.ReportSelectors;
 
 namespace CrimeWatch.Application.Helpers;
 internal static class ReportRepositorySpecificationExtension
@@ -13,7 +13,7 @@ internal static class ReportRepositorySpecificationExtension
 
     public static async Task<List<Report>> GetAllReportsWithMediaItemModeratorAndWitnessByAsync(
         this IRepository<Report, ReportId> repository, CancellationToken cancellationToken)
-        => await repository.GetManyAsync<ReportWithMediaItemModeratorAndWitness>(new(), cancellationToken);
+        => await repository.GetAllAsync<ReportWithMediaItemModeratorAndWitness>(cancellationToken);
 
     public static async Task<Report?> ReportWithMediaItemAndWitnessByIdAsync(
         this IRepository<Report, ReportId> repository, ReportId reportId, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ internal static class ReportRepositorySpecificationExtension
     public static async Task<bool> HasPermissionsToEditAsync(this IRepository<Report, ReportId> repository,
         ReportId reportId, WitnessId witnessId, CancellationToken cancellationToken)
     {
-        var report = await repository.GetByIdAsync(reportId, e => new { e.WitnessId }, cancellationToken);
+        var report = await repository.GetByIdAsync(reportId, PermissionsToEdit.Selector, cancellationToken);
 
         return report != null && witnessId.Equals(report.WitnessId);
     }
@@ -43,7 +43,7 @@ internal static class ReportRepositorySpecificationExtension
     public static async Task<bool> HasPermissionsToModerateAsync(this IRepository<Report, ReportId> reportRepository,
         ReportId reportId, ModeratorId? moderatorId, CancellationToken cancellationToken)
     {
-        var report = await reportRepository.GetByIdAsync(reportId, e => new { e.ModeratorId, e.Status },
+        var report = await reportRepository.GetByIdAsync(reportId, PermissionsToModerate.Selector,
             cancellationToken);
         if (report is null) return false;
         if (report.Status.Equals(Status.Pending)) return true;

@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.RevertEvidenceToReview;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.RevertEvidenceToReview;
 internal class RevertEvidenceToReviewCommandHandler : IRequestHandler<RevertEvidenceToReviewCommand, Evidence>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
@@ -12,9 +10,9 @@ internal class RevertEvidenceToReviewCommandHandler : IRequestHandler<RevertEvid
 
     public async Task<Evidence> Handle(RevertEvidenceToReviewCommand request, CancellationToken cancellationToken)
     {
-        Evidence evidence =
+        var evidence =
             await _evidenceRepository.GetByIdAsync(request.EvidenceId, cancellationToken)
-            ?? throw new Exception($"Evidence with id {request.EvidenceId} not found.");
+            ?? throw new($"Evidence with id {request.EvidenceId} not found.");
 
         evidence.RevertToReview();
 

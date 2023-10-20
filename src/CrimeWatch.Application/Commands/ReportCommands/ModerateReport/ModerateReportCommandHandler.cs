@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
 internal class ModerateReportCommandHandler : IRequestHandler<ModerateReportCommand, Report>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
@@ -12,9 +10,9 @@ internal class ModerateReportCommandHandler : IRequestHandler<ModerateReportComm
 
     public async Task<Report> Handle(ModerateReportCommand request, CancellationToken cancellationToken)
     {
-        Report report =
+        var report =
             await _reportRepository.GetByIdAsync(request.ReportId, cancellationToken)
-            ?? throw new Exception($"Report with id {request.ReportId} not found.");
+            ?? throw new($"Report with id {request.ReportId} not found.");
 
         report.Moderate(request.ModeratorId);
 

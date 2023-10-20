@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.DeleteEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.DeleteEvidence;
 internal class DeleteEvidenceCommandHandler : IRequestHandler<DeleteEvidenceCommand, bool>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;

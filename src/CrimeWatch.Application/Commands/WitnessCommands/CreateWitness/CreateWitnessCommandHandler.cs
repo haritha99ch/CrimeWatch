@@ -12,7 +12,7 @@ internal class CreateWitnessCommandHandler : IRequestHandler<CreateWitnessComman
 
     public async Task<Witness> Handle(CreateWitnessCommand request, CancellationToken cancellationToken)
     {
-        Witness witness = Witness
+        var witness = Witness
             .Create(request.FirstName, request.LastName, request.Gender, request.DateOfBirth,
                 request.PhoneNumber, request.Email, request.Password);
 

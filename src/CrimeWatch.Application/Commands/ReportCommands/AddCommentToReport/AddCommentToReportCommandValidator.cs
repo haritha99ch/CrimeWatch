@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.AddCommentToReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.AddCommentToReport;
 public class AddCommentToReportCommandValidator : HttpContextValidator<AddCommentToReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

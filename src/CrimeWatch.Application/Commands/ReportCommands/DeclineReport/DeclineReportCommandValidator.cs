@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
 public class DeclineReportCommandValidator : HttpContextValidator<DeclineReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

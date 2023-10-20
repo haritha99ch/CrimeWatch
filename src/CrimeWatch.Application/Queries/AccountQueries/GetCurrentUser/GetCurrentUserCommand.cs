@@ -1,2 +1,2 @@
 ﻿namespace CrimeWatch.Application.Queries.AccountQueries.GetCurrentUser;
-public sealed record GetCurrentUserCommand() : IRequest<object>;
+public sealed record GetCurrentUserCommand : IRequest<object>;

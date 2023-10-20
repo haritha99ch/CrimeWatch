@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.DeclineEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.DeclineEvidence;
 public class DeclineEvidenceCommandValidator : HttpContextValidator<DeclineEvidenceCommand>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;

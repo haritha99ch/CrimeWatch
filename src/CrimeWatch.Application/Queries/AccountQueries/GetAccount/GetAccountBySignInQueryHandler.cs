@@ -1,7 +1,6 @@
 ﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
 using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
 using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-using Microsoft.Extensions.Options;
 
 namespace CrimeWatch.Application.Queries.AccountQueries.GetAccount;
 internal class GetAccountBySignInQueryHandler : IRequestHandler<GetAccountBySignInQuery, string>

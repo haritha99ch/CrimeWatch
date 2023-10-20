@@ -1,8 +1,4 @@
-﻿using CrimeWatch.AppSettings.Options;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CrimeWatch.Application.OptionsConfigurations;
 public class JwtBearerOptionsConfiguration : IConfigureNamedOptions<JwtBearerOptions>

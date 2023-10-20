@@ -4,5 +4,5 @@ public enum ReportPermissions
     FullAccess,
     Moderated,
     Granted,
-    Denied,
+    Denied
 }

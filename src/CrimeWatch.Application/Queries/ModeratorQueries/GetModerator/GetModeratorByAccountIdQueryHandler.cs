@@ -12,5 +12,5 @@ internal class GetModeratorByAccountIdQueryHandler : IRequestHandler<GetModerato
 
     public async Task<Moderator> Handle(GetModeratorByAccountIdQuery request, CancellationToken cancellationToken)
         => await _moderatorRepository.GetModeratorWithAllByAccountIdAsync(request.AccountId, cancellationToken)
-        ?? throw new Exception($"Moderator not found");
+            ?? throw new("Moderator not found");
 }

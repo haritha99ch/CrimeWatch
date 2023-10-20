@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
 public class ModerateReportCommandValidator : HttpContextValidator<ModerateReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

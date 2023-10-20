@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
 internal class DeclineReportCommandHandler : IRequestHandler<DeclineReportCommand, Report>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

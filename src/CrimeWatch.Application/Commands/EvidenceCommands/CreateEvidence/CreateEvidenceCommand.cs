@@ -1,7 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using Microsoft.AspNetCore.Http;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.CreateEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.CreateEvidence;
 public sealed record CreateEvidenceCommand(
         WitnessId WitnessId,
         ReportId ReportId,

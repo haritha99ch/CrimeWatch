@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
 internal class DeleteReportCommandHandler : IRequestHandler<DeleteReportCommand, bool>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

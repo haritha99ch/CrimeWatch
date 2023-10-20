@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.RevertReportToReview;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.RevertReportToReview;
 public class RevertReportToReviewCommandValidator : HttpContextValidator<RevertReportToReviewCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

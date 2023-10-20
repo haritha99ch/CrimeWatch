@@ -12,9 +12,9 @@ internal class UpdateModeratorCommandHandler : IRequestHandler<UpdateModeratorCo
 
     public async Task<Moderator> Handle(UpdateModeratorCommand request, CancellationToken cancellationToken)
     {
-        Moderator? moderator =
+        var moderator =
             await _moderatorRepository.GetModeratorWithAllByIdAsync(request.Id, cancellationToken)
-            ?? throw new Exception("Moderator not found");
+            ?? throw new("Moderator not found");
 
         moderator.Update(
             request.FirstName,
@@ -26,7 +26,7 @@ internal class UpdateModeratorCommandHandler : IRequestHandler<UpdateModeratorCo
             request.Province,
             request.Email,
             request.Password
-            );
+        );
 
         return await _moderatorRepository.UpdateAsync(moderator, cancellationToken);
     }

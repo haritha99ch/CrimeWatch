@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Queries.ReportQueries.GetReport;
+﻿namespace CrimeWatch.Application.Queries.ReportQueries.GetReport;
 public class GetReportQueryValidator : HttpContextValidator<GetReportQuery>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

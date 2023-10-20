@@ -1,9 +1,5 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using Microsoft.AspNetCore.Http;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.UpdateReport;
-public sealed record
-    UpdateReportCommand(
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.UpdateReport;
+public sealed record UpdateReportCommand(
         ReportId Id,
         string Title,
         string Description,

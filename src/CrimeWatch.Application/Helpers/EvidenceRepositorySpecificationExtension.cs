@@ -1,4 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+﻿using CrimeWatch.Application.Selectors.EvidenceSelector;
 
 namespace CrimeWatch.Application.Helpers;
 internal static class EvidenceRepositorySpecificationExtension
@@ -18,7 +18,7 @@ internal static class EvidenceRepositorySpecificationExtension
     public static async Task<bool> HasPermissionsToEditAsync(this IRepository<Evidence, EvidenceId> repository,
         EvidenceId evidenceId, WitnessId witnessId, CancellationToken cancellationToken)
     {
-        var report = await repository.GetByIdAsync(evidenceId, e => new { e.WitnessId }, cancellationToken);
+        var report = await repository.GetByIdAsync(evidenceId, PermissionsToEdit.Selector, cancellationToken);
 
         return report != null && witnessId.Equals(report.WitnessId);
     }
@@ -27,7 +27,7 @@ internal static class EvidenceRepositorySpecificationExtension
         this IRepository<Evidence, EvidenceId> reportRepository,
         EvidenceId evidenceId, ModeratorId? moderatorId, CancellationToken cancellationToken)
     {
-        var report = await reportRepository.GetByIdAsync(evidenceId, e => new { e.ModeratorId, e.Status },
+        var report = await reportRepository.GetByIdAsync(evidenceId, PermissionsToModerate.Selector,
             cancellationToken);
         if (report is null) return false;
         if (report.Status.Equals(Status.Pending)) return true;

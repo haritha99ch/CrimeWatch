@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Queries.ReportQueries.GetAllReports;
+﻿namespace CrimeWatch.Application.Queries.ReportQueries.GetAllReports;
 internal class GetAllReportsQueryHandler : IRequestHandler<GetAllReportsQuery, List<Report>>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

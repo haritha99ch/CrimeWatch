@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.ModerateEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.ModerateEvidence;
 public class ModerateEvidenceCommandValidator : HttpContextValidator<ModerateEvidenceCommand>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;

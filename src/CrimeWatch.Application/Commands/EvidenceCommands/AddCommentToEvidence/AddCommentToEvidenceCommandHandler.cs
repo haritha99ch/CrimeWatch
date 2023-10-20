@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.AddCommentToEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.AddCommentToEvidence;
 internal class AddCommentToEvidenceCommandHandler : IRequestHandler<AddCommentToEvidenceCommand, Evidence>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
@@ -12,9 +10,9 @@ internal class AddCommentToEvidenceCommandHandler : IRequestHandler<AddCommentTo
 
     public async Task<Evidence> Handle(AddCommentToEvidenceCommand request, CancellationToken cancellationToken)
     {
-        Evidence evidence =
+        var evidence =
             await _evidenceRepository.GetByIdAsync(request.EvidenceId, cancellationToken)
-            ?? throw new Exception($"Evidence with id {request.EvidenceId} not found.");
+            ?? throw new($"Evidence with id {request.EvidenceId} not found.");
 
         evidence.Comment(request.Comment);
 

@@ -2,8 +2,6 @@
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using CrimeWatch.Application.Contracts.Services;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using Microsoft.AspNetCore.Http;
 
 namespace CrimeWatch.Application.Services;
 internal class BlobStorageService : IFileStorageService
@@ -46,6 +44,6 @@ internal class BlobStorageService : IFileStorageService
         await blockBlobClient.UploadAsync(file.OpenReadStream(), cancellationToken: cancellationToken);
         var url = blockBlobClient.Uri.AbsoluteUri;
 
-        return MediaItem.Create(mediaItemType, url);
+        return MediaItem.Create(mediaItemType, url) ?? throw new($"Could not upload {fileName}.{fileExtension}");
     }
 }

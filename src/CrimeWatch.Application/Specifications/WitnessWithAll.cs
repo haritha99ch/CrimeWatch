@@ -4,10 +4,14 @@ namespace CrimeWatch.Application.Specifications;
 internal class WitnessWithAll : Specification<Witness, WitnessId>
 {
     public WitnessWithAll(WitnessId witnessId) : base(e => e.Id.Equals(witnessId))
-        => AddIncludes();
+    {
+        AddIncludes();
+    }
 
     public WitnessWithAll(AccountId accountId) : base(e => e.AccountId.Equals(accountId))
-        => AddIncludes();
+    {
+        AddIncludes();
+    }
 
     private void AddIncludes()
     {

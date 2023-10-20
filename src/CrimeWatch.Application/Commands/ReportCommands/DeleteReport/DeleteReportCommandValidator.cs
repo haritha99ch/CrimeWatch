@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
 public class DeleteReportCommandValidator : HttpContextValidator<DeleteReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

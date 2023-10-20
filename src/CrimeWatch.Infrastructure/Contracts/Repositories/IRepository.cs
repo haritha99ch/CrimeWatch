@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.Common;
-using CrimeWatch.Infrastructure.Common;
-using System.Linq.Expressions;
+﻿using CrimeWatch.Infrastructure.Common;
 
 namespace CrimeWatch.Infrastructure.Contracts.Repositories;
 public interface IRepository<TEntity, TValueObject>
@@ -28,7 +26,7 @@ public interface IRepository<TEntity, TValueObject>
         CancellationToken? cancellationToken = null)
         where TSpecification : Specification<TEntity, TValueObject>;
 
-    Task<List<TEntity>> GetAllAsync<TSpecification>(TValueObject id,
+    Task<List<TEntity>> GetAllAsync<TSpecification>(
         CancellationToken? cancellationToken = null)
         where TSpecification : Specification<TEntity, TValueObject>;
 

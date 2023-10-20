@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.ReportCommands.ApproveReport;
+﻿namespace CrimeWatch.Application.Commands.ReportCommands.ApproveReport;
 public class ApproveReportCommandValidator : HttpContextValidator<ApproveReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;

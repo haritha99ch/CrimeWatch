@@ -1,5 +1,4 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
 namespace CrimeWatch.Application.Commands.ReportCommands.CreateReport;
 internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand, Report>
@@ -20,7 +19,7 @@ internal class CreateReportCommandHandler : IRequestHandler<CreateReportCommand,
         var mediaItem =
             await _fileStorageService.SaveFileAsync(request.MediaItem, request.WitnessId, cancellationToken);
 
-        Report report = Report
+        var report = Report
             .Create(
                 request.WitnessId,
                 request.Title,

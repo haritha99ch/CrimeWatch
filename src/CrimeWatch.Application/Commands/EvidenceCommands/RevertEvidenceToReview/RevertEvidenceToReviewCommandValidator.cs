@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.RevertEvidenceToReview;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.RevertEvidenceToReview;
 public class RevertEvidenceToReviewCommandValidator : HttpContextValidator<RevertEvidenceToReviewCommand>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;

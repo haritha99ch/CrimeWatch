@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Specifications;
+﻿namespace CrimeWatch.Application.Specifications;
 internal class ReportWithMediaItemModeratorAndWitness : Specification<Report, ReportId>
 {
     public ReportWithMediaItemModeratorAndWitness(ReportId? reportId = null)

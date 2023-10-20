@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Queries.EvidenceQueries.GetAllModeratedEvidenceForReport;
+﻿namespace CrimeWatch.Application.Queries.EvidenceQueries.GetAllModeratedEvidenceForReport;
 internal class
     GetAllModeratedEvidenceForReportQueryHandler : IRequestHandler<GetAllModeratedEvidenceForReportQuery,
         List<Evidence>>

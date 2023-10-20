@@ -1,5 +1,4 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
 
 namespace CrimeWatch.Application.Commands.EvidenceCommands.CreateEvidence;
 internal class CreateEvidenceCommandHandler : IRequestHandler<CreateEvidenceCommand, Evidence>
@@ -25,7 +24,7 @@ internal class CreateEvidenceCommandHandler : IRequestHandler<CreateEvidenceComm
             mediaItems.Add(newMediaItem);
         }
 
-        Evidence evidence = Evidence.Create(
+        var evidence = Evidence.Create(
             request.WitnessId,
             request.ReportId,
             request.Caption,

@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.ApproveEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.ApproveEvidence;
 internal class ApproveEvidenceCommandHandler : IRequestHandler<ApproveEvidenceCommand, Evidence>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
@@ -12,9 +10,9 @@ internal class ApproveEvidenceCommandHandler : IRequestHandler<ApproveEvidenceCo
 
     public async Task<Evidence> Handle(ApproveEvidenceCommand request, CancellationToken cancellationToken)
     {
-        Evidence evidence =
-           await _evidenceRepository.GetByIdAsync(request.EvidenceId, cancellationToken)
-           ?? throw new Exception($"Evidence with id {request.EvidenceId} not found.");
+        var evidence =
+            await _evidenceRepository.GetByIdAsync(request.EvidenceId, cancellationToken)
+            ?? throw new($"Evidence with id {request.EvidenceId} not found.");
 
         evidence.Approve();
 

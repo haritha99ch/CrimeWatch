@@ -4,10 +4,14 @@ namespace CrimeWatch.Application.Specifications;
 internal class ModeratorWithAll : Specification<Moderator, ModeratorId>
 {
     public ModeratorWithAll(ModeratorId moderator) : base(e => e.Id.Equals(moderator))
-        => AddIncludes();
+    {
+        AddIncludes();
+    }
 
     public ModeratorWithAll(AccountId accountId) : base(e => e.AccountId.Equals(accountId))
-        => AddIncludes();
+    {
+        AddIncludes();
+    }
 
     private void AddIncludes()
     {

@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.ModerateEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.ModerateEvidence;
 internal class ModerateEvidenceCommandHandler : IRequestHandler<ModerateEvidenceCommand, Evidence>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
@@ -12,9 +10,9 @@ internal class ModerateEvidenceCommandHandler : IRequestHandler<ModerateEvidence
 
     public async Task<Evidence> Handle(ModerateEvidenceCommand request, CancellationToken cancellationToken)
     {
-        Evidence evidence =
+        var evidence =
             await _evidenceRepository.GetByIdAsync(request.EvidenceId, cancellationToken)
-            ?? throw new Exception($"Evidence with id {request.EvidenceId} not found.");
+            ?? throw new($"Evidence with id {request.EvidenceId} not found.");
 
         evidence.Moderate(request.ModeratorId);
 

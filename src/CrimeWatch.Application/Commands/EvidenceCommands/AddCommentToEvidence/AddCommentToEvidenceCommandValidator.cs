@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Application.Commands.EvidenceCommands.AddCommentToEvidence;
+﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.AddCommentToEvidence;
 public class AddCommentToEvidenceCommandValidator : HttpContextValidator<AddCommentToEvidenceCommand>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
