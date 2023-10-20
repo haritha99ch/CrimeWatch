@@ -1,10 +1,10 @@
-﻿namespace CrimeWatch.Application.Primitives;
-public abstract class HttpContextValidator<TRequest> : AbstractValidator<TRequest> where TRequest : IBaseRequest
+﻿namespace CrimeWatch.Application.Common;
+public abstract class RequestPermissions
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     protected readonly UserClaims UserClaims;
 
-    protected HttpContextValidator(IHttpContextAccessor httpContextAccessor)
+    protected RequestPermissions(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
         UserClaims = HttpContext.GetUserClaims();

@@ -1,4 +1,4 @@
-﻿using CrimeWatch.Application.Primitives;
+﻿using CrimeWatch.Application.Common;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 

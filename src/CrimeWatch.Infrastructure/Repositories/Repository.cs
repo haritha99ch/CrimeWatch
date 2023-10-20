@@ -1,7 +1,7 @@
-﻿using CrimeWatch.Domain.Primitives;
+﻿using CrimeWatch.Domain.Common;
 using CrimeWatch.Infrastructure.Contracts.Repositories;
 using CrimeWatch.Infrastructure.Helpers;
-using CrimeWatch.Infrastructure.Primitives;
+using CrimeWatch.Infrastructure.Common;
 using System.Linq.Expressions;
 
 namespace CrimeWatch.Infrastructure.Repositories;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace CrimeWatch.AppSettings.Primitives;
+namespace CrimeWatch.AppSettings.Common;
 public class OptionsConfigurator<T> : IConfigureOptions<T>, IPostConfigureOptions<T> where T : class
 {
     private readonly IConfiguration _configuration;

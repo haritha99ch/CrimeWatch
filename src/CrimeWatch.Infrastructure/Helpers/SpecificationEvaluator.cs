@@ -1,5 +1,5 @@
-﻿using CrimeWatch.Domain.Primitives;
-using CrimeWatch.Infrastructure.Primitives;
+﻿using CrimeWatch.Domain.Common;
+using CrimeWatch.Infrastructure.Common;
 
 namespace CrimeWatch.Infrastructure.Helpers;
 internal static class SpecificationEvaluator

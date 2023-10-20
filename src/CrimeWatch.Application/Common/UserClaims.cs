@@ -1,7 +1,7 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
 using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 
-namespace CrimeWatch.Application.Primitives;
+namespace CrimeWatch.Application.Common;
 public sealed record UserClaims(string? UserId, string UserRole = "")
 {
     public UserType UserType => UserRole switch

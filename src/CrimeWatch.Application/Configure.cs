@@ -3,7 +3,7 @@ using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Application.OptionsConfigurations;
 using CrimeWatch.Application.Services;
 using CrimeWatch.AppSettings;
-using CrimeWatch.AppSettings.Primitives;
+using CrimeWatch.AppSettings.Common;
 using CrimeWatch.Infrastructure;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;

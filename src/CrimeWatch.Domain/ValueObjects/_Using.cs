@@ -1,1 +1,1 @@
-﻿global using CrimeWatch.Domain.Primitives;
+﻿global using CrimeWatch.Domain.Common;

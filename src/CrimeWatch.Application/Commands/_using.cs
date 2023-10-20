@@ -5,5 +5,5 @@ global using CrimeWatch.Infrastructure.Contracts.Repositories;
 global using FluentValidation;
 global using MediatR;
 global using CrimeWatch.Application.Enums;
-global using CrimeWatch.Application.Primitives;
+global using CrimeWatch.Application.Common;
 global using Microsoft.AspNetCore.Http;
