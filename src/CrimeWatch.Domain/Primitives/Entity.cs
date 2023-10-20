@@ -1,5 +1,5 @@
 ﻿namespace CrimeWatch.Domain.Primitives;
-public class Entity<T> where T : ValueObject
+public class Entity<TValueObject> where TValueObject : ValueObject
 {
-    public T Id { get; set; } = default!;
+    public TValueObject Id { get; set; } = default!;
 }

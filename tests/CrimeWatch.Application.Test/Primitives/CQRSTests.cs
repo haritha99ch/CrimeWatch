@@ -20,7 +20,11 @@ public abstract class CQRSTests
             .ConfigureServices(
                 service =>
                 {
-                    service.AddApplication(options => options.UseInMemoryDatabase(databaseName));
+                    service.AddApplication(options =>
+                    {
+                        options.UseInMemoryDatabase(databaseName);
+                        options.EnableSensitiveDataLogging();
+                    });
                     service.AddTransient<IFileStorageService, InMemoryBlobStorageService>();
                     service.ConfigureOptions<JwtOptionsConfiguration>();
                 })
@@ -29,6 +33,7 @@ public abstract class CQRSTests
         _dbContext = GetService<IApplicationDbContext>();
         _mediator = GetService<IMediator>();
     }
+
     private IHost _host { get; }
 
     private T GetService<T>() where T : class

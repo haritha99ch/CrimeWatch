@@ -26,8 +26,8 @@ public class UserCommandsTests : CQRSTests
         CreateWitnessCommand command = new(
             FirstName: "John",
             LastName: "Doe",
-            Gender: Gender.Male,
-            DateOfBirth: new(1990, 1, 1),
+            Gender.Male,
+            new(1990, 1, 1),
             PhoneNumber: "1234567890",
             Email: "john@example.com",
             Password: "P@ssw0rd"
@@ -53,8 +53,8 @@ public class UserCommandsTests : CQRSTests
         CreateModeratorCommand command = new(
             FirstName: "Jane",
             LastName: "Smith",
-            Gender: Gender.Female,
-            DateOfBirth: new(1985, 5, 10),
+            Gender.Female,
+            new(1985, 5, 10),
             PhoneNumber: "9876543210",
             PoliceId: "12345",
             Province: "Example Province",
@@ -81,26 +81,17 @@ public class UserCommandsTests : CQRSTests
     public async Task UpdateModeratorCommand_Should_Update_Moderator()
     {
         // Arrange
-        CreateModeratorCommand arrangeModeratorCommand = new(
-            FirstName: "Jane",
-            LastName: "Smith",
-            Gender: Gender.Female,
-            DateOfBirth: new(1985, 5, 10),
-            PhoneNumber: "9876543210",
-            PoliceId: "12345",
-            Province: "Example Province",
-            Email: "jane@example.com",
-            Password: "P@ssw0rd"
-        );
-        var moderator = await _mediator.Send(arrangeModeratorCommand);
+        var moderatorEntry = await _dbContext.Moderator.AddAsync(DataProvider.GetTestModerators().FirstOrDefault()!);
+        await _dbContext.SaveChangesAsync();
+        _dbContext.ChangeTracker.Clear();
 
         // Act
         UpdateModeratorCommand command = new(
-            Id: moderator.Id,
+            moderatorEntry.Entity.Id,
             FirstName: "UpdatedFirstName",
             LastName: "UpdatedLastName",
-            Gender: Gender.Female,
-            DateOfBirth: new(1990, 1, 1),
+            Gender.Female,
+            new(1990, 1, 1),
             PhoneNumber: "5555555555",
             PoliceId: "54321",
             Province: "Updated Province",
@@ -125,24 +116,17 @@ public class UserCommandsTests : CQRSTests
     public async Task UpdateWitnessCommand_Should_Update_Witness()
     {
         // Arrange
-        CreateWitnessCommand arrangeWitnessCommand = new(
-            FirstName: "Jane",
-            LastName: "Smith",
-            Gender: Gender.Female,
-            DateOfBirth: new(1985, 5, 10),
-            PhoneNumber: "9876543210",
-            Email: "jane@example.com",
-            Password: "P@ssw0rd"
-        );
-        var existingWitness = await _mediator.Send(arrangeWitnessCommand);
+        var witnessEntry = await _dbContext.Witness.AddAsync(DataProvider.GetTestWitness().FirstOrDefault()!);
+        await _dbContext.SaveChangesAsync();
+        _dbContext.ChangeTracker.Clear();
 
         // Act
         UpdateWitnessCommand? command = new(
-            Id: existingWitness.Id,
+            witnessEntry.Entity.Id,
             FirstName: "UpdatedFirstName",
             LastName: "UpdatedLastName",
-            Gender: Gender.Male,
-            DateOfBirth: new(1988, 6, 15),
+            Gender.Male,
+            new(1988, 6, 15),
             PhoneNumber: "6666666666",
             Email: "updated@example.com",
             Password: "UpdatedP@ssw0rd"

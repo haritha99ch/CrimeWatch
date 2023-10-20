@@ -5,11 +5,11 @@ internal static class ModeratorRepositorySpecificationExtension
 {
     public static async Task<Moderator?> GetModeratorWithAllByIdAsync(
         this IRepository<Moderator, ModeratorId> repository, ModeratorId id, CancellationToken cancellationToken)
-        => await repository.GetByAsync<ModeratorWithAll>(new(id), cancellationToken);
+        => await repository.GetOneAsync<ModeratorWithAll>(new(id), cancellationToken);
 
     public static async Task<Moderator?> GetModeratorWithAllByAccountIdAsync(
         this IRepository<Moderator, ModeratorId> repository, AccountId accountId, CancellationToken cancellationToken)
-        => await repository.GetByAsync<ModeratorWithAll>(new(accountId), cancellationToken);
+        => await repository.GetOneAsync<ModeratorWithAll>(new(accountId), cancellationToken);
 
     public static async Task<bool> IsPoliceIdUniqueAsync(
         this IRepository<Moderator, ModeratorId> repository, string policeId,

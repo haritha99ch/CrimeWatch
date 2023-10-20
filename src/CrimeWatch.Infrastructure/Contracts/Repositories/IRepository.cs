@@ -3,22 +3,71 @@ using CrimeWatch.Infrastructure.Primitives;
 using System.Linq.Expressions;
 
 namespace CrimeWatch.Infrastructure.Contracts.Repositories;
-public interface IRepository<T, V> where T : Entity<V> where V : ValueObject
+public interface IRepository<TEntity, TValueObject>
+    where TEntity : Entity<TValueObject> where TValueObject : ValueObject
 {
-    Task<T?> GetByIdAsync(V id, CancellationToken? cancellationToken = null);
-    Task<List<T>> GetAllAsync(CancellationToken? cancellationToken = null);
-    Task<List<T>> GetAllByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
-    Task<List<TResult>> GetAllByAsync<S, TResult>(S specification, Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
-    Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null);
-    Task<TResult?> GetByIdAsync<TResult>(V id, Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null);
-    Task<T?> GetByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
-    Task<TResult?> GetByAsync<S, TResult>(S specification, Expression<Func<T, TResult>> selector, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
-    Task<T> AddAsync(T entity, CancellationToken? cancellationToken = null);
-    Task<T> UpdateAsync(T entity, CancellationToken? cancellationToken = null);
-    Task<bool> DeleteByIdAsync(V id, CancellationToken? cancellationToken = null);
-    Task<bool> ExistsAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
+
+
+    # region Common
+
+    Task<TEntity> AddAsync(TEntity entity, CancellationToken? cancellationToken = null);
+    Task<TEntity?> GetByIdAsync(TValueObject id, CancellationToken? cancellationToken = null);
+    Task<List<TEntity>> GetAllAsync(CancellationToken? cancellationToken = null);
+    Task<TEntity> UpdateAsync(TEntity entity, CancellationToken? cancellationToken = null);
+    Task<bool> DeleteByIdAsync(TValueObject id, CancellationToken? cancellationToken = null);
+    Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken? cancellationToken = null);
+    Task<bool> ExistsByIdAsync(TValueObject id, CancellationToken? cancellationToken = null);
     Task<int> CountAsync(CancellationToken? cancellationToken = null);
-    Task<int> CountByAsync<S>(S specification, CancellationToken? cancellationToken = null) where S : Specification<T, V>;
-    Task RemoveRangeAsync(List<T> entities, CancellationToken? cancellationToken = null);
-    IRepository<T, V> AsTracking();
+
+    #endregion
+
+
+    #region Specification
+
+    Task<TEntity?> GetByIdAsync<TSpecification>(TValueObject id,
+        CancellationToken? cancellationToken = null)
+        where TSpecification : Specification<TEntity, TValueObject>;
+
+    Task<List<TEntity>> GetAllAsync<TSpecification>(TValueObject id,
+        CancellationToken? cancellationToken = null)
+        where TSpecification : Specification<TEntity, TValueObject>;
+
+    Task<TEntity?> GetOneAsync<TSpecification>(TSpecification specification,
+        CancellationToken? cancellationToken = null)
+        where TSpecification : Specification<TEntity, TValueObject>;
+
+    Task<List<TEntity>> GetManyAsync<TSpecification>(TSpecification specification,
+        CancellationToken? cancellationToken = null)
+        where TSpecification : Specification<TEntity, TValueObject>;
+
+
+    Task<bool> ExistsAsync<TSpecification>(TSpecification specification, CancellationToken? cancellationToken = null)
+        where TSpecification : Specification<TEntity, TValueObject>;
+
+    Task<int> CountByAsync<TSpecification>(TSpecification specification, CancellationToken? cancellationToken = null)
+        where TSpecification : Specification<TEntity, TValueObject>;
+
+    #endregion
+
+
+    #region Selector
+
+    Task<TResult?> GetByIdAsync<TResult>(TValueObject id, Expression<Func<TEntity, TResult>> selector,
+        CancellationToken? cancellationToken = null);
+
+    Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+        CancellationToken? cancellationToken = null);
+
+    Task<TResult?> GetOneAsync<TResult, TSpecification>(TSpecification specification,
+        Expression<Func<TEntity, TResult>> selector,
+        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity, TValueObject>;
+
+    Task<List<TResult>> GetManyAsync<TResult, TSpecification>(TSpecification specification,
+        Expression<Func<TEntity, TResult>> selector,
+        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity, TValueObject>;
+
+    #endregion
+
+
+    IRepository<TEntity, TValueObject> AsTracking();
 }

@@ -4,13 +4,10 @@ public class MediaItem : Entity<MediaItemId>
     public MediaItemType Type { get; set; }
     public string Url { get; set; } = string.Empty;
 
-    public static MediaItem Create(MediaItemType type, string url)
+    public static MediaItem? Create(MediaItemType type, string url) => new()
     {
-        return new MediaItem
-        {
-            Id = new(Guid.NewGuid()),
-            Type = type,
-            Url = url
-        };
-    }
+        Id = new(Guid.NewGuid()),
+        Type = type,
+        Url = url
+    };
 }

@@ -12,22 +12,22 @@ public class Moderator : AggregateRoot<ModeratorId>
     public User? User { get; set; }
     public Account? Account { get; set; }
 
-    public static Moderator Create(
-        string firstName,
-        string lastName,
-        Gender gender,
-        DateTime dateOfBirth,
-        string phoneNumber,
-        string policeId,
-        string province,
-        string email,
-        string password
+    public static Moderator? Create(
+            string firstName,
+            string lastName,
+            Gender gender,
+            DateTime dateOfBirth,
+            string phoneNumber,
+            string policeId,
+            string province,
+            string email,
+            string password
         )
     {
-        User user = User.Create(firstName, lastName, gender, dateOfBirth, phoneNumber);
-        Account account = Account.Create(email, password, true);
+        var user = User.Create(firstName, lastName, gender, dateOfBirth, phoneNumber);
+        var account = Account.Create(email, password, true);
 
-        return new Moderator
+        return new()
         {
             Id = new(Guid.NewGuid()),
             User = user,

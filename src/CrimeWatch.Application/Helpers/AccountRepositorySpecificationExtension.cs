@@ -5,7 +5,7 @@ internal static class AccountRepositorySpecificationExtension
 {
     public static async Task<Account?> GetAccountBySignInAsync(this IRepository<Account, AccountId> repository,
         string email, string password, CancellationToken cancellationToken)
-        => await repository.GetByAsync<AccountBySignIn>(new(email, password), cancellationToken);
+        => await repository.GetOneAsync<AccountBySignIn>(new(email, password), cancellationToken);
 
     public static async Task<bool> IsEmailUniqueAsync(this IRepository<Account, AccountId> repository,
         string email, CancellationToken cancellationToken)
