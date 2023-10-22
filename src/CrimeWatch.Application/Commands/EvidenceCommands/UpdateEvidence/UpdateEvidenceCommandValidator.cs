@@ -1,11 +1,13 @@
-﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.UpdateEvidence;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Commands.EvidenceCommands.UpdateEvidence;
 public class UpdateEvidenceCommandValidator : HttpContextValidator<UpdateEvidenceCommand>
 {
     private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
 
     public UpdateEvidenceCommandValidator(
-        IHttpContextAccessor httpContextAccessor,
-        IRepository<Evidence, EvidenceId> evidenceRepository) : base(httpContextAccessor)
+        IAuthenticationService authenticationService,
+        IRepository<Evidence, EvidenceId> evidenceRepository) : base(authenticationService)
     {
         _evidenceRepository = evidenceRepository;
         RuleFor(e => e)
@@ -15,6 +17,11 @@ public class UpdateEvidenceCommandValidator : HttpContextValidator<UpdateEvidenc
     }
 
     private async Task<bool> HasPermissions(UpdateEvidenceCommand command, CancellationToken cancellationToken)
-        => UserClaims.WitnessId != null
-            && await _evidenceRepository.HasPermissionsToEditAsync(command.Id, UserClaims.WitnessId, cancellationToken);
+    {
+        var result = _authenticationService.Authenticate();
+        return await result.Authorize<Task<bool>>(
+            async witnessId
+                => await _evidenceRepository.HasPermissionsToEditAsync(command.Id, witnessId, cancellationToken),
+            Task.FromResult(false));
+    }
 }

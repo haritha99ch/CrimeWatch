@@ -1,11 +1,13 @@
-﻿namespace CrimeWatch.Application.Commands.ReportCommands.ApproveReport;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Commands.ReportCommands.ApproveReport;
 public class ApproveReportCommandValidator : HttpContextValidator<ApproveReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 
     public ApproveReportCommandValidator(
-        IHttpContextAccessor httpContextAccessor,
-        IRepository<Report, ReportId> reportRepository) : base(httpContextAccessor)
+        IAuthenticationService authenticationService,
+        IRepository<Report, ReportId> reportRepository) : base(authenticationService)
     {
         _reportRepository = reportRepository;
         RuleFor(e => e)
@@ -16,10 +18,10 @@ public class ApproveReportCommandValidator : HttpContextValidator<ApproveReportC
 
     private async Task<bool> HasPermissions(ApproveReportCommand command, CancellationToken cancellationToken)
     {
-        if (!UserClaims.UserType.Equals(UserType.Moderator)) return false;
-        return
-            await _reportRepository.HasPermissionsToModerateAsync(command.ReportId, UserClaims.ModeratorId,
-                cancellationToken);
-
+        var result = _authenticationService.Authenticate();
+        return await result.Authorize<Task<bool>>(
+            async moderatorId => await _reportRepository.HasPermissionsToModerateAsync(command.ReportId,
+                moderatorId, cancellationToken),
+            Task.FromResult(false));
     }
 }

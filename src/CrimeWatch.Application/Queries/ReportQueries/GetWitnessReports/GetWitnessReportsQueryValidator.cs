@@ -1,8 +1,10 @@
-﻿namespace CrimeWatch.Application.Queries.ReportQueries.GetWitnessReports;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Queries.ReportQueries.GetWitnessReports;
 public class GetWitnessReportsQueryValidator : HttpContextValidator<GetWitnessReportsQuery>
 {
 
-    public GetWitnessReportsQueryValidator(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+    public GetWitnessReportsQueryValidator(IAuthenticationService authenticationService) : base(authenticationService)
     {
         RuleFor(e => e.WitnessId)
             .Must(HasPermissions)
@@ -11,5 +13,5 @@ public class GetWitnessReportsQueryValidator : HttpContextValidator<GetWitnessRe
     }
 
     private bool HasPermissions(WitnessId witnessId)
-        => UserClaims.WitnessId is not null && UserClaims.WitnessId.Equals(UserClaims.WitnessId);
+        => _authenticationService.Authenticate().Authorize(witnessId: witnessId.Equals);
 }

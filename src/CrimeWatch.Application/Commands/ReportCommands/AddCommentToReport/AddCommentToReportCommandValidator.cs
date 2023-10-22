@@ -1,11 +1,13 @@
-﻿namespace CrimeWatch.Application.Commands.ReportCommands.AddCommentToReport;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Commands.ReportCommands.AddCommentToReport;
 public class AddCommentToReportCommandValidator : HttpContextValidator<AddCommentToReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 
     public AddCommentToReportCommandValidator(
-        IHttpContextAccessor httpContextAccessor,
-        IRepository<Report, ReportId> reportRepository) : base(httpContextAccessor)
+        IAuthenticationService authenticationService,
+        IRepository<Report, ReportId> reportRepository) : base(authenticationService)
     {
         _reportRepository = reportRepository;
         RuleFor(e => e)
@@ -16,10 +18,10 @@ public class AddCommentToReportCommandValidator : HttpContextValidator<AddCommen
 
     private async Task<bool> HasPermissions(AddCommentToReportCommand command, CancellationToken cancellationToken)
     {
-        if (!UserClaims.UserType.Equals(UserType.Moderator)) return false;
-        return
-            await _reportRepository.HasPermissionsToModerateAsync(command.ReportId, UserClaims.ModeratorId,
-                cancellationToken);
-
+        var result = _authenticationService.Authenticate();
+        return await result.Authorize<Task<bool>>(
+            async moderatorId => await _reportRepository.HasPermissionsToModerateAsync(command.ReportId,
+                moderatorId, cancellationToken),
+            Task.FromResult(false))!;
     }
 }

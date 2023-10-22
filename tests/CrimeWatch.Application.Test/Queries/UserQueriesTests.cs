@@ -38,7 +38,7 @@ public class UserQueriesTests : CQRSTests
         var result = await _mediator.Send(query);
 
         // Assert
-        Assert.AreEqual(witness!.Id, result!.Id);
+        Assert.AreEqual(witness.Id, result.Id);
     }
 
     [TestMethod]
@@ -52,7 +52,7 @@ public class UserQueriesTests : CQRSTests
         var result = await _mediator.Send(query);
 
         // Assert
-        Assert.AreEqual(witness!.Id, result!.Id);
+        Assert.AreEqual(witness.Id, result.Id);
     }
 
     [TestMethod]
@@ -66,7 +66,7 @@ public class UserQueriesTests : CQRSTests
         var result = await _mediator.Send(query);
 
         // Assert
-        Assert.AreEqual(moderator!.Id, result!.Id);
+        Assert.AreEqual(moderator.Id, result.Id);
     }
 
     [TestMethod]
@@ -80,6 +80,6 @@ public class UserQueriesTests : CQRSTests
         var result = await _mediator.Send(query);
 
         // Assert
-        Assert.AreEqual(moderator!.Id, result!.Id);
+        Assert.AreEqual(moderator.Id, result.Id);
     }
 }

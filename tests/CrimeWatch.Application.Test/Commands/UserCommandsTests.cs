@@ -121,7 +121,7 @@ public class UserCommandsTests : CQRSTests
         _dbContext.ChangeTracker.Clear();
 
         // Act
-        UpdateWitnessCommand? command = new(
+        UpdateWitnessCommand command = new(
             witnessEntry.Entity.Id,
             FirstName: "UpdatedFirstName",
             LastName: "UpdatedLastName",

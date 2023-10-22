@@ -1,7 +1,9 @@
-﻿namespace CrimeWatch.Application.Commands.WitnessCommands.DeleteWitness;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Commands.WitnessCommands.DeleteWitness;
 public class DeleteWitnessCommandValidator : HttpContextValidator<DeleteWitnessCommand>
 {
-    public DeleteWitnessCommandValidator(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+    public DeleteWitnessCommandValidator(IAuthenticationService authenticationService) : base(authenticationService)
     {
         RuleFor(e => e.WitnessId)
             .Must(HasPermissions)
@@ -9,5 +11,7 @@ public class DeleteWitnessCommandValidator : HttpContextValidator<DeleteWitnessC
             .WithErrorCode(StatusCodes.Status401Unauthorized.ToString());
     }
 
-    private bool HasPermissions(WitnessId witnessId) => witnessId.Equals(UserClaims.WitnessId);
+    private bool HasPermissions(WitnessId witnessId)
+        => _authenticationService.Authenticate()
+            .Authorize(witnessId: witnessId.Equals);
 }

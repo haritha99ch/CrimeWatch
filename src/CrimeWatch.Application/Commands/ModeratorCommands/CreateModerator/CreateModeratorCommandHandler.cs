@@ -25,6 +25,6 @@ internal class CreateModeratorCommandHandler : IRequestHandler<CreateModeratorCo
                 request.Password
             );
 
-        return await _moderatorRepository.AddAsync(moderator, cancellationToken);
+        return await _moderatorRepository.AddAsync(moderator!, cancellationToken);
     }
 }

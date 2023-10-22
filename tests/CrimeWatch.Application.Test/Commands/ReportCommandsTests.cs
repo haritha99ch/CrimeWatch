@@ -13,7 +13,6 @@ namespace CrimeWatch.Application.Test.Commands;
 public class ReportCommandsTests : CQRSTests
 {
     private ReportId? ReportId { get; set; }
-    private MediaItemId? MediaItemId { get; set; }
 
     public ReportCommandsTests() : base("Reports") { }
 
@@ -26,7 +25,6 @@ public class ReportCommandsTests : CQRSTests
         var testReport = DataProvider.GetTestReports().FirstOrDefault()!;
         testReport.WitnessId = testWitness.Id;
         ReportId = testReport.Id;
-        MediaItemId = testReport.MediaItem!.Id;
         await _dbContext.Witness.AddAsync(testWitness);
         await _dbContext.Moderator.AddAsync(testModerator);
         await _dbContext.Report.AddAsync(testReport);
@@ -51,11 +49,11 @@ public class ReportCommandsTests : CQRSTests
         var mediaItem = DataProvider.GetTestFile();
 
         CreateReportCommand command = new(
-            WitnessId: witness!.Id,
+            witness!.Id,
             Title: "Sample Report Title",
             Description: "Sample Report Description",
-            Location: DataProvider.GetTestLocation(),
-            MediaItem: mediaItem
+            DataProvider.GetTestLocation(),
+            mediaItem
         );
 
         // Act
@@ -76,13 +74,13 @@ public class ReportCommandsTests : CQRSTests
         var newTitle = "Updated Title";
         var newDescription = "Updated Description";
         var newLocation = DataProvider.GetTestLocation();
-        var newMediaItem = MediaItem.Create(MediaItemType.Video, "url updated");
+        var newMediaItem = MediaItem.Create(MediaItemType.Video, url: "url updated");
 
         UpdateReportCommand command = new(
-            Id: ReportId!,
-            Title: newTitle,
-            Description: newDescription,
-            Location: newLocation,
+            ReportId!,
+            newTitle,
+            newDescription,
+            newLocation,
             newMediaItem
         );
 

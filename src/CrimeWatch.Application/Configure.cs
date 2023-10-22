@@ -19,7 +19,7 @@ public static class Configure
         services.AddInfrastructure();
         services.AddBlobService();
         services.AddTransient<IFileStorageService, BlobStorageService>();
-        services.AddTransient<IAuthenticationService, AuthenticationService>();
+        services.AddTransient<IAuthenticationService, JwtAuthenticationService>();
         services.AddCqrs();
     }
 

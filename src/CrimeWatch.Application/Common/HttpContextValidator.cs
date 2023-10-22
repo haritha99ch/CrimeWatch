@@ -1,14 +1,12 @@
-﻿namespace CrimeWatch.Application.Common;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Common;
 public abstract class HttpContextValidator<TRequest> : AbstractValidator<TRequest> where TRequest : IBaseRequest
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    protected readonly UserClaims UserClaims;
+    protected readonly IAuthenticationService _authenticationService;
 
-    protected HttpContextValidator(IHttpContextAccessor httpContextAccessor)
+    protected HttpContextValidator(IAuthenticationService authenticationService)
     {
-        _httpContextAccessor = httpContextAccessor;
-        UserClaims = HttpContext.GetUserClaims();
+        _authenticationService = authenticationService;
     }
-
-    private HttpContext HttpContext => _httpContextAccessor.HttpContext ?? throw new("Not an API");
 }

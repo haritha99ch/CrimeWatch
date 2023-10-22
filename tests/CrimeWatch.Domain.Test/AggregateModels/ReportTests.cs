@@ -8,14 +8,18 @@ public class ReportTests
     private readonly WitnessId _authorId = new(new());
     private readonly string _title = "Suspicious Activity";
     private readonly string _description = "Report of suspicious activity in the neighborhood.";
-    private readonly Location _location = Location.Create(null, "123 Main St", null, "Cityville", "Stateville");
-    private readonly MediaItem _mediaItem = MediaItem.Create(MediaItemType.Image, "https://example.com/image.jpg");
+
+    private readonly Location _location =
+        Location.Create(null, street1: "123 Main St", null, city: "Cityville", province: "Stateville");
+
+    private readonly MediaItem
+        _mediaItem = MediaItem.Create(MediaItemType.Image, url: "https://example.com/image.jpg")!;
 
     [TestMethod]
     public void ReportCreate_ReturnsValidReport()
     {
         // Act
-        Report report = Report.Create(_authorId, _title, _description, _location, _mediaItem);
+        var report = Report.Create(_authorId, _title, _description, _location, _mediaItem);
 
         // Assert
         Assert.IsNotNull(report);
@@ -33,13 +37,13 @@ public class ReportTests
         var report = Report.Create(_authorId, _title, _description, _location, _mediaItem);
         WitnessId authorId = new(new());
         ReportId reportId = new(new());
-        string caption = "Evidence Caption";
-        string description = "Details about the evidence.";
-        Location location = Location.Create(null, "456 Elm St", null, "Townsville", "Stateville");
+        var caption = "Evidence Caption";
+        var description = "Details about the evidence.";
+        var location = Location.Create(null, street1: "456 Elm St", null, city: "Townsville", province: "Stateville");
         List<MediaItem> mediaItems = new();
 
         // Act
-        Evidence evidence = Evidence.Create(authorId, reportId, caption, description, location, mediaItems);
+        var evidence = Evidence.Create(authorId, reportId, caption, description, location, mediaItems);
 
         // Act
         report.AddEvidence(evidence);

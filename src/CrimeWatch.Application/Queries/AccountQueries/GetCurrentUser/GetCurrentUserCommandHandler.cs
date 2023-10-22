@@ -21,8 +21,9 @@ internal class GetCurrentUserCommandHandler
         CancellationToken cancellationToken)
     {
         var result = _authenticationService.Authenticate();
-        if (result.Item1)
-            return await _mediator.Send(new GetModeratorByIdQuery(new(new(result.Item2!))), cancellationToken);
-        return await _mediator.Send(new GetWitnessByIdQuery(new(new(result.Item2!))), cancellationToken);
+        return await result.Authorize<Task<ModeratorOrWitness>>(
+            async m => await _mediator.Send(new GetModeratorByIdQuery(m), cancellationToken),
+            async w => await _mediator.Send(new GetWitnessByIdQuery(w), cancellationToken),
+            _ => Task.FromResult<ModeratorOrWitness>("Not Found"));
     }
 }

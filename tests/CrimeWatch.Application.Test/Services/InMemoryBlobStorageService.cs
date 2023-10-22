@@ -21,10 +21,10 @@ internal class InMemoryBlobStorageService : IFileStorageService
 
     public async Task<MediaItem> SaveFileAsync(IFormFile file, WitnessId witnessId, CancellationToken cancellationToken)
     {
-        string fileExtension = Path.GetExtension(file.FileName);
-        string fileName = $"{Guid.NewGuid()}{fileExtension}";
+        var fileExtension = Path.GetExtension(file.FileName);
+        var fileName = $"{Guid.NewGuid()}{fileExtension}";
 
-        MediaItemType mediaItemType = file.ContentType switch
+        var mediaItemType = file.ContentType switch
         {
             "image/jpeg" => MediaItemType.Image,
             "image/png" => MediaItemType.Image,
@@ -33,11 +33,9 @@ internal class InMemoryBlobStorageService : IFileStorageService
         };
 
         MemoryStream memoryStream = new();
-        await file.CopyToAsync(memoryStream);
+        await file.CopyToAsync(memoryStream, cancellationToken);
         _storage.Add(fileName, memoryStream);
 
-        string url = fileName;
-
-        return MediaItem.Create(mediaItemType, url);
+        return MediaItem.Create(mediaItemType, fileName)!;
     }
 }

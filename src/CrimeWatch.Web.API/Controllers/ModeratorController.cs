@@ -15,7 +15,7 @@ public class ModeratorController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("Get/{moderatorId}")]
+    [HttpGet($"{nameof(Get)}/{{{nameof(moderatorId)}}}")]
     public async Task<ActionResult<Moderator>> Get([FromRoute] Guid moderatorId)
     {
         // Authorized
@@ -26,7 +26,7 @@ public class ModeratorController : ControllerBase
             : NotFound("Moderator Not Found!");
     }
 
-    [HttpGet("GetReports/{moderatorId}")]
+    [HttpGet($"{nameof(GetReports)}/{{{nameof(moderatorId)}}}")]
     public async Task<ActionResult<List<Report>>> GetReports([FromRoute] Guid moderatorId)
     {
         // Authorized
@@ -35,7 +35,7 @@ public class ModeratorController : ControllerBase
         return Ok(reports);
     }
 
-    [HttpPatch("Update")]
+    [HttpPatch(nameof(Update))]
     public async Task<ActionResult<Witness>> Update([FromBody] UpdateModeratorCommand command)
     {
         // Authorized
@@ -43,7 +43,7 @@ public class ModeratorController : ControllerBase
         return Ok(moderator);
     }
 
-    [HttpDelete("Delete/{moderatorId}")]
+    [HttpDelete($"{nameof(Delete)}/{{{nameof(moderatorId)}}}")]
     public async Task<ActionResult<bool>> Delete([FromRoute] Guid moderatorId)
     {
         DeleteModeratorCommand command = new(new(moderatorId));

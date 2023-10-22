@@ -21,7 +21,7 @@ public class ReportController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("Create")]
+    [HttpPost(nameof(Create))]
     public async Task<ActionResult<Report>> Create([FromForm] CreateReportCommand command)
     {
         // Authorized
@@ -29,7 +29,7 @@ public class ReportController : ControllerBase
         return Ok(newReport);
     }
 
-    [HttpGet("Get")]
+    [HttpGet(nameof(Get))]
     [AllowAnonymous]
     public async Task<ActionResult<List<Report>>> Get()
     {
@@ -41,7 +41,7 @@ public class ReportController : ControllerBase
         return Ok(reports);
     }
 
-    [HttpGet("Get/{reportId}")]
+    [HttpGet($"{nameof(Get)}/{{{nameof(reportId)}}}")]
     [AllowAnonymous]
     public async Task<ActionResult<Report>> Get([FromRoute] Guid reportId)
     {
@@ -54,7 +54,7 @@ public class ReportController : ControllerBase
             : NotFound("Report Not Found!");
     }
 
-    [HttpPatch("Update")]
+    [HttpPatch(nameof(Update))]
     public async Task<ActionResult<Report>> Update([FromForm] UpdateReportCommand command)
     {
         // Authorized
@@ -65,7 +65,7 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
-    [HttpPatch("Moderate")]
+    [HttpPatch(nameof(Moderate))]
     public async Task<ActionResult<Report>> Moderate([FromBody] ModerateReportCommand command)
     {
         // Authorize
@@ -73,7 +73,7 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
-    [HttpPatch("Approve")]
+    [HttpPatch(nameof(Approve))]
     public async Task<ActionResult<Report>> Approve([FromBody] ApproveReportCommand command)
     {
         // Authorize
@@ -82,7 +82,7 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
-    [HttpPatch("Decline")]
+    [HttpPatch(nameof(Decline))]
     public async Task<ActionResult<Report>> Decline([FromBody] DeclineReportCommand command)
     {
         // Authorize
@@ -91,7 +91,7 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
-    [HttpPatch("Revert")]
+    [HttpPatch(nameof(Revert))]
     public async Task<ActionResult<Report>> Revert([FromBody] RevertReportToReviewCommand command)
     {
         // Authorize
@@ -100,7 +100,7 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
-    [HttpPost("Comment")]
+    [HttpPost(nameof(Comment))]
     public async Task<ActionResult<Report>> Comment([FromBody] AddCommentToReportCommand command)
     {
         // Authorize
@@ -109,7 +109,7 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
-    [HttpDelete("Delete/{reportId}")]
+    [HttpDelete($"{nameof(Delete)}/{{{nameof(reportId)}}}")]
     public async Task<ActionResult<bool>> Delete([FromRoute] Guid reportId)
     {
         DeleteReportCommand command = new(new(reportId));

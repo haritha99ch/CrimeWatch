@@ -15,7 +15,7 @@ public class WitnessController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("Get/{witnessId}")]
+    [HttpGet($"{nameof(Get)}/{{{nameof(witnessId)}}}")]
     public async Task<ActionResult<Witness>> Get([FromRoute] Guid witnessId)
     {
         GetWitnessByIdQuery query = new(new(witnessId));
@@ -25,7 +25,7 @@ public class WitnessController : ControllerBase
             : NotFound("Witness Not Found!");
     }
 
-    [HttpGet("GetReports/{witnessId}")]
+    [HttpGet($"{nameof(GetReports)}/{{{nameof(witnessId)}}}")]
     public async Task<ActionResult<List<Report>>> GetReports([FromRoute] Guid witnessId)
     {
         GetWitnessReportsQuery query = new(new(witnessId));
@@ -33,7 +33,7 @@ public class WitnessController : ControllerBase
         return Ok(reports);
     }
 
-    [HttpPatch("Update")]
+    [HttpPatch(nameof(Update))]
     public async Task<ActionResult<Witness>> Update([FromBody] UpdateWitnessCommand command)
     {
         // Authorized
@@ -41,7 +41,7 @@ public class WitnessController : ControllerBase
         return Ok(witness);
     }
 
-    [HttpDelete("Delete/{witnessId}")]
+    [HttpDelete($"{nameof(Delete)}/{{{nameof(witnessId)}}}")]
     public async Task<ActionResult<bool>> Delete([FromRoute] Guid witnessId)
     {
         DeleteWitnessCommand command = new(new(witnessId));

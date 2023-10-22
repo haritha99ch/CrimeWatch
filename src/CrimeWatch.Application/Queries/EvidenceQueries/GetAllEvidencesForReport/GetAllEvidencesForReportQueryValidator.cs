@@ -1,9 +1,11 @@
-﻿namespace CrimeWatch.Application.Queries.EvidenceQueries.GetAllEvidencesForReport;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Queries.EvidenceQueries.GetAllEvidencesForReport;
 public sealed class GetAllEvidencesForReportQueryValidator : HttpContextValidator<GetAllEvidencesForReportQuery>
 {
     public GetAllEvidencesForReportQueryValidator(
-        IHttpContextAccessor httpContextAccessor,
-        IOptions<AppOptions> appOptions) : base(httpContextAccessor)
+        IAuthenticationService authenticationService,
+        IOptions<AppOptions> appOptions) : base(authenticationService)
     {
         if (!appOptions.Value.ModeratedContent) return;
         RuleFor(e => e)
@@ -12,5 +14,6 @@ public sealed class GetAllEvidencesForReportQueryValidator : HttpContextValidato
             .WithErrorCode(StatusCodes.Status401Unauthorized.ToString());
     }
 
-    private bool HasPermissions(GetAllEvidencesForReportQuery query) => UserClaims.UserType.Equals(UserType.Moderator);
+    private bool HasPermissions(GetAllEvidencesForReportQuery query)
+        => _authenticationService.Authenticate().IsModerator;
 }

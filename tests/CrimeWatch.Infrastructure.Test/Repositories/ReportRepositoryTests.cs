@@ -1,5 +1,4 @@
 ﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 
 namespace CrimeWatch.Infrastructure.Test.Repositories;
 [TestClass]
@@ -18,7 +17,7 @@ public class ReportRepositoryTests : RepositoryTests
     public async Task TestInitializeAsync()
     {
         // Add test data to the in-memory database
-        Witness testWitness = DataProvider.GetTestWitness().FirstOrDefault()!;
+        var testWitness = DataProvider.GetTestWitness().FirstOrDefault()!;
         await _dbContext.Witness.AddAsync(testWitness);
         await _dbContext.SaveChangesAsync();
     }
@@ -36,12 +35,12 @@ public class ReportRepositoryTests : RepositoryTests
     public async Task AddAsync_Should_Add_Report_To_Context()
     {
         // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
+        var testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        var report = DataProvider.GetTestReports().FirstOrDefault()!;
         report.WitnessId = testWitness!.Id;
 
         // Act
-        Report? addedReport = await _repository.AddAsync(report);
+        var addedReport = await _repository.AddAsync(report);
 
         // Assert
         Assert.AreSame(report, addedReport);
@@ -52,12 +51,12 @@ public class ReportRepositoryTests : RepositoryTests
     public async Task CountAsync_Should_Return_Count_Of_Reports()
     {
         // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report1 = DataProvider.GetTestReports().FirstOrDefault()!;
+        var testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        var report1 = DataProvider.GetTestReports().FirstOrDefault()!;
         report1.WitnessId = testWitness!.Id;
 
-        Report report2 = DataProvider.GetTestReports().FirstOrDefault()!;
-        report2.WitnessId = testWitness!.Id;
+        var report2 = DataProvider.GetTestReports().FirstOrDefault()!;
+        report2.WitnessId = testWitness.Id;
 
         await _repository.AddAsync(report1);
         await _repository.AddAsync(report2);
@@ -73,8 +72,8 @@ public class ReportRepositoryTests : RepositoryTests
     public async Task DeleteByIdAsync_Should_Delete_Report_From_Context()
     {
         // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
+        var testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        var report = DataProvider.GetTestReports().FirstOrDefault()!;
         report.WitnessId = testWitness!.Id;
         await _repository.AddAsync(report);
 
@@ -101,18 +100,18 @@ public class ReportRepositoryTests : RepositoryTests
     public async Task GetAllAsync_Should_Return_All_Reports()
     {
         // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report1 = DataProvider.GetTestReports().FirstOrDefault()!;
+        var testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        var report1 = DataProvider.GetTestReports().FirstOrDefault()!;
         report1.WitnessId = testWitness!.Id;
 
-        Report report2 = DataProvider.GetTestReports().FirstOrDefault()!;
-        report2.WitnessId = testWitness!.Id;
+        var report2 = DataProvider.GetTestReports().FirstOrDefault()!;
+        report2.WitnessId = testWitness.Id;
 
         await _repository.AddAsync(report1);
         await _repository.AddAsync(report2);
 
         // Act
-        List<Report>? reports = await _repository.GetAllAsync();
+        var reports = await _repository.GetAllAsync();
 
         // Assert
         Assert.AreEqual(2, reports.Count);
@@ -125,13 +124,13 @@ public class ReportRepositoryTests : RepositoryTests
     public async Task GetByIdAsync_Should_Return_Report_By_Id()
     {
         // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
+        var testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        var report = DataProvider.GetTestReports().FirstOrDefault()!;
         report.WitnessId = testWitness!.Id;
         await _repository.AddAsync(report);
 
         // Act
-        Report? retrievedReport = await _repository.GetByIdAsync(report.Id);
+        var retrievedReport = await _repository.GetByIdAsync(report.Id);
 
         // Assert
         Assert.IsNotNull(retrievedReport);
@@ -142,12 +141,12 @@ public class ReportRepositoryTests : RepositoryTests
     public async Task UpdateAsync_Should_Update_Report_In_Context()
     {
         // Arrange
-        Witness? testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
-        Report report = DataProvider.GetTestReports().FirstOrDefault()!;
+        var testWitness = await _dbContext.Witness.FirstOrDefaultAsync();
+        var report = DataProvider.GetTestReports().FirstOrDefault()!;
         report.WitnessId = testWitness!.Id;
         report = await _repository.AddAsync(report);
 
-        Report? updatedReport = report;
+        var updatedReport = report;
         updatedReport.Title = "Updated Caption";
         updatedReport.Description = "Updated Description";
 

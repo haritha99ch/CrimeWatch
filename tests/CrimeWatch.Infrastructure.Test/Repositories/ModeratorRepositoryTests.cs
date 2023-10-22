@@ -25,10 +25,10 @@ public class ModeratorRepositoryTests : RepositoryTests
     public async Task AddAsync_Should_Add_Moderator_To_Context()
     {
         // Arrange
-        Moderator moderator = DataProvider.GetTestModerators().First();
+        var moderator = DataProvider.GetTestModerators().First();
 
         // Act
-        Moderator addedModerator = await _repository.AddAsync(moderator);
+        var addedModerator = await _repository.AddAsync(moderator);
 
         // Assert
         Assert.AreSame(moderator, addedModerator);
@@ -38,11 +38,11 @@ public class ModeratorRepositoryTests : RepositoryTests
     public async Task GetByIdAsync_Should_Return_Moderator_By_Id()
     {
         // Arrange
-        Moderator moderator = DataProvider.GetTestModerators().First();
+        var moderator = DataProvider.GetTestModerators().First();
         await _repository.AddAsync(moderator);
 
         // Act
-        Moderator? retrievedModerator = await _repository.GetByIdAsync(moderator.Id);
+        var retrievedModerator = await _repository.GetByIdAsync(moderator.Id);
 
         // Assert
         Assert.IsNotNull(retrievedModerator);
@@ -53,14 +53,14 @@ public class ModeratorRepositoryTests : RepositoryTests
     public async Task GetAllAsync_Should_Return_All_Moderators()
     {
         // Arrange
-        Moderator moderator1 = DataProvider.GetTestModerators().First();
-        Moderator moderator2 = DataProvider.GetTestModerators().Last();
+        var moderator1 = DataProvider.GetTestModerators().First();
+        var moderator2 = DataProvider.GetTestModerators().Last();
 
         await _repository.AddAsync(moderator1);
         await _repository.AddAsync(moderator2);
 
         // Act
-        List<Moderator>? moderators = await _repository.GetAllAsync();
+        var moderators = await _repository.GetAllAsync();
 
         // Assert
         Assert.AreEqual(2, moderators.Count);
@@ -72,8 +72,8 @@ public class ModeratorRepositoryTests : RepositoryTests
     public async Task CountAsync_Should_Return_Count_Of_Moderators()
     {
         // Arrange
-        Moderator moderator1 = DataProvider.GetTestModerators().First();
-        Moderator moderator2 = DataProvider.GetTestModerators().Last();
+        var moderator1 = DataProvider.GetTestModerators().First();
+        var moderator2 = DataProvider.GetTestModerators().Last();
 
         await _repository.AddAsync(moderator1);
         await _repository.AddAsync(moderator2);
@@ -89,10 +89,10 @@ public class ModeratorRepositoryTests : RepositoryTests
     public async Task UpdateAsync_Should_Update_Moderator_In_Context()
     {
         // Arrange
-        Moderator testModerator = DataProvider.GetTestModerators().First();
+        var testModerator = DataProvider.GetTestModerators().First();
         await _repository.AddAsync(testModerator);
 
-        Moderator updatedModerator = testModerator;
+        var updatedModerator = testModerator;
         updatedModerator.Province = "Updated Province";
 
         // Act
@@ -106,7 +106,7 @@ public class ModeratorRepositoryTests : RepositoryTests
     public async Task DeleteByIdAsync_Should_Delete_Moderator_From_Context()
     {
         // Arrange
-        Moderator testModerator = DataProvider.GetTestModerators().First();
+        var testModerator = DataProvider.GetTestModerators().First();
         await _repository.AddAsync(testModerator);
 
         // Act
@@ -122,7 +122,7 @@ public class ModeratorRepositoryTests : RepositoryTests
     public async Task DeleteByIdAsync_Should_Return_False_If_Moderator_Not_Found()
     {
         // Act
-        var isDeleted = await _repository.DeleteByIdAsync(new ModeratorId(Guid.NewGuid()));
+        var isDeleted = await _repository.DeleteByIdAsync(new(Guid.NewGuid()));
 
         // Assert
         Assert.IsFalse(isDeleted);

@@ -1,11 +1,13 @@
-﻿namespace CrimeWatch.Application.Queries.ReportQueries.GetReport;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Queries.ReportQueries.GetReport;
 public class GetReportQueryValidator : HttpContextValidator<GetReportQuery>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 
-    public GetReportQueryValidator(IHttpContextAccessor httpContextAccessor,
+    public GetReportQueryValidator(IAuthenticationService authenticationService,
         IRepository<Report, ReportId> reportRepository,
-        IOptions<AppOptions> appOptions) : base(httpContextAccessor)
+        IOptions<AppOptions> appOptions) : base(authenticationService)
     {
         _reportRepository = reportRepository;
         if (!appOptions.Value.ModeratedContent) return;
@@ -21,7 +23,9 @@ public class GetReportQueryValidator : HttpContextValidator<GetReportQuery>
             await _reportRepository.GetByIdAsync(reportId, e => new { e.Status, e.WitnessId }, cancellationToken);
 
         if (report is null) return false;
-        if (UserClaims.UserType.Equals(UserType.Moderator)) return true;
-        return !report.Status.Equals(Status.Pending) || report.WitnessId.Equals(UserClaims.WitnessId);
+        var result = _authenticationService.Authenticate();
+        if (result.IsModerator) return true;
+        return !report.Status.Equals(Status.Pending)
+            || result.Authorize(witnessId: report.WitnessId.Equals);
     }
 }

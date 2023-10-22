@@ -1,11 +1,13 @@
-﻿namespace CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Commands.ReportCommands.DeleteReport;
 public class DeleteReportCommandValidator : HttpContextValidator<DeleteReportCommand>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 
     public DeleteReportCommandValidator(
-        IHttpContextAccessor httpContextAccessor,
-        IRepository<Report, ReportId> reportRepository) : base(httpContextAccessor)
+        IAuthenticationService authenticationService,
+        IRepository<Report, ReportId> reportRepository) : base(authenticationService)
     {
         _reportRepository = reportRepository;
         RuleFor(e => e)
@@ -15,6 +17,11 @@ public class DeleteReportCommandValidator : HttpContextValidator<DeleteReportCom
     }
 
     private async Task<bool> HasPermissions(DeleteReportCommand command, CancellationToken cancellationToken)
-        => UserClaims.WitnessId != null
-            && await _reportRepository.HasPermissionsToEditAsync(command.Id, UserClaims.WitnessId, cancellationToken);
+    {
+        var result = _authenticationService.Authenticate();
+        return await result.Authorize<Task<bool>>(
+            async witnessId => await _reportRepository.HasPermissionsToEditAsync(command.Id, witnessId,
+                cancellationToken),
+            Task.FromResult(false));
+    }
 }

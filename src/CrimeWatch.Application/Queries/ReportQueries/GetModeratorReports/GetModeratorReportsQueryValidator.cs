@@ -1,8 +1,10 @@
-﻿namespace CrimeWatch.Application.Queries.ReportQueries.GetModeratorReports;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Queries.ReportQueries.GetModeratorReports;
 public class GetModeratorReportsQueryValidator : HttpContextValidator<GetModeratorReportsQuery>
 {
 
-    public GetModeratorReportsQueryValidator(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+    public GetModeratorReportsQueryValidator(IAuthenticationService authenticationService) : base(authenticationService)
     {
         RuleFor(e => e.ModeratorId)
             .Must(HasPermissions)
@@ -11,5 +13,6 @@ public class GetModeratorReportsQueryValidator : HttpContextValidator<GetModerat
     }
 
     private bool HasPermissions(ModeratorId moderatorId)
-        => UserClaims.ModeratorId is not null && moderatorId.Equals(UserClaims.ModeratorId);
+        => _authenticationService.Authenticate()
+            .Authorize(moderatorId: moderatorId.Equals);
 }

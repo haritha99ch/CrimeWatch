@@ -20,7 +20,7 @@ public class EvidenceController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("Create")]
+    [HttpPost(nameof(Create))]
     public async Task<ActionResult<Evidence>> Create([FromForm] CreateEvidenceCommand command)
     {
         // Authorize
@@ -29,7 +29,7 @@ public class EvidenceController : ControllerBase
         return Ok(newEvidence);
     }
 
-    [HttpGet("GetAllForReport/{reportId}")]
+    [HttpGet($"{nameof(GetAllForReport)}/{{{nameof(reportId)}}}")]
     public async Task<ActionResult<List<Evidence>>> GetAllForReport([FromRoute] Guid reportId)
     {
         // Authorize
@@ -39,10 +39,10 @@ public class EvidenceController : ControllerBase
         return Ok(evidence);
     }
 
-    [HttpGet("Get/{evidenceId}")]
+    [HttpGet($"{nameof(Get)}/{{{nameof(evidenceId)}}}")]
     public Task<ActionResult<Evidence>> Get([FromRoute] Guid evidenceId) => throw new NotImplementedException();
 
-    [HttpPatch("Update")]
+    [HttpPatch(nameof(Update))]
     public async Task<ActionResult<Evidence>> Update([FromForm] UpdateEvidenceCommand command)
     {
         // Authorized
@@ -51,7 +51,7 @@ public class EvidenceController : ControllerBase
         return Ok(updatedEvidence);
     }
 
-    [HttpPatch("Moderate")]
+    [HttpPatch(nameof(Moderate))]
     public async Task<ActionResult<Evidence>> Moderate([FromBody] ModerateEvidenceCommand command)
     {
         // Authorize
@@ -59,7 +59,7 @@ public class EvidenceController : ControllerBase
         return Ok(evidence);
     }
 
-    [HttpPatch("Approve")]
+    [HttpPatch(nameof(Approve))]
     public async Task<ActionResult<Evidence>> Approve([FromBody] ApproveEvidenceCommand command)
     {
         // Authorize
@@ -68,7 +68,7 @@ public class EvidenceController : ControllerBase
         return Ok(evidence);
     }
 
-    [HttpPatch("Decline")]
+    [HttpPatch(nameof(Decline))]
     public async Task<ActionResult<Evidence>> Decline([FromBody] DeclineEvidenceCommand command)
     {
         // Authorize
@@ -77,7 +77,7 @@ public class EvidenceController : ControllerBase
         return Ok(evidence);
     }
 
-    [HttpPatch("Revert")]
+    [HttpPatch(nameof(Revert))]
     public async Task<ActionResult<Evidence>> Revert([FromBody] RevertEvidenceToReviewCommand command)
     {
         // Authorize
@@ -86,7 +86,7 @@ public class EvidenceController : ControllerBase
         return Ok(evidence);
     }
 
-    [HttpPost("Comment")]
+    [HttpPost(nameof(Comment))]
     public async Task<ActionResult<Evidence>> Comment([FromBody] AddCommentToEvidenceCommand command)
     {
         // Authorize
@@ -95,7 +95,7 @@ public class EvidenceController : ControllerBase
         return Ok(evidence);
     }
 
-    [HttpDelete("Delete/{evidenceId}")]
+    [HttpDelete($"{nameof(Delete)}/{{{nameof(evidenceId)}}}")]
     public async Task<ActionResult<bool>> Delete([FromRoute] Guid evidenceId)
     {
         DeleteEvidenceCommand command = new(new(evidenceId));

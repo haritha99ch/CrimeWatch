@@ -9,14 +9,17 @@ public class EvidenceTests
     private readonly ReportId _reportId = new(new());
     private readonly string _caption = "Evidence Caption";
     private readonly string _description = "Details about the evidence.";
-    private readonly Location _location = Location.Create(null, "456 Elm St", null, "Townsville", "Stateville");
+
+    private readonly Location _location =
+        Location.Create(null, street1: "456 Elm St", null, city: "Townsville", province: "Stateville");
+
     private readonly List<MediaItem> _mediaItems = new();
 
     [TestMethod]
     public void EvidenceCreate_ReturnsValidEvidence()
     {
         // Act
-        Evidence evidence = Evidence.Create(_authorId, _reportId, _caption, _description, _location, _mediaItems);
+        var evidence = Evidence.Create(_authorId, _reportId, _caption, _description, _location, _mediaItems);
 
         // Assert
         Assert.IsNotNull(evidence);
@@ -30,11 +33,11 @@ public class EvidenceTests
     public void AddMediaItem_MediaItemCountIncrease()
     {
         // Arrange
-        Evidence evidence = Evidence.Create(_authorId, _reportId, _caption, _description, _location, _mediaItems);
-        MediaItem _mediaItem = MediaItem.Create(MediaItemType.Image, "https://example.com/image.jpg");
+        var evidence = Evidence.Create(_authorId, _reportId, _caption, _description, _location, _mediaItems);
+        var mediaItem = MediaItem.Create(MediaItemType.Image, url: "https://example.com/image.jpg")!;
 
         // Act
-        evidence.AddMediaItem(_mediaItem);
+        evidence.AddMediaItem(mediaItem);
 
         // Assert
         Assert.AreEqual(1, evidence.MediaItems.Count);

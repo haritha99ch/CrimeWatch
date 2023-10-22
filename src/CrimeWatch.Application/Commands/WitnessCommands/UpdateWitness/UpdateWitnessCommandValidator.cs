@@ -1,7 +1,9 @@
-﻿namespace CrimeWatch.Application.Commands.WitnessCommands.UpdateWitness;
+﻿using CrimeWatch.Application.Contracts.Services;
+
+namespace CrimeWatch.Application.Commands.WitnessCommands.UpdateWitness;
 public class UpdateWitnessCommandValidator : HttpContextValidator<UpdateWitnessCommand>
 {
-    public UpdateWitnessCommandValidator(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+    public UpdateWitnessCommandValidator(IAuthenticationService authenticationService) : base(authenticationService)
     {
         RuleFor(e => e.Id)
             .Must(HasPermissions)
@@ -9,5 +11,7 @@ public class UpdateWitnessCommandValidator : HttpContextValidator<UpdateWitnessC
             .WithErrorCode(StatusCodes.Status401Unauthorized.ToString());
     }
 
-    private bool HasPermissions(WitnessId witnessId) => witnessId.Equals(UserClaims.WitnessId);
+    private bool HasPermissions(WitnessId witnessId)
+        => _authenticationService.Authenticate()
+            .Authorize(witnessId: witnessId.Equals);
 }

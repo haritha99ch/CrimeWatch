@@ -1,5 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.UserAggregate;
-using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
+﻿using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 
 namespace CrimeWatch.Infrastructure.Test.Repositories;
 [TestClass]
@@ -18,7 +17,7 @@ public class WitnessEntityRepositoryTests : RepositoryTests
     public async Task TestInitializeAsync()
     {
         // Add test data to the in-memory database
-        User testUser = DataProvider.GetTestUsers().FirstOrDefault()!;
+        var testUser = DataProvider.GetTestUsers().FirstOrDefault()!;
         await _dbContext.User.AddAsync(testUser);
         await _dbContext.SaveChangesAsync();
     }
@@ -36,12 +35,12 @@ public class WitnessEntityRepositoryTests : RepositoryTests
     public async Task AddAsync_Should_Add_Witness_To_Context()
     {
         // Arrange
-        User? testUser = await _dbContext.User.FirstOrDefaultAsync();
-        Witness witness = DataProvider.GetTestWitness().FirstOrDefault()!;
+        var testUser = await _dbContext.User.FirstOrDefaultAsync();
+        var witness = DataProvider.GetTestWitness().FirstOrDefault()!;
         witness.UserId = testUser!.Id;
 
         // Act
-        Witness? addedWitness = await _repository.AddAsync(witness);
+        var addedWitness = await _repository.AddAsync(witness);
 
         // Assert
         Assert.AreSame(witness, addedWitness);
@@ -51,13 +50,13 @@ public class WitnessEntityRepositoryTests : RepositoryTests
     public async Task GetByIdAsync_Should_Return_Witness_By_Id()
     {
         // Arrange
-        User? testUser = await _dbContext.User.FirstOrDefaultAsync();
-        Witness witness = DataProvider.GetTestWitness().FirstOrDefault()!;
+        var testUser = await _dbContext.User.FirstOrDefaultAsync();
+        var witness = DataProvider.GetTestWitness().FirstOrDefault()!;
         witness.UserId = testUser!.Id;
         await _repository.AddAsync(witness);
 
         // Act
-        Witness? retrievedWitness = await _repository.GetByIdAsync(witness.Id);
+        var retrievedWitness = await _repository.GetByIdAsync(witness.Id);
 
         // Assert
         Assert.IsNotNull(retrievedWitness);
@@ -68,18 +67,18 @@ public class WitnessEntityRepositoryTests : RepositoryTests
     public async Task GetAllAsync_Should_Return_All_Witnesses()
     {
         // Arrange
-        User? testUser = await _dbContext.User.FirstOrDefaultAsync();
-        Witness witness1 = DataProvider.GetTestWitness().FirstOrDefault()!;
+        var testUser = await _dbContext.User.FirstOrDefaultAsync();
+        var witness1 = DataProvider.GetTestWitness().FirstOrDefault()!;
         witness1.UserId = testUser!.Id;
 
-        Witness witness2 = DataProvider.GetTestWitness().LastOrDefault()!;
-        witness2.UserId = testUser!.Id;
+        var witness2 = DataProvider.GetTestWitness().LastOrDefault()!;
+        witness2.UserId = testUser.Id;
 
         await _repository.AddAsync(witness1);
         await _repository.AddAsync(witness2);
 
         // Act
-        List<Witness>? witnesses = await _repository.GetAllAsync();
+        var witnesses = await _repository.GetAllAsync();
 
         // Assert
         Assert.AreEqual(2, witnesses.Count);
@@ -91,12 +90,12 @@ public class WitnessEntityRepositoryTests : RepositoryTests
     public async Task CountAsync_Should_Return_Count_Of_Witnesses()
     {
         // Arrange
-        User? testUser = await _dbContext.User.FirstOrDefaultAsync();
-        Witness witness1 = DataProvider.GetTestWitness().FirstOrDefault()!;
+        var testUser = await _dbContext.User.FirstOrDefaultAsync();
+        var witness1 = DataProvider.GetTestWitness().FirstOrDefault()!;
         witness1.UserId = testUser!.Id;
 
-        Witness witness2 = DataProvider.GetTestWitness().LastOrDefault()!;
-        witness2.UserId = testUser!.Id;
+        var witness2 = DataProvider.GetTestWitness().LastOrDefault()!;
+        witness2.UserId = testUser.Id;
 
         await _repository.AddAsync(witness1);
         await _repository.AddAsync(witness2);
@@ -112,8 +111,8 @@ public class WitnessEntityRepositoryTests : RepositoryTests
     public async Task DeleteByIdAsync_Should_Delete_Witness_From_Context()
     {
         // Arrange
-        User? testUser = await _dbContext.User.FirstOrDefaultAsync();
-        Witness witness = DataProvider.GetTestWitness().FirstOrDefault()!;
+        var testUser = await _dbContext.User.FirstOrDefaultAsync();
+        var witness = DataProvider.GetTestWitness().FirstOrDefault()!;
         witness.UserId = testUser!.Id;
         await _repository.AddAsync(witness);
 

@@ -65,7 +65,7 @@ public class ReportQueriesTests : CQRSTests
     public async Task GetWitnessReportQuery_Should_Return_WitnessReports()
     {
         // Arrange
-        var witness = await _dbContext.Witness.FirstOrDefaultAsync()!;
+        var witness = await _dbContext.Witness.FirstOrDefaultAsync();
         var report = DataProvider.GetTestReports().FirstOrDefault()!;
         report.WitnessId = witness!.Id;
 
@@ -83,8 +83,8 @@ public class ReportQueriesTests : CQRSTests
     public async Task GetModeratorReportQuery_Should_Return_WitnessReports()
     {
         // Arrange
-        var witness = await _dbContext.Witness.FirstOrDefaultAsync()!;
-        var moderator = await _dbContext.Moderator.FirstOrDefaultAsync()!;
+        var witness = await _dbContext.Witness.FirstOrDefaultAsync();
+        var moderator = await _dbContext.Moderator.FirstOrDefaultAsync();
         var report = DataProvider.GetTestReports().FirstOrDefault()!;
         report.ModeratorId = moderator!.Id;
         report.WitnessId = witness!.Id;

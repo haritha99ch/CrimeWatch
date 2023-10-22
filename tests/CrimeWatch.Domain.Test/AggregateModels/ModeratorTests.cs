@@ -8,18 +8,19 @@ public class ModeratorTests
     public void ModeratorCreate_ReturnsValidModerator()
     {
         // Arrange
-        string firstName = "Michael";
-        string lastName = "Smith";
-        Gender gender = Gender.Male;
+        var firstName = "Michael";
+        var lastName = "Smith";
+        var gender = Gender.Male;
         DateTime dateOfBirth = new(1988, 3, 25);
-        string phoneNumber = "555-123-4567";
-        string policeId = "P12345";
-        string province = "California";
-        string email = "moderator@example.com";
-        string password = "secureP@ss";
+        var phoneNumber = "555-123-4567";
+        var policeId = "P12345";
+        var province = "California";
+        var email = "moderator@example.com";
+        var password = "secureP@ss";
 
         // Act
-        Moderator moderator = Moderator.Create(firstName, lastName, gender, dateOfBirth, phoneNumber, policeId, province, email, password);
+        var moderator = Moderator.Create(firstName, lastName, gender, dateOfBirth, phoneNumber, policeId, province,
+            email, password)!;
 
         // Assert
         Assert.IsNotNull(moderator);

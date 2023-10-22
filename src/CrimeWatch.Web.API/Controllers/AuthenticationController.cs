@@ -15,33 +15,33 @@ public class AuthenticationController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("Witness/SignUp")]
+    [HttpPost($"{nameof(Witness)}/{nameof(SignUp)}")]
     public async Task<ActionResult<Witness>> SignUp([FromBody] CreateWitnessCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);
     }
 
-    [HttpPost("Moderator/SignUp")]
+    [HttpPost($"{nameof(Moderator)}/{nameof(SignUp)}")]
     public async Task<ActionResult<Moderator>> SignUp([FromBody] CreateModeratorCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);
     }
 
-    [HttpPost("SignIn")]
+    [HttpPost(nameof(SignIn))]
     public async Task<ActionResult> SignIn([FromBody] GetAccountBySignInQuery query)
     {
         var result = await _mediator.Send(query);
         return result is null ? NotFound("Account Not found!") : Ok(result);
     }
 
-    [HttpGet("GetCurrentUser")]
+    [HttpGet(nameof(GetCurrentUser))]
     [Authorize]
     public async Task<ActionResult> GetCurrentUser()
     {
         var result = await _mediator.Send(new GetCurrentUserCommand());
-        return result.Match<ActionResult>(Ok, Ok);
+        return result.Match<ActionResult>(Ok, Ok, NotFound);
     }
 
 }

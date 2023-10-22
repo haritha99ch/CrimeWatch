@@ -8,12 +8,12 @@ public class AccountTests
     public void AccountCreate_ReturnsValidAccount()
     {
         // Arrange
-        string email = "test@example.com";
-        string password = "password123";
-        bool isModerator = true;
+        var email = "test@example.com";
+        var password = "password123";
+        var isModerator = true;
 
         // Act
-        Account account = Account.Create(email, password, isModerator);
+        var account = Account.Create(email, password, isModerator)!;
 
         // Assert
         Assert.IsNotNull(account);
