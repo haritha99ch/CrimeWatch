@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-
-namespace CrimeWatch.Infrastructure.Test.Repositories;
+﻿namespace CrimeWatch.Infrastructure.Test.Repositories;
 [TestClass]
 public class WitnessEntityRepositoryTests : RepositoryTests
 {

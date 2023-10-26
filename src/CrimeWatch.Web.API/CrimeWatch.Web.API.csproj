@@ -1,33 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<InvariantGlobalization>fales</InvariantGlobalization>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>fales</InvariantGlobalization>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-rc.1.23421.29" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.11" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-rc.2.23480.2"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.12"/>
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\CrimeWatch.Application\CrimeWatch.Application.csproj" />
-		<ProjectReference Include="..\CrimeWatch.AppSettings\CrimeWatch.AppSettings.csproj" />
-		<ProjectReference Include="..\CrimeWatch.Shared\CrimeWatch.Shared.csproj" />
-		<ProjectReference Include="..\CrimeWatch.Web.Client\crimewatch.web.client.esproj">
-			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-		</ProjectReference>
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\CrimeWatch.Application\CrimeWatch.Application.csproj"/>
+        <ProjectReference Include="..\CrimeWatch.AppSettings\CrimeWatch.AppSettings.csproj"/>
+        <ProjectReference Include="..\CrimeWatch.Shared\CrimeWatch.Shared.csproj"/>
+        <ProjectReference Include="..\CrimeWatch.Web.Client\crimewatch.web.client.esproj">
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+        </ProjectReference>
+    </ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Options\" />
-	</ItemGroup>
+    <ItemGroup>
+        <Folder Include="Options\"/>
+    </ItemGroup>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Debug'">
-		<Exec Command="npm --prefix ..\crimewatch.web.client\ run build" />
-	</Target>
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)' == 'Debug'">
+        <Exec Command="npm --prefix ..\crimewatch.web.client\ run build"/>
+    </Target>
 
 </Project>

@@ -4,7 +4,7 @@ using CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
 using CrimeWatch.Application.Commands.ReportCommands.ModerateReport;
 using CrimeWatch.Application.Commands.ReportCommands.RevertReportToReview;
 using CrimeWatch.Application.Commands.ReportCommands.UpdateReport;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using CrimeWatch.Domain.Entities;
 using CrimeWatch.Domain.Enums;
 using CrimeWatch.Domain.ValueObjects;
 

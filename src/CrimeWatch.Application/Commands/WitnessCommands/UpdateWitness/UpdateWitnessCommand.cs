@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-
-namespace CrimeWatch.Application.Commands.WitnessCommands.UpdateWitness;
+﻿namespace CrimeWatch.Application.Commands.WitnessCommands.UpdateWitness;
 public sealed record UpdateWitnessCommand(
         WitnessId Id,
         string FirstName,

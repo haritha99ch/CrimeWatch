@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
-namespace CrimeWatch.Infrastructure.Test.Repositories;
+﻿namespace CrimeWatch.Infrastructure.Test.Repositories;
 [TestClass]
 public class ReportRepositoryTests : RepositoryTests
 {

@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-
-namespace CrimeWatch.Application.Commands.WitnessCommands.CreateWitness;
+﻿namespace CrimeWatch.Application.Commands.WitnessCommands.CreateWitness;
 public sealed record CreateWitnessCommand(
         string FirstName,
         string LastName,

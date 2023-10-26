@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-
-namespace CrimeWatch.Application.Helpers;
+﻿namespace CrimeWatch.Application.Helpers;
 internal static class ModeratorRepositorySpecificationExtension
 {
     public static async Task<Moderator?> GetModeratorWithAllByIdAsync(

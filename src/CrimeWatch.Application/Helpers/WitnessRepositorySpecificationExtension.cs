@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-
-namespace CrimeWatch.Application.Helpers;
+﻿namespace CrimeWatch.Application.Helpers;
 internal static class WitnessRepositorySpecificationExtension
 {
     public static async Task<Witness?> GetWitnessWithAllByIdAsync(

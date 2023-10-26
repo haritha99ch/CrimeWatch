@@ -1,18 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 
 namespace CrimeWatch.Infrastructure.Common;
-public abstract class Specification<TEntity, TValueObject>
-    where TEntity : Entity<TValueObject> where TValueObject : ValueObject
+public abstract class Specification<TEntity>(Expression<Func<TEntity, bool>>? criteria = null)
+    where TEntity : BaseEntity
 {
-    public Expression<Func<TEntity, bool>>? Criteria { get; }
+    public Expression<Func<TEntity, bool>>? Criteria { get; } = criteria;
     public List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>> Includes { get; } = new();
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
-
-    protected Specification(Expression<Func<TEntity, bool>>? criteria = null)
-    {
-        Criteria = criteria;
-    }
 
     protected void AddInclude(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object?>> include)
         => Includes.Add(include!);

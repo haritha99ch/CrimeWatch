@@ -1,13 +1,15 @@
-﻿namespace CrimeWatch.Infrastructure.Contexts;
+﻿using CrimeWatch.Domain.Entities;
+
+namespace CrimeWatch.Infrastructure.Contexts;
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    public DbSet<Account> Account { get; set; }
-    public DbSet<User> User { get; set; }
-    public DbSet<Witness> Witness { get; set; }
-    public DbSet<Moderator> Moderator { get; set; }
-    public DbSet<Report> Report { get; set; }
-    public DbSet<Evidence> Evidence { get; set; }
-    public DbSet<MediaItem> MediaItem { get; set; }
+    public DbSet<Account> Account { get; set; } = default!;
+    public DbSet<User> User { get; set; } = default!;
+    public DbSet<Witness> Witness { get; set; } = default!;
+    public DbSet<Moderator> Moderator { get; set; } = default!;
+    public DbSet<Report> Report { get; set; } = default!;
+    public DbSet<Evidence> Evidence { get; set; } = default!;
+    public DbSet<MediaItem> MediaItem { get; set; } = default!;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

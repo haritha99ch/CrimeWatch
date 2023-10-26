@@ -1,7 +1,5 @@
-﻿using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-
-namespace CrimeWatch.Application.Specifications;
-internal class WitnessWithAll : Specification<Witness, WitnessId>
+﻿namespace CrimeWatch.Application.Specifications;
+internal class WitnessWithAll : Specification<Witness>
 {
     public WitnessWithAll(WitnessId witnessId) : base(e => e.Id.Equals(witnessId))
     {
@@ -15,7 +13,7 @@ internal class WitnessWithAll : Specification<Witness, WitnessId>
 
     private void AddIncludes()
     {
-        AddInclude(e => e.Include(e => e.User));
-        AddInclude(e => e.Include(e => e.Account));
+        AddInclude(e => e.Include(w => w.User));
+        AddInclude(e => e.Include(w => w.Account));
     }
 }

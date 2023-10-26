@@ -1,5 +1,3 @@
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
 namespace CrimeWatch.Domain.Test.AggregateModels;
 [TestClass]
 public class ReportTests

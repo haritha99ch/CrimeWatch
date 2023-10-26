@@ -1,5 +1,3 @@
-using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-
 namespace CrimeWatch.Domain.Test.AggregateModels;
 [TestClass]
 public class ModeratorTests

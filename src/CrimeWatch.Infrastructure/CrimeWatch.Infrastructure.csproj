@@ -1,25 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-rc.1.23419.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-rc.1.23419.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-rc.1.23419.4" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0-rc.1.23419.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-rc.2.23480.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-rc.2.23480.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-rc.2.23479.6"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0-rc.2.23479.6"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CrimeWatch.AppSettings\CrimeWatch.AppSettings.csproj" />
-    <ProjectReference Include="..\CrimeWatch.Domain\CrimeWatch.Domain.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\CrimeWatch.AppSettings\CrimeWatch.AppSettings.csproj"/>
+        <ProjectReference Include="..\CrimeWatch.Domain\CrimeWatch.Domain.csproj"/>
+    </ItemGroup>
 
 </Project>

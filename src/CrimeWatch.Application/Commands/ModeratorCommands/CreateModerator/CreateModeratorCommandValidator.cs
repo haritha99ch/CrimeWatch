@@ -1,7 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
-using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-
-namespace CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
+﻿namespace CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
 public sealed class CreateModeratorCommandValidator : AbstractValidator<CreateModeratorCommand>
 {
     public CreateModeratorCommandValidator(

@@ -1,5 +1,7 @@
-﻿namespace CrimeWatch.Domain.AggregateModels.ReportAggregate;
-public class Report : AggregateRoot<ReportId>
+﻿using CrimeWatch.Domain.Models;
+
+namespace CrimeWatch.Domain.Entities;
+public class Report : Entity<ReportId>
 {
     public WitnessId WitnessId { get; set; } = default!;
     public ModeratorId? ModeratorId { get; set; }
@@ -17,22 +19,22 @@ public class Report : AggregateRoot<ReportId>
     public List<Evidence> Evidences { get; set; } = new();
 
     public static Report Create(
-        WitnessId witnessId,
-        string title,
-        string description,
-        Location location,
-        MediaItem mediaItem,
-        List<Evidence>? evidences = null
+            WitnessId witnessId,
+            string title,
+            string description,
+            Location location,
+            MediaItem mediaItem,
+            List<Evidence>? evidences = null
         ) => new()
-        {
-            Id = new(Guid.NewGuid()),
-            WitnessId = witnessId,
-            Title = title,
-            Description = description,
-            Location = location,
-            MediaItem = mediaItem,
-            Evidences = evidences ?? new List<Evidence>()
-        };
+    {
+        Id = new(Guid.NewGuid()),
+        WitnessId = witnessId,
+        Title = title,
+        Description = description,
+        Location = location,
+        MediaItem = mediaItem,
+        Evidences = evidences ?? new List<Evidence>()
+    };
 
     public void AddEvidence(Evidence evidence) => Evidences.Add(evidence);
     public void Moderate(ModeratorId moderatorId)

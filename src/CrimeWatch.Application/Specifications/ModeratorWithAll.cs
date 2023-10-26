@@ -1,7 +1,5 @@
-﻿using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-
-namespace CrimeWatch.Application.Specifications;
-internal class ModeratorWithAll : Specification<Moderator, ModeratorId>
+﻿namespace CrimeWatch.Application.Specifications;
+internal class ModeratorWithAll : Specification<Moderator>
 {
     public ModeratorWithAll(ModeratorId moderator) : base(e => e.Id.Equals(moderator))
     {

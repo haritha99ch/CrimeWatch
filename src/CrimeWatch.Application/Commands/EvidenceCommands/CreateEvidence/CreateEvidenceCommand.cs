@@ -1,4 +1,6 @@
-﻿namespace CrimeWatch.Application.Commands.EvidenceCommands.CreateEvidence;
+﻿using CrimeWatch.Domain.Models;
+
+namespace CrimeWatch.Application.Commands.EvidenceCommands.CreateEvidence;
 public sealed record CreateEvidenceCommand(
         WitnessId WitnessId,
         ReportId ReportId,

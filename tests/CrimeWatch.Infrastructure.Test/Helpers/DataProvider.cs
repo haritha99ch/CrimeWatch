@@ -1,9 +1,6 @@
 ﻿using Bogus;
-using CrimeWatch.Domain.AggregateModels.AccountAggregate;
-using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using CrimeWatch.Domain.AggregateModels.UserAggregate;
-using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
+using CrimeWatch.Domain.Entities;
+using CrimeWatch.Domain.Models;
 
 namespace CrimeWatch.Infrastructure.Test.Helpers;
 internal static class DataProvider

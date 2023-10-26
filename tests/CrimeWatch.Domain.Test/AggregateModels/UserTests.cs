@@ -1,5 +1,3 @@
-using CrimeWatch.Domain.AggregateModels.UserAggregate;
-
 namespace CrimeWatch.Domain.Test.AggregateModels;
 [TestClass]
 public class UserTests
@@ -8,14 +6,14 @@ public class UserTests
     public void UserCreate_ReturnsValidUser()
     {
         // Arrange
-        string firstName = "John";
-        string lastName = "Doe";
-        Gender gender = Gender.Male;
+        var firstName = "John";
+        var lastName = "Doe";
+        var gender = Gender.Male;
         DateTime dateOfBirth = new(1990, 1, 1);
-        string phoneNumber = "123-456-7890";
+        var phoneNumber = "123-456-7890";
 
         // Act
-        User user = User.Create(firstName, lastName, gender, dateOfBirth, phoneNumber);
+        var user = User.Create(firstName, lastName, gender, dateOfBirth, phoneNumber);
 
         // Assert
         Assert.IsNotNull(user);

@@ -1,5 +1,5 @@
 ﻿namespace CrimeWatch.Application.Specifications;
-internal class ReportWithMediaItemModeratorAndWitness : Specification<Report, ReportId>
+internal class ReportWithMediaItemModeratorAndWitness : Specification<Report>
 {
     public ReportWithMediaItemModeratorAndWitness(ReportId? reportId = null)
         : base(e => reportId == null || e.Id.Equals(reportId))

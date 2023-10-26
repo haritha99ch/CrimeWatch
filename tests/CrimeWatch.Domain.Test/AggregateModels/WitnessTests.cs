@@ -1,5 +1,3 @@
-using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-
 namespace CrimeWatch.Domain.Test.AggregateModels;
 [TestClass]
 public class WitnessTests
@@ -8,16 +6,16 @@ public class WitnessTests
     public void WitnessCreate_ReturnsValidWitness()
     {
         // Arrange
-        string firstName = "Alice";
-        string lastName = "Johnson";
-        Gender gender = Gender.Female;
+        var firstName = "Alice";
+        var lastName = "Johnson";
+        var gender = Gender.Female;
         DateTime dateOfBirth = new(1995, 6, 15);
-        string phoneNumber = "987-654-3210";
-        string email = "alice@example.com";
-        string password = "p@ssw0rd";
+        var phoneNumber = "987-654-3210";
+        var email = "alice@example.com";
+        var password = "p@ssw0rd";
 
         // Act
-        Witness witness = Witness.Create(firstName, lastName, gender, dateOfBirth, phoneNumber, email, password);
+        var witness = Witness.Create(firstName, lastName, gender, dateOfBirth, phoneNumber, email, password);
 
         // Assert
         Assert.IsNotNull(witness);

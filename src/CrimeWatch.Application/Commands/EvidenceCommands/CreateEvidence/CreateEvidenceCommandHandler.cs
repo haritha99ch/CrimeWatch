@@ -1,25 +1,17 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
 
 namespace CrimeWatch.Application.Commands.EvidenceCommands.CreateEvidence;
-internal class CreateEvidenceCommandHandler : IRequestHandler<CreateEvidenceCommand, Evidence>
+internal class CreateEvidenceCommandHandler(
+    IRepository<Evidence, EvidenceId> evidenceRepository,
+    IFileStorageService fileStorageService) : IRequestHandler<CreateEvidenceCommand, Evidence>
 {
-    private readonly IRepository<Evidence, EvidenceId> _evidenceRepository;
-    private readonly IFileStorageService _fileStorageService;
-
-    public CreateEvidenceCommandHandler(
-        IRepository<Evidence, EvidenceId> evidenceRepository,
-        IFileStorageService fileStorageService)
-    {
-        _evidenceRepository = evidenceRepository;
-        _fileStorageService = fileStorageService;
-    }
 
     public async Task<Evidence> Handle(CreateEvidenceCommand request, CancellationToken cancellationToken)
     {
         List<MediaItem> mediaItems = new();
         foreach (var mediaItem in request.MediaItems)
         {
-            var newMediaItem = await _fileStorageService.SaveFileAsync(mediaItem, request.WitnessId, cancellationToken);
+            var newMediaItem = await fileStorageService.SaveFileAsync(mediaItem, request.WitnessId, cancellationToken);
 
             mediaItems.Add(newMediaItem);
         }
@@ -33,7 +25,7 @@ internal class CreateEvidenceCommandHandler : IRequestHandler<CreateEvidenceComm
             mediaItems
         );
 
-        var result = await _evidenceRepository.AddAsync(evidence, cancellationToken);
+        var result = await evidenceRepository.AddAsync(evidence, cancellationToken);
 
         return result;
     }

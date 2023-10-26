@@ -1,21 +1,16 @@
 ﻿namespace CrimeWatch.Application.Commands.ReportCommands.DeclineReport;
-internal class DeclineReportCommandHandler : IRequestHandler<DeclineReportCommand, Report>
+internal class DeclineReportCommandHandler(IRepository<Report, ReportId> reportRepository)
+    : IRequestHandler<DeclineReportCommand, Report>
 {
-    private readonly IRepository<Report, ReportId> _reportRepository;
-
-    public DeclineReportCommandHandler(IRepository<Report, ReportId> reportRepository)
-    {
-        _reportRepository = reportRepository;
-    }
 
     public async Task<Report> Handle(DeclineReportCommand request, CancellationToken cancellationToken)
     {
         var report =
-            await _reportRepository.GetByIdAsync(request.ReportId, cancellationToken)
+            await reportRepository.GetByIdAsync(request.ReportId, cancellationToken)
             ?? throw new($"Report with id {request.ReportId} not found.");
 
         report.Decline();
 
-        return await _reportRepository.UpdateAsync(report, cancellationToken);
+        return await reportRepository.UpdateAsync(report, cancellationToken);
     }
 }

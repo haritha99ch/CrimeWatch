@@ -1,5 +1,5 @@
 ﻿namespace CrimeWatch.Application.Specifications;
-internal class ModeratedReportWithMediaItemModeratorAndWitness : Specification<Report, ReportId>
+internal class ModeratedReportWithMediaItemModeratorAndWitness : Specification<Report>
 {
     public ModeratedReportWithMediaItemModeratorAndWitness()
         : base(e => !(e.Status.Equals(Status.Pending) || e.Status.Equals(Status.UnderReview)))

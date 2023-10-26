@@ -1,5 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
+﻿using CrimeWatch.Domain.Entities;
 
 namespace CrimeWatch.Application.Shared;
 public readonly struct ModeratorOrWitness

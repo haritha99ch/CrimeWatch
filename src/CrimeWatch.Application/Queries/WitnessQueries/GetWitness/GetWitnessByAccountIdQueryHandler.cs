@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-
-namespace CrimeWatch.Application.Queries.WitnessQueries.GetWitness;
+﻿namespace CrimeWatch.Application.Queries.WitnessQueries.GetWitness;
 internal class GetWitnessByAccountIdQueryHandler : IRequestHandler<GetWitnessByAccountIdQuery, Witness>
 {
     private readonly IRepository<Witness, WitnessId> _witnessRepository;

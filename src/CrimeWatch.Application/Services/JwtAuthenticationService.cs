@@ -1,8 +1,5 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
 using CrimeWatch.Application.Shared;
-using CrimeWatch.Domain.AggregateModels.AccountAggregate;
-using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
 
 namespace CrimeWatch.Application.Services;
 internal class JwtAuthenticationService : IAuthenticationService

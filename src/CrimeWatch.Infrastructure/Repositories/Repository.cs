@@ -103,7 +103,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<TEntity?> GetByIdAsync<TSpecification>(TValueObject id,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>
+        where TSpecification : Specification<TEntity>
     {
         var specification = Activator.CreateInstance<TSpecification>();
         var entity = await _queryable.AddSpecification(specification)
@@ -115,7 +115,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<List<TEntity>> GetAllAsync<TSpecification>(
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>
+        where TSpecification : Specification<TEntity>
     {
         var specification = Activator.CreateInstance<TSpecification>();
         var entities = await _queryable.AddSpecification(specification)
@@ -126,7 +126,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<TEntity?> GetOneAsync<TSpecification>(TSpecification specification,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>
+        where TSpecification : Specification<TEntity>
     {
         var entities = await _queryable.AsNoTracking().AddSpecification(specification)
             .FirstOrDefaultAsync(cancellationToken ?? CancellationToken.None);
@@ -136,7 +136,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<List<TEntity>> GetManyAsync<TSpecification>(TSpecification specification,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>
+        where TSpecification : Specification<TEntity>
     {
         var entities = await _queryable.AddSpecification(specification)
             .ToListAsync(cancellationToken ?? CancellationToken.None);
@@ -146,7 +146,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<bool> ExistsAsync<TSpecification>(TSpecification specification,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>
+        where TSpecification : Specification<TEntity>
     {
         var isExists = await _dbSet.AddSpecification(specification)
             .AnyAsync(cancellationToken ?? CancellationToken.None);
@@ -156,7 +156,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<int> CountByAsync<TSpecification>(TSpecification specification,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>
+        where TSpecification : Specification<TEntity>
     {
         var count = await _queryable.AddSpecification(specification)
             .CountAsync(cancellationToken ?? CancellationToken.None);
@@ -188,7 +188,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<TResult?> GetOneAsync<TResult, TSpecification>(TSpecification specification,
         Expression<Func<TEntity, TResult>> selector,
-        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity, TValueObject>
+        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity>
     {
         var entities = await _queryable.AddSpecification(specification).Select(selector)
             .SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None);
@@ -198,7 +198,7 @@ public class Repository<TEntity, TValueObject> : IRepository<TEntity, TValueObje
 
     public async Task<List<TResult>> GetManyAsync<TResult, TSpecification>(TSpecification specification,
         Expression<Func<TEntity, TResult>> selector, CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>
+        where TSpecification : Specification<TEntity>
     {
         var entities = await _queryable.AddSpecification(specification).Select(selector)
             .ToListAsync(cancellationToken ?? CancellationToken.None);

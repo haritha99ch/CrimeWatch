@@ -1,5 +1,5 @@
 ﻿using CrimeWatch.Application.Contracts.Services;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
+using CrimeWatch.Domain.Entities;
 using CrimeWatch.Domain.Enums;
 using CrimeWatch.Domain.ValueObjects;
 using Microsoft.AspNetCore.Http;

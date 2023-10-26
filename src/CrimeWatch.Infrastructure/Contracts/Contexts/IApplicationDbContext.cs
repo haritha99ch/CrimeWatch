@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using CrimeWatch.Domain.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CrimeWatch.Infrastructure.Contracts.Contexts;
 public interface IApplicationDbContext

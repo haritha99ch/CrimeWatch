@@ -1,5 +1,3 @@
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-
 namespace CrimeWatch.Domain.Test.AggregateModels;
 [TestClass]
 public class LocationTests
@@ -8,11 +6,11 @@ public class LocationTests
     public void LocationCreate_ReturnsValidLocation()
     {
         // Arrange
-        string no = "123";
-        string street1 = "First Street";
-        string street2 = "Second Ave";
-        string city = "Townsville";
-        string province = "Stateville";
+        var no = "123";
+        var street1 = "First Street";
+        var street2 = "Second Ave";
+        var city = "Townsville";
+        var province = "Stateville";
 
         // Act
         Location location = Location.Create(no, street1, street2, city, province);

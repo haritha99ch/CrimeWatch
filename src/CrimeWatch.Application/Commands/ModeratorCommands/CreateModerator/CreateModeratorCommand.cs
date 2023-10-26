@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-
-namespace CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
+﻿namespace CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
 public sealed record CreateModeratorCommand(
         string FirstName,
         string LastName,

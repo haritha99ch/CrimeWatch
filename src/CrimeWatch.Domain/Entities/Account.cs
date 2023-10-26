@@ -1,5 +1,5 @@
-﻿namespace CrimeWatch.Domain.AggregateModels.AccountAggregate;
-public class Account : AggregateRoot<AccountId>
+﻿namespace CrimeWatch.Domain.Entities;
+public class Account : Entity<AccountId>
 {
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;

@@ -1,5 +1,5 @@
 ﻿namespace CrimeWatch.Application.Specifications;
-internal class ReportWithAllById : Specification<Report, ReportId>
+internal class ReportWithAllById : Specification<Report>
 {
     public ReportWithAllById(ReportId reportId)
         : base(e => e.Id.Equals(reportId))

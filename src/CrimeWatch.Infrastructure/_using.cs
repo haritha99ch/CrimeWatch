@@ -1,9 +1,4 @@
-﻿global using CrimeWatch.Domain.AggregateModels.AccountAggregate;
-global using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-global using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-global using CrimeWatch.Domain.AggregateModels.UserAggregate;
-global using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
-global using CrimeWatch.Infrastructure.Contexts;
+﻿global using CrimeWatch.Infrastructure.Contexts;
 global using CrimeWatch.Infrastructure.Contracts.Contexts;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;

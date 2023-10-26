@@ -1,5 +1,5 @@
 ﻿namespace CrimeWatch.Application.Specifications;
-internal class ModeratedEvidenceWithAllForReport : Specification<Evidence, EvidenceId>
+internal class ModeratedEvidenceWithAllForReport : Specification<Evidence>
 {
     public ModeratedEvidenceWithAllForReport(ReportId reportId)
         : base(e => e.ReportId.Equals(reportId)

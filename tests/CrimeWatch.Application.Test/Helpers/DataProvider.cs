@@ -1,10 +1,7 @@
 ﻿using Bogus;
-using CrimeWatch.Domain.AggregateModels.AccountAggregate;
-using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-using CrimeWatch.Domain.AggregateModels.ReportAggregate;
-using CrimeWatch.Domain.AggregateModels.UserAggregate;
-using CrimeWatch.Domain.AggregateModels.WitnessAggregate;
+using CrimeWatch.Domain.Entities;
 using CrimeWatch.Domain.Enums;
+using CrimeWatch.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using System.Text;
 

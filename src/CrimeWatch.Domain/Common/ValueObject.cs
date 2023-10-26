@@ -1,2 +1,2 @@
 ﻿namespace CrimeWatch.Domain.Common;
-public record ValueObject(Guid Value);
+public abstract record ValueObject(Guid Value);

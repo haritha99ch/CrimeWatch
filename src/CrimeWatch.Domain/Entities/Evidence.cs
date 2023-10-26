@@ -1,4 +1,6 @@
-﻿namespace CrimeWatch.Domain.AggregateModels.ReportAggregate;
+﻿using CrimeWatch.Domain.Models;
+
+namespace CrimeWatch.Domain.Entities;
 public class Evidence : Entity<EvidenceId>
 {
     public WitnessId WitnessId { get; set; } = default!;

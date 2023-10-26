@@ -1,14 +1,7 @@
-﻿using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-
-namespace CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
-internal class CreateModeratorCommandHandler : IRequestHandler<CreateModeratorCommand, Moderator>
+﻿namespace CrimeWatch.Application.Commands.ModeratorCommands.CreateModerator;
+internal class CreateModeratorCommandHandler(IRepository<Moderator, ModeratorId> moderatorRepository)
+    : IRequestHandler<CreateModeratorCommand, Moderator>
 {
-    private readonly IRepository<Moderator, ModeratorId> _moderatorRepository;
-
-    public CreateModeratorCommandHandler(IRepository<Moderator, ModeratorId> moderatorRepository)
-    {
-        _moderatorRepository = moderatorRepository;
-    }
 
     public async Task<Moderator> Handle(CreateModeratorCommand request, CancellationToken cancellationToken)
     {
@@ -25,6 +18,6 @@ internal class CreateModeratorCommandHandler : IRequestHandler<CreateModeratorCo
                 request.Password
             );
 
-        return await _moderatorRepository.AddAsync(moderator!, cancellationToken);
+        return await moderatorRepository.AddAsync(moderator!, cancellationToken);
     }
 }

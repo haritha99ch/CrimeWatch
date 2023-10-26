@@ -1,19 +1,12 @@
-﻿using CrimeWatch.Domain.AggregateModels.ModeratorAggregate;
-
-namespace CrimeWatch.Application.Commands.ModeratorCommands.UpdateModerator;
-internal class UpdateModeratorCommandHandler : IRequestHandler<UpdateModeratorCommand, Moderator>
+﻿namespace CrimeWatch.Application.Commands.ModeratorCommands.UpdateModerator;
+internal class UpdateModeratorCommandHandler(IRepository<Moderator, ModeratorId> moderatorRepository)
+    : IRequestHandler<UpdateModeratorCommand, Moderator>
 {
-    private readonly IRepository<Moderator, ModeratorId> _moderatorRepository;
-
-    public UpdateModeratorCommandHandler(IRepository<Moderator, ModeratorId> moderatorRepository)
-    {
-        _moderatorRepository = moderatorRepository;
-    }
 
     public async Task<Moderator> Handle(UpdateModeratorCommand request, CancellationToken cancellationToken)
     {
         var moderator =
-            await _moderatorRepository.GetModeratorWithAllByIdAsync(request.Id, cancellationToken)
+            await moderatorRepository.GetModeratorWithAllByIdAsync(request.Id, cancellationToken)
             ?? throw new("Moderator not found");
 
         moderator.Update(
@@ -28,6 +21,6 @@ internal class UpdateModeratorCommandHandler : IRequestHandler<UpdateModeratorCo
             request.Password
         );
 
-        return await _moderatorRepository.UpdateAsync(moderator, cancellationToken);
+        return await moderatorRepository.UpdateAsync(moderator, cancellationToken);
     }
 }

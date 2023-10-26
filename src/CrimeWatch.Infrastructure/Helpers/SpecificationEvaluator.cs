@@ -1,13 +1,12 @@
-﻿using CrimeWatch.Domain.Common;
-using CrimeWatch.Infrastructure.Common;
+﻿using CrimeWatch.Infrastructure.Common;
 
 namespace CrimeWatch.Infrastructure.Helpers;
 internal static class SpecificationEvaluator
 {
-    internal static IQueryable<T> AddSpecification<T, V>
-        (this IQueryable<T> inputQuery, Specification<T, V> specification) where T : Entity<V> where V : ValueObject
+    internal static IQueryable<TEntity> AddSpecification<TEntity>
+        (this IQueryable<TEntity> inputQuery, Specification<TEntity> specification) where TEntity : BaseEntity
     {
-        IQueryable<T> query = inputQuery;
+        var query = inputQuery;
 
         if (specification.Criteria != null)
             query = query.Where(specification.Criteria);
@@ -20,7 +19,9 @@ internal static class SpecificationEvaluator
             query = query.OrderBy(specification.OrderBy);
         }
         else if (specification.OrderByDescending != null)
+        {
             query = query.OrderByDescending(specification.OrderByDescending);
+        }
 
         return query;
     }

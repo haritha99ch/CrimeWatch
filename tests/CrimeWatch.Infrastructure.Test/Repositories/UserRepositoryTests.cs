@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.UserAggregate;
-
-namespace CrimeWatch.Infrastructure.Test.Repositories;
+﻿namespace CrimeWatch.Infrastructure.Test.Repositories;
 [TestClass]
 public class UserRepositoryTests : RepositoryTests
 {
@@ -25,10 +23,10 @@ public class UserRepositoryTests : RepositoryTests
     public async Task AddAsync_Should_Add_User_To_Context()
     {
         // Arrange
-        User user = DataProvider.GetTestUsers().First();
+        var user = DataProvider.GetTestUsers().First();
 
         // Act
-        User addedUser = await _repository.AddAsync(user);
+        var addedUser = await _repository.AddAsync(user);
 
         // Assert
         Assert.AreSame(user, addedUser);
@@ -38,11 +36,11 @@ public class UserRepositoryTests : RepositoryTests
     public async Task GetByIdAsync_Should_Return_User_By_Id()
     {
         // Arrange
-        User user = DataProvider.GetTestUsers().First();
+        var user = DataProvider.GetTestUsers().First();
         await _repository.AddAsync(user);
 
         // Act
-        User? retrievedUser = await _repository.GetByIdAsync(user.Id);
+        var retrievedUser = await _repository.GetByIdAsync(user.Id);
 
         // Assert
         Assert.IsNotNull(retrievedUser);
@@ -53,14 +51,14 @@ public class UserRepositoryTests : RepositoryTests
     public async Task GetAllAsync_Should_Return_All_Users()
     {
         // Arrange
-        User user1 = DataProvider.GetTestUsers().First();
-        User user2 = DataProvider.GetTestUsers().Last();
+        var user1 = DataProvider.GetTestUsers().First();
+        var user2 = DataProvider.GetTestUsers().Last();
 
         await _repository.AddAsync(user1);
         await _repository.AddAsync(user2);
 
         // Act
-        List<User>? users = await _repository.GetAllAsync();
+        var users = await _repository.GetAllAsync();
 
         // Assert
         Assert.AreEqual(2, users.Count);
@@ -72,8 +70,8 @@ public class UserRepositoryTests : RepositoryTests
     public async Task CountAsync_Should_Return_Count_Of_Users()
     {
         // Arrange
-        User user1 = DataProvider.GetTestUsers().First();
-        User user2 = DataProvider.GetTestUsers().Last();
+        var user1 = DataProvider.GetTestUsers().First();
+        var user2 = DataProvider.GetTestUsers().Last();
 
         await _repository.AddAsync(user1);
         await _repository.AddAsync(user2);
@@ -89,10 +87,10 @@ public class UserRepositoryTests : RepositoryTests
     public async Task UpdateAsync_Should_Update_User_In_Context()
     {
         // Arrange
-        User user = DataProvider.GetTestUsers().First();
+        var user = DataProvider.GetTestUsers().First();
         user = await _repository.AddAsync(user);
 
-        User updatedUser = user;
+        var updatedUser = user;
         updatedUser.FirstName = "UpdatedFirstName";
         updatedUser.LastName = "UpdatedLastName";
 
@@ -108,7 +106,7 @@ public class UserRepositoryTests : RepositoryTests
     public async Task DeleteByIdAsync_Should_Delete_User_From_Context()
     {
         // Arrange
-        User user = DataProvider.GetTestUsers().First();
+        var user = DataProvider.GetTestUsers().First();
         await _repository.AddAsync(user);
 
         // Act
@@ -124,7 +122,7 @@ public class UserRepositoryTests : RepositoryTests
     public async Task DeleteByIdAsync_Should_Return_False_If_User_Not_Found()
     {
         // Act
-        var isDeleted = await _repository.DeleteByIdAsync(new UserId(Guid.NewGuid()));
+        var isDeleted = await _repository.DeleteByIdAsync(new(Guid.NewGuid()));
 
         // Assert
         Assert.IsFalse(isDeleted);

@@ -1,6 +1,4 @@
-﻿using CrimeWatch.Domain.AggregateModels.AccountAggregate;
-
-namespace CrimeWatch.Application.Commands.WitnessCommands.CreateWitness;
+﻿namespace CrimeWatch.Application.Commands.WitnessCommands.CreateWitness;
 public sealed class CreateWitnessCommandValidator : AbstractValidator<CreateWitnessCommand>
 {
     public CreateWitnessCommandValidator(IRepository<Account, AccountId> accountRepository)

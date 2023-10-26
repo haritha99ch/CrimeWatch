@@ -24,26 +24,26 @@ public interface IRepository<TEntity, TValueObject>
 
     Task<TEntity?> GetByIdAsync<TSpecification>(TValueObject id,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>;
+        where TSpecification : Specification<TEntity>;
 
     Task<List<TEntity>> GetAllAsync<TSpecification>(
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>;
+        where TSpecification : Specification<TEntity>;
 
     Task<TEntity?> GetOneAsync<TSpecification>(TSpecification specification,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>;
+        where TSpecification : Specification<TEntity>;
 
     Task<List<TEntity>> GetManyAsync<TSpecification>(TSpecification specification,
         CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>;
+        where TSpecification : Specification<TEntity>;
 
 
     Task<bool> ExistsAsync<TSpecification>(TSpecification specification, CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>;
+        where TSpecification : Specification<TEntity>;
 
     Task<int> CountByAsync<TSpecification>(TSpecification specification, CancellationToken? cancellationToken = null)
-        where TSpecification : Specification<TEntity, TValueObject>;
+        where TSpecification : Specification<TEntity>;
 
     #endregion
 
@@ -58,11 +58,11 @@ public interface IRepository<TEntity, TValueObject>
 
     Task<TResult?> GetOneAsync<TResult, TSpecification>(TSpecification specification,
         Expression<Func<TEntity, TResult>> selector,
-        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity, TValueObject>;
+        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity>;
 
     Task<List<TResult>> GetManyAsync<TResult, TSpecification>(TSpecification specification,
         Expression<Func<TEntity, TResult>> selector,
-        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity, TValueObject>;
+        CancellationToken? cancellationToken = null) where TSpecification : Specification<TEntity>;
 
     #endregion
 
