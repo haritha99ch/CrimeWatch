@@ -2,7 +2,7 @@
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate.Entities;
-public sealed class MediaItem : Entity<MediaItemId>
+public sealed record MediaItem : Entity<MediaItemId>
 {
     public required string Url { get; init; }
     public required MediaType MediaType { get; init; }
@@ -14,4 +14,15 @@ public sealed class MediaItem : Entity<MediaItemId>
         MediaType = mediaType,
         CreatedAt = DateTime.Now
     };
+
+    public MediaItem Update(string url, MediaType mediaType)
+    {
+        if (url.Equals(Url) && mediaType.Equals(MediaType)) return this;
+        return this with
+        {
+            Url = url,
+            MediaType = mediaType,
+            UpdatedAt = DateTime.Now
+        };
+    }
 }

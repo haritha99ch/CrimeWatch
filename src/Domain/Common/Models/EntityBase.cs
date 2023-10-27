@@ -1,2 +1,2 @@
 ﻿namespace Domain.Common.Models;
-public abstract class EntityBase;
+public abstract record EntityBase;

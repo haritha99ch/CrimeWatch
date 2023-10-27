@@ -3,7 +3,7 @@ using Domain.AggregateModels.AccountAggregate.Enums;
 using Domain.AggregateModels.AccountAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.AccountAggregate;
-public sealed class Account : AggregateRoot<AccountId>
+public sealed record Account : AggregateRoot<AccountId>
 {
     public required string Email { get; init; }
     public required string Password { get; init; }
@@ -52,5 +52,62 @@ public sealed class Account : AggregateRoot<AccountId>
         Moderator = Moderator.Create(policeId, city, province),
         CreatedAt = DateTime.Now
     };
+
+    public Account UpdateModerator(
+        string nic,
+        string firstName,
+        string lastName,
+        Gender gender,
+        DateOnly birthDay,
+        string policeId,
+        string city,
+        string province,
+        string email,
+        string password)
+    {
+        var updatedPerson = Person!.Update(nic, firstName, lastName, gender, birthDay);
+        var updatedModerator = Moderator!.Update(policeId, city, province);
+
+        if (email.Equals(Email)
+            && password.Equals(Password)
+            && updatedPerson.Equals(Person)
+            && updatedModerator.Equals(Moderator)) return this;
+
+        return this with
+        {
+            Person = updatedPerson,
+            Moderator = updatedModerator,
+            Email = email,
+            Password = password,
+            UpdatedAt = DateTime.Now
+        };
+    }
+
+    public Account UpdateWitness(
+        string nic,
+        string firstName,
+        string lastName,
+        Gender gender,
+        DateOnly birthDay,
+        string email,
+        string password)
+    {
+        var updatedPerson = Person!.Update(nic, firstName, lastName, gender, birthDay);
+        var updatedWitness = Witness!.Update();
+
+        if (email.Equals(Email)
+            && password.Equals(Password)
+            && updatedPerson.Equals(Person)
+            && updatedWitness.Equals(Witness)) return this;
+
+        return this with
+        {
+            Person = updatedPerson,
+            Witness = updatedWitness,
+            Email = email,
+            Password = password,
+            UpdatedAt = DateTime.Now
+        };
+    }
 
 }

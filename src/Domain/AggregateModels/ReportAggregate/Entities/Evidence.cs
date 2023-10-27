@@ -4,7 +4,7 @@ using Domain.AggregateModels.ReportAggregate.Enums;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate.Entities;
-public sealed class Evidence : Entity<EvidenceId>
+public sealed record Evidence : Entity<EvidenceId>
 {
     public required AccountId AuthorId { get; init; }
     public AccountId? ModeratorId { get; init; }
@@ -33,5 +33,28 @@ public sealed class Evidence : Entity<EvidenceId>
         CreatedAt = DateTime.Now,
         Id = new(Guid.NewGuid())
     };
+
+    public Evidence Update(
+        string caption,
+        string description,
+        Location location,
+        List<MediaItem>? mediaItems)
+    {
+        mediaItems ??= new();
+        if (caption.Equals(Caption)
+            && description.Equals(Description)
+            && location.Equals(Location)
+            && mediaItems.OrderBy(e => e).SequenceEqual(MediaItems.OrderBy(e => e)))
+            return this;
+
+        return this with
+        {
+            Caption = caption,
+            Description = description,
+            Location = location,
+            MediaItems = mediaItems,
+            UpdatedAt = DateTime.Now
+        };
+    }
 
 }

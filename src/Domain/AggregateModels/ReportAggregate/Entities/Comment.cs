@@ -3,7 +3,7 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate.Entities;
-public sealed class Comment : Entity<CommentId>
+public sealed record Comment : Entity<CommentId>
 {
     public required AccountId AccountId { get; init; }
     public required string Content { get; init; }
@@ -17,4 +17,14 @@ public sealed class Comment : Entity<CommentId>
         CreatedAt = DateTime.Now,
         Id = new(Guid.NewGuid())
     };
+
+    public Comment Update(string content)
+    {
+        if (content.Equals(Content)) return this;
+        return this with
+        {
+            Content = content,
+            UpdatedAt = DateTime.Now
+        };
+    }
 }

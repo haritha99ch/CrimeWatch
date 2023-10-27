@@ -1,2 +1,2 @@
 ﻿namespace Domain.Common.Models;
-public abstract class AggregateRoot<TEntityId> : Entity<TEntityId> where TEntityId : EntityId;
+public abstract record AggregateRoot<TEntityId> : Entity<TEntityId> where TEntityId : EntityId;

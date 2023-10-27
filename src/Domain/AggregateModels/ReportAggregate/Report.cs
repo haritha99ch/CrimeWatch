@@ -5,7 +5,7 @@ using Domain.AggregateModels.ReportAggregate.Enums;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate;
-public sealed class Report : AggregateRoot<ReportId>
+public sealed record Report : AggregateRoot<ReportId>
 {
     public required AccountId AuthorId { get; init; }
     public AccountId? ModeratorId { get; init; }
@@ -20,20 +20,35 @@ public sealed class Report : AggregateRoot<ReportId>
     public Account? Moderator { get; init; }
 
     public static Report Create(
-        AccountId authorId, 
-        string caption, 
-        string description, 
+        AccountId authorId,
+        string caption,
+        string description,
         Location location,
-        MediaItem mediaItem) =>
-        new()
+        MediaItem mediaItem) => new()
+    {
+        Id = new(Guid.NewGuid()),
+        AuthorId = authorId,
+        Caption = caption,
+        Description = description,
+        Location = location,
+        MediaItem = mediaItem,
+        Status = Status.Pending,
+        CreatedAt = DateTime.Now
+    };
+
+    public Report Update(string caption, string description, Location location, MediaItem mediaItem)
+    {
+        var updatedMediaItem = MediaItem!.Update(mediaItem.Url, mediaItem.MediaType);
+        if (caption.Equals(Caption)
+            && description.Equals(Description)
+            && location.Equals(Location)
+            && updatedMediaItem.Equals(MediaItem)) return this;
+
+        return this with
         {
-            Id = new(Guid.NewGuid()),
-            AuthorId = authorId,
             Caption = caption,
             Description = description,
-            Location = location,
-            MediaItem = mediaItem,
-            Status = Status.Pending,
-            CreatedAt = DateTime.Now
+            Location = location
         };
+    }
 }
