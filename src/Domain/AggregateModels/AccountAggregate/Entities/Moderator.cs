@@ -3,9 +3,9 @@
 namespace Domain.AggregateModels.AccountAggregate.Entities;
 public sealed record Moderator : Entity<ModeratorId>
 {
-    public required string PoliceId { get; init; }
-    public required string City { get; init; }
-    public required string Province { get; init; }
+    public required string PoliceId { get; set; }
+    public required string City { get; set; }
+    public required string Province { get; set; }
 
     public static Moderator Create(string policeId, string city, string province) => new()
     {
@@ -19,12 +19,12 @@ public sealed record Moderator : Entity<ModeratorId>
     public Moderator Update(string policeId, string city, string province)
     {
         if (policeId.Equals(PoliceId) && city.Equals(City) && province.Equals(Province)) return this;
-        return this with
-        {
-            PoliceId = policeId,
-            City = city,
-            Province = province,
-            UpdatedAt = DateTime.Now
-        };
+
+        PoliceId = policeId;
+        City = city;
+        Province = province;
+        UpdatedAt = DateTime.Now;
+
+        return this;
     }
 }

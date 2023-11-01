@@ -9,5 +9,9 @@ public sealed record Witness : Entity<WitnessId>
         CreatedAt = DateTime.Now
     };
 
-    public Witness Update() => this;
+    public Witness Update()
+    {
+        UpdatedAt = DateTime.Now;
+        return this;
+    }
 }

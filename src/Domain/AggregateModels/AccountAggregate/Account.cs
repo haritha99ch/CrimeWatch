@@ -5,13 +5,14 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 namespace Domain.AggregateModels.AccountAggregate;
 public sealed record Account : AggregateRoot<AccountId>
 {
-    public required string Email { get; init; }
-    public required string Password { get; init; }
+    public required string Email { get; set; }
+    public required string Password { get; set; }
+    public required string PhoneNumber { get; set; }
     public required AccountType AccountType { get; init; }
 
-    public Person? Person { get; init; }
-    public Witness? Witness { get; init; }
-    public Moderator? Moderator { get; init; }
+    public Person? Person { get; private init; }
+    public Witness? Witness { get; private init; }
+    public Moderator? Moderator { get; private init; }
 
     public static Account CreateAccountForWitness(
         string nic,
@@ -20,10 +21,12 @@ public sealed record Account : AggregateRoot<AccountId>
         Gender gender,
         DateOnly birthDay,
         string email,
-        string password) => new()
+        string password,
+        string phoneNumber) => new()
     {
         Email = email,
         Password = password,
+        PhoneNumber = phoneNumber,
         AccountType = AccountType.Witness,
         Id = new(Guid.NewGuid()),
         Person = Person.Create(nic, firstName, lastName, gender, birthDay),
@@ -41,10 +44,12 @@ public sealed record Account : AggregateRoot<AccountId>
         string city,
         string province,
         string email,
-        string password) => new()
+        string password,
+        string phoneNumber) => new()
     {
         Email = email,
         Password = password,
+        PhoneNumber = phoneNumber,
         AccountType = AccountType.Moderator,
         Id = new(Guid.NewGuid()),
         Person = Person.Create(nic, firstName, lastName, gender, birthDay),
@@ -63,24 +68,20 @@ public sealed record Account : AggregateRoot<AccountId>
         string city,
         string province,
         string email,
-        string password)
+        string password,
+        string phoneNumber)
     {
-        var updatedPerson = Person!.Update(nic, firstName, lastName, gender, birthDay);
-        var updatedModerator = Moderator!.Update(policeId, city, province);
+        Person!.Update(nic, firstName, lastName, gender, birthDay);
+        Moderator!.Update(policeId, city, province);
 
-        if (email.Equals(Email)
-            && password.Equals(Password)
-            && updatedPerson.Equals(Person)
-            && updatedModerator.Equals(Moderator)) return this;
+        if (email.Equals(Email) && password.Equals(Password)) return this;
 
-        return this with
-        {
-            Person = updatedPerson,
-            Moderator = updatedModerator,
-            Email = email,
-            Password = password,
-            UpdatedAt = DateTime.Now
-        };
+        Email = email;
+        Password = password;
+        PhoneNumber = phoneNumber;
+        UpdatedAt = DateTime.Now;
+
+        return this;
     }
 
     public Account UpdateWitness(
@@ -90,24 +91,22 @@ public sealed record Account : AggregateRoot<AccountId>
         Gender gender,
         DateOnly birthDay,
         string email,
-        string password)
+        string password,
+        string phoneNumber)
     {
-        var updatedPerson = Person!.Update(nic, firstName, lastName, gender, birthDay);
-        var updatedWitness = Witness!.Update();
+        Person!.Update(nic, firstName, lastName, gender, birthDay);
+        Witness!.Update();
+        
+        UpdatedAt = Person.UpdatedAt > Witness.UpdatedAt ? Person.UpdatedAt : Witness.UpdatedAt;
 
-        if (email.Equals(Email)
-            && password.Equals(Password)
-            && updatedPerson.Equals(Person)
-            && updatedWitness.Equals(Witness)) return this;
+        if (email.Equals(Email) && password.Equals(Password)) return this;
 
-        return this with
-        {
-            Person = updatedPerson,
-            Witness = updatedWitness,
-            Email = email,
-            Password = password,
-            UpdatedAt = DateTime.Now
-        };
+        Email = email;
+        Password = password;
+        PhoneNumber = phoneNumber;
+        UpdatedAt = DateTime.Now;
+
+        return this;
     }
 
 }
