@@ -7,13 +7,13 @@ namespace Domain.AggregateModels.ReportAggregate.Entities;
 public sealed record Evidence : Entity<EvidenceId>
 {
     public required AccountId AuthorId { get; init; }
-    public AccountId? ModeratorId { get; init; }
-    public required string Caption { get; init; }
-    public required string Description { get; init; }
+    public AccountId? ModeratorId { get; set; }
+    public required string Caption { get; set; }
+    public required string Description { get; set; }
     public required Location Location { get; init; }
-    public required Status Status { get; init; }
+    public required Status Status { get; set; }
 
-    public List<MediaItem> MediaItems { get; init; } = new();
+    public List<MediaItem> MediaItems { get; set; } = new();
     public List<Comment> Comments { get; init; } = new();
 
     public Account? Author { get; init; }
@@ -23,27 +23,36 @@ public sealed record Evidence : Entity<EvidenceId>
         AccountId authorId,
         string caption,
         string description,
-        Location location,
+        string no,
+        string street1,
+        string street2,
+        string city,
+        string province,
         IEnumerable<MediaUpload> mediaItems) => new()
     {
         AuthorId = authorId,
         Caption = caption,
         Description = description,
-        Location = location,
+        Location = Location.Create(no, street1, street2, city, province),
         MediaItems = MapMediaUploadsToEntities(mediaItems),
         Status = Status.Pending,
         CreatedAt = DateTime.Now,
         Id = new(Guid.NewGuid())
     };
 
-    public Evidence Update(
+    public void Update(
             string caption,
             string description,
-            Location location,
+            string no,
+            string street1,
+            string street2,
+            string city,
+            string province,
             List<MediaItem>? mediaItems,
             List<MediaUpload>? newMediaItems
         )
     {
+        Location.Update(no, street1, street2, city, province);
         mediaItems ??= new();
         if (newMediaItems is not null)
         {
@@ -51,26 +60,43 @@ public sealed record Evidence : Entity<EvidenceId>
         }
         if (caption.Equals(Caption)
             && description.Equals(Description)
-            && location.Equals(Location)
             && mediaItems.OrderBy(e => e).SequenceEqual(MediaItems.OrderBy(e => e)))
-            return this;
+            return;
 
-        return this with
-        {
-            Caption = caption,
-            Description = description,
-            Location = location,
-            MediaItems = mediaItems,
-            UpdatedAt = DateTime.Now
-        };
+        Caption = caption;
+        Description = description;
+        MediaItems = mediaItems;
+        UpdatedAt = DateTime.Now;
     }
 
     internal Evidence SetModerator(AccountId moderatorId)
-        => this with { ModeratorId = moderatorId, Status = Status.UnderReview, UpdatedAt = DateTime.Now };
+    {
+        ModeratorId = moderatorId;
+        Status = Status.UnderReview;
+        UpdatedAt = DateTime.Now;
+        return this;
+    }
 
-    internal Evidence SetApproved() => this with { Status = Status.Approved, UpdatedAt = DateTime.Now };
-    internal Evidence SetDeclined() => this with { Status = Status.Declined, UpdatedAt = DateTime.Now };
-    internal Evidence SetUnderReview() => this with { Status = Status.UnderReview, UpdatedAt = DateTime.Now };
+    internal Evidence SetApproved()
+    {
+        Status = Status.Approved;
+        UpdatedAt = DateTime.Now;
+        return this;
+    }
+
+    internal Evidence SetDeclined()
+    {
+        Status = Status.Declined;
+        UpdatedAt = DateTime.Now;
+        return this;
+    }
+
+    internal Evidence SetUnderReview()
+    {
+        Status = Status.UnderReview;
+        UpdatedAt = DateTime.Now;
+        return this;
+    }
 
     public Comment AddComment(AccountId accountId, string content)
     {
@@ -81,33 +107,28 @@ public sealed record Evidence : Entity<EvidenceId>
 
     public Comment UpdateComment(CommentId commentId, string content)
     {
-        var comment = GetComment(commentId, out var index);
-        var updatedComment = comment.Update(content);
-        return ReplaceComment(index, updatedComment);
+        var comment = GetComment(commentId);
+        comment.Update(content);
+        return comment;
     }
 
     public bool DeleteComment(CommentId commentId)
     {
-        var comment = GetComment(commentId, out var index);
+        var comment = GetComment(commentId);
         Comments.Remove(comment);
         return true;
     }
 
-    private Comment ReplaceComment(int index, Comment updatedComment)
-    {
-        Comments[index] = updatedComment;
-        return updatedComment;
-    }
-
-    private Comment GetComment(CommentId commentId, out int index)
+    private Comment GetComment(CommentId commentId)
     {
         var comment = Comments.FirstOrDefault(c => c.Id.Equals(commentId));
         if (comment is null) throw new("Comment is not found");
-        index = Comments.IndexOf(comment);
         return comment;
     }
 
 
     private static List<MediaItem> MapMediaUploadsToEntities(IEnumerable<MediaUpload> mediaItems)
-        => mediaItems.Select(e => MediaItem.Create(e.Url, e.MediaType)).ToList();
+    {
+        return mediaItems.Select(e => MediaItem.Create(e.Url, e.MediaType)).ToList();
+    }
 }

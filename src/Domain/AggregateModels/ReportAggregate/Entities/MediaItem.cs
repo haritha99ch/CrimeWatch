@@ -4,8 +4,8 @@ using Domain.AggregateModels.ReportAggregate.ValueObjects;
 namespace Domain.AggregateModels.ReportAggregate.Entities;
 public sealed record MediaItem : Entity<MediaItemId>
 {
-    public required string Url { get; init; }
-    public required MediaType MediaType { get; init; }
+    public required string Url { get; set; }
+    public required MediaType MediaType { get; set; }
 
     public static MediaItem Create(string url, MediaType mediaType) => new()
     {
@@ -18,11 +18,11 @@ public sealed record MediaItem : Entity<MediaItemId>
     public MediaItem Update(string url, MediaType mediaType)
     {
         if (url.Equals(Url) && mediaType.Equals(MediaType)) return this;
-        return this with
-        {
-            Url = url,
-            MediaType = mediaType,
-            UpdatedAt = DateTime.Now
-        };
+
+        Url = url;
+        MediaType = mediaType;
+        UpdatedAt = DateTime.Now;
+
+        return this;
     }
 }

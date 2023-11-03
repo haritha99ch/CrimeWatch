@@ -58,8 +58,7 @@ public sealed record Account : AggregateRoot<AccountId>
         CreatedAt = DateTime.Now
     };
 
-    public Account UpdateModerator(
-        string nic,
+    public void UpdateModerator(string nic,
         string firstName,
         string lastName,
         Gender gender,
@@ -74,18 +73,15 @@ public sealed record Account : AggregateRoot<AccountId>
         Person!.Update(nic, firstName, lastName, gender, birthDay);
         Moderator!.Update(policeId, city, province);
 
-        if (email.Equals(Email) && password.Equals(Password)) return this;
+        if (email.Equals(Email) && password.Equals(Password)) return;
 
         Email = email;
         Password = password;
         PhoneNumber = phoneNumber;
         UpdatedAt = DateTime.Now;
-
-        return this;
     }
 
-    public Account UpdateWitness(
-        string nic,
+    public void UpdateWitness(string nic,
         string firstName,
         string lastName,
         Gender gender,
@@ -96,17 +92,15 @@ public sealed record Account : AggregateRoot<AccountId>
     {
         Person!.Update(nic, firstName, lastName, gender, birthDay);
         Witness!.Update();
-        
+
         UpdatedAt = Person.UpdatedAt > Witness.UpdatedAt ? Person.UpdatedAt : Witness.UpdatedAt;
 
-        if (email.Equals(Email) && password.Equals(Password)) return this;
+        if (email.Equals(Email) && password.Equals(Password)) return;
 
         Email = email;
         Password = password;
         PhoneNumber = phoneNumber;
         UpdatedAt = DateTime.Now;
-
-        return this;
     }
 
 }
