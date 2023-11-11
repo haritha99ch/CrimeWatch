@@ -17,6 +17,8 @@ public sealed record Report : AggregateRoot<ReportId>
     public List<Evidence> Evidences { get; init; } = new();
     public List<Comment> Comments { get; init; } = new();
     public List<ViolationType> ViolationTypes { get; private set; } = new();
+    public List<Bookmark> Bookmarks { get; init; } = new();
+    public int BookmarksCount { get; private set; }
     public MediaItem? MediaItem { get; private init; }
     public Account? Author { get; init; }
     public Account? Moderator { get; init; }
@@ -116,6 +118,28 @@ public sealed record Report : AggregateRoot<ReportId>
         var comment = GetComment(commentId);
         var deleted = Comments.Remove(comment);
         return deleted;
+    }
+
+    public bool AddBookmark(AccountId accountId)
+    {
+        if (Bookmarks.Any(e => e.AccountId.Equals(accountId)))
+        {
+            throw new("Bookmark is already added");
+        }
+        Bookmarks.Add(Bookmark.Create(accountId));
+        BookmarksCount++;
+        return true;
+    }
+
+    public bool RemoveBookmark(AccountId accountId)
+    {
+        if (!Bookmarks.Any(e => e.AccountId.Equals(accountId)))
+        {
+            throw new("No bookmark was added to remove");
+        }
+        Bookmarks.Remove(Bookmarks.FirstOrDefault(e => e.AccountId.Equals(accountId))!);
+        BookmarksCount--;
+        return true;
     }
 
     public Evidence AddEvidence(

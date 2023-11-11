@@ -38,8 +38,9 @@ public static class DataProvider
     internal static string Caption => new Lorem().Sentence();
     internal static string Description => new Lorem().Paragraphs();
     internal static string MediaItemUrl => new Internet().Url();
-    internal static AccountId AuthorId => new(Guid.NewGuid());
-    internal static AccountId ModeratorId => new(Guid.NewGuid());
+    internal static AccountId AccountId => new(Guid.NewGuid());
+    internal static AccountId AuthorId => AccountId;
+    internal static AccountId ModeratorId => AccountId;
     internal static Account TestAccountForWitness => GetWitnessAccount();
     internal static Account TestAccountForModerator => GetModeratorAccount();
     internal static MediaUpload TestMediaItem => GetMediaUpload();
@@ -47,11 +48,22 @@ public static class DataProvider
     internal static Report TestModeratedReport => GetModeratedReport();
     internal static Report TestApprovedReport => GetApprovedReport();
     internal static Report TestReportWithAComment => GetReportWithAComment();
+    internal static Report TestReportWithABookmark => GetReportWithBookmark();
     internal static Evidence TestEvidence => GetEvidence();
     internal static Report TestReportWithAEvidence => GetReportWithAEvidence();
     internal static Report TestReportWithAEvidenceIncludingComment => GetReportWithAEvidenceIncludingComment();
 
     private static Comment TestComment => GetComment();
+    private static Bookmark TestBookmark => GetBookmark();
+    private static Bookmark GetBookmark()
+    {
+        var faker = new Faker<Bookmark>()
+            .RuleFor(b => b.Id, () => new(Guid.NewGuid()))
+            .RuleFor(b => b.AccountId, () => new(Guid.NewGuid()))
+            .RuleFor(a => a.CreatedAt, DateTime.Now);
+
+        return faker.Generate();
+    }
     private static Account GetWitnessAccount()
     {
         var faker = new Faker<Account>()
@@ -126,6 +138,27 @@ public static class DataProvider
             .RuleFor(r => r.Location, GetLocation)
             .RuleFor(r => r.MediaItem, GetMediaItem)
             .RuleFor(r => r.CreatedAt, DateTime.Now);
+
+        return faker.Generate();
+    }
+
+    private static Report GetReportWithBookmark()
+    {
+        var faker = new Faker<Report>()
+            .RuleFor(r => r.Id, () => new(Guid.NewGuid()))
+            .RuleFor(r => r.AuthorId, () => new(Guid.NewGuid()))
+            .RuleFor(r => r.Caption, Caption)
+            .RuleFor(r => r.Status, Status.Pending)
+            .RuleFor(r => r.Description, Description)
+            .RuleFor(r => r.Location, GetLocation)
+            .RuleFor(r => r.MediaItem, GetMediaItem)
+            .RuleFor(r => r.CreatedAt, DateTime.Now)
+            .RuleFor(r => r.Bookmarks, (_, r) =>
+            {
+                r.Bookmarks.Add(TestBookmark);
+                return r.Bookmarks;
+            })
+            .RuleFor(r => r.BookmarksCount, 1);
 
         return faker.Generate();
     }

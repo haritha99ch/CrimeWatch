@@ -152,6 +152,52 @@ public class ReportAggregate
     }
 
     [TestMethod]
+    public void Add_Bookmark_To_Report()
+    {
+        var report = DataProvider.TestReport;
+        var accountId = DataProvider.AccountId;
+
+        report.AddBookmark(accountId);
+
+        Assert.AreEqual(1, report.Bookmarks.Count);
+        Assert.AreEqual(accountId, report.Bookmarks[0].AccountId);
+        Assert.IsNotNull(report.Bookmarks[0].CreatedAt);
+    }
+
+    [TestMethod]
+    public void Add_Bookmark_To_Report_When_Bookmark_Is_Already_Added()
+    {
+        var report = DataProvider.TestReportWithABookmark;
+        var accountId = report.Bookmarks[0].AccountId;
+
+
+        var result = Assert.ThrowsException<Exception>(() => report.AddBookmark(accountId));
+        Assert.AreSame(expected: "Bookmark is already added", result.Message);
+    }
+
+    [TestMethod]
+    public void Remove_Bookmark_From_Report()
+    {
+        var report = DataProvider.TestReportWithABookmark;
+        var accountId = report.Bookmarks[0].AccountId;
+
+        report.RemoveBookmark(accountId);
+
+        Assert.AreEqual(0, report.Bookmarks.Count);
+    }
+
+    [TestMethod]
+    public void Remove_Bookmark_From_Report_Which_Is_Not_Added()
+    {
+        var report = DataProvider.TestReportWithABookmark;
+        var accountId = DataProvider.AccountId;
+        while (accountId == report.Bookmarks[0].AccountId) accountId = DataProvider.AccountId;
+
+        var result = Assert.ThrowsException<Exception>(() => report.RemoveBookmark(accountId));
+        Assert.AreSame(expected: "No bookmark was added to remove", result.Message);
+    }
+
+    [TestMethod]
     public void Add_Evidence_To_Report()
     {
         var report = DataProvider.TestReport;
