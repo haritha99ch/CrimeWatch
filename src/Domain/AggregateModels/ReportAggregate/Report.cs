@@ -16,6 +16,7 @@ public sealed record Report : AggregateRoot<ReportId>
 
     public List<Evidence> Evidences { get; init; } = new();
     public List<Comment> Comments { get; init; } = new();
+    public List<ViolationType> ViolationTypes { get; private set; } = new();
     public MediaItem? MediaItem { get; private init; }
     public Account? Author { get; init; }
     public Account? Moderator { get; init; }
@@ -29,6 +30,7 @@ public sealed record Report : AggregateRoot<ReportId>
         string street2,
         string city,
         string province,
+        List<ViolationType> violationTypes,
         MediaUpload mediaItem) => new()
     {
         Id = new(Guid.NewGuid()),
@@ -37,6 +39,7 @@ public sealed record Report : AggregateRoot<ReportId>
         Description = description,
         Location = Location.Create(no, street1, street2, city, province),
         MediaItem = MediaItem.Create(mediaItem.Url, mediaItem.MediaType),
+        ViolationTypes = violationTypes,
         Status = Status.Pending,
         CreatedAt = DateTime.Now
     };
@@ -48,9 +51,11 @@ public sealed record Report : AggregateRoot<ReportId>
         string street2,
         string city,
         string province,
+        List<ViolationType> violationTypes,
         MediaItem? mediaItem,
         MediaUpload? newMediaItem)
     {
+        ViolationTypes = violationTypes;
         Location.Update(no, street1, street2, city, province);
         if (mediaItem is not null)
         {

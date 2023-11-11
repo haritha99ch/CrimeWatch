@@ -33,6 +33,8 @@ public static class DataProvider
     internal static string No => new Address().BuildingNumber();
     internal static string Street1 => new Address().StreetName();
     internal static string Street2 => new Address().StreetName();
+    internal static List<ViolationType> ViolationTypes
+        => Enumerable.Repeat(new Randomizer().Enum<ViolationType>(), 4).ToList();
     internal static string Caption => new Lorem().Sentence();
     internal static string Description => new Lorem().Paragraphs();
     internal static string MediaItemUrl => new Internet().Url();

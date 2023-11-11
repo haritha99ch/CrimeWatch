@@ -17,8 +17,9 @@ public class ReportAggregate
         var province = DataProvider.Province;
         var authorId = DataProvider.AuthorId;
         var mediaItemUpload = DataProvider.TestMediaItem;
+        var violationTypes = DataProvider.ViolationTypes;
 
-        var report = Report.Create(authorId, caption, description, no, street1, street2, city, province,
+        var report = Report.Create(authorId, caption, description, no, street1, street2, city, province, violationTypes,
             mediaItemUpload);
 
         Assert.IsNotNull(report);
@@ -31,6 +32,7 @@ public class ReportAggregate
         Assert.AreEqual(street2, report.Location.Street2);
         Assert.AreEqual(city, report.Location.City);
         Assert.AreEqual(province, report.Location.Province);
+        Assert.AreEqual(violationTypes, report.ViolationTypes);
     }
 
     [TestMethod]
@@ -45,9 +47,10 @@ public class ReportAggregate
         var city = report.Location.City;
         var province = report.Location.Province;
         var newMediaItem = DataProvider.TestMediaItem;
+        var violationTypes = DataProvider.ViolationTypes;
 
-        report.Update(updatedCaption, updatedDescription, no, street1, updatedStreet2, city, province, null,
-            newMediaItem);
+        report.Update(updatedCaption, updatedDescription, no, street1, updatedStreet2, city, province, violationTypes,
+            null, newMediaItem);
 
         Assert.IsNotNull(report.MediaItem);
         Assert.IsNotNull(report.AuthorId);
@@ -60,6 +63,7 @@ public class ReportAggregate
         Assert.AreEqual(city, report.Location.City);
         Assert.AreEqual(province, report.Location.Province);
         Assert.AreEqual(Status.Pending, report.Status);
+        Assert.AreSame(violationTypes, report.ViolationTypes);
     }
 
     [TestMethod]
