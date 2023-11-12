@@ -40,7 +40,7 @@ public sealed record Evidence : Entity<EvidenceId>
         Id = new(Guid.NewGuid())
     };
 
-    public void Update(
+    public bool Update(
             string caption,
             string description,
             string no,
@@ -52,25 +52,32 @@ public sealed record Evidence : Entity<EvidenceId>
             List<MediaUpload>? newMediaItems
         )
     {
-        Location.Update(no, street1, street2, city, province);
+        var thisUpdated = false;
+        var mediaItemsUpdated = false;
+        var locationUpdated = Location.Update(no, street1, street2, city, province);
         mediaItems ??= new();
         if (newMediaItems is not null)
         {
             mediaItems.AddRange(MapMediaUploadsToEntities(newMediaItems));
+            mediaItemsUpdated = true;
         }
-        if (caption.Equals(Caption)
-            && description.Equals(Description)
-            && mediaItems.OrderBy(e => e).SequenceEqual(MediaItems.OrderBy(e => e)))
-            return;
-
-        Caption = caption;
-        Description = description;
-        MediaItems = mediaItems;
+        if (!caption.Equals(Caption)
+            || !description.Equals(Description)
+            || !mediaItems.OrderBy(e => e).SequenceEqual(MediaItems.OrderBy(e => e)))
+        {
+            Caption = caption;
+            Description = description;
+            MediaItems = mediaItems;
+            thisUpdated = true;
+        }
+        if (!thisUpdated && !locationUpdated && !mediaItemsUpdated) return false;
         UpdatedAt = DateTime.Now;
+        return true;
     }
 
     internal Evidence SetModerator(AccountId moderatorId)
     {
+        if (ModeratorId is not null) throw new("Report is already moderated");
         ModeratorId = moderatorId;
         Status = Status.UnderReview;
         UpdatedAt = DateTime.Now;
@@ -79,6 +86,7 @@ public sealed record Evidence : Entity<EvidenceId>
 
     internal Evidence SetApproved()
     {
+        if (Status.Equals(Status.Approved)) throw new("Report is already approved");
         Status = Status.Approved;
         UpdatedAt = DateTime.Now;
         return this;
@@ -86,6 +94,7 @@ public sealed record Evidence : Entity<EvidenceId>
 
     internal Evidence SetDeclined()
     {
+        if (Status.Equals(Status.Declined)) throw new("Report is already declined");
         Status = Status.Declined;
         UpdatedAt = DateTime.Now;
         return this;
@@ -93,6 +102,7 @@ public sealed record Evidence : Entity<EvidenceId>
 
     internal Evidence SetUnderReview()
     {
+        if (Status.Equals(Status.UnderReview)) throw new("Report is already under Review");
         Status = Status.UnderReview;
         UpdatedAt = DateTime.Now;
         return this;

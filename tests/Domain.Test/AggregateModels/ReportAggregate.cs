@@ -145,7 +145,7 @@ public class ReportAggregate
     {
         var report = DataProvider.TestReportWithAComment;
 
-        var deleted = report.DeleteComment(report.Comments[0].Id);
+        var deleted = report.RemoveComment(report.Comments[0].Id);
 
         Assert.IsTrue(deleted);
         Assert.AreEqual(0, report.Comments.Count);
@@ -301,7 +301,7 @@ public class ReportAggregate
     {
         var report = DataProvider.TestReportWithAEvidence;
 
-        var deleted = report.DeleteEvidence(report.Evidences[0].Id);
+        var deleted = report.RemoveEvidence(report.Evidences[0].Id);
 
         Assert.IsTrue(deleted);
         Assert.AreEqual(0, report.Evidences.Count);
@@ -340,7 +340,7 @@ public class ReportAggregate
     {
         var report = DataProvider.TestReportWithAEvidenceIncludingComment;
 
-        var deleted = report.DeleteCommentInEvidence(report.Evidences[0].Id, report.Evidences[0].Comments[0].Id);
+        var deleted = report.RemoveCommentInEvidence(report.Evidences[0].Id, report.Evidences[0].Comments[0].Id);
 
         Assert.IsTrue(deleted);
         Assert.AreEqual(0, report.Evidences[0].Comments.Count);

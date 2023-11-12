@@ -16,14 +16,16 @@ public sealed record Location
         Province = province
     };
 
-    public Location Update(string? no, string street1, string? street2, string city, string province)
+    public bool Update(string? no, string street1, string? street2, string city, string province)
     {
+        if (No == no && Street1 == street1 && Street2 == street2 && City == city && Province == province) return false;
+
         No = no;
         Street1 = street1;
         Street2 = street2;
         City = city;
         Province = province;
 
-        return this;
+        return true;
     }
 }

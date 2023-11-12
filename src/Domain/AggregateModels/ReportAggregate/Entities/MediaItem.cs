@@ -15,14 +15,14 @@ public sealed record MediaItem : Entity<MediaItemId>
         CreatedAt = DateTime.Now
     };
 
-    public MediaItem Update(string url, MediaType mediaType)
+    public bool Update(string url, MediaType mediaType)
     {
-        if (url.Equals(Url) && mediaType.Equals(MediaType)) return this;
+        if (url.Equals(Url) && mediaType.Equals(MediaType)) return false;
 
         Url = url;
         MediaType = mediaType;
         UpdatedAt = DateTime.Now;
 
-        return this;
+        return true;
     }
 }
