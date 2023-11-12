@@ -2,4 +2,4 @@
 using Domain.Contracts.Models;
 
 namespace Domain.AggregateModels.ReportAggregate.Events;
-public record EvidenceRemoveFromReportEvent(Report Report, Evidence Evidence) : IDomainEvent;
+public record EvidenceFromReportUpdatedEvent(Report Report, Evidence Evidence) : IDomainEvent;

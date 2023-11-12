@@ -123,14 +123,14 @@ public sealed record Report : AggregateRoot<ReportId>
         if (Status.Equals(Status.UnderReview)) throw new("Report is already under Review");
         Status = Status.UnderReview;
         UpdatedAt = DateTime.Now;
-        RaiseDomainEvent(new ReportUnderReviewEvent(this));
+        RaiseDomainEvent(new ReportRevertedToUnderReviewEvent(this));
     }
 
     public Comment AddComment(AccountId accountId, string content)
     {
         var comment = Comment.Create(accountId, content);
         Comments.Add(comment);
-        RaiseDomainEvent(new CommentAddedToReportEvent(this, comment));
+        RaiseDomainEvent(new CommentForReportAddedEvent(this, comment));
         return comment;
     }
 
@@ -138,7 +138,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var comment = GetComment(commentId);
         comment.Update(content);
-        RaiseDomainEvent(new CommentUpdatedOnReportEvent(this, comment));
+        RaiseDomainEvent(new CommentFromReportUpdatedEvent(this, comment));
         return comment;
     }
 
@@ -146,7 +146,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var comment = GetComment(commentId);
         var deleted = Comments.Remove(comment);
-        RaiseDomainEvent(new CommentRemovedFromReportEvent(this, commentId));
+        RaiseDomainEvent(new CommentFromReportRemovedEvent(this, commentId));
         return deleted;
     }
 
@@ -189,7 +189,7 @@ public sealed record Report : AggregateRoot<ReportId>
         var evidence = Evidence.Create(authorId, caption, description, no, street1, street2, city, province,
             mediaItems);
         Evidences.Add(evidence);
-        RaiseDomainEvent(new EvidenceAddedToReportEvent(this, evidence));
+        RaiseDomainEvent(new EvidenceAddedForReportEvent(this, evidence));
         return evidence;
     }
 
@@ -198,7 +198,7 @@ public sealed record Report : AggregateRoot<ReportId>
         var evidence = Evidences.FirstOrDefault(e => e.Id.Equals(evidenceId));
         if (evidence is null) return false;
         Evidences.Remove(evidence);
-        RaiseDomainEvent(new EvidenceRemoveFromReportEvent(this, evidence));
+        RaiseDomainEvent(new EvidenceFromReportRemovedEvent(this, evidenceId));
         return true;
     }
 
@@ -217,7 +217,7 @@ public sealed record Report : AggregateRoot<ReportId>
         var evidence = GetEvidence(evidenceId);
         var evidenceUpdate = evidence.Update(caption, description, no, street1, street2, city, province, mediaItems,
             newMediaItems);
-        if (evidenceUpdate) RaiseDomainEvent(new EvidenceRemoveFromReportEvent(this, evidence));
+        if (evidenceUpdate) RaiseDomainEvent(new EvidenceFromReportUpdatedEvent(this, evidence));
         return evidence;
     }
 
@@ -225,7 +225,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var evidence = GetEvidence(evidenceId);
         evidence.SetModerator(moderatorId);
-        RaiseDomainEvent(new EvidenceOnReportModeratedEvent(this, evidence));
+        RaiseDomainEvent(new EvidenceFromReportModeratedEvent(this, evidence));
         return evidence;
     }
 
@@ -233,7 +233,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var evidence = GetEvidence(evidenceId);
         evidence.SetApproved();
-        RaiseDomainEvent(new EvidenceOnReportApprovedEvent(this, evidence));
+        RaiseDomainEvent(new EvidenceFromReportApprovedEvent(this, evidence));
         return evidence;
     }
 
@@ -241,7 +241,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var evidence = GetEvidence(evidenceId);
         evidence.SetDeclined();
-        RaiseDomainEvent(new EvidenceOnReportDeclinedEvent(this, evidence));
+        RaiseDomainEvent(new EvidenceFromReportDeclinedEvent(this, evidence));
         return evidence;
     }
 
@@ -249,7 +249,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var evidence = GetEvidence(evidenceId);
         evidence.SetUnderReview();
-        RaiseDomainEvent(new EvidenceOnReportUnderReviewedEvent(this, evidence));
+        RaiseDomainEvent(new EvidenceFromReportRevertedToUnderReviewEvent(this, evidence));
         return evidence;
     }
 
@@ -257,7 +257,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var evidence = GetEvidence(evidenceId);
         var comment = evidence.AddComment(accountId, content);
-        RaiseDomainEvent(new CommentAddedToEvidenceOnReportEvent(this, evidenceId, comment));
+        RaiseDomainEvent(new CommentForEvidenceOnReportAddedEvent(this, evidenceId, comment));
         return comment;
     }
 
@@ -265,7 +265,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var evidence = GetEvidence(evidenceId);
         var comment = evidence.UpdateComment(commentId, content);
-        RaiseDomainEvent(new CommentUpdatedOnEvidenceOnReportEvent(this, evidenceId, comment));
+        RaiseDomainEvent(new CommentFromEvidenceOnReportUpdatedEvent(this, evidenceId, comment));
         return comment;
     }
 
@@ -273,7 +273,7 @@ public sealed record Report : AggregateRoot<ReportId>
     {
         var evidence = GetEvidence(evidenceId);
         var deleted = evidence.DeleteComment(commentId);
-        RaiseDomainEvent(new CommentRemovedFromEvidenceOnReportEvent(this, evidenceId, commentId));
+        RaiseDomainEvent(new CommentFromEvidenceOnReportRemovedEvent(this, evidenceId, commentId));
         return deleted;
     }
 

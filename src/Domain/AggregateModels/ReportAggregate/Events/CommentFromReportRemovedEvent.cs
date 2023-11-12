@@ -2,4 +2,4 @@
 using Domain.Contracts.Models;
 
 namespace Domain.AggregateModels.ReportAggregate.Events;
-public record CommentRemovedFromReportEvent(Report Report, CommentId CommentId) : IDomainEvent;
+public record CommentFromReportRemovedEvent(Report Report, CommentId CommentId) : IDomainEvent;

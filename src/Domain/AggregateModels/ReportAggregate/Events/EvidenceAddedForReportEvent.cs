@@ -2,4 +2,4 @@
 using Domain.Contracts.Models;
 
 namespace Domain.AggregateModels.ReportAggregate.Events;
-public record CommentAddedToReportEvent(Report Report, Comment Comment) : IDomainEvent;
+public record EvidenceAddedForReportEvent(Report Report, Evidence Evidence) : IDomainEvent;
