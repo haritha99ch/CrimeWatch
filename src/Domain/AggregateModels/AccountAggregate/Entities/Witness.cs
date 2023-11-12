@@ -9,9 +9,5 @@ public sealed record Witness : Entity<WitnessId>
         CreatedAt = DateTime.Now
     };
 
-    public Witness Update()
-    {
-        UpdatedAt = DateTime.Now;
-        return this;
-    }
+    public bool Update() => false;
 }

@@ -16,15 +16,15 @@ public sealed record Moderator : Entity<ModeratorId>
         Province = province
     };
 
-    public Moderator Update(string policeId, string city, string province)
+    public bool Update(string policeId, string city, string province)
     {
-        if (policeId.Equals(PoliceId) && city.Equals(City) && province.Equals(Province)) return this;
+        if (policeId.Equals(PoliceId) && city.Equals(City) && province.Equals(Province)) return false;
 
         PoliceId = policeId;
         City = city;
         Province = province;
         UpdatedAt = DateTime.Now;
 
-        return this;
+        return true;
     }
 }

@@ -22,13 +22,13 @@ public sealed record Person : Entity<PersonId>
             CreatedAt = DateTime.Now
         };
 
-    public Person Update(string nic, string firstName, string lastName, Gender gender, DateOnly birthDate)
+    public bool Update(string nic, string firstName, string lastName, Gender gender, DateOnly birthDate)
     {
         if (nic.Equals(Nic)
             && firstName.Equals(FirstName)
             && lastName.Equals(LastName)
             && gender.Equals(Gender)
-            && birthDate.Equals(BirthDate)) return this;
+            && birthDate.Equals(BirthDate)) return false;
 
         Nic = nic;
         FirstName = firstName;
@@ -37,6 +37,6 @@ public sealed record Person : Entity<PersonId>
         Gender = gender;
         UpdatedAt = DateTime.Now;
 
-        return this;
+        return true;
     }
 }
