@@ -1,12 +1,9 @@
-﻿using Domain.AggregateModels.AccountAggregate;
-using Domain.AggregateModels.AccountAggregate.Enums;
-
-namespace Domain.Test.AggregateModels;
+﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
 [TestClass]
-public class AccountAggregateTests
+public class WhenCreatingAccount
 {
     [TestMethod]
-    public void Create_Account_For_Witness()
+    public void Should_CreateAccountForWitness()
     {
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
@@ -43,7 +40,25 @@ public class AccountAggregateTests
     }
 
     [TestMethod]
-    public void Create_Account_For_Moderator()
+    public void ShouldRaise_AccountCreatedEvent_When_Creating_Account_For_Witness()
+    {
+        var nic = DataProvider.Nic;
+        var firstName = DataProvider.FirstName;
+        var lastName = DataProvider.LastName;
+        var gender = DataProvider.Gender;
+        var birthDate = DataProvider.BirthDate;
+        var email = DataProvider.Email;
+        var password = DataProvider.Password;
+        var phoneNumber = DataProvider.PhoneNumber;
+
+        var account =
+            Account.CreateAccountForWitness(nic, firstName, lastName, gender, birthDate, email, password, phoneNumber);
+
+        Assert.IsTrue(account.HasDomainEvent<AccountCreatedEvent>());
+    }
+
+    [TestMethod]
+    public void Should_CreateAccountForModerator()
     {
         var nic = DataProvider.Nic;
         var policeId = DataProvider.PoliceId;
@@ -83,46 +98,23 @@ public class AccountAggregateTests
     }
 
     [TestMethod]
-    public void Update_Witness_Account()
+    public void ShouldRaise_AccountCreatedEvent_When_Creating_Account_For_Moderator()
     {
-        var account = DataProvider.TestAccountForWitness;
-        var person = account.Person!;
+        var nic = DataProvider.Nic;
+        var policeId = DataProvider.PoliceId;
+        var city = DataProvider.City;
+        var province = DataProvider.Province;
+        var firstName = DataProvider.FirstName;
+        var lastName = DataProvider.LastName;
+        var gender = DataProvider.Gender;
+        var birthDate = DataProvider.BirthDate;
+        var email = DataProvider.Email;
+        var password = DataProvider.Password;
+        var phoneNumber = DataProvider.PhoneNumber;
 
-        var newEmail = DataProvider.Email;
-        var newLastName = DataProvider.LastName;
+        var account = Account.CreateAccountForModerator(nic, firstName, lastName, gender, birthDate, policeId, city,
+            province, email, password, phoneNumber);
 
-        account.UpdateWitness(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate, newEmail,
-            account.Password, account.PhoneNumber);
-
-        Assert.IsNotNull(account.Person);
-        person = account.Person;
-        Assert.AreEqual(newEmail, account.Email);
-        Assert.AreEqual(newLastName, person.LastName);
-
-    }
-
-    [TestMethod]
-    public void Update_Moderator_Account()
-    {
-        var account = DataProvider.TestAccountForModerator;
-        var person = account.Person!;
-        var moderator = account.Moderator!;
-
-        var newEmail = DataProvider.Email;
-        var newLastName = DataProvider.LastName;
-
-        account.UpdateModerator(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate,
-            moderator.PoliceId, moderator.City, moderator.Province, newEmail,
-            account.Password, account.PhoneNumber);
-
-        Assert.IsNotNull(account.Person);
-        person = account.Person;
-        Assert.AreEqual(newEmail, account.Email);
-        Assert.AreEqual(newLastName, person.LastName);
-
-        Assert.IsNotNull(account.Moderator);
-        moderator = account.Moderator;
-        Assert.AreEqual(moderator.City, moderator.City);
-        Assert.AreEqual(moderator.Province, moderator.Province);
+        Assert.IsTrue(account.HasDomainEvent<AccountCreatedEvent>());
     }
 }
