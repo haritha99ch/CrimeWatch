@@ -6,15 +6,15 @@ using Domain.AggregateModels.ReportAggregate.ValueObjects;
 namespace Domain.AggregateModels.ReportAggregate.Entities;
 public sealed record Evidence : Entity<EvidenceId>
 {
-    public required AccountId AuthorId { get; init; }
-    public AccountId? ModeratorId { get; set; }
+    public AccountId? AuthorId { get; private init; }
+    public AccountId? ModeratorId { get; private set; }
     public required string Caption { get; set; }
     public required string Description { get; set; }
     public required Location Location { get; init; }
     public required Status Status { get; set; }
 
-    public List<MediaItem> MediaItems { get; set; } = new();
-    public List<Comment> Comments { get; init; } = new();
+    public List<MediaItem> MediaItems { get; private set; } = new();
+    public List<Comment> Comments { get; } = new();
 
     public Account? Author { get; init; }
     public Account? Moderator { get; init; }

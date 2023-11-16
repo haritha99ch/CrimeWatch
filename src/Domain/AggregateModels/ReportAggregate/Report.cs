@@ -8,7 +8,7 @@ using Domain.AggregateModels.ReportAggregate.ValueObjects;
 namespace Domain.AggregateModels.ReportAggregate;
 public sealed record Report : AggregateRoot<ReportId>
 {
-    public required AccountId AuthorId { get; init; }
+    public AccountId? AuthorId { get; init; }
     public AccountId? ModeratorId { get; private set; }
     public required string Caption { get; set; }
     public required string Description { get; set; }
