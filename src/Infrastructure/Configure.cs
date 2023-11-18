@@ -2,6 +2,7 @@
 using ApplicationSettings.Helpers;
 using ApplicationSettings.Options;
 using Infrastructure.Context;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,11 @@ public static class Configure
     public static void AddInfrastructure(this IServiceCollection serviceCollection)
     {
         serviceCollection.ConfigureSqlDbContext();
+    }
+
+    public static void AddInfrastructure(this IServiceCollection serviceCollection, string instanceName)
+    {
+        serviceCollection.ConfigureSqlDbContext(instanceName);
     }
 
     /// <summary>
@@ -35,6 +41,26 @@ public static class Configure
             });
             builder.EnableSensitiveDataLogging(sqlServerOptions.EnableSensitiveDataLogging);
             builder.EnableDetailedErrors(sqlServerOptions.EnableDetailedErrors);
+        });
+    }
+
+    private static void ConfigureSqlDbContext(this IServiceCollection serviceCollection, string instanceName)
+    {
+        serviceCollection.AddDbContext<ApplicationDbContext>(builder =>
+        {
+            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource = @"(localdb)\MSSQLLocalDB",
+                InitialCatalog = $"crime-watch-db-test-{instanceName}",
+                IntegratedSecurity = true
+            };
+            builder.UseSqlServer(sqlConnectionStringBuilder.ConnectionString, options =>
+            {
+                options.EnableRetryOnFailure(5);
+                options.CommandTimeout(30);
+            });
+            builder.EnableSensitiveDataLogging();
+            builder.EnableDetailedErrors();
         });
     }
 }

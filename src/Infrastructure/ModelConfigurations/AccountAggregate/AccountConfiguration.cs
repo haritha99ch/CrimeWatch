@@ -18,7 +18,7 @@ sealed internal class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.Property(a => a.Password).IsRequired().HasMaxLength(25);
 
-        builder.Property(a => a.PhoneNumber).IsRequired().HasMaxLength(15);
+        builder.Property(a => a.PhoneNumber).IsRequired().HasMaxLength(20);
         builder.HasIndex(a => a.PhoneNumber).IsUnique();
 
         builder.OwnsOne<Person>(e => e.Person, navigationBuilder => navigationBuilder.Configure());

@@ -14,44 +14,44 @@ using PersonEntity = Domain.AggregateModels.AccountAggregate.Entities.Person;
 
 // using Person = Bogus.Person;
 
-namespace Domain.Test.Helpers;
+namespace TestDataProvider;
 public static class DataProvider
 {
-    internal static string Nic => new Randomizer().Int(1, 1000000000).ToString();
-    internal static string FirstName => new Person().FirstName;
-    internal static string LastName => new Person().LastName;
-    internal static string PhoneNumber => new Person().Phone;
-    internal static DateOnly BirthDate
+    public static string Nic => new Randomizer().Int(1, 1000000000).ToString();
+    public static string FirstName => new Person().FirstName;
+    public static string LastName => new Person().LastName;
+    public static string PhoneNumber => new Person().Phone;
+    public static DateOnly BirthDate
         => DateOnly.FromDateTime(new Person().DateOfBirth);
-    internal static Gender Gender => new Randomizer().Enum<Gender>();
-    internal static MediaType MediaType => new Randomizer().Enum<MediaType>();
-    internal static string Email => new Internet().Email();
-    internal static string Password => new Internet().Password();
-    internal static string City => new Address().City();
-    internal static string Province => new Address().State();
-    internal static string PoliceId => new Randomizer().Int(1, 1000000000).ToString();
-    internal static string No => new Address().BuildingNumber();
-    internal static string Street1 => new Address().StreetName();
-    internal static string Street2 => new Address().StreetName();
-    internal static List<ViolationType> ViolationTypes
+    public static Gender Gender => new Randomizer().Enum<Gender>();
+    public static MediaType MediaType => new Randomizer().Enum<MediaType>();
+    public static string Email => new Internet().Email();
+    public static string Password => new Internet().Password();
+    public static string City => new Address().City();
+    public static string Province => new Address().State();
+    public static string PoliceId => new Randomizer().Int(1, 1000000000).ToString();
+    public static string No => new Address().BuildingNumber();
+    public static string Street1 => new Address().StreetName();
+    public static string Street2 => new Address().StreetName();
+    public static List<ViolationType> ViolationTypes
         => Enumerable.Repeat(new Randomizer().Enum<ViolationType>(), 4).ToList();
-    internal static string Caption => new Lorem().Sentence();
-    internal static string Description => new Lorem().Paragraphs();
-    internal static string MediaItemUrl => new Internet().Url();
-    internal static AccountId AccountId => new(Guid.NewGuid());
-    internal static AccountId AuthorId => AccountId;
-    internal static AccountId ModeratorId => AccountId;
-    internal static Account TestAccountForWitness => GetWitnessAccount();
-    internal static Account TestAccountForModerator => GetModeratorAccount();
-    internal static MediaUpload TestMediaItem => GetMediaUpload();
-    internal static Report TestReport => GetReport();
-    internal static Report TestModeratedReport => GetModeratedReport();
-    internal static Report TestApprovedReport => GetApprovedReport();
-    internal static Report TestReportWithAComment => GetReportWithAComment();
-    internal static Report TestReportWithABookmark => GetReportWithBookmark();
-    internal static Evidence TestEvidence => GetEvidence();
-    internal static Report TestReportWithAEvidence => GetReportWithAEvidence();
-    internal static Report TestReportWithAEvidenceIncludingComment => GetReportWithAEvidenceIncludingComment();
+    public static string Caption => new Lorem().Sentence();
+    public static string Description => new Lorem().Paragraphs();
+    public static string MediaItemUrl => new Internet().Url();
+    public static AccountId AccountId => new(Guid.NewGuid());
+    public static AccountId AuthorId => AccountId;
+    public static AccountId ModeratorId => AccountId;
+    public static Account TestAccountForWitness => GetWitnessAccount();
+    public static Account TestAccountForModerator => GetModeratorAccount();
+    public static MediaUpload TestMediaItem => GetMediaUpload();
+    public static Report TestReport => GetReport();
+    public static Report TestModeratedReport => GetModeratedReport();
+    public static Report TestApprovedReport => GetApprovedReport();
+    public static Report TestReportWithAComment => GetReportWithAComment();
+    public static Report TestReportWithABookmark => GetReportWithBookmark();
+    public static Evidence TestEvidence => GetEvidence();
+    public static Report TestReportWithAEvidence => GetReportWithAEvidence();
+    public static Report TestReportWithAEvidenceIncludingComment => GetReportWithAEvidenceIncludingComment();
 
     private static Comment TestComment => GetComment();
     private static Bookmark TestBookmark => GetBookmark();
@@ -71,6 +71,7 @@ public static class DataProvider
             .RuleFor(a => a.Email, Email)
             .RuleFor(a => a.Password, Password)
             .RuleFor(a => a.PhoneNumber, PhoneNumber)
+            .RuleFor(a => a.AccountType, AccountType.Witness)
             .RuleFor(a => a.Person, GetPerson)
             .RuleFor(a => a.Witness, GetWitness)
             .RuleFor(a => a.CreatedAt, DateTime.Now);
@@ -85,6 +86,7 @@ public static class DataProvider
             .RuleFor(a => a.Email, Email)
             .RuleFor(a => a.Password, Password)
             .RuleFor(a => a.PhoneNumber, PhoneNumber)
+            .RuleFor(a => a.AccountType, AccountType.Moderator)
             .RuleFor(a => a.Person, GetPerson)
             .RuleFor(a => a.Moderator, GetModerator)
             .RuleFor(a => a.CreatedAt, DateTime.Now);
