@@ -52,9 +52,14 @@ public static class DataProvider
     public static Evidence TestEvidence => GetEvidence();
     public static Report TestReportWithAEvidence => GetReportWithAEvidence();
     public static Report TestReportWithAEvidenceIncludingComment => GetReportWithAEvidenceIncludingComment();
+    public static EmailVerificationCode TestEmailVerificationCode => GetEmailVerificationCode();
+    public static PhoneNumberVerificationCode TestPhoneNumberVerificationCode => GetPhoneNumberVerificationCode();
 
     private static Comment TestComment => GetComment();
     private static Bookmark TestBookmark => GetBookmark();
+
+    private static EmailVerificationCode GetEmailVerificationCode() => EmailVerificationCode.Create();
+    private static PhoneNumberVerificationCode GetPhoneNumberVerificationCode() => PhoneNumberVerificationCode.Create();
     private static Bookmark GetBookmark()
     {
         var faker = new Faker<Bookmark>()
@@ -69,11 +74,15 @@ public static class DataProvider
         var faker = new Faker<Account>()
             .RuleFor(a => a.Id, () => new(Guid.NewGuid()))
             .RuleFor(a => a.Email, Email)
-            .RuleFor(a => a.Password, Password)
+            .RuleFor(a => a.Password, BCrypt.Net.BCrypt.HashPassword(Password))
             .RuleFor(a => a.PhoneNumber, PhoneNumber)
             .RuleFor(a => a.AccountType, AccountType.Witness)
             .RuleFor(a => a.Person, GetPerson)
             .RuleFor(a => a.Witness, GetWitness)
+            .RuleFor(a => a.IsEmailVerified, false)
+            .RuleFor(a => a.IsPhoneNumberVerified, false)
+            .RuleFor(a => a.EmailVerificationCode, TestEmailVerificationCode)
+            .RuleFor(a => a.PhoneNumberVerificationCode, TestPhoneNumberVerificationCode)
             .RuleFor(a => a.CreatedAt, DateTime.Now);
 
         return faker.Generate();
@@ -84,11 +93,15 @@ public static class DataProvider
         var faker = new Faker<Account>()
             .RuleFor(a => a.Id, () => new(Guid.NewGuid()))
             .RuleFor(a => a.Email, Email)
-            .RuleFor(a => a.Password, Password)
+            .RuleFor(a => a.Password, BCrypt.Net.BCrypt.HashPassword(Password))
             .RuleFor(a => a.PhoneNumber, PhoneNumber)
             .RuleFor(a => a.AccountType, AccountType.Moderator)
             .RuleFor(a => a.Person, GetPerson)
             .RuleFor(a => a.Moderator, GetModerator)
+            .RuleFor(a => a.IsEmailVerified, false)
+            .RuleFor(a => a.IsPhoneNumberVerified, false)
+            .RuleFor(a => a.EmailVerificationCode, TestEmailVerificationCode)
+            .RuleFor(a => a.PhoneNumberVerificationCode, TestPhoneNumberVerificationCode)
             .RuleFor(a => a.CreatedAt, DateTime.Now);
 
         return faker.Generate();

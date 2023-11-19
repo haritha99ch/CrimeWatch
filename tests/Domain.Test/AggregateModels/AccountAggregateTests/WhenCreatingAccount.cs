@@ -22,8 +22,9 @@ public class WhenCreatingAccount
         Assert.IsNotNull(account.Id);
         Assert.AreEqual(AccountType.Witness, account.AccountType);
         Assert.AreEqual(email, account.Email);
-        Assert.AreEqual(password, account.Password);
+        Assert.IsTrue(BCrypt.Net.BCrypt.Verify(password, account.Password));
         Assert.AreEqual(phoneNumber, account.PhoneNumber);
+        Assert.IsNotNull(account.EmailVerificationCode);
 
         Assert.IsNotNull(account.Person);
         var person = account.Person;
@@ -80,8 +81,9 @@ public class WhenCreatingAccount
         Assert.IsNotNull(account.Id);
         Assert.AreEqual(AccountType.Moderator, account.AccountType);
         Assert.AreEqual(email, account.Email);
-        Assert.AreEqual(password, account.Password);
+        Assert.IsTrue(BCrypt.Net.BCrypt.Verify(password, account.Password));
         Assert.AreEqual(phoneNumber, account.PhoneNumber);
+        Assert.IsNotNull(account.EmailVerificationCode);
 
         Assert.IsNotNull(account.Person);
         var person = account.Person;

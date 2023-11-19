@@ -7,15 +7,12 @@ public class WhenUpdatingAccount
         var account = DataProvider.TestAccountForWitness;
         var person = account.Person!;
 
-        var newEmail = DataProvider.Email;
         var newLastName = DataProvider.LastName;
 
-        account.UpdateWitness(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate, newEmail,
-            account.Password, account.PhoneNumber);
+        account.UpdateWitness(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate);
 
         Assert.IsNotNull(account.Person);
         person = account.Person;
-        Assert.AreEqual(newEmail, account.Email);
         Assert.AreEqual(newLastName, person.LastName);
     }
 
@@ -25,11 +22,9 @@ public class WhenUpdatingAccount
         var account = DataProvider.TestAccountForWitness;
         var person = account.Person!;
 
-        var newEmail = DataProvider.Email;
         var newLastName = DataProvider.LastName;
 
-        account.UpdateWitness(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate, newEmail,
-            account.Password, account.PhoneNumber);
+        account.UpdateWitness(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate);
 
         Assert.IsTrue(account.HasDomainEvent<AccountUpdatedEvent>());
     }
@@ -41,16 +36,13 @@ public class WhenUpdatingAccount
         var person = account.Person!;
         var moderator = account.Moderator!;
 
-        var newEmail = DataProvider.Email;
         var newLastName = DataProvider.LastName;
 
         account.UpdateModerator(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate,
-            moderator.PoliceId, moderator.City, moderator.Province, newEmail,
-            account.Password, account.PhoneNumber);
+            moderator.PoliceId, moderator.City, moderator.Province);
 
         Assert.IsNotNull(account.Person);
         person = account.Person;
-        Assert.AreEqual(newEmail, account.Email);
         Assert.AreEqual(newLastName, person.LastName);
 
         Assert.IsNotNull(account.Moderator);
@@ -66,12 +58,10 @@ public class WhenUpdatingAccount
         var person = account.Person!;
         var moderator = account.Moderator!;
 
-        var newEmail = DataProvider.Email;
         var newLastName = DataProvider.LastName;
 
         account.UpdateModerator(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate,
-            moderator.PoliceId, moderator.City, moderator.Province, newEmail,
-            account.Password, account.PhoneNumber);
+            moderator.PoliceId, moderator.City, moderator.Province);
 
         Assert.IsTrue(account.HasDomainEvent<AccountUpdatedEvent>());
     }

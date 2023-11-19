@@ -3,7 +3,7 @@ public interface IAggregateRoot
 {
     public List<IDomainEvent> DomainEvents { get; }
 
-    void RaiseDomainEvent(IDomainEvent domainEvent);
-    void RemoveDomainEvent(IDomainEvent domainEvent);
+    void RaiseDomainEvent<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : IDomainEvent;
+    void RemoveDomainEvent<TDomainEvent>(TDomainEvent domainEvent) where TDomainEvent : IDomainEvent;
     void ClearDomainEvents();
 }
