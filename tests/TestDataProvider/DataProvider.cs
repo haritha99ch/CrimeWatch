@@ -20,7 +20,7 @@ public static class DataProvider
     public static string Nic => new Randomizer().Int(1, 1000000000).ToString();
     public static string FirstName => new Person().FirstName;
     public static string LastName => new Person().LastName;
-    public static string PhoneNumber => new Person().Phone;
+    public static string PhoneNumber => new Randomizer().Long(100000000000, 999999999999).ToString();
     public static DateOnly BirthDate
         => DateOnly.FromDateTime(new Person().DateOfBirth);
     public static Gender Gender => new Randomizer().Enum<Gender>();

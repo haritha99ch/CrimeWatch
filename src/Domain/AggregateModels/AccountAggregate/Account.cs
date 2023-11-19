@@ -2,6 +2,7 @@
 using Domain.AggregateModels.AccountAggregate.Enums;
 using Domain.AggregateModels.AccountAggregate.Events;
 using Domain.AggregateModels.AccountAggregate.ValueObjects;
+using static BCrypt.Net.BCrypt;
 
 namespace Domain.AggregateModels.AccountAggregate;
 public sealed record Account : AggregateRoot<AccountId>
@@ -143,7 +144,7 @@ public sealed record Account : AggregateRoot<AccountId>
 
     public void ChangePassword(string newPassword)
     {
-        if (BCrypt.Net.BCrypt.Verify(newPassword, Password))
+        if (Verify(newPassword, Password))
             throw new("New password must be different from the old password.");
 
         Password = HashPassword(newPassword);
@@ -189,4 +190,5 @@ public sealed record Account : AggregateRoot<AccountId>
         RaiseDomainEvent(new AccountPhoneNumberVerificationCodeRequestedEvent(Id, PhoneNumberVerificationCode));
         return PhoneNumberVerificationCode;
     }
+    public bool VerifyPassword(string password) => Verify(password, Password);
 }

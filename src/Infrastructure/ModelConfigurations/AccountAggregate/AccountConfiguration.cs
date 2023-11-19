@@ -33,11 +33,14 @@ sealed internal class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.OwnsOne<PhoneNumberVerificationCode>(a => a.PhoneNumberVerificationCode,
             navigationBuilder => navigationBuilder.Configure());
 
-        builder.OwnsOne<Person>(e => e.Person, navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsOne<Person>(e => e.Person, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(e => e.Person).AutoInclude(false);
 
-        builder.OwnsOne<Witness>(e => e.Witness, navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsOne<Witness>(e => e.Witness, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(e => e.Witness).AutoInclude(false);;
 
-        builder.OwnsOne<Moderator>(e => e.Moderator, navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsOne<Moderator>(e => e.Moderator, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(e => e.Moderator).AutoInclude(false);
 
         builder.Property(a => a.CreatedAt).IsRequired();
 

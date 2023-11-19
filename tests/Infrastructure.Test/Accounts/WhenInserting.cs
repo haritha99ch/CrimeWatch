@@ -34,6 +34,10 @@ public class WhenInserting : TestBase
         Assert.IsNull(insertedAccount.Witness);
         Assert.IsNotNull(insertedAccount.Moderator);
         Assert.IsNotNull(insertedAccount.Moderator.Id);
+        Assert.IsFalse(insertedAccount.IsEmailVerified);
+        Assert.IsFalse(insertedAccount.IsPhoneNumberVerified);
+        Assert.IsNotNull(insertedAccount.EmailVerificationCode);
+        Assert.IsNotNull(insertedAccount.PhoneNumberVerificationCode);
     }
 
     [TestMethod]
@@ -52,5 +56,7 @@ public class WhenInserting : TestBase
         Assert.IsNull(insertedAccount.Moderator);
         Assert.IsNotNull(insertedAccount.Witness);
         Assert.IsNotNull(insertedAccount.Witness.Id);
+        Assert.IsNotNull(insertedAccount.EmailVerificationCode);
+        Assert.IsNotNull(insertedAccount.PhoneNumberVerificationCode);
     }
 }
