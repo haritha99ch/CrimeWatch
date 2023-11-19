@@ -1,6 +1,8 @@
 ﻿using Domain.AggregateModels.AccountAggregate;
 using Domain.AggregateModels.AccountAggregate.Entities;
+using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using Infrastructure.ModelConfigurations.AccountAggregate.EntityConfigurations;
+using Infrastructure.ModelConfigurations.AccountAggregate.ValueObjectConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,10 +18,20 @@ sealed internal class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(a => a.Email).IsRequired().HasMaxLength(100);
         builder.HasIndex(a => a.Email).IsUnique();
 
-        builder.Property(a => a.Password).IsRequired().HasMaxLength(25);
+        builder.Property(a => a.Password).IsRequired();
 
         builder.Property(a => a.PhoneNumber).IsRequired().HasMaxLength(20);
         builder.HasIndex(a => a.PhoneNumber).IsUnique();
+
+        builder.Property(a => a.IsEmailVerified).IsRequired();
+
+        builder.Property(a => a.IsPhoneNumberVerified).IsRequired();
+
+        builder.OwnsOne<EmailVerificationCode>(a => a.EmailVerificationCode,
+            navigationBuilder => navigationBuilder.Configure());
+
+        builder.OwnsOne<PhoneNumberVerificationCode>(a => a.PhoneNumberVerificationCode,
+            navigationBuilder => navigationBuilder.Configure());
 
         builder.OwnsOne<Person>(e => e.Person, navigationBuilder => navigationBuilder.Configure());
 
