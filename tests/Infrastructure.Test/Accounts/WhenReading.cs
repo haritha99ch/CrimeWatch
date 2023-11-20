@@ -1,8 +1,6 @@
 ﻿using Domain.AggregateModels.AccountAggregate;
 using Domain.AggregateModels.AccountAggregate.ValueObjects;
-using Infrastructure.Test.Common.Tests;
 using Microsoft.EntityFrameworkCore;
-using TestDataProvider;
 
 namespace Infrastructure.Test.Accounts;
 [TestClass]
@@ -94,7 +92,8 @@ public class WhenReading : TestBase
     {
         var account = await DbContext.Accounts
             .Where(e => e.Id.Equals(Account.Id))
-            .Select(e => new AccountWithPersonalInfo(e.Id, e.Email, $"{e.Person!.FirstName} {e.Person.LastName}")).SingleOrDefaultAsync();
+            .Select(e => new AccountWithPersonalInfo(e.Id, e.Email, $"{e.Person!.FirstName} {e.Person.LastName}"))
+            .SingleOrDefaultAsync();
 
         Assert.IsNotNull(account);
         Assert.IsNotNull(account.AccountId);

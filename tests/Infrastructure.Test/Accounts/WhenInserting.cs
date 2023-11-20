@@ -1,7 +1,4 @@
-﻿using Infrastructure.Test.Common.Tests;
-using TestDataProvider;
-
-namespace Infrastructure.Test.Accounts;
+﻿namespace Infrastructure.Test.Accounts;
 [TestClass]
 public class WhenInserting : TestBase
 {

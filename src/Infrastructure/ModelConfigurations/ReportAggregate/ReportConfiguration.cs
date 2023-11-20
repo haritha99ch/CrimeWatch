@@ -23,13 +23,17 @@ sealed internal class ReportConfiguration : IEntityTypeConfiguration<Report>
 
         builder.Property(r => r.BookmarksCount).IsRequired().HasDefaultValue(0);
 
-        builder.OwnsOne(r => r.MediaItem, navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsOne(r => r.MediaItem, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(r => r.MediaItem).AutoInclude(false);
 
-        builder.OwnsMany(r => r.Bookmarks, navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsMany(r => r.Bookmarks, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(r => r.Bookmarks).AutoInclude(false);
 
-        builder.OwnsMany(r => r.Evidences, navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsMany(r => r.Evidences, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(r => r.Evidences).AutoInclude(false);
 
-        builder.OwnsMany(e => e.Comments, navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsMany(e => e.Comments, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(r => r.Comments).AutoInclude(false);
 
         builder.HasOne(e => e.Author).WithMany().HasForeignKey(e => e.AuthorId);
         builder.Property(e => e.AuthorId)

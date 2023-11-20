@@ -1,7 +1,5 @@
 ﻿using Domain.AggregateModels.AccountAggregate.ValueObjects;
-using Infrastructure.Test.Common.Tests;
 using Microsoft.EntityFrameworkCore;
-using TestDataProvider;
 
 namespace Infrastructure.Test.Accounts;
 [TestClass]

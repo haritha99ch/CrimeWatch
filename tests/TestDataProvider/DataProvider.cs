@@ -142,11 +142,11 @@ public static class DataProvider
         return faker.Generate();
     }
 
-    private static Report GetReport()
+    public static Report GetReport(AccountId? accountId = null)
     {
         var faker = new Faker<Report>()
             .RuleFor(r => r.Id, () => new(Guid.NewGuid()))
-            .RuleFor(r => r.AuthorId, () => new(Guid.NewGuid()))
+            .RuleFor(r => r.AuthorId, () => accountId ?? new(Guid.NewGuid()))
             .RuleFor(r => r.Caption, Caption)
             .RuleFor(r => r.Status, Status.Pending)
             .RuleFor(r => r.Description, Description)
@@ -272,11 +272,11 @@ public static class DataProvider
         return faker.Generate();
     }
 
-    private static Evidence GetEvidence()
+    public static Evidence GetEvidence(AccountId? authorId = null)
     {
         var faker = new Faker<Evidence>()
             .RuleFor(e => e.Id, () => new(Guid.NewGuid()))
-            .RuleFor(e => e.AuthorId, AuthorId)
+            .RuleFor(e => e.AuthorId, authorId ?? AuthorId)
             .RuleFor(e => e.Caption, Caption)
             .RuleFor(e => e.Description, Description)
             .RuleFor(e => e.Location, GetLocation)
@@ -319,11 +319,11 @@ public static class DataProvider
         return faker.Generate();
     }
 
-    private static Report GetReportWithAEvidence()
+    public static Report GetReportWithAEvidence(AccountId? authorId = null)
     {
         var faker = new Faker<Report>()
             .RuleFor(r => r.Id, () => new(Guid.NewGuid()))
-            .RuleFor(r => r.AuthorId, () => new(Guid.NewGuid()))
+            .RuleFor(r => r.AuthorId, () => authorId ?? new(Guid.NewGuid()))
             .RuleFor(r => r.Caption, Caption)
             .RuleFor(r => r.Description, Description)
             .RuleFor(r => r.Location, GetLocation)
@@ -331,7 +331,7 @@ public static class DataProvider
             .RuleFor(r => r.CreatedAt, DateTime.Now)
             .RuleFor(r => r.Evidences, (_, r) =>
             {
-                r.Evidences.Add(TestEvidence);
+                r.Evidences.Add(GetEvidence(authorId));
                 return r.Evidences;
             });
 

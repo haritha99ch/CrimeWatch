@@ -54,14 +54,14 @@ public sealed record Report : AggregateRoot<ReportId>
 
     public void Update(string caption,
         string description,
-        string no,
+        string? no,
         string street1,
-        string street2,
+        string? street2,
         string city,
         string province,
         List<ViolationType> violationTypes,
         MediaItem? mediaItem,
-        MediaUpload? newMediaItem)
+        MediaUpload? newMediaItem = null)
     {
         var violationTypesUpdated = false;
         bool mediaItemUpdated;
@@ -212,7 +212,7 @@ public sealed record Report : AggregateRoot<ReportId>
         string city,
         string province,
         List<MediaItem>? mediaItems,
-        List<MediaUpload>? newMediaItems)
+        List<MediaUpload>? newMediaItems = null)
     {
         var evidence = GetEvidence(evidenceId);
         var evidenceUpdate = evidence.Update(caption, description, no, street1, street2, city, province, mediaItems,
