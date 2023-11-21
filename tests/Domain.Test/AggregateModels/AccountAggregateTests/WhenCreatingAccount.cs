@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
+
 [TestClass]
 public class WhenCreatingAccount
 {
@@ -14,8 +15,16 @@ public class WhenCreatingAccount
         var password = DataProvider.Password;
         var phoneNumber = DataProvider.PhoneNumber;
 
-        var account =
-            Account.CreateAccountForWitness(nic, firstName, lastName, gender, birthDate, email, password, phoneNumber);
+        var account = Account.CreateAccountForWitness(
+            nic,
+            firstName,
+            lastName,
+            gender,
+            birthDate,
+            email,
+            password,
+            phoneNumber
+        );
 
         Assert.IsNotNull(account);
 
@@ -52,8 +61,16 @@ public class WhenCreatingAccount
         var password = DataProvider.Password;
         var phoneNumber = DataProvider.PhoneNumber;
 
-        var account =
-            Account.CreateAccountForWitness(nic, firstName, lastName, gender, birthDate, email, password, phoneNumber);
+        var account = Account.CreateAccountForWitness(
+            nic,
+            firstName,
+            lastName,
+            gender,
+            birthDate,
+            email,
+            password,
+            phoneNumber
+        );
 
         Assert.IsTrue(account.HasDomainEvent<AccountCreatedEvent>());
     }
@@ -73,8 +90,19 @@ public class WhenCreatingAccount
         var password = DataProvider.Password;
         var phoneNumber = DataProvider.PhoneNumber;
 
-        var account = Account.CreateAccountForModerator(nic, firstName, lastName, gender, birthDate, policeId, city,
-            province, email, password, phoneNumber);
+        var account = Account.CreateAccountForModerator(
+            nic,
+            firstName,
+            lastName,
+            gender,
+            birthDate,
+            policeId,
+            city,
+            province,
+            email,
+            password,
+            phoneNumber
+        );
 
         Assert.IsNotNull(account);
 
@@ -114,8 +142,19 @@ public class WhenCreatingAccount
         var password = DataProvider.Password;
         var phoneNumber = DataProvider.PhoneNumber;
 
-        var account = Account.CreateAccountForModerator(nic, firstName, lastName, gender, birthDate, policeId, city,
-            province, email, password, phoneNumber);
+        var account = Account.CreateAccountForModerator(
+            nic,
+            firstName,
+            lastName,
+            gender,
+            birthDate,
+            policeId,
+            city,
+            province,
+            email,
+            password,
+            phoneNumber
+        );
 
         Assert.IsTrue(account.HasDomainEvent<AccountCreatedEvent>());
     }

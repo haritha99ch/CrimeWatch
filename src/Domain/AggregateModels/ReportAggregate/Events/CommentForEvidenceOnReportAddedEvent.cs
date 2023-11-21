@@ -2,5 +2,9 @@
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate.Events;
-public record CommentForEvidenceOnReportAddedEvent(Report Report, EvidenceId EvidenceId, Comment Comment)
-    : IDomainEvent;
+
+public record CommentForEvidenceOnReportAddedEvent(
+    Report Report,
+    EvidenceId EvidenceId,
+    Comment Comment
+) : IDomainEvent;

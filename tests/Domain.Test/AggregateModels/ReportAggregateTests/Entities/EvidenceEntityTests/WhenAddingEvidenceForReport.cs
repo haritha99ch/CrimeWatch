@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests.Entities.EvidenceEntityTests;
+
 [TestClass]
 public class WhenAddingEvidenceForReport
 {
@@ -16,7 +17,17 @@ public class WhenAddingEvidenceForReport
         var province = DataProvider.Province;
         var mediaItems = Enumerable.Repeat(DataProvider.TestMediaItem, 3).ToList();
 
-        report.AddEvidence(authorId, caption, description, no, street1, street2, city, province, mediaItems);
+        report.AddEvidence(
+            authorId,
+            caption,
+            description,
+            no,
+            street1,
+            street2,
+            city,
+            province,
+            mediaItems
+        );
 
         Assert.AreEqual(1, report.Evidences.Count);
         Assert.AreEqual(authorId, report.Evidences[0].AuthorId);
@@ -45,7 +56,17 @@ public class WhenAddingEvidenceForReport
         var province = DataProvider.Province;
         var mediaItems = Enumerable.Repeat(DataProvider.TestMediaItem, 3).ToList();
 
-        report.AddEvidence(authorId, caption, description, no, street1, street2, city, province, mediaItems);
+        report.AddEvidence(
+            authorId,
+            caption,
+            description,
+            no,
+            street1,
+            street2,
+            city,
+            province,
+            mediaItems
+        );
 
         Assert.IsTrue(report.HasDomainEvent<EvidenceAddedForReportEvent>());
     }

@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests;
+
 public class WhenDecliningReport
 {
     [TestMethod]

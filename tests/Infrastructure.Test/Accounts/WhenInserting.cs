@@ -1,4 +1,5 @@
 ﻿namespace Infrastructure.Test.Accounts;
+
 [TestClass]
 public class WhenInserting : TestBase
 {

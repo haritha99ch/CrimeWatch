@@ -5,6 +5,7 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using static BCrypt.Net.BCrypt;
 
 namespace Domain.AggregateModels.AccountAggregate;
+
 public sealed record Account : AggregateRoot<AccountId>
 {
     public required string Email { get; set; }
@@ -30,7 +31,8 @@ public sealed record Account : AggregateRoot<AccountId>
         DateOnly birthDay,
         string email,
         string password,
-        string phoneNumber)
+        string phoneNumber
+    )
     {
         var account = new Account
         {
@@ -63,7 +65,8 @@ public sealed record Account : AggregateRoot<AccountId>
         string province,
         string email,
         string password,
-        string phoneNumber)
+        string phoneNumber
+    )
     {
         var account = new Account
         {
@@ -86,35 +89,41 @@ public sealed record Account : AggregateRoot<AccountId>
         return account;
     }
 
-    public void UpdateModerator(string nic,
+    public void UpdateModerator(
+        string nic,
         string firstName,
         string lastName,
         Gender gender,
         DateOnly birthDay,
         string policeId,
         string city,
-        string province)
+        string province
+    )
     {
         var personUpdated = Person!.Update(nic, firstName, lastName, gender, birthDay);
         var moderatorUpdated = Moderator!.Update(policeId, city, province);
 
-        if (!personUpdated && !moderatorUpdated) return;
+        if (!personUpdated && !moderatorUpdated)
+            return;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new AccountUpdatedEvent(Id));
     }
 
-    public void UpdateWitness(string nic,
+    public void UpdateWitness(
+        string nic,
         string firstName,
         string lastName,
         Gender gender,
-        DateOnly birthDay)
+        DateOnly birthDay
+    )
     {
         var personUpdated = Person!.Update(nic, firstName, lastName, gender, birthDay);
         var witnessUpdated = Witness!.Update();
 
         UpdatedAt = Person.UpdatedAt > Witness.UpdatedAt ? Person.UpdatedAt : Witness.UpdatedAt;
 
-        if (!personUpdated && !witnessUpdated) return;
+        if (!personUpdated && !witnessUpdated)
+            return;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new AccountUpdatedEvent(Id));
     }
@@ -133,8 +142,10 @@ public sealed record Account : AggregateRoot<AccountId>
 
     public void VerifyEmail(EmailVerificationCode verificationCode)
     {
-        if (IsEmailVerified) return;
-        if (EmailVerificationCode.IsExpired) throw new("Verification code has expired");
+        if (IsEmailVerified)
+            return;
+        if (EmailVerificationCode.IsExpired)
+            throw new("Verification code has expired");
         if (!EmailVerificationCode.Equals(verificationCode))
             throw new("Invalid verification code.");
 
@@ -161,13 +172,17 @@ public sealed record Account : AggregateRoot<AccountId>
         UpdatedAt = DateTime.Now;
         IsPhoneNumberVerified = false;
         PhoneNumberVerificationCode = PhoneNumberVerificationCode.Create();
-        RaiseDomainEvent(new AccountPhoneNumberChangedEvent(Id, PhoneNumber, PhoneNumberVerificationCode));
+        RaiseDomainEvent(
+            new AccountPhoneNumberChangedEvent(Id, PhoneNumber, PhoneNumberVerificationCode)
+        );
     }
 
     public void VerifyPhoneNumber(PhoneNumberVerificationCode verificationCode)
     {
-        if (IsPhoneNumberVerified) return;
-        if (PhoneNumberVerificationCode.IsExpired) throw new("Verification code has expired");
+        if (IsPhoneNumberVerified)
+            return;
+        if (PhoneNumberVerificationCode.IsExpired)
+            throw new("Verification code has expired");
         if (!PhoneNumberVerificationCode.Equals(verificationCode))
             throw new("Invalid verification code.");
 
@@ -187,8 +202,11 @@ public sealed record Account : AggregateRoot<AccountId>
     {
         PhoneNumberVerificationCode = PhoneNumberVerificationCode.Create();
         IsPhoneNumberVerified = false;
-        RaiseDomainEvent(new AccountPhoneNumberVerificationCodeRequestedEvent(Id, PhoneNumberVerificationCode));
+        RaiseDomainEvent(
+            new AccountPhoneNumberVerificationCodeRequestedEvent(Id, PhoneNumberVerificationCode)
+        );
         return PhoneNumberVerificationCode;
     }
+
     public bool VerifyPassword(string password) => Verify(password, Password);
 }

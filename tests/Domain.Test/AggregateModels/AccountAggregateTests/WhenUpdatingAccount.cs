@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
+
 public class WhenUpdatingAccount
 {
     [TestMethod]
@@ -9,7 +10,13 @@ public class WhenUpdatingAccount
 
         var newLastName = DataProvider.LastName;
 
-        account.UpdateWitness(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate);
+        account.UpdateWitness(
+            person.Nic,
+            person.FirstName,
+            newLastName,
+            person.Gender,
+            person.BirthDate
+        );
 
         Assert.IsNotNull(account.Person);
         person = account.Person;
@@ -24,7 +31,13 @@ public class WhenUpdatingAccount
 
         var newLastName = DataProvider.LastName;
 
-        account.UpdateWitness(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate);
+        account.UpdateWitness(
+            person.Nic,
+            person.FirstName,
+            newLastName,
+            person.Gender,
+            person.BirthDate
+        );
 
         Assert.IsTrue(account.HasDomainEvent<AccountUpdatedEvent>());
     }
@@ -38,8 +51,16 @@ public class WhenUpdatingAccount
 
         var newLastName = DataProvider.LastName;
 
-        account.UpdateModerator(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate,
-            moderator.PoliceId, moderator.City, moderator.Province);
+        account.UpdateModerator(
+            person.Nic,
+            person.FirstName,
+            newLastName,
+            person.Gender,
+            person.BirthDate,
+            moderator.PoliceId,
+            moderator.City,
+            moderator.Province
+        );
 
         Assert.IsNotNull(account.Person);
         person = account.Person;
@@ -60,8 +81,16 @@ public class WhenUpdatingAccount
 
         var newLastName = DataProvider.LastName;
 
-        account.UpdateModerator(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate,
-            moderator.PoliceId, moderator.City, moderator.Province);
+        account.UpdateModerator(
+            person.Nic,
+            person.FirstName,
+            newLastName,
+            person.Gender,
+            person.BirthDate,
+            moderator.PoliceId,
+            moderator.City,
+            moderator.Province
+        );
 
         Assert.IsTrue(account.HasDomainEvent<AccountUpdatedEvent>());
     }

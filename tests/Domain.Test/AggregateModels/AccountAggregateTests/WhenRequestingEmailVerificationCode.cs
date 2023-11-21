@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
+
 [TestClass]
 public class WhenRequestingEmailVerificationCode
 {
@@ -32,7 +33,6 @@ public class WhenRequestingEmailVerificationCode
         var account = DataProvider.TestAccountForModerator;
 
         account.RequestEmailVerificationCode();
-        
         Assert.IsTrue(account.HasDomainEvent<AccountEmailVerificationCodeRequestedEvent>());
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.ReportAggregate.EntityConfiguration;
+
 internal static class BookmarkConfiguration
 {
     internal static void Configure(this OwnedNavigationBuilder<Report, Bookmark> builder)
@@ -14,7 +15,10 @@ internal static class BookmarkConfiguration
 
         builder.Property(b => b.AccountId).HasConversion(id => id.Value, value => new(value));
 
-        builder.HasOne<Account>(b => b.Account)
-            .WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Cascade);
+        builder
+            .HasOne<Account>(b => b.Account)
+            .WithMany()
+            .HasForeignKey(b => b.AccountId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

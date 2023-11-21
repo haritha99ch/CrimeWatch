@@ -15,14 +15,15 @@ using PersonEntity = Domain.AggregateModels.AccountAggregate.Entities.Person;
 // using Person = Bogus.Person;
 
 namespace TestDataProvider;
+
 public static class DataProvider
 {
     public static string Nic => new Randomizer().Int(1, 1000000000).ToString();
     public static string FirstName => new Person().FirstName;
     public static string LastName => new Person().LastName;
-    public static string PhoneNumber => new Randomizer().Long(100000000000, 999999999999).ToString();
-    public static DateOnly BirthDate
-        => DateOnly.FromDateTime(new Person().DateOfBirth);
+    public static string PhoneNumber =>
+        new Randomizer().Long(100000000000, 999999999999).ToString();
+    public static DateOnly BirthDate => DateOnly.FromDateTime(new Person().DateOfBirth);
     public static Gender Gender => new Randomizer().Enum<Gender>();
     public static MediaType MediaType => new Randomizer().Enum<MediaType>();
     public static string Email => new Internet().Email();
@@ -33,8 +34,8 @@ public static class DataProvider
     public static string No => new Address().BuildingNumber();
     public static string Street1 => new Address().StreetName();
     public static string Street2 => new Address().StreetName();
-    public static List<ViolationType> ViolationTypes
-        => Enumerable.Repeat(new Randomizer().Enum<ViolationType>(), 4).ToList();
+    public static List<ViolationType> ViolationTypes =>
+        Enumerable.Repeat(new Randomizer().Enum<ViolationType>(), 4).ToList();
     public static string Caption => new Lorem().Sentence();
     public static string Description => new Lorem().Paragraphs();
     public static string MediaItemUrl => new Internet().Url();
@@ -51,15 +52,21 @@ public static class DataProvider
     public static Report TestReportWithABookmark => GetReportWithBookmark();
     public static Evidence TestEvidence => GetEvidence();
     public static Report TestReportWithAEvidence => GetReportWithAEvidence();
-    public static Report TestReportWithAEvidenceIncludingComment => GetReportWithAEvidenceIncludingComment();
+    public static Report TestReportWithAEvidenceIncludingComment =>
+        GetReportWithAEvidenceIncludingComment();
     public static EmailVerificationCode TestEmailVerificationCode => GetEmailVerificationCode();
-    public static PhoneNumberVerificationCode TestPhoneNumberVerificationCode => GetPhoneNumberVerificationCode();
+    public static PhoneNumberVerificationCode TestPhoneNumberVerificationCode =>
+        GetPhoneNumberVerificationCode();
 
     private static Comment TestComment => GetComment();
     private static Bookmark TestBookmark => GetBookmark();
 
-    private static EmailVerificationCode GetEmailVerificationCode() => EmailVerificationCode.Create();
-    private static PhoneNumberVerificationCode GetPhoneNumberVerificationCode() => PhoneNumberVerificationCode.Create();
+    private static EmailVerificationCode GetEmailVerificationCode() =>
+        EmailVerificationCode.Create();
+
+    private static PhoneNumberVerificationCode GetPhoneNumberVerificationCode() =>
+        PhoneNumberVerificationCode.Create();
+
     private static Bookmark GetBookmark()
     {
         var faker = new Faker<Bookmark>()
@@ -69,6 +76,7 @@ public static class DataProvider
 
         return faker.Generate();
     }
+
     private static Account GetWitnessAccount()
     {
         var faker = new Faker<Account>()
@@ -168,11 +176,14 @@ public static class DataProvider
             .RuleFor(r => r.Location, GetLocation)
             .RuleFor(r => r.MediaItem, GetMediaItem)
             .RuleFor(r => r.CreatedAt, DateTime.Now)
-            .RuleFor(r => r.Bookmarks, (_, r) =>
-            {
-                r.Bookmarks.Add(TestBookmark);
-                return r.Bookmarks;
-            })
+            .RuleFor(
+                r => r.Bookmarks,
+                (_, r) =>
+                {
+                    r.Bookmarks.Add(TestBookmark);
+                    return r.Bookmarks;
+                }
+            )
             .RuleFor(r => r.BookmarksCount, 1);
 
         return faker.Generate();
@@ -189,11 +200,14 @@ public static class DataProvider
             .RuleFor(r => r.Location, GetLocation)
             .RuleFor(r => r.MediaItem, GetMediaItem)
             .RuleFor(r => r.CreatedAt, DateTime.Now)
-            .RuleFor(r => r.Comments, (_, r) =>
-            {
-                r.Comments.Add(TestComment);
-                return r.Comments;
-            });
+            .RuleFor(
+                r => r.Comments,
+                (_, r) =>
+                {
+                    r.Comments.Add(TestComment);
+                    return r.Comments;
+                }
+            );
 
         return faker.Generate();
     }
@@ -280,14 +294,17 @@ public static class DataProvider
             .RuleFor(e => e.Caption, Caption)
             .RuleFor(e => e.Description, Description)
             .RuleFor(e => e.Location, GetLocation)
-            .RuleFor(e => e.MediaItems, (_, e) =>
-            {
-                for (var i = 0; i < 5; i++)
+            .RuleFor(
+                e => e.MediaItems,
+                (_, e) =>
                 {
-                    e.MediaItems.Add(GetMediaItem());
+                    for (var i = 0; i < 5; i++)
+                    {
+                        e.MediaItems.Add(GetMediaItem());
+                    }
+                    return e.MediaItems;
                 }
-                return e.MediaItems;
-            })
+            )
             .RuleFor(e => e.CreatedAt, DateTime.Now);
 
         return faker.Generate();
@@ -301,20 +318,26 @@ public static class DataProvider
             .RuleFor(e => e.Caption, Caption)
             .RuleFor(e => e.Description, Description)
             .RuleFor(e => e.Location, GetLocation)
-            .RuleFor(e => e.MediaItems, (_, e) =>
-            {
-                for (var i = 0; i < 5; i++)
+            .RuleFor(
+                e => e.MediaItems,
+                (_, e) =>
                 {
-                    e.MediaItems.Add(GetMediaItem());
+                    for (var i = 0; i < 5; i++)
+                    {
+                        e.MediaItems.Add(GetMediaItem());
+                    }
+                    return e.MediaItems;
                 }
-                return e.MediaItems;
-            })
+            )
             .RuleFor(e => e.CreatedAt, DateTime.Now)
-            .RuleFor(r => r.Comments, (_, r) =>
-            {
-                r.Comments.Add(TestComment);
-                return r.Comments;
-            });
+            .RuleFor(
+                r => r.Comments,
+                (_, r) =>
+                {
+                    r.Comments.Add(TestComment);
+                    return r.Comments;
+                }
+            );
 
         return faker.Generate();
     }
@@ -329,11 +352,14 @@ public static class DataProvider
             .RuleFor(r => r.Location, GetLocation)
             .RuleFor(r => r.MediaItem, GetMediaItem)
             .RuleFor(r => r.CreatedAt, DateTime.Now)
-            .RuleFor(r => r.Evidences, (_, r) =>
-            {
-                r.Evidences.Add(GetEvidence(authorId));
-                return r.Evidences;
-            });
+            .RuleFor(
+                r => r.Evidences,
+                (_, r) =>
+                {
+                    r.Evidences.Add(GetEvidence(authorId));
+                    return r.Evidences;
+                }
+            );
 
         return faker.Generate();
     }
@@ -348,11 +374,14 @@ public static class DataProvider
             .RuleFor(r => r.Location, GetLocation)
             .RuleFor(r => r.MediaItem, GetMediaItem)
             .RuleFor(r => r.CreatedAt, DateTime.Now)
-            .RuleFor(r => r.Evidences, (_, r) =>
-            {
-                r.Evidences.Add(GetEvidenceWithComment());
-                return r.Evidences;
-            });
+            .RuleFor(
+                r => r.Evidences,
+                (_, r) =>
+                {
+                    r.Evidences.Add(GetEvidenceWithComment());
+                    return r.Evidences;
+                }
+            );
 
         return faker.Generate();
     }

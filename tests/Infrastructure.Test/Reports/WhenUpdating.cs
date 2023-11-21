@@ -4,12 +4,14 @@ using Domain.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Reports;
+
 [TestClass]
 public class WhenUpdating : TestBase
 {
     private Account WitnessAccount { get; set; } = default!;
     private Account ModeratorAccount { get; set; } = default!;
     private List<Report> Reports { get; set; } = new();
+
     [TestInitialize]
     public async Task Initialize()
     {
@@ -39,20 +41,29 @@ public class WhenUpdating : TestBase
     [TestMethod]
     public async Task ShouldUpdateReport()
     {
-        var report = await DbContext.Reports
+        var report = await DbContext
+            .Reports
             .Include(e => e.MediaItem)
-            .Include(e => e.Location).FirstOrDefaultAsync();
+            .Include(e => e.Location)
+            .FirstOrDefaultAsync();
         var newCaption = DataProvider.Caption;
         var newDescription = DataProvider.Description;
 
-        report!.Update(newCaption, newDescription, report.Location.No!, report.Location.Street1,
-            report.Location.Street2!, report.Location.City, report.Location.Province, report.ViolationTypes,
-            report.MediaItem);
+        report!.Update(
+            newCaption,
+            newDescription,
+            report.Location.No!,
+            report.Location.Street1,
+            report.Location.Street2!,
+            report.Location.City,
+            report.Location.Province,
+            report.ViolationTypes,
+            report.MediaItem
+        );
         DbContext.Reports.Update(report);
         await DbContext.SaveChangesAsync();
 
-        report = await DbContext.Reports
-            .Include(e => e.MediaItem).FirstOrDefaultAsync();
+        report = await DbContext.Reports.Include(e => e.MediaItem).FirstOrDefaultAsync();
         Assert.AreEqual(newCaption, report!.Caption);
         Assert.AreEqual(newDescription, report.Description);
     }
@@ -70,7 +81,6 @@ public class WhenUpdating : TestBase
         Assert.AreEqual(ModeratorAccount.Id, report!.ModeratorId);
     }
 
-
     [TestMethod]
     public async Task When_Inserting_OwnedEntity()
     {
@@ -85,10 +95,19 @@ public class WhenUpdating : TestBase
         var province = DataProvider.Province;
         var mediaItems = Enumerable.Repeat(DataProvider.TestMediaItem, 3).ToList();
 
-        report!.AddEvidence(WitnessAccount.Id, caption, description, no, street1, street2, city, province, mediaItems);
+        report!.AddEvidence(
+            WitnessAccount.Id,
+            caption,
+            description,
+            no,
+            street1,
+            street2,
+            city,
+            province,
+            mediaItems
+        );
         DbContext.Reports.Update(report);
         await DbContext.SaveChangesAsync();
-
 
         report = await DbContext.Reports.Include(e => e.Evidences).FirstOrDefaultAsync();
         Assert.AreEqual(1, report!.Evidences.Count);
@@ -102,9 +121,11 @@ public class WhenUpdating : TestBase
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
 
-        report = await DbContext.Reports
+        report = await DbContext
+            .Reports
             .Include(e => e.Evidences)
-            .ThenInclude(e => e.MediaItems).FirstOrDefaultAsync(r => r.Id.Equals(report.Id));
+            .ThenInclude(e => e.MediaItems)
+            .FirstOrDefaultAsync(r => r.Id.Equals(report.Id));
         var evidence = report!.Evidences.First();
         var newCaption = DataProvider.Caption;
         var newDescription = DataProvider.Description;
@@ -120,14 +141,26 @@ public class WhenUpdating : TestBase
             newMediaItems.Add(DataProvider.TestMediaItem);
         }
 
-        report.UpdateEvidence(evidence.Id, newCaption, newDescription, newNo, newStreet1, newStreet2, newCity,
-            newProvince, evidence.MediaItems, newMediaItems);
+        report.UpdateEvidence(
+            evidence.Id,
+            newCaption,
+            newDescription,
+            newNo,
+            newStreet1,
+            newStreet2,
+            newCity,
+            newProvince,
+            evidence.MediaItems,
+            newMediaItems
+        );
         DbContext.Reports.Update(report);
         await DbContext.SaveChangesAsync();
 
-        report = await DbContext.Reports
+        report = await DbContext
+            .Reports
             .Include(e => e.Evidences)
-            .ThenInclude(e => e.MediaItems).FirstOrDefaultAsync(r => r.Id.Equals(report.Id));
+            .ThenInclude(e => e.MediaItems)
+            .FirstOrDefaultAsync(r => r.Id.Equals(report.Id));
         evidence = report!.Evidences.First();
         Assert.AreEqual(newCaption, evidence.Caption);
         Assert.AreEqual(newDescription, evidence.Description);
@@ -146,8 +179,10 @@ public class WhenUpdating : TestBase
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
 
-        report = await DbContext.Reports
-            .Include(e => e.Evidences).FirstOrDefaultAsync(r => r.Id.Equals(report.Id));
+        report = await DbContext
+            .Reports
+            .Include(e => e.Evidences)
+            .FirstOrDefaultAsync(r => r.Id.Equals(report.Id));
         var evidence = report!.Evidences.First();
         report.RemoveEvidence(evidence.Id);
         DbContext.Reports.Update(report);

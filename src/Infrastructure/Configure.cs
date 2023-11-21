@@ -2,11 +2,15 @@
 using ApplicationSettings.Helpers;
 using ApplicationSettings.Options;
 using Infrastructure.Context;
+using Infrastructure.Contracts.Services;
+using Infrastructure.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;
+
 public static class Configure
 {
     /// <summary>
@@ -16,9 +20,14 @@ public static class Configure
     public static void AddInfrastructure(this IServiceCollection serviceCollection)
     {
         serviceCollection.ConfigureSqlDbContext();
+        serviceCollection.ConfigureBlobStorageClient();
+        serviceCollection.AddScoped<IBlobStorageClient, BlobStorageClient>();
     }
 
-    public static void AddInfrastructure(this IServiceCollection serviceCollection, string instanceName)
+    public static void AddInfrastructure(
+        this IServiceCollection serviceCollection,
+        string instanceName
+    )
     {
         serviceCollection.ConfigureSqlDbContext(instanceName);
     }
@@ -31,20 +40,28 @@ public static class Configure
     private static void ConfigureSqlDbContext(this IServiceCollection serviceCollection)
     {
         serviceCollection.ConfigureSqlServerOptions();
-        serviceCollection.AddDbContext<ApplicationDbContext>((serviceProvider, builder) =>
-        {
-            var sqlServerOptions = serviceProvider.GetRequiredOptions<SqlServerOptions>();
-            builder.UseSqlServer(sqlServerOptions.ConnectionString, options =>
+        serviceCollection.AddDbContext<ApplicationDbContext>(
+            (serviceProvider, builder) =>
             {
-                options.EnableRetryOnFailure(sqlServerOptions.MaxRetryCount);
-                options.CommandTimeout(sqlServerOptions.CommandTimeout);
-            });
-            builder.EnableSensitiveDataLogging(sqlServerOptions.EnableSensitiveDataLogging);
-            builder.EnableDetailedErrors(sqlServerOptions.EnableDetailedErrors);
-        });
+                var sqlServerOptions = serviceProvider.GetRequiredOptions<SqlServerOptions>();
+                builder.UseSqlServer(
+                    sqlServerOptions.ConnectionString,
+                    options =>
+                    {
+                        options.EnableRetryOnFailure(sqlServerOptions.MaxRetryCount);
+                        options.CommandTimeout(sqlServerOptions.CommandTimeout);
+                    }
+                );
+                builder.EnableSensitiveDataLogging(sqlServerOptions.EnableSensitiveDataLogging);
+                builder.EnableDetailedErrors(sqlServerOptions.EnableDetailedErrors);
+            }
+        );
     }
 
-    private static void ConfigureSqlDbContext(this IServiceCollection serviceCollection, string instanceName)
+    private static void ConfigureSqlDbContext(
+        this IServiceCollection serviceCollection,
+        string instanceName
+    )
     {
         serviceCollection.AddDbContext<ApplicationDbContext>(builder =>
         {
@@ -54,13 +71,25 @@ public static class Configure
                 InitialCatalog = $"crime-watch-db-test-{instanceName}",
                 IntegratedSecurity = true
             };
-            builder.UseSqlServer(sqlConnectionStringBuilder.ConnectionString, options =>
-            {
-                options.EnableRetryOnFailure(5);
-                options.CommandTimeout(30);
-            });
+            builder.UseSqlServer(
+                sqlConnectionStringBuilder.ConnectionString,
+                options =>
+                {
+                    options.EnableRetryOnFailure(5);
+                    options.CommandTimeout(30);
+                }
+            );
             builder.EnableSensitiveDataLogging();
             builder.EnableDetailedErrors();
         });
+    }
+
+    private static void ConfigureBlobStorageClient(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.ConfigureBlobStorageOptions();
+        var blobStorageOptions = serviceCollection.GetRequiredOptions<BlobStorageOptions>();
+        serviceCollection.AddAzureClients(
+            builder => builder.AddBlobServiceClient(blobStorageOptions.ConnectionString)
+        );
     }
 }

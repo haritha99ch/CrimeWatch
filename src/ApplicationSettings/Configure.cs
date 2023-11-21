@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationSettings;
+
 public static class Configure
 {
     /// <summary>
@@ -23,5 +24,10 @@ public static class Configure
     public static void ConfigureSqlServerOptions(this IServiceCollection serviceCollection)
     {
         serviceCollection.ConfigureOptions<ConfigureApplicationOptions<SqlServerOptions>>();
+    }
+
+    public static void ConfigureBlobStorageOptions(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.ConfigureOptions<ConfigureApplicationOptions<BlobStorageOptions>>();
     }
 }

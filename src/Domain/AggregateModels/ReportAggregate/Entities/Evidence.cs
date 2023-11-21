@@ -4,6 +4,7 @@ using Domain.AggregateModels.ReportAggregate.Enums;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate.Entities;
+
 public sealed record Evidence : Entity<EvidenceId>
 {
     public AccountId? AuthorId { get; private init; }
@@ -28,29 +29,31 @@ public sealed record Evidence : Entity<EvidenceId>
         string street2,
         string city,
         string province,
-        IEnumerable<MediaUpload> mediaItems) => new()
-    {
-        AuthorId = authorId,
-        Caption = caption,
-        Description = description,
-        Location = Location.Create(no, street1, street2, city, province),
-        MediaItems = MapMediaUploadsToEntities(mediaItems),
-        Status = Status.Pending,
-        CreatedAt = DateTime.Now,
-        Id = new(Guid.NewGuid())
-    };
+        IEnumerable<MediaUpload> mediaItems
+    ) =>
+        new()
+        {
+            AuthorId = authorId,
+            Caption = caption,
+            Description = description,
+            Location = Location.Create(no, street1, street2, city, province),
+            MediaItems = MapMediaUploadsToEntities(mediaItems),
+            Status = Status.Pending,
+            CreatedAt = DateTime.Now,
+            Id = new(Guid.NewGuid())
+        };
 
     public bool Update(
-            string caption,
-            string description,
-            string no,
-            string street1,
-            string street2,
-            string city,
-            string province,
-            List<MediaItem>? mediaItems,
-            List<MediaUpload>? newMediaItems
-        )
+        string caption,
+        string description,
+        string no,
+        string street1,
+        string street2,
+        string city,
+        string province,
+        List<MediaItem>? mediaItems,
+        List<MediaUpload>? newMediaItems
+    )
     {
         var thisUpdated = false;
         var mediaItemsUpdated = false;
@@ -61,23 +64,27 @@ public sealed record Evidence : Entity<EvidenceId>
             mediaItems.AddRange(MapMediaUploadsToEntities(newMediaItems));
             mediaItemsUpdated = true;
         }
-        if (!caption.Equals(Caption)
+        if (
+            !caption.Equals(Caption)
             || !description.Equals(Description)
-            || !mediaItems.OrderBy(e => e).SequenceEqual(MediaItems.OrderBy(e => e)))
+            || !mediaItems.OrderBy(e => e).SequenceEqual(MediaItems.OrderBy(e => e))
+        )
         {
             Caption = caption;
             Description = description;
             MediaItems = mediaItems;
             thisUpdated = true;
         }
-        if (!thisUpdated && !locationUpdated && !mediaItemsUpdated) return false;
+        if (!thisUpdated && !locationUpdated && !mediaItemsUpdated)
+            return false;
         UpdatedAt = DateTime.Now;
         return true;
     }
 
     internal Evidence SetModerator(AccountId moderatorId)
     {
-        if (ModeratorId is not null) throw new("Report is already moderated");
+        if (ModeratorId is not null)
+            throw new("Report is already moderated");
         ModeratorId = moderatorId;
         Status = Status.UnderReview;
         UpdatedAt = DateTime.Now;
@@ -86,7 +93,8 @@ public sealed record Evidence : Entity<EvidenceId>
 
     internal Evidence SetApproved()
     {
-        if (Status.Equals(Status.Approved)) throw new("Report is already approved");
+        if (Status.Equals(Status.Approved))
+            throw new("Report is already approved");
         Status = Status.Approved;
         UpdatedAt = DateTime.Now;
         return this;
@@ -94,7 +102,8 @@ public sealed record Evidence : Entity<EvidenceId>
 
     internal Evidence SetDeclined()
     {
-        if (Status.Equals(Status.Declined)) throw new("Report is already declined");
+        if (Status.Equals(Status.Declined))
+            throw new("Report is already declined");
         Status = Status.Declined;
         UpdatedAt = DateTime.Now;
         return this;
@@ -102,7 +111,8 @@ public sealed record Evidence : Entity<EvidenceId>
 
     internal Evidence SetUnderReview()
     {
-        if (Status.Equals(Status.UnderReview)) throw new("Report is already under Review");
+        if (Status.Equals(Status.UnderReview))
+            throw new("Report is already under Review");
         Status = Status.UnderReview;
         UpdatedAt = DateTime.Now;
         return this;
@@ -132,10 +142,10 @@ public sealed record Evidence : Entity<EvidenceId>
     private Comment GetComment(CommentId commentId)
     {
         var comment = Comments.FirstOrDefault(c => c.Id.Equals(commentId));
-        if (comment is null) throw new("Comment is not found");
+        if (comment is null)
+            throw new("Comment is not found");
         return comment;
     }
-
 
     private static List<MediaItem> MapMediaUploadsToEntities(IEnumerable<MediaUpload> mediaItems)
     {

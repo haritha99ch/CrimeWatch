@@ -1,10 +1,12 @@
 ﻿using Domain.AggregateModels.AccountAggregate;
 
 namespace Infrastructure.Test.Reports;
+
 [TestClass]
 public class WhenInserting : TestBase
 {
     private Account WitnessAccount { get; set; } = default!;
+
     [TestInitialize]
     public async Task Initialize()
     {

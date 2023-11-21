@@ -3,9 +3,12 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.AccountAggregate.ValueObjectConfigurations;
+
 internal static class EmailVerificationCodeConfiguration
 {
-    internal static void Configure(this OwnedNavigationBuilder<Account, EmailVerificationCode> builder)
+    internal static void Configure(
+        this OwnedNavigationBuilder<Account, EmailVerificationCode> builder
+    )
     {
         builder.Property(e => e.Value).IsRequired();
         builder.Property(e => e.CreatedAt).IsRequired();

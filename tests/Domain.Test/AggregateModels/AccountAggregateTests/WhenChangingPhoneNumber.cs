@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
+
 [TestClass]
 public class WhenChangingPhoneNumber
 {

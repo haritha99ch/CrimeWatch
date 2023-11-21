@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests;
+
 [TestClass]
 public class WhenUpdatingReport
 {
@@ -16,8 +17,18 @@ public class WhenUpdatingReport
         var newMediaItem = DataProvider.TestMediaItem;
         var violationTypes = DataProvider.ViolationTypes;
 
-        report.Update(updatedCaption, updatedDescription, no, street1, updatedStreet2, city, province, violationTypes,
-            null, newMediaItem);
+        report.Update(
+            updatedCaption,
+            updatedDescription,
+            no,
+            street1,
+            updatedStreet2,
+            city,
+            province,
+            violationTypes,
+            null,
+            newMediaItem
+        );
 
         Assert.IsNotNull(report.MediaItem);
         Assert.IsNotNull(report.AuthorId);
@@ -47,8 +58,18 @@ public class WhenUpdatingReport
         var newMediaItem = DataProvider.TestMediaItem;
         var violationTypes = DataProvider.ViolationTypes;
 
-        report.Update(updatedCaption, updatedDescription, no, street1, updatedStreet2, city, province, violationTypes,
-            null, newMediaItem);
+        report.Update(
+            updatedCaption,
+            updatedDescription,
+            no,
+            street1,
+            updatedStreet2,
+            city,
+            province,
+            violationTypes,
+            null,
+            newMediaItem
+        );
 
         Assert.IsTrue(report.HasDomainEvent<ReportUpdatedEvent>());
     }

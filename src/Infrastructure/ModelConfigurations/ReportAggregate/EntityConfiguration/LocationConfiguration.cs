@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.ReportAggregate.EntityConfiguration;
+
 internal static class LocationConfiguration
 {
     internal static void Configure(this OwnedNavigationBuilder<Report, Location> builder)

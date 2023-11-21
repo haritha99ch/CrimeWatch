@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Accounts;
+
 [TestClass]
 public class WhenUpdating : TestBase
 {
@@ -34,19 +35,32 @@ public class WhenUpdating : TestBase
     [TestMethod]
     public async Task WhenUpdating_Moderator_Info()
     {
-        var account = await DbContext.Accounts
+        var account = await DbContext
+            .Accounts
             .Include(e => e.Person!)
-            .Include(account => account.Moderator!).FirstOrDefaultAsync(e => e.Id == ModeratorAccountId);
+            .Include(account => account.Moderator!)
+            .FirstOrDefaultAsync(e => e.Id == ModeratorAccountId);
         var person = account!.Person!;
         var moderator = account.Moderator!;
         var newLastName = DataProvider.LastName;
-        account.UpdateModerator(person.Nic, person.FirstName, newLastName, person.Gender, person.BirthDate,
-            moderator.PoliceId, moderator.City, moderator.Province);
+        account.UpdateModerator(
+            person.Nic,
+            person.FirstName,
+            newLastName,
+            person.Gender,
+            person.BirthDate,
+            moderator.PoliceId,
+            moderator.City,
+            moderator.Province
+        );
 
         DbContext.Accounts.Update(account);
         await DbContext.SaveChangesAsync();
 
-        account = await DbContext.Accounts.Include(e => e.Person!).FirstOrDefaultAsync(e => e.Id == ModeratorAccountId);
+        account = await DbContext
+            .Accounts
+            .Include(e => e.Person!)
+            .FirstOrDefaultAsync(e => e.Id == ModeratorAccountId);
         Assert.AreEqual(newLastName, account!.Person!.LastName);
     }
 }

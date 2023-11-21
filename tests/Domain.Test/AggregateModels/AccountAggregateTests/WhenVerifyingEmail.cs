@@ -1,6 +1,7 @@
 ﻿using Domain.AggregateModels.AccountAggregate.ValueObjects;
 
 namespace Domain.Test.AggregateModels.AccountAggregateTests;
+
 [TestClass]
 public class WhenVerifyingEmail
 {

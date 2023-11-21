@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
+
 [TestClass]
 public class WhenRequestingPhoneNumberVerificationCode
 {
@@ -25,14 +26,14 @@ public class WhenRequestingPhoneNumberVerificationCode
         Assert.IsFalse(currentVerificationCode.Equals(newVerificationCode));
         Assert.IsFalse(account.IsEmailVerified);
     }
-    
+
     [TestMethod]
     public void ShouldRaise_AccountPhoneNumberVerificationCodeRequestedEvent()
     {
         var account = DataProvider.TestAccountForModerator;
 
         account.RequestPhoneNumberVerificationCode();
-        
+
         Assert.IsTrue(account.HasDomainEvent<AccountPhoneNumberVerificationCodeRequestedEvent>());
     }
 }

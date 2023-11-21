@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.AccountAggregate;
-sealed internal class AccountConfiguration : IEntityTypeConfiguration<Account>
-{
 
+internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
+{
     public void Configure(EntityTypeBuilder<Account> builder)
     {
         builder.HasKey(a => a.Id);
@@ -27,20 +27,34 @@ sealed internal class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.Property(a => a.IsPhoneNumberVerified).IsRequired();
 
-        builder.OwnsOne<EmailVerificationCode>(a => a.EmailVerificationCode,
-            navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsOne<EmailVerificationCode>(
+            a => a.EmailVerificationCode,
+            navigationBuilder => navigationBuilder.Configure()
+        );
 
-        builder.OwnsOne<PhoneNumberVerificationCode>(a => a.PhoneNumberVerificationCode,
-            navigationBuilder => navigationBuilder.Configure());
+        builder.OwnsOne<PhoneNumberVerificationCode>(
+            a => a.PhoneNumberVerificationCode,
+            navigationBuilder => navigationBuilder.Configure()
+        );
 
-        builder.OwnsOne<Person>(e => e.Person, navigationBuilder => navigationBuilder.Configure())
-            .Navigation(e => e.Person).AutoInclude(false);
+        builder
+            .OwnsOne<Person>(e => e.Person, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(e => e.Person)
+            .AutoInclude(false);
 
-        builder.OwnsOne<Witness>(e => e.Witness, navigationBuilder => navigationBuilder.Configure())
-            .Navigation(e => e.Witness).AutoInclude(false);;
+        builder
+            .OwnsOne<Witness>(e => e.Witness, navigationBuilder => navigationBuilder.Configure())
+            .Navigation(e => e.Witness)
+            .AutoInclude(false);
+        ;
 
-        builder.OwnsOne<Moderator>(e => e.Moderator, navigationBuilder => navigationBuilder.Configure())
-            .Navigation(e => e.Moderator).AutoInclude(false);
+        builder
+            .OwnsOne<Moderator>(
+                e => e.Moderator,
+                navigationBuilder => navigationBuilder.Configure()
+            )
+            .Navigation(e => e.Moderator)
+            .AutoInclude(false);
 
         builder.Property(a => a.CreatedAt).IsRequired();
 

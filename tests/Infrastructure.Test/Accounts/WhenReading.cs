@@ -3,6 +3,7 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Accounts;
+
 [TestClass]
 public class WhenReading : TestBase
 {
@@ -39,9 +40,11 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_ReadingById_IncludingOwnedEntities()
     {
-        var account = await DbContext.Accounts
+        var account = await DbContext
+            .Accounts
             .Include(e => e.Moderator)
-            .Include(e => e.Person).FirstOrDefaultAsync(e => e.Id.Equals(Account.Id));
+            .Include(e => e.Person)
+            .FirstOrDefaultAsync(e => e.Id.Equals(Account.Id));
 
         Assert.IsNotNull(account);
         Assert.IsNotNull(account.Moderator);
@@ -51,8 +54,10 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_ReadingByPredicate()
     {
-        var account = await DbContext.Accounts
-            .Where(e => e.Email.Equals(Account.Email) && e.Password.Equals(Account.Password)).FirstOrDefaultAsync();
+        var account = await DbContext
+            .Accounts
+            .Where(e => e.Email.Equals(Account.Email) && e.Password.Equals(Account.Password))
+            .FirstOrDefaultAsync();
 
         Assert.IsNotNull(account);
     }
@@ -60,8 +65,10 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_ReadingByPredicating_From_OwnedEntity()
     {
-        var account = await DbContext.Accounts
-            .Where(e => e.Person!.FirstName.Equals(Account.Person!.FirstName)).FirstOrDefaultAsync();
+        var account = await DbContext
+            .Accounts
+            .Where(e => e.Person!.FirstName.Equals(Account.Person!.FirstName))
+            .FirstOrDefaultAsync();
 
         Assert.IsNotNull(account);
     }
@@ -69,7 +76,10 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_Selecting_Properties()
     {
-        var account = await DbContext.Accounts.Select(e => new { e.Id, e.Email }).FirstOrDefaultAsync();
+        var account = await DbContext
+            .Accounts
+            .Select(e => new { e.Id, e.Email })
+            .FirstOrDefaultAsync();
 
         Assert.IsNotNull(account);
         Assert.IsNotNull(account.Id);
@@ -79,8 +89,10 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_Selecting_Properties_From_OwnedEntities()
     {
-        var account = await DbContext.Accounts
-            .Select(e => new { e.Id, e.Person!.FirstName }).FirstOrDefaultAsync(e => e.Id.Equals(Account.Id));
+        var account = await DbContext
+            .Accounts
+            .Select(e => new { e.Id, e.Person!.FirstName })
+            .FirstOrDefaultAsync(e => e.Id.Equals(Account.Id));
 
         Assert.IsNotNull(account);
         Assert.IsNotNull(account.Id);
@@ -90,9 +102,17 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_Selecting_And_Mapping_To_Type()
     {
-        var account = await DbContext.Accounts
+        var account = await DbContext
+            .Accounts
             .Where(e => e.Id.Equals(Account.Id))
-            .Select(e => new AccountWithPersonalInfo(e.Id, e.Email, $"{e.Person!.FirstName} {e.Person.LastName}"))
+            .Select(
+                e =>
+                    new AccountWithPersonalInfo(
+                        e.Id,
+                        e.Email,
+                        $"{e.Person!.FirstName} {e.Person.LastName}"
+                    )
+            )
             .SingleOrDefaultAsync();
 
         Assert.IsNotNull(account);
@@ -103,5 +123,4 @@ public class WhenReading : TestBase
     }
 
     private record AccountWithPersonalInfo(AccountId AccountId, string Email, string FullName);
-
 }

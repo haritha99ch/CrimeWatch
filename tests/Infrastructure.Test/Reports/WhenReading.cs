@@ -3,11 +3,13 @@ using Domain.AggregateModels.ReportAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Reports;
+
 [TestClass]
 public class WhenReading : TestBase
 {
     private Account WitnessAccount { get; set; } = default!;
     private List<Report> Reports { get; } = new();
+
     [TestInitialize]
     public async Task Initialize()
     {
@@ -45,7 +47,9 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_ReadingByPredicating()
     {
-        var report = await DbContext.Reports.Where(e => e.Caption.Equals(Reports.First().Caption))
+        var report = await DbContext
+            .Reports
+            .Where(e => e.Caption.Equals(Reports.First().Caption))
             .SingleOrDefaultAsync();
 
         Assert.AreEqual(report!.Id, Reports.First().Id);
@@ -71,7 +75,10 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_Selecting_Properties()
     {
-        var report = await DbContext.Reports.Select(e => new { e.Id, e.Caption }).FirstOrDefaultAsync();
+        var report = await DbContext
+            .Reports
+            .Select(e => new { e.Id, e.Caption })
+            .FirstOrDefaultAsync();
 
         Assert.IsNotNull(report!.Id);
         Assert.IsNotNull(report.Caption);
@@ -80,7 +87,9 @@ public class WhenReading : TestBase
     [TestMethod]
     public async Task When_Selecting_Properties_From_OwnedEntity()
     {
-        var report = await DbContext.Reports.Select(e => new { e.Id, e.Author!.Person!.FirstName })
+        var report = await DbContext
+            .Reports
+            .Select(e => new { e.Id, e.Author!.Person!.FirstName })
             .FirstOrDefaultAsync();
 
         Assert.IsNotNull(report!.Id);

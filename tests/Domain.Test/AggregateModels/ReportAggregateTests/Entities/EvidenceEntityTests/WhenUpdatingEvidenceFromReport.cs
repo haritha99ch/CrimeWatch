@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests.Entities.EvidenceEntityTests;
+
 [TestClass]
 public class WhenUpdatingEvidenceFromReport
 {
@@ -17,9 +18,18 @@ public class WhenUpdatingEvidenceFromReport
         var exitingMediaItems = report.Evidences[0].MediaItems;
         exitingMediaItems.RemoveAt(1);
 
-        report.UpdateEvidence(report.Evidences[0].Id, updatedCaption, updatedDescription, no, street1, updatedStreet2,
-            city, province,
-            exitingMediaItems, newMediaItems);
+        report.UpdateEvidence(
+            report.Evidences[0].Id,
+            updatedCaption,
+            updatedDescription,
+            no,
+            street1,
+            updatedStreet2,
+            city,
+            province,
+            exitingMediaItems,
+            newMediaItems
+        );
 
         Assert.IsNotNull(report.MediaItem);
         Assert.IsNotNull(report.AuthorId);
@@ -44,9 +54,18 @@ public class WhenUpdatingEvidenceFromReport
         var exitingMediaItems = report.Evidences[0].MediaItems;
         exitingMediaItems.RemoveAt(1);
 
-        report.UpdateEvidence(report.Evidences[0].Id, updatedCaption, updatedDescription, no, street1, updatedStreet2,
-            city, province,
-            exitingMediaItems, newMediaItems);
+        report.UpdateEvidence(
+            report.Evidences[0].Id,
+            updatedCaption,
+            updatedDescription,
+            no,
+            street1,
+            updatedStreet2,
+            city,
+            province,
+            exitingMediaItems,
+            newMediaItems
+        );
 
         Assert.IsTrue(report.HasDomainEvent<EvidenceFromReportUpdatedEvent>());
     }

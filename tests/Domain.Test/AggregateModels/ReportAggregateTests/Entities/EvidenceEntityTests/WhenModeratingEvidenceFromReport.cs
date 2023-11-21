@@ -1,4 +1,5 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests.Entities.EvidenceEntityTests;
+
 [TestClass]
 public class WhenModeratingEvidenceFromReport
 {

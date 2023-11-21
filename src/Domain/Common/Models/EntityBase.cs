@@ -1,4 +1,5 @@
 ﻿namespace Domain.Common.Models;
+
 public abstract record EntityBase
 {
     public required DateTime CreatedAt { get; init; }

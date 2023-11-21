@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Reports;
+
 [TestClass]
 public class WhenDeleting : TestBase
 {

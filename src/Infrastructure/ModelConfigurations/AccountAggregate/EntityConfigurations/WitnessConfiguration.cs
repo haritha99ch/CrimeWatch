@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.AccountAggregate.EntityConfigurations;
+
 internal static class WitnessConfiguration
 {
-
     internal static void Configure(this OwnedNavigationBuilder<Account, Witness> builder)
     {
         builder.ToTable(nameof(Witness));
