@@ -21,7 +21,6 @@ public static class Configure
     {
         serviceCollection.ConfigureSqlDbContext();
         serviceCollection.ConfigureBlobStorageClient();
-        serviceCollection.AddScoped<IBlobStorageClient, BlobStorageClient>();
     }
 
     public static void AddInfrastructure(
@@ -91,5 +90,6 @@ public static class Configure
         serviceCollection.AddAzureClients(
             builder => builder.AddBlobServiceClient(blobStorageOptions.ConnectionString)
         );
+        serviceCollection.AddScoped<IBlobStorageClient, BlobStorageClient>();
     }
 }
