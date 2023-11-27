@@ -18,5 +18,8 @@ public static class Configure
     ///
     /// </summary>
     /// <param name="services"></param>
-    public static void AddApplication(this IServiceCollection services) { }
+    public static void AddApplication(this IServiceCollection services)
+    {
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AssemblyReference>());
+    }
 }

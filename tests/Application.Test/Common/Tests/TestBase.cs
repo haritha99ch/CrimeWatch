@@ -1,22 +1,20 @@
-﻿using Domain.AggregateModels.AccountAggregate;
+﻿using Application.Test.Common.Host;
+using Domain.AggregateModels.AccountAggregate;
 using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using Domain.AggregateModels.ReportAggregate;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 using Infrastructure.Context;
+using MediatR;
 using Persistence.Contracts.Repositories;
-using Persistence.Test.Common.Host;
 
-namespace Persistence.Test.Common.Tests;
+namespace Application.Test.Common.Tests;
 
 public abstract class TestBase
 {
     private readonly App _app = App.Create();
     protected ApplicationDbContext DbContext => _app.DbContext;
-    protected IRepository<Account, AccountId> AccountRepository =>
-        _app.GetRequiredService<IRepository<Account, AccountId>>();
 
-    protected IRepository<Report, ReportId> ReportRepository =>
-        _app.GetRequiredService<IRepository<Report, ReportId>>();
+    protected ISender Mediator => _app.GetRequiredService<ISender>();
 
     protected virtual async Task InitializeAsync()
     {
@@ -29,7 +27,8 @@ public abstract class TestBase
         await DbContext.Database.EnsureDeletedAsync();
     }
 
-    protected async Task SaveAndClearChangeTrackerAsync(){
+    protected async Task SaveAndClearChangeTrackerAsync()
+    {
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
     }

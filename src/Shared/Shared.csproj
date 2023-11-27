@@ -1,11 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Persistence\Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
