@@ -1,10 +1,9 @@
-﻿using Application.Features.Accounts.Commands.CreateAccountForModerator;
-using Application.Test.Common.Tests;
+﻿using Application.Test.Common.Tests;
 
 namespace Application.Test.Features.Accounts.Commands;
 
 [TestClass]
-public class WhenCreatingAccountForModerator : TestBase
+public class WhenCreatingAccountForWitness : TestBase
 {
     [TestInitialize]
     public async Task Initialize()
@@ -19,36 +18,29 @@ public class WhenCreatingAccountForModerator : TestBase
     }
 
     [TestMethod]
-    public async Task ShouldCreate_AccountForModerator()
+    public async Task ShouldCreate_AccountForWitness()
     {
         var nic = DataProvider.Nic;
-        var policeId = DataProvider.PoliceId;
-        var city = DataProvider.City;
-        var province = DataProvider.Province;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;
         var gender = DataProvider.Gender;
-        var birthDate = DataProvider.BirthDate;
+        var birthDay = DataProvider.BirthDate;
         var email = DataProvider.Email;
         var password = DataProvider.Password;
         var phoneNumber = DataProvider.PhoneNumber;
 
-        var command = new CreateAccountForModeratorCommand(
+        var command = new CreateAccountForWitnessCommand(
             nic,
             firstName,
             lastName,
             gender,
-            birthDate.ToDateTime(TimeOnly.MinValue),
-            policeId,
-            city,
-            province,
+            birthDay,
             email,
             password,
             phoneNumber
         );
-        var result = await Mediator.Send(command);
-        var handler = new CreateAccountForModeratorCommandHandler(null!);
-        var account = result.GetResult(e => e);
+        var accountResult = await Mediator.Send(command);
+        var account = accountResult.GetResult(e => e);
 
         Assert.IsNotNull(account);
     }

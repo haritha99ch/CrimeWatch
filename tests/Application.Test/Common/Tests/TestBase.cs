@@ -1,11 +1,6 @@
 ﻿using Application.Test.Common.Host;
-using Domain.AggregateModels.AccountAggregate;
-using Domain.AggregateModels.AccountAggregate.ValueObjects;
-using Domain.AggregateModels.ReportAggregate;
-using Domain.AggregateModels.ReportAggregate.ValueObjects;
 using Infrastructure.Context;
 using MediatR;
-using Persistence.Contracts.Repositories;
 
 namespace Application.Test.Common.Tests;
 

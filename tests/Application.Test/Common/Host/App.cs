@@ -22,7 +22,7 @@ public class App
             .ConfigureServices(
                 (_, services) =>
                 {
-                    services.AddInfrastructure("persistence-test");
+                    services.AddInfrastructure("application-test");
                     services.AddPersistence();
                     services.AddApplication();
                 }
