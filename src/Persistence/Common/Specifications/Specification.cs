@@ -5,13 +5,13 @@ using Persistence.Common.Specifications.Types;
 
 namespace Persistence.Common.Specifications;
 
-public abstract class Specification<TEntity>
+public abstract record Specification<TEntity>
     where TEntity : IAggregateRoot
 {
     public Expression<Func<TEntity, bool>>? Criteria { get; }
     public List<
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>
-    > Includes { get; } = [ ];
+    > Includes { get; } = [];
 
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }

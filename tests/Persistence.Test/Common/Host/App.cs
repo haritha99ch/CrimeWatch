@@ -38,4 +38,9 @@ public class App
         }
         return service;
     }
+
+    internal void Dispose()
+    {
+        _host.Dispose();
+    }
 }

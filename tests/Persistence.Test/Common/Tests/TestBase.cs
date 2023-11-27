@@ -17,4 +17,21 @@ public abstract class TestBase
 
     protected IRepository<Report, ReportId> ReportRepository =>
         _app.GetRequiredService<IRepository<Report, ReportId>>();
+
+    protected virtual async Task InitializeAsync()
+    {
+        await DbContext.Database.EnsureDeletedAsync();
+        await DbContext.Database.EnsureCreatedAsync();
+    }
+
+    protected virtual async Task CleanupAsync()
+    {
+        await DbContext.Database.EnsureDeletedAsync();
+        _app.Dispose();
+    }
+
+    protected async Task SaveAndClearChangeTrackerAsync(){
+        await DbContext.SaveChangesAsync();
+        DbContext.ChangeTracker.Clear();
+    }
 }
