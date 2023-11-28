@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Contracts.Services;
+using Application.Services;
+using ApplicationSettings;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
@@ -11,6 +14,7 @@ public static class Configure
     ///     <para><see cref="ApplicationSettings.Configure.AddApplicationSettings(Microsoft.Extensions.Configuration.IConfigurationBuilder)"/>,</para>
     ///     <para><see cref="Infrastructure.Configure.AddInfrastructure(IServiceCollection)"/>,</para>
     ///     <para><see cref="Persistence.Configure.AddPersistence(IServiceCollection)"/>,</para>
+    ///     <para><see cref="Microsoft.AspNetCore.Http.HttpContextAccessor"/></para>
     /// <see cref=""/>
     /// </para>
     /// </summary>
@@ -20,6 +24,8 @@ public static class Configure
     /// <param name="services"></param>
     public static void AddApplication(this IServiceCollection services)
     {
+        services.ConfigureJwtOptions();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AssemblyReference>());
     }
 }

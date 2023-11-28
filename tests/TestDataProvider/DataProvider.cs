@@ -57,7 +57,7 @@ public static class DataProvider
     public static EmailVerificationCode TestEmailVerificationCode => GetEmailVerificationCode();
     public static PhoneNumberVerificationCode TestPhoneNumberVerificationCode =>
         GetPhoneNumberVerificationCode();
-
+    public static string TestSecretKey = new Faker().Random.String2(32);
     private static Comment TestComment => GetComment();
     private static Bookmark TestBookmark => GetBookmark();
 
@@ -96,12 +96,12 @@ public static class DataProvider
         return faker.Generate();
     }
 
-    private static Account GetModeratorAccount()
+    public static Account GetModeratorAccount(string? password = null)
     {
         var faker = new Faker<Account>()
             .RuleFor(a => a.Id, () => new(Guid.NewGuid()))
             .RuleFor(a => a.Email, Email)
-            .RuleFor(a => a.Password, BCrypt.Net.BCrypt.HashPassword(Password))
+            .RuleFor(a => a.Password, BCrypt.Net.BCrypt.HashPassword(password ?? Password))
             .RuleFor(a => a.PhoneNumber, PhoneNumber)
             .RuleFor(a => a.AccountType, AccountType.Moderator)
             .RuleFor(a => a.Person, GetPerson)

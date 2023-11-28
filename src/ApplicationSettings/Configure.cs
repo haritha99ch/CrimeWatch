@@ -30,4 +30,9 @@ public static class Configure
     {
         serviceCollection.ConfigureOptions<ConfigureApplicationOptions<BlobStorageOptions>>();
     }
+
+    public static void ConfigureJwtOptions(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.ConfigureOptions<ConfigureApplicationOptions<JwtOptions>>();
+    }
 }

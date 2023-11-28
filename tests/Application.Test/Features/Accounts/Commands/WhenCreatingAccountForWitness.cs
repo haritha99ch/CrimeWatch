@@ -39,8 +39,8 @@ public class WhenCreatingAccountForWitness : TestBase
             password,
             phoneNumber
         );
-        var accountResult = await Mediator.Send(command);
-        var account = accountResult.GetResult(e => e);
+        var result = await Mediator.Send(command);
+        var account = result.GetValue();
 
         Assert.IsNotNull(account);
     }

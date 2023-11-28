@@ -48,7 +48,7 @@ public class WhenCreatingAccountForModerator : TestBase
         );
         var result = await Mediator.Send(command);
         var handler = new CreateAccountForModeratorCommandHandler(null!);
-        var account = result.GetResult(e => e);
+        var account = result.GetValue();
 
         Assert.IsNotNull(account);
     }

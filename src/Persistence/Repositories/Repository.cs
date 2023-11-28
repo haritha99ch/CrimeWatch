@@ -93,10 +93,11 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
     )
         where TSpecification : Specification<TEntity>
     {
-        return await DbSet
+        var entity = await DbSet
             .AsNoTracking()
             .AddSpecification(specification)
-            .SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None);
+            .FirstOrDefaultAsync(cancellationToken ?? CancellationToken.None);
+        return entity;
     }
 
     public async Task<List<TEntity>> GetManyAsync<TSpecification>(
