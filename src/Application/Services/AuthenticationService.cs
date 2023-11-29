@@ -7,7 +7,6 @@ using Application.Features.Accounts.Queries.SignInToAccount.Errors;
 using Application.Helpers.Repositories;
 using Application.Selectors;
 using ApplicationSettings.Options;
-using Domain.AggregateModels.AccountAggregate.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -54,7 +53,10 @@ internal class AuthenticationService : IAuthenticationService
     {
         var claims = new List<Claim>
         {
-            new(ClaimTypes.Role, isModerator ? nameof(Moderator) : nameof(Witness)),
+            new(
+                ClaimTypes.Role,
+                isModerator ? AccountType.Moderator.ToString() : AccountType.Moderator.ToString()
+            ),
             new(JwtRegisteredClaimNames.Sub, id.Value.ToString()),
             new(JwtRegisteredClaimNames.Email, email)
         };
@@ -72,15 +74,18 @@ internal class AuthenticationService : IAuthenticationService
         return new JwtSecurityTokenHandler().WriteToken(tokeOptions);
     }
 
-    private async Task<Result<AccountAuthenticationInfo>> GetAuthenticationResult(
+    public async Task<Result<AccountAuthenticationInfo>> GetAuthenticationResult(
         CancellationToken cancellationToken
     )
     {
         ArgumentNullException.ThrowIfNull(HttpContext, paramName: "Not an API");
         var claims = HttpContext.User.Claims.ToList();
-
         var accountIdValue = claims
-            .Where(e => e.Type.Equals(ClaimTypes.NameIdentifier))
+            .Where(
+                e =>
+                    e.Type.Equals(ClaimTypes.NameIdentifier)
+                    || e.Type.Equals(JwtRegisteredClaimNames.Sub)
+            )
             .Select(e => e.Value)
             .FirstOrDefault();
 

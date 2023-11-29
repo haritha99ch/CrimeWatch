@@ -1,7 +1,7 @@
 ﻿namespace Application.Features.Accounts.Commands.CreateAccountForModerator;
 
 public sealed class CreateAccountForModeratorCommandHandler
-    : IRequestHandler<CreateAccountForModeratorCommand, Result<Account>>
+    : ICommandHandler<CreateAccountForModeratorCommand, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
 

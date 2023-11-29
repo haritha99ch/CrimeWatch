@@ -1,6 +1,8 @@
-﻿using Application.Contracts.Services;
+﻿using Application.Behaviors;
+using Application.Contracts.Services;
 using Application.Services;
 using ApplicationSettings;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -26,6 +28,11 @@ public static class Configure
     {
         services.ConfigureJwtOptions();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AssemblyReference>());
+        services
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<AssemblyReference>())
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
+
+    public static void AddApplicationValidators(this IServiceCollection services) =>
+        services.AddValidatorsFromAssemblyContaining<AssemblyReference>(includeInternalTypes: true);
 }

@@ -49,16 +49,16 @@ public interface IRepository<TEntity, TEntityID>
         CancellationToken? cancellationToken = null
     )
         where TSpecification : Specification<TEntity>;
+    #endregion
 
+    #region Selector
     Task<TSelector?> GetByIdAsync<TSelector>(
         TEntityID id,
         Expression<Func<TEntity, TSelector>> selector,
         CancellationToken? cancellationToken = null
     )
         where TSelector : Selector<TEntity, TSelector>;
-    #endregion
 
-    #region Selector
     Task<List<TSelector>> GetManyAsync<TSelector>(
         Expression<Func<TEntity, TSelector>> selector,
         CancellationToken? cancellationToken = null

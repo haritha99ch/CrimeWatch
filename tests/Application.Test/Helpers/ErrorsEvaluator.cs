@@ -4,5 +4,5 @@ namespace Application.Test.Helpers;
 
 internal static class ErrorsEvaluator
 {
-    internal static bool HasError<TError>(this Error error) => error is TError;
+    internal static bool Is<TError>(this Error error) => error is TError;
 }

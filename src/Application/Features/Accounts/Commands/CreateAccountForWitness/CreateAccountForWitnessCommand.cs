@@ -9,4 +9,4 @@ public sealed record CreateAccountForWitnessCommand(
     string Email,
     string Password,
     string PhoneNumber
-) : IRequest<Result<Account>>;
+) : ICommand<Account>;

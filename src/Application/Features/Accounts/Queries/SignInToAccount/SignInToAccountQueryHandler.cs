@@ -2,8 +2,7 @@
 
 namespace Application.Features.Accounts.Queries.SignInToAccount;
 
-internal sealed class SignInToAccountQueryHandler
-    : IRequestHandler<SignInToAccountQuery, Result<string>>
+internal sealed class SignInToAccountQueryHandler : IQueryHandler<SignInToAccountQuery, string>
 {
     private readonly IAuthenticationService _authenticationService;
 

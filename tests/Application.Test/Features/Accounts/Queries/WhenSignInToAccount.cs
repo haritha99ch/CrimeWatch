@@ -48,6 +48,6 @@ public class WhenSignInToAccount : TestBase
         var result = await Mediator.Send(command);
         var error = result.GetError();
 
-        Assert.IsTrue(error.HasError<AccountNotFoundError>());
+        Assert.IsTrue(error.Is<AccountNotFoundError>());
     }
 }

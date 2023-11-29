@@ -12,4 +12,4 @@ public sealed record CreateAccountForModeratorCommand(
     string Email,
     string Password,
     string PhoneNumber
-) : IRequest<Result<Account>>;
+) : ICommand<Account>;

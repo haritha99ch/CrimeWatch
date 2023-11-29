@@ -49,6 +49,7 @@ public class App
                     );
 
                     services.AddApplication();
+                    services.AddApplicationValidators();
                 }
             )
             .Build();

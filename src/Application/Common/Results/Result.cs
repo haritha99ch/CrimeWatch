@@ -2,10 +2,9 @@
 
 namespace Application.Common.Results;
 
-public readonly struct Result<T>
+public class Result<T> : Result
 {
     private bool IsSuccess => _error is null && _result is not null;
-    private readonly Error? _error;
     private readonly T? _result;
 
     private Result(T result)
@@ -14,19 +13,21 @@ public readonly struct Result<T>
     }
 
     private Result(Error error)
-    {
-        _error = error;
-    }
+        : base(error) { }
 
     public static implicit operator Result<T>(T result) => new(result);
 
     public static implicit operator Result<T>(Error error) => new(error);
 
+    public static Result<T> Failure(Error error)
+    {
+        return new Result<T>(error);
+    }
+
     public TResult? GetValue<TResult>(
         Func<T, TResult> onSuccess,
         Func<Error, TResult>? onError = null
     )
-        where TResult : class
     {
         if (!IsSuccess)
         {
@@ -74,5 +75,15 @@ public readonly struct Result<T>
         if (_error is null)
             throw new ArgumentNullException(nameof(_error), "No error information is available.");
         return _error;
+    }
+}
+
+public class Result
+{
+    protected readonly Error? _error;
+
+    protected Result(Error? error = default)
+    {
+        _error = error;
     }
 }
