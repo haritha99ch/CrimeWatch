@@ -1,7 +1,4 @@
-﻿using System.Net;
-using Application.Common.Errors;
-
-namespace Application.Errors.Accounts;
+﻿namespace Application.Errors.Accounts;
 
 public sealed record AccountNotFoundError : Error<AccountNotFoundError>
 {

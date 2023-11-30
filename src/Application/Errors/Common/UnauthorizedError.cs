@@ -1,7 +1,4 @@
-﻿using System.Net;
-using Application.Common.Errors;
-
-namespace Application.Errors.Common;
+﻿namespace Application.Errors.Common;
 
 public record UnauthorizedError : Error<UnauthorizedError>
 {
