@@ -2,8 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using Application.Contracts.Services;
-using Application.Errors;
-using Application.Features.Accounts.Queries.SignInToAccount.Errors;
 using Application.Helpers.Repositories;
 using Application.Selectors;
 using ApplicationSettings.Options;

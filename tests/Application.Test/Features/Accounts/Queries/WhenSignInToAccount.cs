@@ -1,7 +1,5 @@
-﻿using Application.Features.Accounts.Queries.SignInToAccount;
-using Application.Features.Accounts.Queries.SignInToAccount.Errors;
-using Application.Test.Common.Tests;
-using Application.Test.Helpers;
+﻿using Application.Errors.Accounts;
+using Application.Features.Accounts.Queries.SignInToAccount;
 
 namespace Application.Test.Features.Accounts.Queries;
 

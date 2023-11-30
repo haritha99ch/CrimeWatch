@@ -1,16 +1,11 @@
-﻿using Application.Errors;
+﻿using Application.Errors.Accounts;
+using Application.Errors.Common;
 using Application.Features.Accounts.Queries.GetAccountById;
-using Application.Features.Accounts.Queries.GetAccountById.Errors;
-using Application.Test.Common.Tests;
-using Application.Test.Helpers;
 using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Accounts.Queries;
 
 [TestClass]
-/// <summary>
-/// To Authorize call <see cref="TestBase.GenerateTokenAndInvoke(bool, Domain.AggregateModels.AccountAggregate.ValueObjects.AccountId, string)."/>
-/// </summary>
 public class WhenGettingAccountById : TestBase
 {
     [TestInitialize]

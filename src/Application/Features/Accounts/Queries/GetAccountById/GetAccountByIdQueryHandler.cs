@@ -1,6 +1,4 @@
-﻿using Application.Features.Accounts.Queries.SignInToAccount.Errors;
-
-namespace Application.Features.Accounts.Queries.GetAccountById;
+﻿namespace Application.Features.Accounts.Queries.GetAccountById;
 
 internal sealed class GetAccountByIdQueryHandler
     : IQueryHandler<GetAccountByIdQuery, Account>

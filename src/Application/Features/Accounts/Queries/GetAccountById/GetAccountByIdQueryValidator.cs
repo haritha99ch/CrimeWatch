@@ -1,6 +1,5 @@
 ﻿using Application.Common.Validators;
 using Application.Contracts.Services;
-using Application.Features.Accounts.Queries.GetAccountById.Errors;
 using FluentValidation;
 
 namespace Application.Features.Accounts.Queries.GetAccountById;

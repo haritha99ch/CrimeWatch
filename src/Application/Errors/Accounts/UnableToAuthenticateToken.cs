@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Application.Common.Errors;
 
-namespace Application.Errors;
+namespace Application.Errors.Accounts;
 
 public sealed record UnableToAuthenticateTokenError : Error<UnableToAuthenticateTokenError>
 {

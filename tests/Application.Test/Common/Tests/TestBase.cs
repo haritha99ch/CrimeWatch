@@ -13,6 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Test.Common.Tests;
 
+/// <summary>
+///     To Authorize, call <see cref="GenerateTokenAndInvoke(bool, AccountId, string)."/>
+/// </summary>
 public abstract class TestBase
 {
     private readonly App _app = App.Create();

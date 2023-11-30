@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Application.Common.Errors;
 
-namespace Application.Features.Accounts.Queries.SignInToAccount.Errors;
+namespace Application.Errors.Accounts;
 
 public sealed record AccountNotFoundError : Error<AccountNotFoundError>
 {
