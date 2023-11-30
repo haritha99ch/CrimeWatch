@@ -25,4 +25,16 @@ internal static class AccountRepositoryExtensions
             cancellationToken
         );
     }
+
+    internal static async Task<Account?> GetWitnessAccountIncludingOwnedById(
+        this IRepository<Account, AccountId> repository,
+        AccountId accountId,
+        CancellationToken cancellationToken
+    )
+    {
+        return await repository.GetOneAsync<WitnessAccountIncludingOwned>(
+            new(accountId),
+            cancellationToken
+        );
+    }
 }
