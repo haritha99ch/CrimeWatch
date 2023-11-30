@@ -24,7 +24,7 @@ public class Result<T> : Result
         return new Result<T>(error);
     }
 
-    public TResult? GetValue<TResult>(
+    public TResult? Handle<TResult>(
         Func<T, TResult> onSuccess,
         Func<Error, TResult>? onError = null
     )

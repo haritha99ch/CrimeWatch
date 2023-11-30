@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Application.Contracts.Services;
 using Application.Helpers.Repositories;
-using Application.Selectors;
+using Application.Selectors.Accounts;
 using ApplicationSettings.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -72,7 +72,7 @@ internal class AuthenticationService : IAuthenticationService
         return new JwtSecurityTokenHandler().WriteToken(tokeOptions);
     }
 
-    public async Task<Result<AccountAuthenticationInfo>> GetAuthenticationResult(
+    public async Task<Result<AccountAuthenticationInfo>> GetAuthenticationResultAsync(
         CancellationToken cancellationToken
     )
     {
@@ -88,7 +88,7 @@ internal class AuthenticationService : IAuthenticationService
             .FirstOrDefault();
 
         if (accountIdValue is null)
-            return UnableToAuthenticateTokenError.Create();
+            return UnableToAuthenticateError.Create(message: "User has not signIn.");
 
         var accountId = new AccountId(new(accountIdValue));
 
@@ -97,6 +97,8 @@ internal class AuthenticationService : IAuthenticationService
             AccountAuthenticationInfo.GetSelector,
             cancellationToken
         );
-        return account is null ? AccountNotFoundError.Create() : account;
+        return account is null
+            ? UnableToAuthenticateError.Create(message: "Authenticated user is not found.")
+            : account;
     }
 }

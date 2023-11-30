@@ -16,8 +16,8 @@ public sealed class GetAccountByIdQueryValidator : ApplicationValidator<GetAccou
 
     private async Task<bool> IsAuthorizedAsync(AccountId id, CancellationToken cancellationToken)
     {
-        var result = await _authenticationService.GetAuthenticationResult(cancellationToken);
-        return result.GetValue(
+        var result = await _authenticationService.GetAuthenticationResultAsync(cancellationToken);
+        return result.Handle(
             e =>
             {
                 if (e.AccountId.Equals(id))

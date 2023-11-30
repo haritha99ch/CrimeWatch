@@ -1,7 +1,4 @@
-﻿using System.Linq.Expressions;
-using Persistence.Common.Selectors;
-
-namespace Application.Selectors;
+﻿namespace Application.Selectors.Accounts;
 
 public sealed record AccountAuthenticationInfo(AccountId AccountId, bool IsModerator)
     : Selector<Account, AccountAuthenticationInfo>

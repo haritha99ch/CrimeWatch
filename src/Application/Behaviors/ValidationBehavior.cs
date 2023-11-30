@@ -1,5 +1,4 @@
 ﻿using Application.Common.Errors;
-using Application.Errors;
 using FluentValidation;
 
 namespace Application.Behaviors;

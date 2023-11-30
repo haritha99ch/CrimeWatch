@@ -50,7 +50,7 @@ public class WhenGettingAccountById : TestBase
         var result = await Mediator.Send(command);
         var error = result.GetError();
 
-        Assert.IsTrue(error.Is<UnableToAuthenticateTokenError>());
+        Assert.IsTrue(error.Is<UnableToAuthenticateError>());
     }
 
     [TestMethod]

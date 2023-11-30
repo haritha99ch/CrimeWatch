@@ -1,4 +1,4 @@
-﻿using Application.Selectors;
+﻿using Application.Selectors.Accounts;
 
 namespace Application.Contracts.Services;
 
@@ -11,7 +11,7 @@ public interface IAuthenticationService
     );
     Task<string> RefreshToken(string token, string refreshToken);
 
-    Task<Result<AccountAuthenticationInfo>> GetAuthenticationResult(
+    Task<Result<AccountAuthenticationInfo>> GetAuthenticationResultAsync(
         CancellationToken cancellationToken
     );
 }

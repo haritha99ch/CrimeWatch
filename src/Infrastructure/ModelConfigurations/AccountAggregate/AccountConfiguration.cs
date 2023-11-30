@@ -27,15 +27,21 @@ internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
 
         builder.Property(a => a.IsPhoneNumberVerified).IsRequired();
 
-        builder.OwnsOne<EmailVerificationCode>(
-            a => a.EmailVerificationCode,
-            navigationBuilder => navigationBuilder.Configure()
-        );
+        builder
+            .OwnsOne<EmailVerificationCode>(
+                a => a.EmailVerificationCode,
+                navigationBuilder => navigationBuilder.Configure()
+            )
+            .Navigation(e => e.EmailVerificationCode)
+            .AutoInclude(false);
 
-        builder.OwnsOne<PhoneNumberVerificationCode>(
-            a => a.PhoneNumberVerificationCode,
-            navigationBuilder => navigationBuilder.Configure()
-        );
+        builder
+            .OwnsOne<PhoneNumberVerificationCode>(
+                a => a.PhoneNumberVerificationCode,
+                navigationBuilder => navigationBuilder.Configure()
+            )
+            .Navigation(e => e.PhoneNumberVerificationCode)
+            .AutoInclude(false);
 
         builder
             .OwnsOne<Person>(e => e.Person, navigationBuilder => navigationBuilder.Configure())

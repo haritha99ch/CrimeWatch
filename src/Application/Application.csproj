@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Errors\Accounts\" />
     <Folder Include="Errors\Common\" />
   </ItemGroup>
 
