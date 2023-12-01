@@ -1,6 +1,4 @@
-﻿using Application.Common.Errors;
-
-namespace Application.Common.Results;
+﻿namespace Application.Common.Results;
 
 public class Result<T> : Result
 {

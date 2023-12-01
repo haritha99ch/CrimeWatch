@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace Application.Common.Errors;
+﻿namespace Application.Common.Errors;
 
 /// <summary>
 /// Implements factory method <see cref="Error{TError}.Create"/> for errors to overwrite error properties.

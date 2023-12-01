@@ -1,5 +1,4 @@
 ﻿using Application.Features.Accounts.Commands.CreateAccountForModerator;
-using Application.Test.Common.Tests;
 
 namespace Application.Test.Features.Accounts.Commands;
 
