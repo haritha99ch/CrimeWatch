@@ -1,7 +1,6 @@
 ﻿using Domain.AggregateModels.ReportAggregate.Enums;
 
 namespace Domain.Common.Models;
-
 public sealed record MediaUpload
 {
     public required string Url { get; init; }

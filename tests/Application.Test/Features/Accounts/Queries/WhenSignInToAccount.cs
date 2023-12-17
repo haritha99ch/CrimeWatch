@@ -2,7 +2,6 @@
 using Application.Features.Accounts.Queries.SignInToAccount;
 
 namespace Application.Test.Features.Accounts.Queries;
-
 [TestClass]
 public class WhenSignInToAccount : TestBase
 {

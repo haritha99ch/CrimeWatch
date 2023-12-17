@@ -3,7 +3,6 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate.Entities;
-
 public sealed record Bookmark : Entity<BookmarkId>
 {
     public required AccountId AccountId { get; init; }

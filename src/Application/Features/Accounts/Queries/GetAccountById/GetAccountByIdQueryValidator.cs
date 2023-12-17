@@ -3,7 +3,6 @@ using Application.Contracts.Services;
 using FluentValidation;
 
 namespace Application.Features.Accounts.Queries.GetAccountById;
-
 public sealed class GetAccountByIdQueryValidator : ApplicationValidator<GetAccountByIdQuery>
 {
     private readonly IAuthenticationService _authenticationService;
@@ -20,8 +19,7 @@ public sealed class GetAccountByIdQueryValidator : ApplicationValidator<GetAccou
         return result.Handle(
             e =>
             {
-                if (e.AccountId.Equals(id))
-                    return true;
+                if (e.AccountId.Equals(id)) return true;
                 validationError = UnauthorizedError.Create();
                 return false;
             },
@@ -29,7 +27,6 @@ public sealed class GetAccountByIdQueryValidator : ApplicationValidator<GetAccou
             {
                 validationError = e;
                 return false;
-            }
-        );
+            });
     }
 }

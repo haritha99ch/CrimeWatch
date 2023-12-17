@@ -3,7 +3,6 @@ using Application.Contracts.Services;
 using FluentValidation;
 
 namespace Application.Features.Accounts.Commands.DeleteAccount;
-
 public sealed class DeleteAccountCommandValidator : ApplicationValidator<DeleteAccountCommand>
 {
     private readonly IAuthenticationService _authenticationService;
@@ -15,26 +14,22 @@ public sealed class DeleteAccountCommandValidator : ApplicationValidator<DeleteA
     }
 
     private async Task<bool> IsAuthorizedAsync(
-        AccountId accountId,
-        CancellationToken cancellationToken
-    )
+            AccountId accountId,
+            CancellationToken cancellationToken
+        )
     {
         var result = await _authenticationService.GetAuthenticationResultAsync(cancellationToken);
         return result.Handle(
             e =>
             {
-                if (accountId.Equals(e.AccountId))
-                    return true;
-                validationError = UnauthorizedError.Create(
-                    message: "You are not authorized to delete this account"
-                );
+                if (accountId.Equals(e.AccountId)) return true;
+                validationError = UnauthorizedError.Create(message: "You are not authorized to delete this account");
                 return false;
             },
             e =>
             {
                 validationError = e;
                 return false;
-            }
-        );
+            });
     }
 }

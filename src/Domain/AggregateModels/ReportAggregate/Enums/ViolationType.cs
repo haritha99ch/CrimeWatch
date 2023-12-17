@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.AggregateModels.ReportAggregate.Enums;
-
 public enum ViolationType
 {
     Traffic = 0,

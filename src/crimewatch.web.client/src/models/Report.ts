@@ -1,4 +1,4 @@
-import { Status } from "../enums/Status";
+import {Status} from "../enums/Status";
 import ModeratorId from "../valueObjects/ModeratorId";
 import ReportId from "../valueObjects/ReportId";
 import WitnessId from "../valueObjects/WitnessId";

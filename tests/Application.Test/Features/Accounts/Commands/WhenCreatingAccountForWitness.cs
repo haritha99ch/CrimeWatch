@@ -1,7 +1,4 @@
-﻿using Application.Test.Common.Tests;
-
-namespace Application.Test.Features.Accounts.Commands;
-
+﻿namespace Application.Test.Features.Accounts.Commands;
 [TestClass]
 public class WhenCreatingAccountForWitness : TestBase
 {
@@ -37,8 +34,7 @@ public class WhenCreatingAccountForWitness : TestBase
             birthDay,
             email,
             password,
-            phoneNumber
-        );
+            phoneNumber);
         var result = await Mediator.Send(command);
         var account = result.GetValue();
 

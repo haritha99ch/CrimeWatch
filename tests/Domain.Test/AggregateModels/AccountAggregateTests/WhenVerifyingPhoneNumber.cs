@@ -1,7 +1,6 @@
 ﻿using Domain.AggregateModels.AccountAggregate.ValueObjects;
 
 namespace Domain.Test.AggregateModels.AccountAggregateTests;
-
 [TestClass]
 public class WhenVerifyingPhoneNumber
 {
@@ -20,9 +19,7 @@ public class WhenVerifyingPhoneNumber
     {
         var account = DataProvider.TestAccountForModerator;
 
-        account.VerifyPhoneNumber(
-            PhoneNumberVerificationCode.Create(account.PhoneNumberVerificationCode.Value)
-        );
+        account.VerifyPhoneNumber(PhoneNumberVerificationCode.Create(account.PhoneNumberVerificationCode.Value));
 
         Assert.IsTrue(account.HasDomainEvent<AccountPhoneNumberVerifiedEvent>());
     }

@@ -1,5 +1,4 @@
 ﻿namespace Application.Errors.Accounts;
-
 public sealed record UnableToAuthenticateError : Error<UnableToAuthenticateError>
 {
     public override string Title { get; init; } = "Authentication Failed.";

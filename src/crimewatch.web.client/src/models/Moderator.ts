@@ -1,4 +1,4 @@
-import { Gender } from "../enums/Gender";
+import {Gender} from "../enums/Gender";
 import AccountId from "../valueObjects/AccountId";
 import ModeratorId from "../valueObjects/ModeratorId";
 import UserId from "../valueObjects/UserId";
@@ -31,7 +31,7 @@ export interface CreateModeratorDto {
     province: string;
 }
 
-export default interface Moderator{
+export default interface Moderator {
     moderatorId: ModeratorId;
     policeId: string;
     userId: UserId;

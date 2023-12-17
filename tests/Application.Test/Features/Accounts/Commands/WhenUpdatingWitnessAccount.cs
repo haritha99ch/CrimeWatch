@@ -1,10 +1,8 @@
 ﻿using Application.Errors.Common;
-using Application.Features.Accounts.Commands.UpdateModeratorAccount;
 using Application.Features.Accounts.Commands.UpdateWitnessAccount;
 using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Accounts.Commands;
-
 [TestClass]
 public class WhenUpdatingWitnessAccount : TestBase
 {
@@ -29,8 +27,7 @@ public class WhenUpdatingWitnessAccount : TestBase
         GenerateTokenAndInvoke(
             testAccount.AccountType.Equals(AccountType.Moderator),
             testAccount.Id,
-            testAccount.Email
-        );
+            testAccount.Email);
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;
@@ -41,8 +38,7 @@ public class WhenUpdatingWitnessAccount : TestBase
             firstName,
             lastName,
             testAccount.Person!.Gender,
-            testAccount.Person!.BirthDate
-        );
+            testAccount.Person!.BirthDate);
         var result = await Mediator.Send(command);
         var account = result.GetValue();
 
@@ -57,13 +53,12 @@ public class WhenUpdatingWitnessAccount : TestBase
     {
         var testAccount = DataProvider.TestAccountForModerator;
         var invalidAccount = DataProvider.TestAccountForModerator;
-        await DbContext.Accounts.AddRangeAsync([ testAccount, invalidAccount ]);
+        await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
         GenerateTokenAndInvoke(
             invalidAccount.AccountType.Equals(AccountType.Moderator),
             invalidAccount.Id,
-            invalidAccount.Email
-        );
+            invalidAccount.Email);
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;
@@ -74,8 +69,7 @@ public class WhenUpdatingWitnessAccount : TestBase
             firstName,
             lastName,
             testAccount.Person!.Gender,
-            testAccount.Person!.BirthDate
-        );
+            testAccount.Person!.BirthDate);
         var result = await Mediator.Send(command);
         var error = result.GetError();
 

@@ -3,7 +3,6 @@ using Domain.AggregateModels.ReportAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Reports;
-
 [TestClass]
 public class WhenReading : TestBase
 {

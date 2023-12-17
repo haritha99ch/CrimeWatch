@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.ReportAggregate.EntityConfiguration;
-
 internal static class EvidenceConfiguration
 {
     internal static void Configure(this OwnedNavigationBuilder<Report, Evidence> builder)
@@ -19,8 +18,7 @@ internal static class EvidenceConfiguration
 
         builder.OwnsOne<Location>(
             e => e.Location,
-            navigationBuilder => navigationBuilder.Configure()
-        );
+            navigationBuilder => navigationBuilder.Configure());
 
         builder.Property(e => e.Status).IsRequired();
 

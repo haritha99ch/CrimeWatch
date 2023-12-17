@@ -1,7 +1,6 @@
 ﻿using Domain.AggregateModels.AccountAggregate.Common;
 
 namespace Domain.AggregateModels.AccountAggregate.ValueObjects;
-
 public sealed record EmailVerificationCode : VerificationCode
 {
     private EmailVerificationCode(int value)

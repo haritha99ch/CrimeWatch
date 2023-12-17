@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
-
 [TestClass]
 public class WhenCreatingAccount
 {
@@ -23,8 +22,7 @@ public class WhenCreatingAccount
             birthDate,
             email,
             password,
-            phoneNumber
-        );
+            phoneNumber);
 
         Assert.IsNotNull(account);
 
@@ -69,8 +67,7 @@ public class WhenCreatingAccount
             birthDate,
             email,
             password,
-            phoneNumber
-        );
+            phoneNumber);
 
         Assert.IsTrue(account.HasDomainEvent<AccountCreatedEvent>());
     }
@@ -101,8 +98,7 @@ public class WhenCreatingAccount
             province,
             email,
             password,
-            phoneNumber
-        );
+            phoneNumber);
 
         Assert.IsNotNull(account);
 
@@ -153,8 +149,7 @@ public class WhenCreatingAccount
             province,
             email,
             password,
-            phoneNumber
-        );
+            phoneNumber);
 
         Assert.IsTrue(account.HasDomainEvent<AccountCreatedEvent>());
     }

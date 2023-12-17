@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests;
-
 [TestClass]
 public class WhenCreatingReport
 {
@@ -27,8 +26,7 @@ public class WhenCreatingReport
             city,
             province,
             violationTypes,
-            mediaItemUpload
-        );
+            mediaItemUpload);
 
         Assert.IsNotNull(report);
         Assert.IsNotNull(report.MediaItem);
@@ -67,8 +65,7 @@ public class WhenCreatingReport
             province,
             violationTypes,
             null,
-            newMediaItem
-        );
+            newMediaItem);
 
         Assert.IsTrue(report.HasDomainEvent<ReportUpdatedEvent>());
     }

@@ -1,6 +1,5 @@
 ﻿namespace Application.Features.Accounts.Commands.CreateAccountForWitness;
-
-internal sealed class CreateAccountForWitnessCommandHandler
+sealed internal class CreateAccountForWitnessCommandHandler
     : ICommandHandler<CreateAccountForWitnessCommand, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
@@ -11,9 +10,9 @@ internal sealed class CreateAccountForWitnessCommandHandler
     }
 
     public async Task<Result<Account>> Handle(
-        CreateAccountForWitnessCommand request,
-        CancellationToken cancellationToken
-    )
+            CreateAccountForWitnessCommand request,
+            CancellationToken cancellationToken
+        )
     {
         var account = Account.CreateAccountForWitness(
             request.Nic,
@@ -23,8 +22,7 @@ internal sealed class CreateAccountForWitnessCommandHandler
             request.BirthDay,
             request.Email,
             request.Password,
-            request.PhoneNumber
-        );
+            request.PhoneNumber);
         return await _accountRepository.AddAsync(account, cancellationToken);
     }
 }

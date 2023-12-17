@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.ReportAggregate;
-
-internal sealed class ReportConfiguration : IEntityTypeConfiguration<Report>
+sealed internal class ReportConfiguration : IEntityTypeConfiguration<Report>
 {
     public void Configure(EntityTypeBuilder<Report> builder)
     {
@@ -19,8 +18,7 @@ internal sealed class ReportConfiguration : IEntityTypeConfiguration<Report>
 
         builder.OwnsOne<Location>(
             r => r.Location,
-            navigationBuilder => navigationBuilder.Configure()
-        );
+            navigationBuilder => navigationBuilder.Configure());
 
         builder.Property(r => r.Status).IsRequired();
 

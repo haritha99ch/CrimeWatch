@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Test.Repositories.AccountRepository;
-
 [TestClass]
 public class WhenAddingAccount : TestBase
 {

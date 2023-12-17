@@ -1,5 +1,4 @@
 ﻿namespace Domain.Common.Models;
-
 public abstract record Entity<TEntityId> : EntityBase
     where TEntityId : EntityId
 {

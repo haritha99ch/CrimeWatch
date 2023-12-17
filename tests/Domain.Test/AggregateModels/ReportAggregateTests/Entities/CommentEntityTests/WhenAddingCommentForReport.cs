@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests.Entities.CommentEntityTests;
-
 [TestClass]
 public class WhenAddingCommentForReport
 {

@@ -1,5 +1,4 @@
 ﻿namespace Persistence.Test.Repositories.AccountRepository;
-
 [TestClass]
 public class WhenUpdating : TestBase
 {
@@ -33,8 +32,7 @@ public class WhenUpdating : TestBase
             testAccount.Person.BirthDate,
             newPoliceId,
             testAccount.Moderator!.City,
-            testAccount.Moderator.Province
-        );
+            testAccount.Moderator.Province);
         var updatedAccount = await AccountRepository.UpdateAsync(testAccount);
 
         Assert.AreEqual(newFirstName, updatedAccount.Person!.FirstName);

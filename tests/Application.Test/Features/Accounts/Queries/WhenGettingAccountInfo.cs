@@ -3,7 +3,6 @@ using Application.Features.Accounts.Queries.GetAccountInfoById;
 using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Accounts.Queries;
-
 [TestClass]
 public class WhenGettingAccountInfoById : TestBase
 {
@@ -32,15 +31,13 @@ public class WhenGettingAccountInfoById : TestBase
         Assert.AreEqual(testAccount.Email, accountInfo.Email);
         Assert.AreEqual(
             $"{testAccount.Person!.FirstName} {testAccount.Person!.LastName}",
-            accountInfo.FullName
-        );
+            accountInfo.FullName);
         Assert.AreEqual(
             testAccount.AccountType.Equals(AccountType.Moderator),
-            accountInfo.IsModerator
-        );
+            accountInfo.IsModerator);
     }
 
-        [TestMethod]
+    [TestMethod]
     public async Task ShouldReturn_AccountNotFoundError_When_Passing_Invalid_AccountId()
     {
         var testAccountId = DataProvider.AccountId;

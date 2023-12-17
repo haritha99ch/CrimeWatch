@@ -3,7 +3,6 @@ using Application.Contracts.Services;
 using FluentValidation;
 
 namespace Application.Features.Accounts.Commands.UpdateWitnessAccount;
-
 public sealed class UpdateWitnessAccountCommandValidator
     : ApplicationValidator<UpdateWitnessAccountCommand>
 {
@@ -21,18 +20,14 @@ public sealed class UpdateWitnessAccountCommandValidator
         return result.Handle(
             e =>
             {
-                if (e.AccountId.Equals(accountId))
-                    return true;
-                validationError = UnauthorizedError.Create(
-                    message: "You are not authorized to update this account."
-                );
+                if (e.AccountId.Equals(accountId)) return true;
+                validationError = UnauthorizedError.Create(message: "You are not authorized to update this account.");
                 return false;
             },
             e =>
             {
                 validationError = e;
                 return false;
-            }
-        );
+            });
     }
 }

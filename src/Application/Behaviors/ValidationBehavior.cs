@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
 
 namespace Application.Behaviors;
-
-internal sealed class ValidationBehavior<TRequest, TResponse>
+sealed internal class ValidationBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseRequest
     where TResponse : Result
@@ -15,18 +14,16 @@ internal sealed class ValidationBehavior<TRequest, TResponse>
     }
 
     public async Task<TResponse> Handle(
-        TRequest request,
-        RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken
-    )
+            TRequest request,
+            RequestHandlerDelegate<TResponse> next,
+            CancellationToken cancellationToken
+        )
     {
-        if (!_validators.Any())
-            return await next();
+        if (!_validators.Any()) return await next();
 
         var context = new ValidationContext<TRequest>(request);
         var validationResults = await Task.WhenAll(
-            _validators.Select(async e => await e.ValidateAsync(context, cancellationToken))
-        );
+            _validators.Select(async e => await e.ValidateAsync(context, cancellationToken)));
         var failures = validationResults.SelectMany(e => e.Errors).Where(e => e != null).ToList();
 
         if (failures.Count != 0)
@@ -55,7 +52,7 @@ internal sealed class ValidationBehavior<TRequest, TResponse>
                 .GetGenericTypeDefinition()
                 .MakeGenericType(typeof(TResult).GenericTypeArguments[0])
                 .GetMethod(nameof(Result<object>.Failure))!
-                .Invoke(null, [ error ])!;
+                .Invoke(null, [error])!;
 
         return validationResults;
     }

@@ -1,10 +1,9 @@
-﻿using System.Reflection;
-using Domain.AggregateModels.AccountAggregate;
+﻿using Domain.AggregateModels.AccountAggregate;
 using Domain.AggregateModels.ReportAggregate;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Infrastructure.Context;
-
 public class ApplicationDbContext : DbContext
 {
     public DbSet<Account> Accounts { get; set; } = default!;

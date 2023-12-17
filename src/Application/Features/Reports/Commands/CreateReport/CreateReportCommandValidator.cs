@@ -3,7 +3,6 @@ using Application.Contracts.Services;
 using FluentValidation;
 
 namespace Application.Features.Reports.Commands.CreateReport;
-
 public sealed class CreateReportCommandValidator : ApplicationValidator<CreateReportCommand>
 {
     private readonly IAuthenticationService _authenticationService;
@@ -15,26 +14,23 @@ public sealed class CreateReportCommandValidator : ApplicationValidator<CreateRe
     }
 
     private async Task<bool> IsAuthorizedAsync(
-        AccountId accountId,
-        CancellationToken cancellationToken
-    )
+            AccountId accountId,
+            CancellationToken cancellationToken
+        )
     {
         var result = await _authenticationService.GetAuthenticationResultAsync(cancellationToken);
         return result.Handle(
             e =>
             {
-                if (e.AccountId.Equals(accountId))
-                    return true;
+                if (e.AccountId.Equals(accountId)) return true;
                 validationError = UnauthorizedError.Create(
-                    message: "You are not authorized to create a report for another user."
-                );
+                    message: "You are not authorized to create a report for another user.");
                 return false;
             },
             e =>
             {
                 validationError = e;
                 return false;
-            }
-        );
+            });
     }
 }

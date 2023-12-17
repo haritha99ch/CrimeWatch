@@ -1,7 +1,6 @@
 ﻿using Domain.AggregateModels.AccountAggregate;
 
 namespace Infrastructure.Test.Reports;
-
 [TestClass]
 public class WhenInserting : TestBase
 {

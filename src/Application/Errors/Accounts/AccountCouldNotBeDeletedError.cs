@@ -1,5 +1,4 @@
 ﻿namespace Application.Errors.Accounts;
-
 public sealed record AccountCouldNotBeDeletedError : Error<AccountCouldNotBeDeletedError>
 {
     public override string Title { get; init; } = "Account could not be deleted";

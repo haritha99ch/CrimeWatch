@@ -1,6 +1,5 @@
 ﻿namespace Application.Features.Reports.Commands.CreateReport;
-
-internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, Report>
+sealed internal class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, Report>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 
@@ -10,9 +9,9 @@ internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportC
     }
 
     public async Task<Result<Report>> Handle(
-        CreateReportCommand request,
-        CancellationToken cancellationToken
-    )
+            CreateReportCommand request,
+            CancellationToken cancellationToken
+        )
     {
         var report = Report.Create(
             request.AuthorId,
@@ -24,8 +23,7 @@ internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportC
             request.City,
             request.Province,
             request.ViolationTypes,
-            request.MediaItem
-        );
+            request.MediaItem);
         return await _reportRepository.AddAsync(report, cancellationToken);
     }
 }

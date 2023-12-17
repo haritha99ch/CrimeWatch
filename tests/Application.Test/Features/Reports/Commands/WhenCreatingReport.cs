@@ -3,7 +3,6 @@ using Application.Features.Reports.Commands.CreateReport;
 using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Reports.Commands;
-
 [TestClass]
 public class WhenCreatingReport : TestBase
 {
@@ -29,8 +28,7 @@ public class WhenCreatingReport : TestBase
         GenerateTokenAndInvoke(
             testAccount.AccountType.Equals(AccountType.Moderator),
             testAccount.Id,
-            testAccount.Email
-        );
+            testAccount.Email);
         var caption = DataProvider.Caption;
         var description = DataProvider.Description;
         var no = DataProvider.No;
@@ -53,8 +51,7 @@ public class WhenCreatingReport : TestBase
             city,
             province,
             violationTypes,
-            mediaItemUpload
-        );
+            mediaItemUpload);
         var result = await Mediator.Send(command);
         var report = result.GetValue();
 
@@ -78,13 +75,12 @@ public class WhenCreatingReport : TestBase
         // Arrange
         var testAccount = DataProvider.TestAccountForModerator;
         var invalidAccount = DataProvider.TestAccountForModerator;
-        await DbContext.Accounts.AddRangeAsync([ testAccount, invalidAccount ]);
+        await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
         GenerateTokenAndInvoke(
             invalidAccount.AccountType.Equals(AccountType.Moderator),
             invalidAccount.Id,
-            invalidAccount.Email
-        );
+            invalidAccount.Email);
         var caption = DataProvider.Caption;
         var description = DataProvider.Description;
         var no = DataProvider.No;
@@ -107,8 +103,7 @@ public class WhenCreatingReport : TestBase
             city,
             province,
             violationTypes,
-            mediaItemUpload
-        );
+            mediaItemUpload);
         var result = await Mediator.Send(command);
         var error = result.GetError();
 

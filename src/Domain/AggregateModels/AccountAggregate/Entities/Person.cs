@@ -2,7 +2,6 @@
 using Domain.AggregateModels.AccountAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.AccountAggregate.Entities;
-
 public sealed record Person : Entity<PersonId>
 {
     public required string Nic { get; set; }
@@ -12,12 +11,12 @@ public sealed record Person : Entity<PersonId>
     public required Gender Gender { get; set; }
 
     public static Person Create(
-        string nic,
-        string firstName,
-        string lastName,
-        Gender gender,
-        DateOnly birthDate
-    ) =>
+            string nic,
+            string firstName,
+            string lastName,
+            Gender gender,
+            DateOnly birthDate
+        ) =>
         new()
         {
             Nic = nic,
@@ -30,12 +29,12 @@ public sealed record Person : Entity<PersonId>
         };
 
     public bool Update(
-        string nic,
-        string firstName,
-        string lastName,
-        Gender gender,
-        DateOnly birthDate
-    )
+            string nic,
+            string firstName,
+            string lastName,
+            Gender gender,
+            DateOnly birthDate
+        )
     {
         if (
             nic.Equals(Nic)
@@ -43,8 +42,7 @@ public sealed record Person : Entity<PersonId>
             && lastName.Equals(LastName)
             && gender.Equals(Gender)
             && birthDate.Equals(BirthDate)
-        )
-            return false;
+        ) return false;
 
         Nic = nic;
         FirstName = firstName;

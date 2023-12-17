@@ -4,7 +4,6 @@ using Application.Features.Accounts.Queries.GetAccountById;
 using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Accounts.Queries;
-
 [TestClass]
 public class WhenGettingAccountById : TestBase
 {
@@ -29,8 +28,7 @@ public class WhenGettingAccountById : TestBase
         GenerateTokenAndInvoke(
             testAccount.AccountType.Equals(AccountType.Moderator),
             testAccount.Id,
-            testAccount.Email
-        );
+            testAccount.Email);
 
         var command = new GetAccountByIdQuery(testAccount.Id);
         var result = await Mediator.Send(command);
@@ -58,13 +56,12 @@ public class WhenGettingAccountById : TestBase
     {
         var validTestAccount = DataProvider.TestAccountForModerator;
         var invalidTestAccount = DataProvider.TestAccountForModerator;
-        await DbContext.Accounts.AddRangeAsync([ validTestAccount, invalidTestAccount ]);
+        await DbContext.Accounts.AddRangeAsync([validTestAccount, invalidTestAccount]);
         await SaveAndClearChangeTrackerAsync();
         GenerateTokenAndInvoke(
             invalidTestAccount.AccountType.Equals(AccountType.Moderator),
             invalidTestAccount.Id,
-            invalidTestAccount.Email
-        );
+            invalidTestAccount.Email);
 
         var command = new GetAccountByIdQuery(validTestAccount.Id);
         var result = await Mediator.Send(command);

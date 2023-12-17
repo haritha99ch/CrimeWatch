@@ -1,5 +1,4 @@
 ﻿namespace ApplicationSettings.Options;
-
 public class JwtOptions : IApplicationOptions
 {
     [Required]

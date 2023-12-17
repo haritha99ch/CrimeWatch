@@ -1,10 +1,9 @@
-﻿using System.Linq.Expressions;
-using Domain.Contracts.Models;
+﻿using Domain.Contracts.Models;
 using Microsoft.EntityFrameworkCore.Query;
 using Persistence.Common.Specifications.Types;
+using System.Linq.Expressions;
 
 namespace Persistence.Common.Specifications;
-
 public abstract record Specification<TEntity>
     where TEntity : IAggregateRoot
 {
@@ -23,15 +22,15 @@ public abstract record Specification<TEntity>
     }
 
     protected void AddInclude(
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include
-    ) => Includes.Add(include);
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include
+        ) => Includes.Add(include);
 
     protected void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression) =>
         OrderBy = orderByExpression;
 
     protected void AddOrderByDescending(
-        Expression<Func<TEntity, object>> orderByDescendingExpression
-    ) => OrderByDescending = orderByDescendingExpression;
+            Expression<Func<TEntity, object>> orderByDescendingExpression
+        ) => OrderByDescending = orderByDescendingExpression;
 
     protected void AddPagination(Pagination pagination) => Pagination = pagination;
 }

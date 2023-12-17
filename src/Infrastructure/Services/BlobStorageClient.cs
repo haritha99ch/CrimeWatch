@@ -3,7 +3,6 @@ using Azure.Storage.Blobs.Models;
 using Infrastructure.Contracts.Services;
 
 namespace Infrastructure.Services;
-
 public class BlobStorageClient : IBlobStorageClient
 {
     private readonly BlobServiceClient _blobServiceClient;
@@ -14,28 +13,27 @@ public class BlobStorageClient : IBlobStorageClient
     }
 
     public async Task<string> UploadFileAsync(
-        string containerName,
-        string fileName,
-        Stream fileStream,
-        CancellationToken cancellationToken
-    )
+            string containerName,
+            string fileName,
+            Stream fileStream,
+            CancellationToken cancellationToken
+        )
     {
         var clientContainer = _blobServiceClient.GetBlobContainerClient(containerName);
         await clientContainer.CreateIfNotExistsAsync(
             PublicAccessType.Blob,
-            cancellationToken: cancellationToken
-        );
+            cancellationToken: cancellationToken);
 
         var blobClient = clientContainer.GetBlobClient(fileName);
-        await blobClient.UploadAsync(fileStream, true, cancellationToken: cancellationToken);
+        await blobClient.UploadAsync(fileStream, true, cancellationToken);
         return blobClient.Uri.AbsoluteUri;
     }
 
     public async Task<bool> DeleteFileByUriAsync(
-        string uri,
-        string containerName,
-        CancellationToken cancellationToken
-    )
+            string uri,
+            string containerName,
+            CancellationToken cancellationToken
+        )
     {
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
         var blobClient = containerClient.GetBlobClient(uri);
@@ -52,9 +50,9 @@ public class BlobStorageClient : IBlobStorageClient
     }
 
     public async Task<bool> DeleteContainerAsync(
-        string containerName,
-        CancellationToken cancellationToken
-    )
+            string containerName,
+            CancellationToken cancellationToken
+        )
     {
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
         try

@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApplicationSettings;
-
 public static class Configure
 {
     /// <summary>

@@ -2,13 +2,12 @@
 using Persistence.Common.Specifications.Types;
 
 namespace Persistence.Common.Specifications.Helpers;
-
 internal static class SpecificationEvaluator
 {
     internal static IQueryable<TEntity> AddSpecification<TEntity>(
-        this IQueryable<TEntity> query,
-        Specification<TEntity> specification
-    )
+            this IQueryable<TEntity> query,
+            Specification<TEntity> specification
+        )
         where TEntity : IAggregateRoot
     {
         query = specification.Includes.Aggregate(query, (current, include) => include(current));

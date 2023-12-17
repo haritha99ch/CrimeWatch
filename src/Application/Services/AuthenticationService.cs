@@ -1,16 +1,15 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Application.Contracts.Services;
+﻿using Application.Contracts.Services;
 using Application.Helpers.Repositories;
 using Application.Selectors.Accounts;
 using ApplicationSettings.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Application.Services;
-
 internal class AuthenticationService : IAuthenticationService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -19,10 +18,10 @@ internal class AuthenticationService : IAuthenticationService
     private HttpContext HttpContext => _httpContextAccessor.HttpContext!;
 
     public AuthenticationService(
-        IHttpContextAccessor httpContextAccessor,
-        IRepository<Account, AccountId> accountRepository,
-        IOptions<JwtOptions> jwtOptions
-    )
+            IHttpContextAccessor httpContextAccessor,
+            IRepository<Account, AccountId> accountRepository,
+            IOptions<JwtOptions> jwtOptions
+        )
     {
         _httpContextAccessor = httpContextAccessor;
         _accountRepository = accountRepository;
@@ -30,22 +29,18 @@ internal class AuthenticationService : IAuthenticationService
     }
 
     public async Task<Result<string>> AuthenticateAndGetTokenAsync(
-        string email,
-        string password,
-        CancellationToken cancellationToken
-    )
+            string email,
+            string password,
+            CancellationToken cancellationToken
+        )
     {
         var account = await _accountRepository.GetAccountByEmail(email, cancellationToken);
-        if (account is null || !account.VerifyPassword(password))
-            return AccountNotFoundError.Create();
+        if (account is null || !account.VerifyPassword(password)) return AccountNotFoundError.Create();
 
         return GenerateToken(account.AccountType.Equals(AccountType.Moderator), account.Id, email);
     }
 
-    public Task<string> RefreshToken(string token, string refreshToken)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<string> RefreshToken(string token, string refreshToken) => throw new NotImplementedException();
 
     private string GenerateToken(bool isModerator, AccountId id, string email)
     {
@@ -53,8 +48,7 @@ internal class AuthenticationService : IAuthenticationService
         {
             new(
                 ClaimTypes.Role,
-                isModerator ? AccountType.Moderator.ToString() : AccountType.Moderator.ToString()
-            ),
+                isModerator ? AccountType.Moderator.ToString() : AccountType.Moderator.ToString()),
             new(JwtRegisteredClaimNames.Sub, id.Value.ToString()),
             new(JwtRegisteredClaimNames.Email, email)
         };
@@ -67,14 +61,13 @@ internal class AuthenticationService : IAuthenticationService
             _jwtOptions.Audience,
             claims,
             expires: DateTime.Now.AddDays(7),
-            signingCredentials: signInCredentials
-        );
+            signingCredentials: signInCredentials);
         return new JwtSecurityTokenHandler().WriteToken(tokeOptions);
     }
 
     public async Task<Result<AccountAuthenticationInfo>> GetAuthenticationResultAsync(
-        CancellationToken cancellationToken
-    )
+            CancellationToken cancellationToken
+        )
     {
         ArgumentNullException.ThrowIfNull(HttpContext, paramName: "Not an API");
         var claims = HttpContext.User.Claims.ToList();
@@ -82,21 +75,18 @@ internal class AuthenticationService : IAuthenticationService
             .Where(
                 e =>
                     e.Type.Equals(ClaimTypes.NameIdentifier)
-                    || e.Type.Equals(JwtRegisteredClaimNames.Sub)
-            )
+                    || e.Type.Equals(JwtRegisteredClaimNames.Sub))
             .Select(e => e.Value)
             .FirstOrDefault();
 
-        if (accountIdValue is null)
-            return UnableToAuthenticateError.Create(message: "User has not signIn.");
+        if (accountIdValue is null) return UnableToAuthenticateError.Create(message: "User has not signIn.");
 
         var accountId = new AccountId(new(accountIdValue));
 
         var account = await _accountRepository.GetByIdAsync(
             accountId,
             AccountAuthenticationInfo.GetSelector,
-            cancellationToken
-        );
+            cancellationToken);
         return account is null
             ? UnableToAuthenticateError.Create(message: "Authenticated user is not found.")
             : account;

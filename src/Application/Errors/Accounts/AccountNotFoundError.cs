@@ -1,5 +1,4 @@
 ﻿namespace Application.Errors.Accounts;
-
 public sealed record AccountNotFoundError : Error<AccountNotFoundError>
 {
     public override string Title { get; init; } = "Account not found";

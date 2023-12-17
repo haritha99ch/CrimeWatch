@@ -1,5 +1,4 @@
 ﻿namespace Domain.Contracts.Models;
-
 public interface IAggregateRoot
 {
     public List<IDomainEvent> DomainEvents { get; }

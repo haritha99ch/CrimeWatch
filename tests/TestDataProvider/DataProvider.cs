@@ -15,7 +15,6 @@ using PersonEntity = Domain.AggregateModels.AccountAggregate.Entities.Person;
 // using Person = Bogus.Person;
 
 namespace TestDataProvider;
-
 public static class DataProvider
 {
     public static string Nic => new Randomizer().Int(1, 1000000000).ToString();
@@ -182,8 +181,7 @@ public static class DataProvider
                 {
                     r.Bookmarks.Add(TestBookmark);
                     return r.Bookmarks;
-                }
-            )
+                })
             .RuleFor(r => r.BookmarksCount, 1);
 
         return faker.Generate();
@@ -206,8 +204,7 @@ public static class DataProvider
                 {
                     r.Comments.Add(TestComment);
                     return r.Comments;
-                }
-            );
+                });
 
         return faker.Generate();
     }
@@ -303,8 +300,7 @@ public static class DataProvider
                         e.MediaItems.Add(GetMediaItem());
                     }
                     return e.MediaItems;
-                }
-            )
+                })
             .RuleFor(e => e.CreatedAt, DateTime.Now);
 
         return faker.Generate();
@@ -327,8 +323,7 @@ public static class DataProvider
                         e.MediaItems.Add(GetMediaItem());
                     }
                     return e.MediaItems;
-                }
-            )
+                })
             .RuleFor(e => e.CreatedAt, DateTime.Now)
             .RuleFor(
                 r => r.Comments,
@@ -336,8 +331,7 @@ public static class DataProvider
                 {
                     r.Comments.Add(TestComment);
                     return r.Comments;
-                }
-            );
+                });
 
         return faker.Generate();
     }
@@ -358,8 +352,7 @@ public static class DataProvider
                 {
                     r.Evidences.Add(GetEvidence(authorId));
                     return r.Evidences;
-                }
-            );
+                });
 
         return faker.Generate();
     }
@@ -380,8 +373,7 @@ public static class DataProvider
                 {
                     r.Evidences.Add(GetEvidenceWithComment());
                     return r.Evidences;
-                }
-            );
+                });
 
         return faker.Generate();
     }

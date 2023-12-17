@@ -1,9 +1,8 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 namespace ApplicationSettings.Helpers;
-
 public static class OptionsLocator
 {
     public static T GetRequiredOptions<T>(this IServiceCollection serviceCollection)
@@ -18,12 +17,10 @@ public static class OptionsLocator
     {
         var options = serviceProvider.GetService<IOptions<T>>()?.Value;
 
-        if (options != null)
-            return options;
+        if (options != null) return options;
         throw new InvalidOperationException(
             $"No configuration found for {typeof(T).Name}. "
-                + $"Please ensure that services.ConfigureOptions<ConfigureApplicationOptions<{typeof(T).Name}>>() "
-                + $"is called in {Assembly.GetCallingAssembly().GetName().Name}."
-        );
+            + $"Please ensure that services.ConfigureOptions<ConfigureApplicationOptions<{typeof(T).Name}>>() "
+            + $"is called in {Assembly.GetCallingAssembly().GetName().Name}.");
     }
 }

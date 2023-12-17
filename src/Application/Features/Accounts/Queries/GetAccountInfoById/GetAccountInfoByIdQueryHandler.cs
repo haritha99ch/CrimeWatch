@@ -1,9 +1,7 @@
-﻿using Application.Features.Accounts.Queries.GetAccountById;
-using Application.Selectors.Accounts;
+﻿using Application.Selectors.Accounts;
 
 namespace Application.Features.Accounts.Queries.GetAccountInfoById;
-
-internal sealed class GetAccountInfoByIdQueryHandler
+sealed internal class GetAccountInfoByIdQueryHandler
     : IQueryHandler<GetAccountInfoByIdQuery, AccountInfo>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
@@ -14,15 +12,14 @@ internal sealed class GetAccountInfoByIdQueryHandler
     }
 
     public async Task<Result<AccountInfo>> Handle(
-        GetAccountInfoByIdQuery request,
-        CancellationToken cancellationToken
-    )
+            GetAccountInfoByIdQuery request,
+            CancellationToken cancellationToken
+        )
     {
         var accountInfo = await _accountRepository.GetByIdAsync(
             request.AccountId,
             AccountInfo.GetSelector,
-            cancellationToken
-        );
+            cancellationToken);
         return accountInfo is not null ? accountInfo : AccountNotFoundError.Create();
     }
 }

@@ -3,7 +3,6 @@ using Application.Features.Accounts.Commands.DeleteAccount;
 using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Accounts.Commands;
-
 [TestClass]
 public class WhenDeletingAccount : TestBase
 {
@@ -28,8 +27,7 @@ public class WhenDeletingAccount : TestBase
         GenerateTokenAndInvoke(
             testAccount.AccountType.Equals(AccountType.Moderator),
             testAccount.Id,
-            testAccount.Email
-        );
+            testAccount.Email);
 
         var result = await Mediator.Send(new DeleteAccountCommand(testAccount.Id));
         var deleted = result.GetValue();
@@ -42,13 +40,12 @@ public class WhenDeletingAccount : TestBase
     {
         var testAccount = DataProvider.TestAccountForModerator;
         var invalidAccount = DataProvider.TestAccountForModerator;
-        await DbContext.Accounts.AddRangeAsync([ testAccount, invalidAccount ]);
+        await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
         GenerateTokenAndInvoke(
             invalidAccount.AccountType.Equals(AccountType.Moderator),
             invalidAccount.Id,
-            invalidAccount.Email
-        );
+            invalidAccount.Email);
 
         var result = await Mediator.Send(new DeleteAccountCommand(testAccount.Id));
         var error = result.GetError();

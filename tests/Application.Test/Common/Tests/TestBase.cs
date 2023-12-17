@@ -1,7 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Application.Test.Common.Host;
+﻿using Application.Test.Common.Host;
 using ApplicationSettings.Options;
 using Domain.AggregateModels.AccountAggregate.Enums;
 using Domain.AggregateModels.AccountAggregate.ValueObjects;
@@ -10,11 +7,13 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Application.Test.Common.Tests;
-
 /// <summary>
-///     To Authorize, call <see cref="GenerateTokenAndInvoke(bool, AccountId, string)."/>
+///     To Authorize, call <see cref="GenerateTokenAndInvoke(bool, AccountId, string)." />
 /// </summary>
 public abstract class TestBase
 {
@@ -51,8 +50,7 @@ public abstract class TestBase
         {
             new(
                 ClaimTypes.Role,
-                isModerator ? AccountType.Moderator.ToString() : AccountType.Moderator.ToString()
-            ),
+                isModerator ? AccountType.Moderator.ToString() : AccountType.Moderator.ToString()),
             new(JwtRegisteredClaimNames.Sub, id.Value.ToString()),
             new(JwtRegisteredClaimNames.Email, email)
         };
@@ -65,10 +63,9 @@ public abstract class TestBase
             _jwtOptions.Audience,
             claims,
             expires: DateTime.Now.AddDays(7),
-            signingCredentials: signInCredentials
-        );
+            signingCredentials: signInCredentials);
 
-        var identity = new ClaimsIdentity(claims, "AuthenticationTypes.Federation");
+        var identity = new ClaimsIdentity(claims, authenticationType: "AuthenticationTypes.Federation");
         _httpContext.User.AddIdentity(identity);
 
         return new JwtSecurityTokenHandler().WriteToken(tokeOptions);

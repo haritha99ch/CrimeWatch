@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests.Entities.BookmarkEntityTests;
-
 [TestClass]
 public class WhenBookmarkingReport
 {

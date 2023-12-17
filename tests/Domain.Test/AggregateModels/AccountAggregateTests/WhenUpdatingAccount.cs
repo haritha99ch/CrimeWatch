@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
-
 public class WhenUpdatingAccount
 {
     [TestMethod]
@@ -15,8 +14,7 @@ public class WhenUpdatingAccount
             person.FirstName,
             newLastName,
             person.Gender,
-            person.BirthDate
-        );
+            person.BirthDate);
 
         Assert.IsNotNull(account.Person);
         person = account.Person;
@@ -36,8 +34,7 @@ public class WhenUpdatingAccount
             person.FirstName,
             newLastName,
             person.Gender,
-            person.BirthDate
-        );
+            person.BirthDate);
 
         Assert.IsTrue(account.HasDomainEvent<AccountUpdatedEvent>());
     }
@@ -59,8 +56,7 @@ public class WhenUpdatingAccount
             person.BirthDate,
             moderator.PoliceId,
             moderator.City,
-            moderator.Province
-        );
+            moderator.Province);
 
         Assert.IsNotNull(account.Person);
         person = account.Person;
@@ -89,8 +85,7 @@ public class WhenUpdatingAccount
             person.BirthDate,
             moderator.PoliceId,
             moderator.City,
-            moderator.Province
-        );
+            moderator.Province);
 
         Assert.IsTrue(account.HasDomainEvent<AccountUpdatedEvent>());
     }

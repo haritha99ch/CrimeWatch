@@ -10,19 +10,15 @@ using Moq;
 using Persistence;
 
 namespace Application.Test.Common.Host;
-
 public class App
 {
     private readonly IHost _host;
-    public ApplicationDbContext DbContext =>
-        _host.Services.GetRequiredService<ApplicationDbContext>();
+    private readonly IServiceScope _scope;
+    public ApplicationDbContext DbContext => GetRequiredService<ApplicationDbContext>();
 
     private App()
     {
-        _host = Microsoft
-            .Extensions
-            .Hosting
-            .Host
+        _host = Microsoft.Extensions.Hosting.Host
             .CreateDefaultBuilder()
             .ConfigureHostConfiguration(config => config.AddApplicationSettings())
             .ConfigureServices(
@@ -44,22 +40,21 @@ public class App
                         Audience = "TestAudience",
                         Secret = DataProvider.TestSecretKey
                     };
-                    services.AddSingleton<IOptions<JwtOptions>>(
-                        new OptionsWrapper<JwtOptions>(jwtOptions)
-                    );
+                    services.AddSingleton<IOptions<JwtOptions>>(new OptionsWrapper<JwtOptions>(jwtOptions));
 
                     services.AddApplication();
                     services.AddApplicationValidators();
-                }
-            )
+                })
             .Build();
+        var scopeFactory = _host.Services.GetRequiredService<IServiceScopeFactory>();
+        _scope = scopeFactory.CreateScope();
     }
 
     public static App Create() => new();
 
     internal T GetRequiredService<T>()
     {
-        if (_host.Services.GetService<T>() is not T service)
+        if (_scope.ServiceProvider.GetService<T>() is not { } service)
         {
             throw new InvalidOperationException($"Service {typeof(T)} needs to be configured");
         }

@@ -6,7 +6,6 @@ using Domain.AggregateModels.ReportAggregate.Events;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate;
-
 public sealed record Report : AggregateRoot<ReportId>
 {
     public AccountId? AuthorId { get; init; }
@@ -26,17 +25,17 @@ public sealed record Report : AggregateRoot<ReportId>
     public Account? Moderator { get; init; }
 
     public static Report Create(
-        AccountId authorId,
-        string caption,
-        string description,
-        string no,
-        string street1,
-        string street2,
-        string city,
-        string province,
-        List<ViolationType> violationTypes,
-        MediaUpload mediaItem
-    )
+            AccountId authorId,
+            string caption,
+            string description,
+            string no,
+            string street1,
+            string street2,
+            string city,
+            string province,
+            List<ViolationType> violationTypes,
+            MediaUpload mediaItem
+        )
     {
         var report = new Report
         {
@@ -55,17 +54,17 @@ public sealed record Report : AggregateRoot<ReportId>
     }
 
     public void Update(
-        string caption,
-        string description,
-        string? no,
-        string street1,
-        string? street2,
-        string city,
-        string province,
-        List<ViolationType> violationTypes,
-        MediaItem? mediaItem,
-        MediaUpload? newMediaItem = null
-    )
+            string caption,
+            string description,
+            string? no,
+            string street1,
+            string? street2,
+            string city,
+            string province,
+            List<ViolationType> violationTypes,
+            MediaItem? mediaItem,
+            MediaUpload? newMediaItem = null
+        )
     {
         var violationTypesUpdated = false;
         bool mediaItemUpdated;
@@ -82,8 +81,7 @@ public sealed record Report : AggregateRoot<ReportId>
         }
         else
         {
-            if (newMediaItem is null)
-                throw new("No new Media item");
+            if (newMediaItem is null) throw new("No new Media item");
             mediaItemUpdated = MediaItem!.Update(newMediaItem.Url, newMediaItem.MediaType);
         }
 
@@ -94,16 +92,14 @@ public sealed record Report : AggregateRoot<ReportId>
             thisUpdated = true;
         }
 
-        if (!violationTypesUpdated && !locationUpdated && !mediaItemUpdated && !thisUpdated)
-            return;
+        if (!violationTypesUpdated && !locationUpdated && !mediaItemUpdated && !thisUpdated) return;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new ReportUpdatedEvent(this));
     }
 
     public void SetModerator(AccountId moderatorId)
     {
-        if (ModeratorId is not null)
-            throw new("Report is already moderated");
+        if (ModeratorId is not null) throw new("Report is already moderated");
         ModeratorId = moderatorId;
         Status = Status.UnderReview;
         UpdatedAt = DateTime.Now;
@@ -112,8 +108,7 @@ public sealed record Report : AggregateRoot<ReportId>
 
     public void SetApproved()
     {
-        if (Status.Equals(Status.Approved))
-            throw new("Report is already approved");
+        if (Status.Equals(Status.Approved)) throw new("Report is already approved");
         Status = Status.Approved;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new ReportApprovedEvent(this));
@@ -121,8 +116,7 @@ public sealed record Report : AggregateRoot<ReportId>
 
     public void SetDeclined()
     {
-        if (Status.Equals(Status.Declined))
-            throw new("Report is already declined");
+        if (Status.Equals(Status.Declined)) throw new("Report is already declined");
         Status = Status.Declined;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new ReportDeclinedEvent(this));
@@ -130,8 +124,7 @@ public sealed record Report : AggregateRoot<ReportId>
 
     public void SetUnderReview()
     {
-        if (Status.Equals(Status.UnderReview))
-            throw new("Report is already under Review");
+        if (Status.Equals(Status.UnderReview)) throw new("Report is already under Review");
         Status = Status.UnderReview;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new ReportRevertedToUnderReviewEvent(this));
@@ -187,16 +180,16 @@ public sealed record Report : AggregateRoot<ReportId>
     }
 
     public Evidence AddEvidence(
-        AccountId authorId,
-        string caption,
-        string description,
-        string no,
-        string street1,
-        string street2,
-        string city,
-        string province,
-        IEnumerable<MediaUpload> mediaItems
-    )
+            AccountId authorId,
+            string caption,
+            string description,
+            string no,
+            string street1,
+            string street2,
+            string city,
+            string province,
+            IEnumerable<MediaUpload> mediaItems
+        )
     {
         var evidence = Evidence.Create(
             authorId,
@@ -207,8 +200,7 @@ public sealed record Report : AggregateRoot<ReportId>
             street2,
             city,
             province,
-            mediaItems
-        );
+            mediaItems);
         Evidences.Add(evidence);
         RaiseDomainEvent(new EvidenceAddedForReportEvent(this, evidence));
         return evidence;
@@ -217,25 +209,24 @@ public sealed record Report : AggregateRoot<ReportId>
     public bool RemoveEvidence(EvidenceId evidenceId)
     {
         var evidence = Evidences.FirstOrDefault(e => e.Id.Equals(evidenceId));
-        if (evidence is null)
-            return false;
+        if (evidence is null) return false;
         Evidences.Remove(evidence);
         RaiseDomainEvent(new EvidenceFromReportRemovedEvent(this, evidenceId));
         return true;
     }
 
     public Evidence UpdateEvidence(
-        EvidenceId evidenceId,
-        string caption,
-        string description,
-        string no,
-        string street1,
-        string street2,
-        string city,
-        string province,
-        List<MediaItem>? mediaItems,
-        List<MediaUpload>? newMediaItems = null
-    )
+            EvidenceId evidenceId,
+            string caption,
+            string description,
+            string no,
+            string street1,
+            string street2,
+            string city,
+            string province,
+            List<MediaItem>? mediaItems,
+            List<MediaUpload>? newMediaItems = null
+        )
     {
         var evidence = GetEvidence(evidenceId);
         var evidenceUpdate = evidence.Update(
@@ -247,10 +238,8 @@ public sealed record Report : AggregateRoot<ReportId>
             city,
             province,
             mediaItems,
-            newMediaItems
-        );
-        if (evidenceUpdate)
-            RaiseDomainEvent(new EvidenceFromReportUpdatedEvent(this, evidence));
+            newMediaItems);
+        if (evidenceUpdate) RaiseDomainEvent(new EvidenceFromReportUpdatedEvent(this, evidence));
         return evidence;
     }
 
@@ -295,10 +284,10 @@ public sealed record Report : AggregateRoot<ReportId>
     }
 
     public Comment UpdateCommentInEvidence(
-        EvidenceId evidenceId,
-        CommentId commentId,
-        string content
-    )
+            EvidenceId evidenceId,
+            CommentId commentId,
+            string content
+        )
     {
         var evidence = GetEvidence(evidenceId);
         var comment = evidence.UpdateComment(commentId, content);
@@ -317,16 +306,14 @@ public sealed record Report : AggregateRoot<ReportId>
     private Evidence GetEvidence(EvidenceId evidenceId)
     {
         var evidence = Evidences.FirstOrDefault(e => e.Id.Equals(evidenceId));
-        if (evidence is null)
-            throw new("Evidence is not found");
+        if (evidence is null) throw new("Evidence is not found");
         return evidence;
     }
 
     private Comment GetComment(CommentId commentId)
     {
         var comment = Comments.FirstOrDefault(c => c.Id.Equals(commentId));
-        if (comment is null)
-            throw new("Comment is not found");
+        if (comment is null) throw new("Comment is not found");
         return comment;
     }
 }

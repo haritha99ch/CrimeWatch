@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.ReportAggregate.EntityConfiguration;
-
 internal static class MediaItemConfiguration
 {
     internal static void Configure(this OwnedNavigationBuilder<Report, MediaItem> builder)

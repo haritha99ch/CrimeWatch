@@ -1,5 +1,4 @@
 ﻿namespace Application.Errors.Common;
-
 public record UnauthorizedError : Error<UnauthorizedError>
 {
     public override string Title { get; init; } = "Unauthorized Request";

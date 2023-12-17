@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 
 namespace ApplicationSettings.Common.Options;
-
 public class ConfigureApplicationOptions<T> : IConfigureOptions<T>, IPostConfigureOptions<T>
     where T : class
 {
@@ -24,8 +23,7 @@ public class ConfigureApplicationOptions<T> : IConfigureOptions<T>, IPostConfigu
         catch (Exception e)
         {
             throw new(
-                $"\nCheck the following properties of section {typeof(T).Name}, section in user secrets or appsettings.json:\n{e.Message}"
-            );
+                $"\nCheck the following properties of section {typeof(T).Name}, section in user secrets or appsettings.json:\n{e.Message}");
         }
     }
 }

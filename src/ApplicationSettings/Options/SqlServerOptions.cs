@@ -1,5 +1,4 @@
 ﻿namespace ApplicationSettings.Options;
-
 public class SqlServerOptions : IApplicationOptions
 {
     [Required]

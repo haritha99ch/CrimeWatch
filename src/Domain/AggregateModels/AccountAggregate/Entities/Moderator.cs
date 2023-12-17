@@ -1,7 +1,6 @@
 ﻿using Domain.AggregateModels.AccountAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.AccountAggregate.Entities;
-
 public sealed record Moderator : Entity<ModeratorId>
 {
     public required string PoliceId { get; set; }
@@ -20,8 +19,7 @@ public sealed record Moderator : Entity<ModeratorId>
 
     public bool Update(string policeId, string city, string province)
     {
-        if (policeId.Equals(PoliceId) && city.Equals(City) && province.Equals(Province))
-            return false;
+        if (policeId.Equals(PoliceId) && city.Equals(City) && province.Equals(Province)) return false;
 
         PoliceId = policeId;
         City = city;

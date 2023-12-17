@@ -1,7 +1,7 @@
 import Api from "../configurations/ApiConfiguration";
-import Moderator, { UpdateModeratorDto } from "../models/Moderator";
+import Moderator, {UpdateModeratorDto} from "../models/Moderator";
 import ModeratorId from "../valueObjects/ModeratorId";
-import { getBearerToken } from "./AuthenticationService";
+import {getBearerToken} from "./AuthenticationService";
 
 const controller = '/api/Moderator';
 

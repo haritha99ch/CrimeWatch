@@ -4,6 +4,7 @@
 ## Get latest from `dotnet new gitignore`
 
 **/Migrations/
+.idea/
 
 # User-specific files
 *.rsuser

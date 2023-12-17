@@ -1,4 +1,4 @@
-import { MediaItemType } from "../enums/MediaItemType";
+import {MediaItemType} from "../enums/MediaItemType";
 import MediaItemId from "../valueObjects/MediaItemId";
 
 export default interface MediaItem {

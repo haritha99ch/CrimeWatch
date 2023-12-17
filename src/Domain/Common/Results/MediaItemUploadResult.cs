@@ -1,5 +1,4 @@
 ﻿namespace Domain.Common.Results;
-
 public readonly struct MediaItemUploadResult
 {
     private readonly MediaUpload? _mediaUpload;
@@ -21,7 +20,7 @@ public readonly struct MediaItemUploadResult
     public static implicit operator MediaItemUploadResult(Exception failed) => new(failed);
 
     public TResult Match<TResult>(
-        Func<MediaUpload, TResult> onMediaUpload,
-        Func<Exception, TResult> onFailed
-    ) => _failed is not null ? onFailed(_failed) : onMediaUpload(_mediaUpload!);
+            Func<MediaUpload, TResult> onMediaUpload,
+            Func<Exception, TResult> onFailed
+        ) => _failed is not null ? onFailed(_failed) : onMediaUpload(_mediaUpload!);
 }

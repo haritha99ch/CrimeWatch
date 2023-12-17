@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.AccountAggregateTests;
-
 [TestClass]
 public class WhenChangingEmail
 {

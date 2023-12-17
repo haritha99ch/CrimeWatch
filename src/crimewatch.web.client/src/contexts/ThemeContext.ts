@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import {createContext} from "react"
 import Theme from "../types/Theme"
 
 type ThemeContextType = {

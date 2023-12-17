@@ -1,4 +1,4 @@
-import { saveItem, getItem, deleteItem } from './LocalFileStorageService';
+import {deleteItem, getItem, saveItem} from './LocalFileStorageService';
 
 const TOKEN_KEY = 'jwt';
 
@@ -12,9 +12,9 @@ export const deleteToken = (): void => {
 
 export const getBearerToken = (): { headers: { Authorization: string } } | undefined => {
     const token = getToken();
-    if(token == null || token === "") return undefined;
+    if (token == null || token === "") return undefined;
     return {
-        headers: { Authorization: `Bearer ${token}`}
+        headers: {Authorization: `Bearer ${token}`}
     };
 }
 

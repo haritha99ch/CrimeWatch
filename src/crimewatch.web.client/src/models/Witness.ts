@@ -1,4 +1,4 @@
-import { Gender } from "../enums/Gender";
+import {Gender} from "../enums/Gender";
 import AccountId from "../valueObjects/AccountId";
 import UserId from "../valueObjects/UserId";
 import WitnessId from "../valueObjects/WitnessId";

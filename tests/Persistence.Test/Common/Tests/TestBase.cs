@@ -7,7 +7,6 @@ using Persistence.Contracts.Repositories;
 using Persistence.Test.Common.Host;
 
 namespace Persistence.Test.Common.Tests;
-
 public abstract class TestBase
 {
     private readonly App _app = App.Create();
@@ -29,7 +28,8 @@ public abstract class TestBase
         await DbContext.Database.EnsureDeletedAsync();
     }
 
-    protected async Task SaveAndClearChangeTrackerAsync(){
+    protected async Task SaveAndClearChangeTrackerAsync()
+    {
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
     }

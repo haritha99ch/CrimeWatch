@@ -4,7 +4,6 @@ using Domain.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Reports;
-
 [TestClass]
 public class WhenUpdating : TestBase
 {
@@ -58,8 +57,7 @@ public class WhenUpdating : TestBase
             report.Location.City,
             report.Location.Province,
             report.ViolationTypes,
-            report.MediaItem
-        );
+            report.MediaItem);
         DbContext.Reports.Update(report);
         await DbContext.SaveChangesAsync();
 
@@ -104,8 +102,7 @@ public class WhenUpdating : TestBase
             street2,
             city,
             province,
-            mediaItems
-        );
+            mediaItems);
         DbContext.Reports.Update(report);
         await DbContext.SaveChangesAsync();
 
@@ -151,8 +148,7 @@ public class WhenUpdating : TestBase
             newCity,
             newProvince,
             evidence.MediaItems,
-            newMediaItems
-        );
+            newMediaItems);
         DbContext.Reports.Update(report);
         await DbContext.SaveChangesAsync();
 

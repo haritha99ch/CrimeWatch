@@ -5,7 +5,6 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using static BCrypt.Net.BCrypt;
 
 namespace Domain.AggregateModels.AccountAggregate;
-
 public sealed record Account : AggregateRoot<AccountId>
 {
     public required string Email { get; set; }
@@ -24,15 +23,15 @@ public sealed record Account : AggregateRoot<AccountId>
     private static string HashPassword(string password) => BCrypt.Net.BCrypt.HashPassword(password);
 
     public static Account CreateAccountForWitness(
-        string nic,
-        string firstName,
-        string lastName,
-        Gender gender,
-        DateOnly birthDay,
-        string email,
-        string password,
-        string phoneNumber
-    )
+            string nic,
+            string firstName,
+            string lastName,
+            Gender gender,
+            DateOnly birthDay,
+            string email,
+            string password,
+            string phoneNumber
+        )
     {
         var account = new Account
         {
@@ -55,18 +54,18 @@ public sealed record Account : AggregateRoot<AccountId>
     }
 
     public static Account CreateAccountForModerator(
-        string nic,
-        string firstName,
-        string lastName,
-        Gender gender,
-        DateOnly birthDay,
-        string policeId,
-        string city,
-        string province,
-        string email,
-        string password,
-        string phoneNumber
-    )
+            string nic,
+            string firstName,
+            string lastName,
+            Gender gender,
+            DateOnly birthDay,
+            string policeId,
+            string city,
+            string province,
+            string email,
+            string password,
+            string phoneNumber
+        )
     {
         var account = new Account
         {
@@ -90,48 +89,45 @@ public sealed record Account : AggregateRoot<AccountId>
     }
 
     public void UpdateModerator(
-        string nic,
-        string firstName,
-        string lastName,
-        Gender gender,
-        DateOnly birthDay,
-        string policeId,
-        string city,
-        string province
-    )
+            string nic,
+            string firstName,
+            string lastName,
+            Gender gender,
+            DateOnly birthDay,
+            string policeId,
+            string city,
+            string province
+        )
     {
         var personUpdated = Person!.Update(nic, firstName, lastName, gender, birthDay);
         var moderatorUpdated = Moderator!.Update(policeId, city, province);
 
-        if (!personUpdated && !moderatorUpdated)
-            return;
+        if (!personUpdated && !moderatorUpdated) return;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new AccountUpdatedEvent(Id));
     }
 
     public void UpdateWitness(
-        string nic,
-        string firstName,
-        string lastName,
-        Gender gender,
-        DateOnly birthDay
-    )
+            string nic,
+            string firstName,
+            string lastName,
+            Gender gender,
+            DateOnly birthDay
+        )
     {
         var personUpdated = Person!.Update(nic, firstName, lastName, gender, birthDay);
         var witnessUpdated = Witness!.Update();
 
         UpdatedAt = Person.UpdatedAt > Witness.UpdatedAt ? Person.UpdatedAt : Witness.UpdatedAt;
 
-        if (!personUpdated && !witnessUpdated)
-            return;
+        if (!personUpdated && !witnessUpdated) return;
         UpdatedAt = DateTime.Now;
         RaiseDomainEvent(new AccountUpdatedEvent(Id));
     }
 
     public void ChangeEmail(string newEmail)
     {
-        if (Email.Equals(newEmail))
-            throw new("New email must be different from the old email.");
+        if (Email.Equals(newEmail)) throw new("New email must be different from the old email.");
 
         Email = newEmail;
         UpdatedAt = DateTime.Now;
@@ -142,12 +138,9 @@ public sealed record Account : AggregateRoot<AccountId>
 
     public void VerifyEmail(EmailVerificationCode verificationCode)
     {
-        if (IsEmailVerified)
-            return;
-        if (EmailVerificationCode.IsExpired)
-            throw new("Verification code has expired");
-        if (!EmailVerificationCode.Equals(verificationCode))
-            throw new("Invalid verification code.");
+        if (IsEmailVerified) return;
+        if (EmailVerificationCode.IsExpired) throw new("Verification code has expired");
+        if (!EmailVerificationCode.Equals(verificationCode)) throw new("Invalid verification code.");
 
         IsEmailVerified = true;
         RaiseDomainEvent(new AccountEmailVerifiedEvent(Id, Email));
@@ -155,8 +148,7 @@ public sealed record Account : AggregateRoot<AccountId>
 
     public void ChangePassword(string newPassword)
     {
-        if (Verify(newPassword, Password))
-            throw new("New password must be different from the old password.");
+        if (Verify(newPassword, Password)) throw new("New password must be different from the old password.");
 
         Password = HashPassword(newPassword);
         UpdatedAt = DateTime.Now;
@@ -172,19 +164,14 @@ public sealed record Account : AggregateRoot<AccountId>
         UpdatedAt = DateTime.Now;
         IsPhoneNumberVerified = false;
         PhoneNumberVerificationCode = PhoneNumberVerificationCode.Create();
-        RaiseDomainEvent(
-            new AccountPhoneNumberChangedEvent(Id, PhoneNumber, PhoneNumberVerificationCode)
-        );
+        RaiseDomainEvent(new AccountPhoneNumberChangedEvent(Id, PhoneNumber, PhoneNumberVerificationCode));
     }
 
     public void VerifyPhoneNumber(PhoneNumberVerificationCode verificationCode)
     {
-        if (IsPhoneNumberVerified)
-            return;
-        if (PhoneNumberVerificationCode.IsExpired)
-            throw new("Verification code has expired");
-        if (!PhoneNumberVerificationCode.Equals(verificationCode))
-            throw new("Invalid verification code.");
+        if (IsPhoneNumberVerified) return;
+        if (PhoneNumberVerificationCode.IsExpired) throw new("Verification code has expired");
+        if (!PhoneNumberVerificationCode.Equals(verificationCode)) throw new("Invalid verification code.");
 
         IsPhoneNumberVerified = true;
         RaiseDomainEvent(new AccountPhoneNumberVerifiedEvent(Id, PhoneNumber));
@@ -202,9 +189,7 @@ public sealed record Account : AggregateRoot<AccountId>
     {
         PhoneNumberVerificationCode = PhoneNumberVerificationCode.Create();
         IsPhoneNumberVerified = false;
-        RaiseDomainEvent(
-            new AccountPhoneNumberVerificationCodeRequestedEvent(Id, PhoneNumberVerificationCode)
-        );
+        RaiseDomainEvent(new AccountPhoneNumberVerificationCodeRequestedEvent(Id, PhoneNumberVerificationCode));
         return PhoneNumberVerificationCode;
     }
 

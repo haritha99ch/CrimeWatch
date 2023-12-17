@@ -3,7 +3,6 @@ using Application.Features.Accounts.Commands.UpdateModeratorAccount;
 using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Accounts.Commands;
-
 [TestClass]
 public class WhenUpdatingModeratorAccount : TestBase
 {
@@ -28,8 +27,7 @@ public class WhenUpdatingModeratorAccount : TestBase
         GenerateTokenAndInvoke(
             testAccount.AccountType.Equals(AccountType.Moderator),
             testAccount.Id,
-            testAccount.Email
-        );
+            testAccount.Email);
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;
@@ -44,8 +42,7 @@ public class WhenUpdatingModeratorAccount : TestBase
             testAccount.Person!.BirthDate,
             policeId,
             testAccount.Moderator!.City,
-            testAccount.Moderator.Province
-        );
+            testAccount.Moderator.Province);
         var result = await Mediator.Send(command);
         var account = result.GetValue();
 
@@ -61,13 +58,12 @@ public class WhenUpdatingModeratorAccount : TestBase
     {
         var testAccount = DataProvider.TestAccountForModerator;
         var invalidAccount = DataProvider.TestAccountForModerator;
-        await DbContext.Accounts.AddRangeAsync([ testAccount, invalidAccount ]);
+        await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
         GenerateTokenAndInvoke(
             invalidAccount.AccountType.Equals(AccountType.Moderator),
             invalidAccount.Id,
-            invalidAccount.Email
-        );
+            invalidAccount.Email);
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;
@@ -82,8 +78,7 @@ public class WhenUpdatingModeratorAccount : TestBase
             testAccount.Person!.BirthDate,
             policeId,
             testAccount.Moderator!.City,
-            testAccount.Moderator.Province
-        );
+            testAccount.Moderator.Province);
         var result = await Mediator.Send(command);
         var error = result.GetError();
 

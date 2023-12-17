@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Accounts;
-
 [TestClass]
 public class WhenDeleting : TestBase
 {

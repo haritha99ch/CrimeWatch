@@ -1,5 +1,4 @@
 ﻿namespace Domain.AggregateModels.ReportAggregate.Enums;
-
 public enum MediaType
 {
     Audio,

@@ -1,5 +1,4 @@
 ﻿namespace Domain.AggregateModels.ReportAggregate.ValueObjects;
-
 public sealed record Location
 {
     public string? No { get; private set; }
@@ -9,12 +8,12 @@ public sealed record Location
     public required string Province { get; set; }
 
     public static Location Create(
-        string? no,
-        string street1,
-        string? street2,
-        string city,
-        string province
-    ) =>
+            string? no,
+            string street1,
+            string? street2,
+            string city,
+            string province
+        ) =>
         new()
         {
             No = no,
@@ -32,8 +31,7 @@ public sealed record Location
             && Street2 == street2
             && City == city
             && Province == province
-        )
-            return false;
+        ) return false;
 
         No = no;
         Street1 = street1;

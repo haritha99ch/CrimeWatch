@@ -1,6 +1,6 @@
-import { fileURLToPath, URL } from 'node:url';
+import {fileURLToPath, URL} from 'node:url';
 
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import plugin from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
@@ -35,7 +35,7 @@ export default defineConfig({
                 target: 'https://localhost:7018/',
                 secure: false
             }
-        } : { 
+        } : {
             '^/api': {
                 target: import.meta.url,
                 secure: false

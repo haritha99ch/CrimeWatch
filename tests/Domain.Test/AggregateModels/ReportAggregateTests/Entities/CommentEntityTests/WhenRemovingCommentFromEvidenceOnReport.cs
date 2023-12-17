@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests.Entities.CommentEntityTests;
-
 [TestClass]
 public class WhenRemovingCommentFromEvidenceOnReport
 {
@@ -10,8 +9,7 @@ public class WhenRemovingCommentFromEvidenceOnReport
 
         var deleted = report.RemoveCommentInEvidence(
             report.Evidences[0].Id,
-            report.Evidences[0].Comments[0].Id
-        );
+            report.Evidences[0].Comments[0].Id);
 
         Assert.IsTrue(deleted);
         Assert.AreEqual(0, report.Evidences[0].Comments.Count);

@@ -1,8 +1,7 @@
 ﻿using Application.Contracts.Services;
 
 namespace Application.Features.Accounts.Queries.SignInToAccount;
-
-internal sealed class SignInToAccountQueryHandler : IQueryHandler<SignInToAccountQuery, string>
+sealed internal class SignInToAccountQueryHandler : IQueryHandler<SignInToAccountQuery, string>
 {
     private readonly IAuthenticationService _authenticationService;
 
@@ -12,14 +11,10 @@ internal sealed class SignInToAccountQueryHandler : IQueryHandler<SignInToAccoun
     }
 
     public async Task<Result<string>> Handle(
-        SignInToAccountQuery request,
-        CancellationToken cancellationToken
-    )
-    {
-        return await _authenticationService.AuthenticateAndGetTokenAsync(
-            request.Email,
-            request.Password,
-            cancellationToken
-        );
-    }
+            SignInToAccountQuery request,
+            CancellationToken cancellationToken
+        ) => await _authenticationService.AuthenticateAndGetTokenAsync(
+        request.Email,
+        request.Password,
+        cancellationToken);
 }

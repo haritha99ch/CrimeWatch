@@ -3,7 +3,6 @@ using Application.Contracts.Services;
 using FluentValidation;
 
 namespace Application.Features.Accounts.Commands.UpdateModeratorAccount;
-
 public sealed class UpdateModeratorAccountCommandValidator
     : ApplicationValidator<UpdateModeratorAccountCommand>
 {
@@ -21,18 +20,14 @@ public sealed class UpdateModeratorAccountCommandValidator
         return result.Handle(
             e =>
             {
-                if (e.AccountId.Equals(accountId))
-                    return true;
-                validationError = UnauthorizedError.Create(
-                    message: "You are not authorized to update this account."
-                );
+                if (e.AccountId.Equals(accountId)) return true;
+                validationError = UnauthorizedError.Create(message: "You are not authorized to update this account.");
                 return false;
             },
             e =>
             {
                 validationError = e;
                 return false;
-            }
-        );
+            });
     }
 }

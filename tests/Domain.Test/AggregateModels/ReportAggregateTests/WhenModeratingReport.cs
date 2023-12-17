@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests;
-
 [TestClass]
 public class WhenModeratingReport
 {

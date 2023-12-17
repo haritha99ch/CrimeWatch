@@ -1,7 +1,6 @@
 ﻿using Application.Features.Accounts.Commands.CreateAccountForModerator;
 
 namespace Application.Test.Features.Accounts.Commands;
-
 [TestClass]
 public class WhenCreatingAccountForModerator : TestBase
 {
@@ -43,8 +42,7 @@ public class WhenCreatingAccountForModerator : TestBase
             province,
             email,
             password,
-            phoneNumber
-        );
+            phoneNumber);
         var result = await Mediator.Send(command);
         var handler = new CreateAccountForModeratorCommandHandler(null!);
         var account = result.GetValue();

@@ -1,5 +1,4 @@
 ﻿namespace Application.Errors.Common;
-
 public sealed record ValidationError : Error<ValidationError>
 {
     public override string Title { get; init; } = "Validation failed";

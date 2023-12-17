@@ -1,5 +1,4 @@
 ﻿namespace Domain.Test.AggregateModels.ReportAggregateTests.Entities.EvidenceEntityTests;
-
 [TestClass]
 public class WhenUpdatingEvidenceFromReport
 {
@@ -28,8 +27,7 @@ public class WhenUpdatingEvidenceFromReport
             city,
             province,
             exitingMediaItems,
-            newMediaItems
-        );
+            newMediaItems);
 
         Assert.IsNotNull(report.MediaItem);
         Assert.IsNotNull(report.AuthorId);
@@ -64,8 +62,7 @@ public class WhenUpdatingEvidenceFromReport
             city,
             province,
             exitingMediaItems,
-            newMediaItems
-        );
+            newMediaItems);
 
         Assert.IsTrue(report.HasDomainEvent<EvidenceFromReportUpdatedEvent>());
     }

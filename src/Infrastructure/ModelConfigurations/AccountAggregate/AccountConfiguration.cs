@@ -7,8 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.AccountAggregate;
-
-internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
+sealed internal class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)
     {
@@ -30,16 +29,14 @@ internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder
             .OwnsOne<EmailVerificationCode>(
                 a => a.EmailVerificationCode,
-                navigationBuilder => navigationBuilder.Configure()
-            )
+                navigationBuilder => navigationBuilder.Configure())
             .Navigation(e => e.EmailVerificationCode)
             .AutoInclude(false);
 
         builder
             .OwnsOne<PhoneNumberVerificationCode>(
                 a => a.PhoneNumberVerificationCode,
-                navigationBuilder => navigationBuilder.Configure()
-            )
+                navigationBuilder => navigationBuilder.Configure())
             .Navigation(e => e.PhoneNumberVerificationCode)
             .AutoInclude(false);
 
@@ -57,8 +54,7 @@ internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder
             .OwnsOne<Moderator>(
                 e => e.Moderator,
-                navigationBuilder => navigationBuilder.Configure()
-            )
+                navigationBuilder => navigationBuilder.Configure())
             .Navigation(e => e.Moderator)
             .AutoInclude(false);
 

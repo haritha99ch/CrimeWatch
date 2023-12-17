@@ -3,7 +3,6 @@ using Domain.AggregateModels.AccountAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Accounts;
-
 [TestClass]
 public class WhenReading : TestBase
 {
@@ -110,9 +109,7 @@ public class WhenReading : TestBase
                     new AccountWithPersonalInfo(
                         e.Id,
                         e.Email,
-                        $"{e.Person!.FirstName} {e.Person.LastName}"
-                    )
-            )
+                        $"{e.Person!.FirstName} {e.Person.LastName}"))
             .SingleOrDefaultAsync();
 
         Assert.IsNotNull(account);

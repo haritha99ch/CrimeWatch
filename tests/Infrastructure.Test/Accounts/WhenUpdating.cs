@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Test.Accounts;
-
 [TestClass]
 public class WhenUpdating : TestBase
 {
@@ -51,8 +50,7 @@ public class WhenUpdating : TestBase
             person.BirthDate,
             moderator.PoliceId,
             moderator.City,
-            moderator.Province
-        );
+            moderator.Province);
 
         DbContext.Accounts.Update(account);
         await DbContext.SaveChangesAsync();

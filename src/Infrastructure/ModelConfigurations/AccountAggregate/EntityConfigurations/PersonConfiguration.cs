@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.AccountAggregate.EntityConfigurations;
-
 internal static class PersonConfiguration
 {
     internal static void Configure(this OwnedNavigationBuilder<Account, Person> builder)

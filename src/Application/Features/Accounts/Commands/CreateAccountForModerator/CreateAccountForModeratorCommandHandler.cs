@@ -1,21 +1,20 @@
 ﻿namespace Application.Features.Accounts.Commands.CreateAccountForModerator;
-
 public sealed class CreateAccountForModeratorCommandHandler
     : ICommandHandler<CreateAccountForModeratorCommand, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
 
     public CreateAccountForModeratorCommandHandler(
-        IRepository<Account, AccountId> accountRepository
-    )
+            IRepository<Account, AccountId> accountRepository
+        )
     {
         _accountRepository = accountRepository;
     }
 
     public async Task<Result<Account>> Handle(
-        CreateAccountForModeratorCommand request,
-        CancellationToken cancellationToken
-    )
+            CreateAccountForModeratorCommand request,
+            CancellationToken cancellationToken
+        )
     {
         var account = Account.CreateAccountForModerator(
             request.Nic,
@@ -28,8 +27,7 @@ public sealed class CreateAccountForModeratorCommandHandler
             request.Province,
             request.Email,
             request.Password,
-            request.PhoneNumber
-        );
+            request.PhoneNumber);
 
         return await _accountRepository.AddAsync(account, cancellationToken);
     }

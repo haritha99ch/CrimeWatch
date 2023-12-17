@@ -1,9 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using Domain.AggregateModels.AccountAggregate;
+﻿using Domain.AggregateModels.AccountAggregate;
 using Persistence.Test.Repositories.AccountRepository.TestSpecifications;
 
 namespace Persistence.Test.Repositories.AccountRepository;
-
 [TestClass]
 public class WhenReading : TestBase
 {
@@ -36,7 +34,7 @@ public class WhenReading : TestBase
     public async Task ShouldAllAccounts()
     {
         var testAccounts = new List<Account>();
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
             testAccounts.Add(DataProvider.TestAccountForModerator);
         }
@@ -52,7 +50,7 @@ public class WhenReading : TestBase
     public async Task ShouldCount_NumberOfAccounts()
     {
         var testAccounts = new List<Account>();
-        for (int i = 0; i < 5; i++)
+        for (var i = 0; i < 5; i++)
         {
             testAccounts.Add(DataProvider.TestAccountForModerator);
         }
@@ -63,7 +61,8 @@ public class WhenReading : TestBase
     }
 
     [TestMethod]
-    public async Task ShouldReturnTrue_Exists(){
+    public async Task ShouldReturnTrue_Exists()
+    {
         var testAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddAsync(testAccount);
         await SaveAndClearChangeTrackerAsync();
@@ -74,7 +73,8 @@ public class WhenReading : TestBase
     }
 
     [TestMethod]
-    public async Task ShouldReturnAccount_BySpecification(){
+    public async Task ShouldReturnAccount_BySpecification()
+    {
         var testAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddAsync(testAccount);
         await SaveAndClearChangeTrackerAsync();

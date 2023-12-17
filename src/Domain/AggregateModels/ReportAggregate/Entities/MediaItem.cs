@@ -2,7 +2,6 @@
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Domain.AggregateModels.ReportAggregate.Entities;
-
 public sealed record MediaItem : Entity<MediaItemId>
 {
     public required string Url { get; set; }
@@ -19,8 +18,7 @@ public sealed record MediaItem : Entity<MediaItemId>
 
     public bool Update(string url, MediaType mediaType)
     {
-        if (url.Equals(Url) && mediaType.Equals(MediaType))
-            return false;
+        if (url.Equals(Url) && mediaType.Equals(MediaType)) return false;
 
         Url = url;
         MediaType = mediaType;
