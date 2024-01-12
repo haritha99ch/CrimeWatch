@@ -1,7 +1,7 @@
 ﻿using Application.Specifications.AccountSpecifications;
 
 namespace Application.Helpers.Repositories;
-internal static class AccountRepositoryExtensions
+internal static class AccountRepositoryExtension
 {
     internal async static Task<Account?> GetAccountByEmail(
             this IRepository<Account, AccountId> repository,

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Helpers.Errors;
+using FluentValidation;
 
 namespace Application.Behaviors;
 sealed internal class ValidationBehavior<TRequest, TResponse>
@@ -26,34 +27,15 @@ sealed internal class ValidationBehavior<TRequest, TResponse>
             _validators.Select(async e => await e.ValidateAsync(context, cancellationToken)));
         var failures = validationResults.SelectMany(e => e.Errors).Where(e => e != null).ToList();
 
-        if (failures.Count != 0)
-        {
-            var error = failures.FirstOrDefault();
-            var userDefinedErrorObject = error?.CustomState;
-            if (userDefinedErrorObject is Error userDefinedError)
-            {
-                return CreateValidationError<TResponse>(userDefinedError);
-            }
-            var validationError = ValidationError.Create(message: error?.ErrorMessage);
-            return CreateValidationError<TResponse>(validationError);
-        }
-        return await next();
-    }
+        if (failures.Count == 0) return await next();
 
-    private static TResult CreateValidationError<TResult>(Error error)
-        where TResult : Result
-    {
-        if (typeof(TResult) == typeof(Result))
+        var error = failures.FirstOrDefault();
+        var userDefinedErrorObject = error?.CustomState;
+        if (userDefinedErrorObject is Error userDefinedError)
         {
-            return (ValidationError.Create(error.Title, error.Message, error.Code) as TResult)!;
+            return userDefinedError.ToTypedValidationError<TResponse>();
         }
-        var validationResults = (TResult)
-            typeof(Result<>)
-                .GetGenericTypeDefinition()
-                .MakeGenericType(typeof(TResult).GenericTypeArguments[0])
-                .GetMethod(nameof(Result<object>.Failure))!
-                .Invoke(null, [error])!;
-
-        return validationResults;
+        var validationError = ValidationError.Create(message: error?.ErrorMessage);
+        return validationError.ToTypedValidationError<TResponse>();
     }
 }
