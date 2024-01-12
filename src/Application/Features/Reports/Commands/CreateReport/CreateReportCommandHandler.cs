@@ -1,5 +1,5 @@
 ﻿namespace Application.Features.Reports.Commands.CreateReport;
-sealed internal class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, Report>
+internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, Report>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 

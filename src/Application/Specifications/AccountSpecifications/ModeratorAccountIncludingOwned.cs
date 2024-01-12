@@ -2,7 +2,7 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.AccountSpecifications;
-sealed internal record ModeratorAccountIncludingOwned : Specification<Account>
+internal sealed record ModeratorAccountIncludingOwned : Specification<Account>
 {
     internal ModeratorAccountIncludingOwned(AccountId accountId)
         : base(e => e.Id.Equals(accountId))

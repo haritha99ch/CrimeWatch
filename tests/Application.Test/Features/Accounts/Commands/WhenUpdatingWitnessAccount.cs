@@ -1,6 +1,5 @@
 ﻿using Application.Errors.Common;
 using Application.Features.Accounts.Commands.UpdateWitnessAccount;
-using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Accounts.Commands;
 [TestClass]
@@ -24,10 +23,7 @@ public class WhenUpdatingWitnessAccount : TestBase
         var testAccount = DataProvider.TestAccountForWitness;
         await DbContext.Accounts.AddAsync(testAccount);
         await SaveAndClearChangeTrackerAsync();
-        GenerateTokenAndInvoke(
-            testAccount.AccountType.Equals(AccountType.Moderator),
-            testAccount.Id,
-            testAccount.Email);
+        GenerateTokenAndInvoke(testAccount);
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;
@@ -55,10 +51,7 @@ public class WhenUpdatingWitnessAccount : TestBase
         var invalidAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
-        GenerateTokenAndInvoke(
-            invalidAccount.AccountType.Equals(AccountType.Moderator),
-            invalidAccount.Id,
-            invalidAccount.Email);
+        GenerateTokenAndInvoke(testAccount);
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;

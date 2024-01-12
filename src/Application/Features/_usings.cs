@@ -3,6 +3,7 @@ global using Application.Contracts.Commands;
 global using Application.Contracts.Queries;
 global using Application.Errors.Accounts;
 global using Application.Errors.Common;
+global using Application.Errors.Reports;
 global using Domain.AggregateModels.AccountAggregate;
 global using Domain.AggregateModels.AccountAggregate.Enums;
 global using Domain.AggregateModels.AccountAggregate.ValueObjects;

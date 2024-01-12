@@ -1,7 +1,6 @@
 ﻿using Application.Test.Common.Host;
 using ApplicationSettings.Options;
-using Domain.AggregateModels.AccountAggregate.Enums;
-using Domain.AggregateModels.AccountAggregate.ValueObjects;
+using Domain.AggregateModels.AccountAggregate;
 using Infrastructure.Context;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +12,7 @@ using System.Text;
 
 namespace Application.Test.Common.Tests;
 /// <summary>
-///     To Authorize, call <see cref="GenerateTokenAndInvoke(bool, AccountId, string)." />
+///     To Authorize, call <see cref="GenerateTokenAndInvoke" />
 /// </summary>
 public abstract class TestBase
 {
@@ -44,15 +43,15 @@ public abstract class TestBase
         DbContext.ChangeTracker.Clear();
     }
 
-    protected string GenerateTokenAndInvoke(bool isModerator, AccountId id, string email)
+    protected string GenerateTokenAndInvoke(Account account)
     {
         var claims = new List<Claim>
         {
             new(
                 ClaimTypes.Role,
-                isModerator ? AccountType.Moderator.ToString() : AccountType.Moderator.ToString()),
-            new(JwtRegisteredClaimNames.Sub, id.Value.ToString()),
-            new(JwtRegisteredClaimNames.Email, email)
+                account.AccountType.ToString()),
+            new(JwtRegisteredClaimNames.Sub, account.Id.Value.ToString()),
+            new(JwtRegisteredClaimNames.Email, account.Email)
         };
 
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));

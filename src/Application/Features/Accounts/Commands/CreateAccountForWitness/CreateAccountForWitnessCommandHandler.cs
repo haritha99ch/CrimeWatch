@@ -1,5 +1,5 @@
 ﻿namespace Application.Features.Accounts.Commands.CreateAccountForWitness;
-sealed internal class CreateAccountForWitnessCommandHandler
+internal sealed class CreateAccountForWitnessCommandHandler
     : ICommandHandler<CreateAccountForWitnessCommand, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;

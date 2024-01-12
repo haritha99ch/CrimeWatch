@@ -1,6 +1,5 @@
 ﻿using Application.Errors.Common;
 using Application.Features.Reports.Commands.CreateReport;
-using Domain.AggregateModels.AccountAggregate.Enums;
 
 namespace Application.Test.Features.Reports.Commands;
 [TestClass]
@@ -25,10 +24,7 @@ public class WhenCreatingReport : TestBase
         var testAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddAsync(testAccount);
         await SaveAndClearChangeTrackerAsync();
-        GenerateTokenAndInvoke(
-            testAccount.AccountType.Equals(AccountType.Moderator),
-            testAccount.Id,
-            testAccount.Email);
+        GenerateTokenAndInvoke(testAccount);
         var caption = DataProvider.Caption;
         var description = DataProvider.Description;
         var no = DataProvider.No;
@@ -77,10 +73,7 @@ public class WhenCreatingReport : TestBase
         var invalidAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
-        GenerateTokenAndInvoke(
-            invalidAccount.AccountType.Equals(AccountType.Moderator),
-            invalidAccount.Id,
-            invalidAccount.Email);
+        GenerateTokenAndInvoke(testAccount);
         var caption = DataProvider.Caption;
         var description = DataProvider.Description;
         var no = DataProvider.No;

@@ -1,7 +1,7 @@
 ﻿using Application.Selectors.Accounts;
 
 namespace Application.Features.Accounts.Queries.GetAccountInfoById;
-sealed internal class GetAccountInfoByIdQueryHandler
+internal sealed class GetAccountInfoByIdQueryHandler
     : IQueryHandler<GetAccountInfoByIdQuery, AccountInfo>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;

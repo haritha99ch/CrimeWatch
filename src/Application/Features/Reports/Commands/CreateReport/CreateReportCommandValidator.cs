@@ -3,7 +3,7 @@ using Application.Contracts.Services;
 using FluentValidation;
 
 namespace Application.Features.Reports.Commands.CreateReport;
-public sealed class CreateReportCommandValidator : ApplicationValidator<CreateReportCommand>
+internal sealed class CreateReportCommandValidator : ApplicationValidator<CreateReportCommand>
 {
     private readonly IAuthenticationService _authenticationService;
 

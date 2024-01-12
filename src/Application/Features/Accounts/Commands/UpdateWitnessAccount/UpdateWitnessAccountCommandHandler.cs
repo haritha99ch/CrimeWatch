@@ -1,7 +1,7 @@
 ﻿using Application.Helpers.Repositories;
 
 namespace Application.Features.Accounts.Commands.UpdateWitnessAccount;
-sealed internal class UpdateWitnessAccountCommandHandler
+internal sealed class UpdateWitnessAccountCommandHandler
     : ICommandHandler<UpdateWitnessAccountCommand, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;

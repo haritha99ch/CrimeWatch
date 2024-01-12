@@ -1,5 +1,5 @@
 ﻿namespace Application.Features.Accounts.Queries.GetAccountById;
-sealed internal class GetAccountByIdQueryHandler
+internal sealed class GetAccountByIdQueryHandler
     : IQueryHandler<GetAccountByIdQuery, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;

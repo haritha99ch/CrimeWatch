@@ -2,7 +2,7 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.AccountSpecifications;
-sealed internal record WitnessAccountIncludingOwned : Specification<Account>
+internal sealed record WitnessAccountIncludingOwned : Specification<Account>
 {
     internal WitnessAccountIncludingOwned(AccountId accountId)
         : base(e => e.Id.Equals(accountId))

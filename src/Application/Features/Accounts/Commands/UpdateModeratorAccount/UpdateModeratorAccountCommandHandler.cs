@@ -1,7 +1,7 @@
 ﻿using Application.Helpers.Repositories;
 
 namespace Application.Features.Accounts.Commands.UpdateModeratorAccount;
-sealed internal class UpdateModeratorAccountCommandHandler
+internal sealed class UpdateModeratorAccountCommandHandler
     : ICommandHandler<UpdateModeratorAccountCommand, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;

@@ -2,7 +2,7 @@
 using Application.Specifications.Reports;
 
 namespace Application.Features.Reports.Commands.UpdateReport;
-sealed internal class UpdateReportCommandHandler : ICommandHandler<UpdateReportCommand, Report>
+internal sealed class UpdateReportCommandHandler : ICommandHandler<UpdateReportCommand, Report>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
 

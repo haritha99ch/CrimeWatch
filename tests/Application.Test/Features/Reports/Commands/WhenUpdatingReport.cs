@@ -1,6 +1,4 @@
-﻿using Application.Errors.Reports;
-using Application.Features.Reports.Commands.UpdateReport;
-using Domain.AggregateModels.AccountAggregate.Enums;
+﻿using Application.Features.Reports.Commands.UpdateReport;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 
 namespace Application.Test.Features.Reports.Commands;
@@ -29,11 +27,7 @@ public class WhenUpdatingReport : TestBase
         await SaveAndClearChangeTrackerAsync();
         var caption = DataProvider.Caption;
         var description = DataProvider.Description;
-
-        GenerateTokenAndInvoke(
-            testAccount.AccountType.Equals(AccountType.Moderator),
-            testAccount.Id,
-            testAccount.Email);
+        GenerateTokenAndInvoke(testAccount);
 
         var command = new UpdateReportCommand(
             testReport.Id,
@@ -69,10 +63,7 @@ public class WhenUpdatingReport : TestBase
         var province = DataProvider.Province;
         var violationTypes = DataProvider.ViolationTypes;
         var mediaItem = DataProvider.TestMediaItem;
-        GenerateTokenAndInvoke(
-            testAccount.AccountType.Equals(AccountType.Moderator),
-            testAccount.Id,
-            testAccount.Email);
+        GenerateTokenAndInvoke(testAccount);
 
         var command = new UpdateReportCommand(
             testReportId,

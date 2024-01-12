@@ -1,10 +1,11 @@
 ﻿using Application.Common.Validators;
 using Application.Contracts.Services;
 using Application.Errors.Reports;
+using Application.Selectors.Reports;
 using FluentValidation;
 
 namespace Application.Features.Reports.Commands.UpdateReport;
-public sealed class UpdateReportCommandValidator : ApplicationValidator<UpdateReportCommand>
+internal sealed class UpdateReportCommandValidator : ApplicationValidator<UpdateReportCommand>
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IRepository<Report, ReportId> _reportRepository;
@@ -37,12 +38,19 @@ public sealed class UpdateReportCommandValidator : ApplicationValidator<UpdateRe
             });
         if (!isAuthenticated) return false;
 
-        var report = await _reportRepository.GetByIdAsync(reportId, cancellationToken);
-        if (report is not null) return report.AuthorId!.Equals(_currentUserId);
+        var report = await _reportRepository.GetByIdAsync(
+            reportId,
+            ReportAuthorizationInfo.GetSelector,
+            cancellationToken);
+        if (report is null)
+        {
+            validationError = ReportNotFoundError.Create(message: "Report is not found to update.");
+            return false;
+        }
 
-        validationError = ReportNotFoundError.Create(message: "Report is not found to authorize.");
+        if (report.AuthorId != null && report.AuthorId.Equals(_currentUserId)) return true;
+
+        validationError = UnauthorizedError.Create(message: "You are not authorize to update report.");
         return false;
     }
-
-
 }

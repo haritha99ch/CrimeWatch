@@ -1,5 +1,5 @@
 ﻿namespace Application.Features.Accounts.Commands.DeleteAccount;
-sealed internal class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand, bool>
+internal sealed class DeleteAccountCommandHandler : ICommandHandler<DeleteAccountCommand, bool>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
 
