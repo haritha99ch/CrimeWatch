@@ -17,7 +17,7 @@ internal static class AccountRepositoryExtension
             this IRepository<Account, AccountId> repository,
             AccountId accountId,
             CancellationToken cancellationToken
-        ) => await repository.GetOneAsync<ModeratorAccountIncludingOwned>(
+        ) => await repository.GetOneAsync<ModeratorAccountToUpdateById>(
         new(accountId),
         cancellationToken);
 
@@ -25,7 +25,7 @@ internal static class AccountRepositoryExtension
             this IRepository<Account, AccountId> repository,
             AccountId accountId,
             CancellationToken cancellationToken
-        ) => await repository.GetOneAsync<WitnessAccountIncludingOwned>(
+        ) => await repository.GetOneAsync<WitnessAccountToUpdateById>(
         new(accountId),
         cancellationToken);
 }

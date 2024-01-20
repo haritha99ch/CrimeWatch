@@ -2,12 +2,12 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.AccountSpecifications;
-internal sealed record ModeratorAccountIncludingOwned : Specification<Account>
+internal sealed record WitnessAccountUpdateInfo : Specification<Account>
 {
-    internal ModeratorAccountIncludingOwned(AccountId accountId)
+    internal WitnessAccountUpdateInfo(AccountId accountId)
         : base(e => e.Id.Equals(accountId))
     {
-        AddInclude(q => q.Include(e => e.Moderator!));
+        AddInclude(q => q.Include(e => e.Witness!));
         AddInclude(q => q.Include(e => e.Person!));
     }
 }
