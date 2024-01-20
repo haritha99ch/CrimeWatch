@@ -73,7 +73,7 @@ public class WhenCreatingReport : TestBase
         var invalidAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
-        GenerateTokenAndInvoke(testAccount);
+        GenerateTokenAndInvoke(invalidAccount);
         var caption = DataProvider.Caption;
         var description = DataProvider.Description;
         var no = DataProvider.No;

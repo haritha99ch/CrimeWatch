@@ -51,7 +51,7 @@ public class WhenUpdatingWitnessAccount : TestBase
         var invalidAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
-        GenerateTokenAndInvoke(testAccount);
+        GenerateTokenAndInvoke(invalidAccount);
         var nic = DataProvider.Nic;
         var firstName = DataProvider.FirstName;
         var lastName = DataProvider.LastName;

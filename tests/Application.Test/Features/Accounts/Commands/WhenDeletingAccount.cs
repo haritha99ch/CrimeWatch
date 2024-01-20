@@ -38,7 +38,7 @@ public class WhenDeletingAccount : TestBase
         var invalidAccount = DataProvider.TestAccountForModerator;
         await DbContext.Accounts.AddRangeAsync([testAccount, invalidAccount]);
         await SaveAndClearChangeTrackerAsync();
-        GenerateTokenAndInvoke(testAccount);
+        GenerateTokenAndInvoke(invalidAccount);
 
         var result = await Mediator.Send(new DeleteAccountCommand(testAccount.Id));
         var error = result.GetError();

@@ -2,9 +2,9 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.AccountSpecifications;
-internal sealed record WitnessAccountUpdateInfo : Specification<Account>
+internal sealed record WitnessAccountToUpdateById : Specification<Account>
 {
-    internal WitnessAccountUpdateInfo(AccountId accountId)
+    internal WitnessAccountToUpdateById(AccountId accountId)
         : base(e => e.Id.Equals(accountId))
     {
         AddInclude(q => q.Include(e => e.Witness!));
