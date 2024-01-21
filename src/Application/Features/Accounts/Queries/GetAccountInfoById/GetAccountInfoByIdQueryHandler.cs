@@ -1,6 +1,4 @@
-﻿using Application.Selectors.Accounts;
-
-namespace Application.Features.Accounts.Queries.GetAccountInfoById;
+﻿namespace Application.Features.Accounts.Queries.GetAccountInfoById;
 internal sealed class GetAccountInfoByIdQueryHandler
     : IQueryHandler<GetAccountInfoByIdQuery, AccountInfo>
 {

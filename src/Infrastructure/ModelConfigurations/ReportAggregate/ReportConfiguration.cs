@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.ReportAggregate;
-sealed internal class ReportConfiguration : IEntityTypeConfiguration<Report>
+internal sealed class ReportConfiguration : IEntityTypeConfiguration<Report>
 {
     public void Configure(EntityTypeBuilder<Report> builder)
     {

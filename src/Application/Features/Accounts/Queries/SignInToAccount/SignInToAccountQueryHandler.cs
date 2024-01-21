@@ -1,6 +1,4 @@
-﻿using Application.Contracts.Services;
-
-namespace Application.Features.Accounts.Queries.SignInToAccount;
+﻿namespace Application.Features.Accounts.Queries.SignInToAccount;
 internal sealed class SignInToAccountQueryHandler : IQueryHandler<SignInToAccountQuery, string>
 {
     private readonly IAuthenticationService _authenticationService;

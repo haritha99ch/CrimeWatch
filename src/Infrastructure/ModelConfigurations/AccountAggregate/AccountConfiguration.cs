@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.ModelConfigurations.AccountAggregate;
-sealed internal class AccountConfiguration : IEntityTypeConfiguration<Account>
+internal sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)
     {

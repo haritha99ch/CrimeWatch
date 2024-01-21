@@ -4,21 +4,21 @@ using Persistence.Common.Specifications;
 using System.Linq.Expressions;
 
 namespace Persistence.Contracts.Repositories;
-public interface IRepository<TEntity, TEntityID>
-    where TEntity : AggregateRoot<TEntityID>
-    where TEntityID : EntityId
+public interface IRepository<TEntity, TEntityId>
+    where TEntity : AggregateRoot<TEntityId>
+    where TEntityId : EntityId
 {
 
 
     #region Basic
 
     Task<TEntity> AddAsync(TEntity entity, CancellationToken? cancellationToken = null);
-    Task<TEntity?> GetByIdAsync(TEntityID id, CancellationToken? cancellationToken = null);
+    Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken? cancellationToken = null);
     Task<List<TEntity>> GetAllAsync(CancellationToken? cancellationToken = null);
-    Task<bool> ExistByIdAsync(TEntityID id, CancellationToken? cancellationToken = null);
+    Task<bool> ExistByIdAsync(TEntityId id, CancellationToken? cancellationToken = null);
     Task<int> CountAsync(CancellationToken? cancellationToken = null);
     Task<TEntity> UpdateAsync(TEntity entity, CancellationToken? cancellationToken = null);
-    Task<bool> DeleteByIdAsync(TEntityID id, CancellationToken? cancellationToken = null);
+    Task<bool> DeleteByIdAsync(TEntityId id, CancellationToken? cancellationToken = null);
 
     #endregion
 
@@ -61,7 +61,7 @@ public interface IRepository<TEntity, TEntityID>
     #region Selector
 
     Task<TSelector?> GetByIdAsync<TSelector>(
-            TEntityID id,
+            TEntityId id,
             Expression<Func<TEntity, TSelector>> selector,
             CancellationToken? cancellationToken = null
         )

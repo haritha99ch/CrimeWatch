@@ -1,6 +1,4 @@
-﻿using Application.Selectors.Accounts;
-
-namespace Application.Contracts.Services;
+﻿namespace Application.Contracts.Services;
 public interface IAuthenticationService
 {
     Task<Result<string>> AuthenticateAndGetTokenAsync(

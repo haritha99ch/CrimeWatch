@@ -1,7 +1,4 @@
 ﻿using Application.Common.Validators;
-using Application.Contracts.Services;
-using Application.Errors.Reports;
-using Application.Selectors.Reports;
 using FluentValidation;
 
 namespace Application.Features.Reports.Commands.UpdateReport;

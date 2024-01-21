@@ -13,3 +13,6 @@ global using Domain.Common.Models;
 global using MediatR;
 global using Persistence.Contracts.Repositories;
 global using Domain.AggregateModels.ReportAggregate.ValueObjects;
+global using Application.Contracts.Services;
+global using Application.Selectors.Reports;
+global using Application.Selectors.Accounts;

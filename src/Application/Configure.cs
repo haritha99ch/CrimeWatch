@@ -1,5 +1,4 @@
 ﻿using Application.Behaviors;
-using Application.Contracts.Services;
 using Application.Services;
 using ApplicationSettings;
 using FluentValidation;
@@ -23,13 +22,11 @@ public static class Configure
     ///         <para>
     ///             <see cref="Microsoft.AspNetCore.Http.HttpContextAccessor" />
     ///         </para>
-    ///         <see cref="" />
     ///     </para>
     /// </summary>
     /// <param name="services"></param>
     /// <summary>
     /// </summary>
-    /// <param name="services"></param>
     public static void AddApplication(this IServiceCollection services)
     {
         services.ConfigureJwtOptions();

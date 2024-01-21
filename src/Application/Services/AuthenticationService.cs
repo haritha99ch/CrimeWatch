@@ -1,6 +1,4 @@
-﻿using Application.Contracts.Services;
-using Application.Helpers.Repositories;
-using Application.Selectors.Accounts;
+﻿using Application.Helpers.Repositories;
 using ApplicationSettings.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;

@@ -1,5 +1,4 @@
-﻿using Application.Errors.Reports;
-using Application.Specifications.Reports;
+﻿using Application.Specifications.Reports;
 
 namespace Application.Features.Reports.Commands.UpdateReport;
 internal sealed class UpdateReportCommandHandler : ICommandHandler<UpdateReportCommand, Report>
