@@ -5,5 +5,5 @@ public static class ReportRepositoryExtension
             this IRepository<Report, ReportId> reportRepository,
             ReportId reportId,
             CancellationToken? cancellationToken = null
-        ) => await reportRepository.GetByIdAsync(reportId, ReportDetails.GetSelector, cancellationToken);
+        ) => await reportRepository.GetByIdAsync(reportId, ReportDetails.SelectQueryable(), cancellationToken);
 }

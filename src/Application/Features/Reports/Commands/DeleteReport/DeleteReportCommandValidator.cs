@@ -34,7 +34,7 @@ internal sealed class DeleteReportCommandValidator : ApplicationValidator<Delete
 
         var report = await _reportRepository.GetByIdAsync(
             reportId,
-            ReportAuthorizationInfo.GetSelector,
+            ReportAuthorizationInfo.SelectQueryable(),
             cancellationToken);
         if (report is null)
         {

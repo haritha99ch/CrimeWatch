@@ -2,7 +2,7 @@
 public record AccountInfo(string FullName, string Email, string PhoneNumber, bool IsModerator)
     : Selector<Account, AccountInfo>
 {
-    protected override Expression<Func<Account, AccountInfo>> Select() =>
+    protected override Expression<Func<Account, AccountInfo>> MapQueryableSelector() =>
         e =>
             new(
                 $"{e.Person!.FirstName} {e.Person.LastName}",

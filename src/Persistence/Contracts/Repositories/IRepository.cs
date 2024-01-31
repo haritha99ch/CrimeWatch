@@ -67,6 +67,13 @@ public interface IRepository<TEntity, TEntityId>
         )
         where TSelector : Selector<TEntity, TSelector>;
 
+    Task<List<TSelector>> GetByIdAsync<TSelector>(
+            TEntityId id,
+            Expression<Func<TEntity, List<TSelector>>> selector,
+            CancellationToken? cancellationToken = null
+        )
+        where TSelector : Selector<TEntity, TSelector>;
+
     Task<List<TSelector>> GetManyAsync<TSelector>(
             Expression<Func<TEntity, TSelector>> selector,
             CancellationToken? cancellationToken = null
@@ -76,6 +83,14 @@ public interface IRepository<TEntity, TEntityId>
     Task<TSelector?> GetOneAsync<TSpecification, TSelector>(
             TSpecification specification,
             Expression<Func<TEntity, TSelector>> selector,
+            CancellationToken? cancellationToken = null
+        )
+        where TSpecification : Specification<TEntity>
+        where TSelector : Selector<TEntity, TSelector>;
+
+    Task<List<TSelector>> GetOneAsync<TSpecification, TSelector>(
+            TSpecification specification,
+            Expression<Func<TEntity, List<TSelector>>> selector,
             CancellationToken? cancellationToken = null
         )
         where TSpecification : Specification<TEntity>

@@ -83,7 +83,7 @@ internal class AuthenticationService : IAuthenticationService
 
         var account = await _accountRepository.GetByIdAsync(
             accountId,
-            AccountAuthenticationInfo.GetSelector,
+            AccountAuthenticationInfo.SelectQueryable(),
             cancellationToken);
         return account is null
             ? UnableToAuthenticateError.Create(message: "Authenticated user is not found.")

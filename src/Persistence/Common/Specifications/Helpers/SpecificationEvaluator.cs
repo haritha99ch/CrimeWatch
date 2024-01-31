@@ -2,9 +2,9 @@
 using Persistence.Common.Specifications.Types;
 
 namespace Persistence.Common.Specifications.Helpers;
-internal static class SpecificationEvaluator
+public static class SpecificationEvaluator
 {
-    internal static IQueryable<TEntity> AddSpecification<TEntity>(
+    public static IQueryable<TEntity> AddSpecification<TEntity>(
             this IQueryable<TEntity> query,
             Specification<TEntity> specification
         )

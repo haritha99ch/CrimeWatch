@@ -1,6 +1,6 @@
 ﻿using Application.Features.Reports.Queries.GetReportDetailsById;
 
-namespace Application.Test.Features.Reports.Commands;
+namespace Application.Test.Features.Reports.Queries;
 [TestClass]
 public class WhenGettingReportDetailsById : TestBase
 {

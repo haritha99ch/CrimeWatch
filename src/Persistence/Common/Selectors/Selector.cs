@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Persistence.Common.Specifications.Types;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace Persistence.Common.Selectors;
@@ -12,11 +13,16 @@ public abstract record Selector<TEntity, TResult> where TResult : Selector<TEnti
     /// <summary>
     ///     Abstract method to be implemented in derived classes to define the selection expression.
     /// </summary>
-    protected abstract Expression<Func<TEntity, TResult>> Select();
+    protected virtual Expression<Func<TEntity, TResult>> MapQueryableSelector() => default!;
+    protected virtual Expression<Func<TEntity, List<TResult>>> MapEnumerableSelector(Pagination? pagination)
+        => default!;
 
     /// <summary>
     ///     Static property to get the selector from derived classes.
     /// </summary>
-    public static Expression<Func<TEntity, TResult>> GetSelector
-        => ((TResult)RuntimeHelpers.GetUninitializedObject(typeof(TResult))).Select();
+    public static Expression<Func<TEntity, TResult>> SelectQueryable()
+        => ((TResult)RuntimeHelpers.GetUninitializedObject(typeof(TResult))).MapQueryableSelector();
+
+    public static Expression<Func<TEntity, List<TResult>>> SelectEnumerable(Pagination? pagination)
+        => ((TResult)RuntimeHelpers.GetUninitializedObject(typeof(TResult))).MapEnumerableSelector(pagination);
 }

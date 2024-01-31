@@ -14,7 +14,7 @@ public record ReportDetails(
         MediaItem MediaItem
     ) : Selector<Report, ReportDetails>
 {
-    protected override Expression<Func<Report, ReportDetails>> Select() =>
+    protected override Expression<Func<Report, ReportDetails>> MapQueryableSelector() =>
         e => new(
             e.Id,
             e.AuthorId == null

@@ -37,7 +37,7 @@ internal sealed class UpdateReportCommandValidator : ApplicationValidator<Update
 
         var report = await _reportRepository.GetByIdAsync(
             reportId,
-            ReportAuthorizationInfo.GetSelector,
+            ReportAuthorizationInfo.SelectQueryable(),
             cancellationToken);
         if (report is null)
         {

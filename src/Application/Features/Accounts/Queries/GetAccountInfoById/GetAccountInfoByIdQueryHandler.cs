@@ -16,7 +16,7 @@ internal sealed class GetAccountInfoByIdQueryHandler
     {
         var accountInfo = await _accountRepository.GetByIdAsync(
             request.AccountId,
-            AccountInfo.GetSelector,
+            AccountInfo.SelectQueryable(),
             cancellationToken);
         return accountInfo is not null ? accountInfo : AccountNotFoundError.Create();
     }

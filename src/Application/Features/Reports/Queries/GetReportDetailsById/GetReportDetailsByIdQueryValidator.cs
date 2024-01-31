@@ -33,8 +33,10 @@ public sealed class GetReportDetailsByIdQueryValidator : ApplicationValidator<Ge
 
         if (isModerator) return true;
 
-        var report = await _reportRepository
-            .GetByIdAsync(reportId, ReportAuthorizationInfo.GetSelector, cancellationToken);
+        var report = await _reportRepository.GetByIdAsync(
+            reportId,
+            ReportAuthorizationInfo.SelectQueryable(),
+            cancellationToken);
 
         if (report is null)
         {
