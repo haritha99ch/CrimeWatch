@@ -1,11 +1,13 @@
-﻿namespace Application.Features.Reports.Queries.GetReportEvidencesById;
-internal sealed class GetReportEvidencesByIdQueryHandler
-    : IQueryHandler<GetReportEvidencesByIdQuery, List<EvidenceDetails>>
+﻿using Application.Specifications.Reports;
+
+namespace Application.Features.Reports.Queries.GetReportEvidencesByReportId;
+internal sealed class GetReportEvidencesByReportIdQueryHandler
+    : IQueryHandler<GetReportEvidencesByReportIdQuery, List<EvidenceDetails>>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
     private readonly IAuthenticationService _authenticationService;
 
-    public GetReportEvidencesByIdQueryHandler(
+    public GetReportEvidencesByReportIdQueryHandler(
             IRepository<Report, ReportId> reportRepository,
             IAuthenticationService authenticationService
         )
@@ -14,7 +16,7 @@ internal sealed class GetReportEvidencesByIdQueryHandler
         _authenticationService = authenticationService;
     }
     public async Task<Result<List<EvidenceDetails>>> Handle(
-            GetReportEvidencesByIdQuery request,
+            GetReportEvidencesByReportIdQuery request,
             CancellationToken cancellationToken
         )
     {
@@ -30,7 +32,10 @@ internal sealed class GetReportEvidencesByIdQueryHandler
             }
         );
         var reportEvidences = await _reportRepository
-            .GetByIdAsync(request.ReportId, EvidenceDetails.SelectEnumerable(request.Pagination), cancellationToken);
-        return reportEvidences ?? [];
+            .GetManyAsync<EvidenceDetailsListByReportId, EvidenceDetails>(
+                new(isModerator, request.ReportId, currentAccountId),
+                cancellationToken);
+
+        return reportEvidences;
     }
 }

@@ -1,13 +1,15 @@
 ﻿using Application.Common.Validators;
+using Application.Specifications.Reports;
 using FluentValidation;
 
-namespace Application.Features.Reports.Queries.GetReportEvidencesById;
-public sealed class GetReportEvidencesByIdQueryValidator : ApplicationValidator<GetReportEvidencesByIdQuery>
+namespace Application.Features.Reports.Queries.GetReportEvidencesByReportId;
+public sealed class
+    GetReportEvidencesByReportIdQueryQueryValidator : ApplicationValidator<GetReportEvidencesByReportIdQuery>
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IRepository<Report, ReportId> _reportRepository;
 
-    public GetReportEvidencesByIdQueryValidator(
+    public GetReportEvidencesByReportIdQueryQueryValidator(
             IAuthenticationService authenticationService,
             IRepository<Report, ReportId> reportRepository
         )
@@ -19,9 +21,9 @@ public sealed class GetReportEvidencesByIdQueryValidator : ApplicationValidator<
             .MustAsync(IsAuthorizedAsync)
             .WithState(_ => validationError);
     }
-    private async Task<bool> IsAuthorizedAsync(ReportId reportId, CancellationToken cancellation)
+    private async Task<bool> IsAuthorizedAsync(ReportId reportId, CancellationToken cancellationToken)
     {
-        var authenticationResult = await _authenticationService.GetAuthenticationResultAsync(cancellation);
+        var authenticationResult = await _authenticationService.GetAuthenticationResultAsync(cancellationToken);
         AccountId? currentAccountId = default;
         var isModerator = false;
 
@@ -33,8 +35,10 @@ public sealed class GetReportEvidencesByIdQueryValidator : ApplicationValidator<
 
         if (isModerator) return true;
 
-        var report =
-            await _reportRepository.GetByIdAsync(reportId, ReportAuthorizationInfo.SelectQueryable(), cancellation);
+        var report = await _reportRepository.GetOneAsync<ReportAuthorizationInfoById, ReportAuthorizationInfo>(
+            new(reportId),
+            cancellationToken);
+
         if (report is null)
         {
             validationError = ReportNotFoundError.Create();

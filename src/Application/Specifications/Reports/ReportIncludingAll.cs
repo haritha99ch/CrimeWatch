@@ -2,7 +2,7 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.Reports;
-public sealed record ReportIncludingAll : Specification<Report>
+internal sealed record ReportIncludingAll : Specification<Report>
 {
     public ReportIncludingAll(ReportId reportId) : base(e => e.Id.Equals(reportId))
     {

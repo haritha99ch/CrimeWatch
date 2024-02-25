@@ -1,4 +1,5 @@
 ﻿using Application.Common.Validators;
+using Application.Specifications.Reports;
 using FluentValidation;
 
 namespace Application.Features.Reports.Commands.DeleteReport;
@@ -32,10 +33,10 @@ internal sealed class DeleteReportCommandValidator : ApplicationValidator<Delete
             });
         if (!isAuthenticated) return false;
 
-        var report = await _reportRepository.GetByIdAsync(
-            reportId,
-            ReportAuthorizationInfo.SelectQueryable(),
+        var report = await _reportRepository.GetOneAsync<ReportAuthorizationInfoById, ReportAuthorizationInfo>(
+            new(reportId),
             cancellationToken);
+
         if (report is null)
         {
             validationError = ReportNotFoundError.Create(message: "Report is not found to delete.");

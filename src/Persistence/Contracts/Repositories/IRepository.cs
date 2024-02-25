@@ -1,7 +1,6 @@
 ﻿using Domain.Common.Models;
-using Persistence.Common.Selectors;
 using Persistence.Common.Specifications;
-using System.Linq.Expressions;
+using Persistence.Contracts.Selectors;
 
 namespace Persistence.Contracts.Repositories;
 public interface IRepository<TEntity, TEntityId>
@@ -31,11 +30,23 @@ public interface IRepository<TEntity, TEntityId>
         )
         where TSpecification : Specification<TEntity>;
 
+    Task<TResult?> GetOneAsync<TSpecification, TResult>(
+            TSpecification specification,
+            CancellationToken? cancellationToken = null
+        )
+        where TResult : ISelector
+        where TSpecification : Specification<TEntity, TResult>;
+
     Task<List<TEntity>> GetManyAsync<TSpecification>(
             TSpecification specification,
             CancellationToken? cancellationToken = null
         )
         where TSpecification : Specification<TEntity>;
+
+    Task<List<TResult>> GetManyAsync<TSpecification, TResult>(
+            TSpecification specification,
+            CancellationToken? cancellationToken = null
+        ) where TSpecification : Specification<TEntity, TResult>;
 
     Task<bool> ExistAsync<TSpecification>(
             TSpecification specification,
@@ -54,55 +65,6 @@ public interface IRepository<TEntity, TEntityId>
             CancellationToken? cancellationToken = null
         )
         where TSpecification : Specification<TEntity>;
-
-    #endregion
-
-
-    #region Selector
-
-    Task<TSelector?> GetByIdAsync<TSelector>(
-            TEntityId id,
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSelector : Selector<TEntity, TSelector>;
-
-    Task<List<TSelector>> GetByIdAsync<TSelector>(
-            TEntityId id,
-            Expression<Func<TEntity, List<TSelector>>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSelector : Selector<TEntity, TSelector>;
-
-    Task<List<TSelector>> GetManyAsync<TSelector>(
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSelector : Selector<TEntity, TSelector>;
-
-    Task<TSelector?> GetOneAsync<TSpecification, TSelector>(
-            TSpecification specification,
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSpecification : Specification<TEntity>
-        where TSelector : Selector<TEntity, TSelector>;
-
-    Task<List<TSelector>> GetOneAsync<TSpecification, TSelector>(
-            TSpecification specification,
-            Expression<Func<TEntity, List<TSelector>>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSpecification : Specification<TEntity>
-        where TSelector : Selector<TEntity, TSelector>;
-
-    Task<List<TSelector>> GetManyAsync<TSpecification, TSelector>(
-            TSpecification specification,
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSpecification : Specification<TEntity>
-        where TSelector : Selector<TEntity, TSelector>;
 
     #endregion
 

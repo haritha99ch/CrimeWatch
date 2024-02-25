@@ -1,4 +1,5 @@
 ﻿using Application.Common.Validators;
+using Application.Specifications.Reports;
 using FluentValidation;
 
 namespace Application.Features.Reports.Queries.GetReportDetailsById;
@@ -33,9 +34,8 @@ public sealed class GetReportDetailsByIdQueryValidator : ApplicationValidator<Ge
 
         if (isModerator) return true;
 
-        var report = await _reportRepository.GetByIdAsync(
-            reportId,
-            ReportAuthorizationInfo.SelectQueryable(),
+        var report = await _reportRepository.GetOneAsync<ReportAuthorizationInfoById, ReportAuthorizationInfo>(
+            new(reportId),
             cancellationToken);
 
         if (report is null)

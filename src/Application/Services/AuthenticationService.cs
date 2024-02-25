@@ -1,4 +1,5 @@
 ﻿using Application.Helpers.Repositories;
+using Application.Specifications.Accounts;
 using ApplicationSettings.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -46,7 +47,7 @@ internal class AuthenticationService : IAuthenticationService
         {
             new(
                 ClaimTypes.Role,
-                isModerator ? AccountType.Moderator.ToString() : AccountType.Moderator.ToString()),
+                isModerator ? AccountType.Moderator.ToString() : AccountType.Witness.ToString()),
             new(JwtRegisteredClaimNames.Sub, id.Value.ToString()),
             new(JwtRegisteredClaimNames.Email, email)
         };
@@ -81,10 +82,11 @@ internal class AuthenticationService : IAuthenticationService
 
         var accountId = new AccountId(new(accountIdValue));
 
-        var account = await _accountRepository.GetByIdAsync(
-            accountId,
-            AccountAuthenticationInfo.SelectQueryable(),
-            cancellationToken);
+        var account = await _accountRepository
+            .GetOneAsync<AccountAuthenticationInfoById, AccountAuthenticationInfo>(
+                new(accountId),
+                cancellationToken);
+
         return account is null
             ? UnableToAuthenticateError.Create(message: "Authenticated user is not found.")
             : account;

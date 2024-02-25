@@ -1,4 +1,4 @@
-﻿using Application.Specifications.AccountSpecifications;
+﻿using Application.Specifications.Accounts;
 
 namespace Application.Helpers.Repositories;
 internal static class AccountRepositoryExtension

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence.Common.Specifications;
 
-namespace Application.Specifications.AccountSpecifications;
+namespace Application.Specifications.Accounts;
 internal sealed record WitnessAccountToUpdateById : Specification<Account>
 {
-    internal WitnessAccountToUpdateById(AccountId accountId)
+    public WitnessAccountToUpdateById(AccountId accountId)
         : base(e => e.Id.Equals(accountId))
     {
         AddInclude(q => q.Include(e => e.Witness!));

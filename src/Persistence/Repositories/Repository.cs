@@ -1,10 +1,10 @@
 ﻿using Domain.Common.Models;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Common.Selectors;
 using Persistence.Common.Specifications;
 using Persistence.Common.Specifications.Helpers;
 using Persistence.Contracts.Repositories;
+using Persistence.Contracts.Selectors;
 using System.Linq.Expressions;
 
 namespace Persistence.Repositories;
@@ -14,7 +14,7 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
 {
     private readonly ApplicationDbContext _context;
     private DbSet<TEntity> DbSet => _context.Set<TEntity>();
-    private readonly Func<TEntityId, Expression<Func<TEntity, bool>>> PredicateById = id => e => e.Id.Equals(id);
+    private readonly Func<TEntityId, Expression<Func<TEntity, bool>>> _predicateById = id => e => e.Id.Equals(id);
 
     public Repository(ApplicationDbContext context)
     {
@@ -37,14 +37,14 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
             CancellationToken? cancellationToken = null
         ) =>
         await DbSet.AsNoTracking()
-            .FirstOrDefaultAsync(PredicateById(id), cancellationToken ?? CancellationToken.None);
+            .FirstOrDefaultAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
 
     public async Task<List<TEntity>> GetAllAsync(CancellationToken? cancellationToken = null)
         => await DbSet.AsNoTracking().ToListAsync();
 
     public async Task<bool> ExistByIdAsync(TEntityId id, CancellationToken? cancellationToken = null) =>
         await DbSet.AsNoTracking()
-            .AnyAsync(PredicateById(id), cancellationToken ?? CancellationToken.None);
+            .AnyAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
 
     public async Task<int> CountAsync(CancellationToken? cancellationToken = null)
         => await DbSet.AsNoTracking().CountAsync(cancellationToken ?? CancellationToken.None);
@@ -66,7 +66,7 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
         )
     {
         var deleted =
-            await DbSet.Where(PredicateById(id))
+            await DbSet.Where(_predicateById(id))
                 .ExecuteDeleteAsync(cancellationToken ?? CancellationToken.None)
             > 0;
         await SaveChangesAsync(cancellationToken);
@@ -92,6 +92,19 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
         return entity;
     }
 
+    public async Task<TResult?> GetOneAsync<TSpecification, TResult>(
+            TSpecification specification,
+            CancellationToken? cancellationToken = null
+        )
+        where TResult : ISelector
+        where TSpecification : Specification<TEntity, TResult>
+    {
+        var queryResult = DbSet.AsNoTracking().AddSpecification(specification);
+        IQueryable<TResult> queryable = default!;
+        queryResult.Handle(e => { queryable = e; });
+        return await queryable.FirstOrDefaultAsync();
+    }
+
     public async Task<List<TEntity>> GetManyAsync<TSpecification>(
             TSpecification specification,
             CancellationToken? cancellationToken = null
@@ -100,6 +113,22 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
         await DbSet.AsNoTracking()
             .AddSpecification(specification)
             .ToListAsync(cancellationToken ?? CancellationToken.None);
+
+    public async Task<List<TResult>> GetManyAsync<TSpecification, TResult>(
+            TSpecification specification,
+            CancellationToken? cancellationToken = null
+        ) where TSpecification : Specification<TEntity, TResult>
+    {
+        var queryResult = DbSet.AsNoTracking().AddSpecification(specification);
+        IQueryable<TResult>? queryable = default;
+        IQueryable<List<TResult>>? listQueryable = default;
+        queryResult.Handle(e => { queryable = e; },
+            e => { listQueryable = e; });
+
+        return queryable is not null
+            ? await queryable.ToListAsync()
+            : await listQueryable!.FirstOrDefaultAsync() ?? [];
+    }
 
     public async Task<int> CountAsync<TSpecification>(
             TSpecification specification,
@@ -132,80 +161,6 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
         await DbSet.AsNoTracking()
             .AddSpecification(specification)
             .AnyAsync(cancellationToken ?? CancellationToken.None);
-
-    #endregion
-
-
-    #region Selector
-
-    public async Task<TSelector?> GetByIdAsync<TSelector>(
-            TEntityId id,
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSelector : Selector<TEntity, TSelector> =>
-        await DbSet.AsNoTracking()
-            .Where(PredicateById(id))
-            .Select(selector)
-            .SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None);
-
-    public async Task<List<TSelector>> GetByIdAsync<TSelector>(
-            TEntityId id,
-            Expression<Func<TEntity, List<TSelector>>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSelector : Selector<TEntity, TSelector> =>
-        await DbSet.AsNoTracking()
-            .Where(PredicateById(id))
-            .Select(selector)
-            .FirstOrDefaultAsync(cancellationToken ?? CancellationToken.None)
-        ?? [];
-
-    public async Task<TSelector?> GetOneAsync<TSpecification, TSelector>(
-            TSpecification specification,
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSpecification : Specification<TEntity>
-        where TSelector : Selector<TEntity, TSelector> =>
-        await DbSet.AsNoTracking()
-            .AddSpecification(specification)
-            .Select(selector)
-            .SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None);
-
-    public async Task<List<TSelector>> GetOneAsync<TSpecification, TSelector>(
-            TSpecification specification,
-            Expression<Func<TEntity, List<TSelector>>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSpecification : Specification<TEntity>
-        where TSelector : Selector<TEntity, TSelector> =>
-        await DbSet.AsNoTracking()
-            .AddSpecification(specification)
-            .Select(selector)
-            .SingleOrDefaultAsync(cancellationToken ?? CancellationToken.None)
-        ?? [];
-
-    public async Task<List<TSelector>> GetManyAsync<TSelector>(
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSelector : Selector<TEntity, TSelector> =>
-        await DbSet.AsNoTracking()
-            .Select(selector)
-            .ToListAsync(cancellationToken ?? CancellationToken.None);
-
-    public async Task<List<TSelector>> GetManyAsync<TSpecification, TSelector>(
-            TSpecification specification,
-            Expression<Func<TEntity, TSelector>> selector,
-            CancellationToken? cancellationToken = null
-        )
-        where TSpecification : Specification<TEntity>
-        where TSelector : Selector<TEntity, TSelector> =>
-        await DbSet.AsNoTracking()
-            .AddSpecification(specification)
-            .Select(selector)
-            .ToListAsync(cancellationToken ?? CancellationToken.None);
 
     #endregion
 

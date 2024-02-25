@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Accounts.Queries.GetAccountInfoById;
+﻿using Application.Specifications.Accounts;
+
+namespace Application.Features.Accounts.Queries.GetAccountInfoById;
 internal sealed class GetAccountInfoByIdQueryHandler
     : IQueryHandler<GetAccountInfoByIdQuery, AccountInfo>
 {
@@ -14,9 +16,8 @@ internal sealed class GetAccountInfoByIdQueryHandler
             CancellationToken cancellationToken
         )
     {
-        var accountInfo = await _accountRepository.GetByIdAsync(
-            request.AccountId,
-            AccountInfo.SelectQueryable(),
+        var accountInfo = await _accountRepository.GetOneAsync<AccountInfoById, AccountInfo>(
+            new(request.AccountId),
             cancellationToken);
         return accountInfo is not null ? accountInfo : AccountNotFoundError.Create();
     }

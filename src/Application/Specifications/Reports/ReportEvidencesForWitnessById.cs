@@ -1,7 +1,7 @@
 ﻿using Persistence.Common.Specifications;
 
 namespace Application.Specifications.Reports;
-public sealed record ReportEvidencesForWitnessById : Specification<Report>
+internal sealed record ReportEvidencesForWitnessById : Specification<Report>
 {
 
     public ReportEvidencesForWitnessById(ReportId reportId, AccountId currentAccountId)

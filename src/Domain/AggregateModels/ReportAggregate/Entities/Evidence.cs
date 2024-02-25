@@ -23,9 +23,9 @@ public sealed record Evidence : Entity<EvidenceId>
             AccountId authorId,
             string caption,
             string description,
-            string no,
+            string? no,
             string street1,
-            string street2,
+            string? street2,
             string city,
             string province,
             IEnumerable<MediaUpload> mediaItems

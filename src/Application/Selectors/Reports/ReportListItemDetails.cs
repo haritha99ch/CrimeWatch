@@ -1,7 +1,7 @@
 ﻿using Shared.Dto.MediaItems;
 
 namespace Application.Selectors.Reports;
-public record ReportDetails(
+public record ReportListItemDetails(
         ReportId ReportId,
         WitnessDetailsForReportDetails? AuthorDetails,
         ModeratorDetailsForReportDetails? ModeratorDetails,
@@ -12,4 +12,4 @@ public record ReportDetails(
         int BookmarksCount,
         bool IsBookmarkedByCurrentUser, // Handle in request handler
         MediaViewItem MediaItem
-    ) : ISelector;
+    );

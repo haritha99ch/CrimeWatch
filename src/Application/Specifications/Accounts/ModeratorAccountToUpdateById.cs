@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence.Common.Specifications;
 
-namespace Application.Specifications.AccountSpecifications;
+namespace Application.Specifications.Accounts;
 internal sealed record ModeratorAccountToUpdateById : Specification<Account>
 {
     internal ModeratorAccountToUpdateById(AccountId accountId)

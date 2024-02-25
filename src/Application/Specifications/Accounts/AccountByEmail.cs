@@ -1,8 +1,8 @@
 ﻿using Persistence.Common.Specifications;
 
-namespace Application.Specifications.AccountSpecifications;
+namespace Application.Specifications.Accounts;
 internal sealed record AccountByEmail : Specification<Account>
 {
-    internal AccountByEmail(string email)
+    public AccountByEmail(string email)
         : base(e => e.Email.Equals(email)) { }
 }
