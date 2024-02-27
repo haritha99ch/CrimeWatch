@@ -15,10 +15,10 @@ public sealed record Report : AggregateRoot<ReportId>
     public required Location Location { get; init; }
     public required Status Status { get; set; }
 
-    public List<Evidence> Evidences { get; init; } = [];
-    public List<Comment> Comments { get; init; } = [];
-    public List<ViolationType> ViolationTypes { get; private set; } = [];
-    public List<Bookmark> Bookmarks { get; init; } = [];
+    public List<Evidence> Evidences { get; init; } = new();
+    public List<Comment> Comments { get; init; } = new();
+    public List<ViolationType> ViolationTypes { get; private set; } = new();
+    public List<Bookmark> Bookmarks { get; init; } = new();
     public int BookmarksCount { get; private set; }
     public MediaItem? MediaItem { get; private init; }
     public Account? Author { get; init; }

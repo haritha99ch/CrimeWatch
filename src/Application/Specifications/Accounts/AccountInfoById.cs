@@ -5,7 +5,12 @@ internal record AccountInfoById : Specification<Account, AccountInfo>
 {
     public AccountInfoById(AccountId accountId) : base(e => e.Id.Equals(accountId))
     {
-        Select = AccountInfo.GetProjection;
+        Select = e =>
+            new AccountInfo(
+                $"{e.Person!.FirstName} {e.Person.LastName}",
+                e.Email,
+                e.PhoneNumber,
+                e.AccountType.Equals(AccountType.Moderator));
     }
 
 }

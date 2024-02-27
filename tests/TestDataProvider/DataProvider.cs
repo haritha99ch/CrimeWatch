@@ -350,7 +350,7 @@ public static class DataProvider
                 r => r.Evidences,
                 (_, r) =>
                 {
-                    r.Evidences.AddRange(Enumerable.Range(1, 3).Select(_ => GetEvidence(authorId)));
+                    r.Evidences.Add(GetEvidence(authorId));
                     return r.Evidences;
                 });
 

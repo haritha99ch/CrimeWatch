@@ -53,8 +53,8 @@ public static class SpecificationEvaluator
         {
             query = query.Skip(pagination.Skip).Take(pagination.Take);
         }
-        return specification.Select.Handle(
-            e => new(query.Select(e)),
-            e => new(query.Select(e)));
+        return specification.SelectList is not null
+            ? Query<TResult>.FromListResult(query.Select(specification.SelectList))
+            : Query<TResult>.FromSingleResult(query.Select(specification.Select!));
     }
 }

@@ -1,6 +1,4 @@
-﻿using Persistence.Common.Selectors;
-using Shared.Dto.MediaItems;
-using System.Linq.Expressions;
+﻿using Shared.Dto.MediaItems;
 
 namespace Application.Selectors.Reports;
 public record ReportListItemDetails(
@@ -14,8 +12,4 @@ public record ReportListItemDetails(
         int BookmarksCount,
         bool IsBookmarkedByCurrentUser, // Handle in request handler
         MediaViewItem MediaItem
-    ) : Selector<Report, ReportAuthorizationInfo>, ISelector
-{
-    protected override Expression<Func<Report, ReportAuthorizationInfo>> SetProjection()
-        => throw new NotImplementedException();
-}
+    );

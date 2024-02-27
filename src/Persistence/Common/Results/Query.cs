@@ -5,15 +5,18 @@ public readonly struct Query<TResult>
     private readonly IQueryable<TResult>? _result = null;
     private readonly IQueryable<List<TResult>>? _results = null;
 
-    public Query(IQueryable<TResult> result)
+    private Query(IQueryable<TResult> result)
     {
         _result = result;
     }
 
-    public Query(IQueryable<List<TResult>>? results)
+    private Query(IQueryable<List<TResult>>? results)
     {
         _results = results;
     }
+
+    internal static Query<TResult> FromSingleResult(IQueryable<TResult> result) => new(result);
+    internal static Query<TResult> FromListResult(IQueryable<List<TResult>> results) => new(results);
 
     internal void Handle(
             Action<IQueryable<TResult>> onQuery,

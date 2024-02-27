@@ -1,6 +1,5 @@
 ﻿using Domain.Contracts.Models;
 using Microsoft.EntityFrameworkCore.Query;
-using Persistence.Common.Results;
 using Persistence.Common.Specifications.Types;
 using System.Linq.Expressions;
 
@@ -43,7 +42,8 @@ public abstract record Specification<TEntity, TResult>
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
     public Pagination? Pagination { get; private set; }
-    public Select<TEntity, TResult> Select { get; protected init; } = default!;
+    public Expression<Func<TEntity, TResult>>? Select { get; protected init; }
+    public Expression<Func<TEntity, List<TResult>>>? SelectList { get; protected init; }
 
     protected Specification(Expression<Func<TEntity, bool>>? criteria = null)
     {

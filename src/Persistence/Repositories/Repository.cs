@@ -39,12 +39,6 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
         await DbSet.AsNoTracking()
             .FirstOrDefaultAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
 
-    public async Task<TEntity?> GetByIdAsTrackingAsync(
-            TEntityId id,
-            CancellationToken? cancellationToken = null
-        ) =>
-        await DbSet.FirstOrDefaultAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
-
     public async Task<List<TEntity>> GetAllAsync(CancellationToken? cancellationToken = null)
         => await DbSet.AsNoTracking().ToListAsync();
 
@@ -60,7 +54,7 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
             CancellationToken? cancellationToken = null
         )
     {
-        DbSet.Update(entity);
+        entity = DbSet.Update(entity).Entity;
         await SaveChangesAsync(cancellationToken);
         ClearChangeTracker();
         return entity;
