@@ -1,4 +1,7 @@
-﻿using Shared.Dto.MediaItems;
+﻿using Domain.AggregateModels.ReportAggregate.Entities;
+using Persistence.Common.Selectors;
+using Shared.Dto.MediaItems;
+using System.Linq.Expressions;
 
 namespace Application.Selectors.Reports;
 public record EvidenceDetails(
@@ -9,4 +12,34 @@ public record EvidenceDetails(
         string Description,
         Location Location,
         List<MediaViewItem> MediaItems
-    ) : ISelector;
+    ) : Selector<Evidence, EvidenceDetails>, ISelector
+{
+    protected override Expression<Func<Evidence, EvidenceDetails>> SetProjection()
+        => e => new(
+            e.Id,
+            e.AuthorId == null
+                ? null
+                : new(
+                    e.AuthorId,
+                    $"{e.Author!.Person!.FirstName} {e.Author.Person.LastName}",
+                    e.Author.Email,
+                    e.Author.PhoneNumber
+                ),
+            e.ModeratorId == null
+                ? null
+                : new(
+                    e.ModeratorId,
+                    $"{e.Moderator!.Person!.FirstName} {e.Moderator.Person.FirstName}",
+                    e.Moderator.Email,
+                    e.Moderator.PhoneNumber,
+                    e.Moderator.Moderator!.City,
+                    e.Moderator.Moderator.Province
+                ),
+            e.Caption,
+            e.Description,
+            e.Location,
+            e.MediaItems
+                .Select(m => new MediaViewItem(m.Url, m.MediaType))
+                .ToList());
+
+}

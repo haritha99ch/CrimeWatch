@@ -5,6 +5,6 @@ internal record AccountAuthenticationInfoById : Specification<Account, AccountAu
 {
     public AccountAuthenticationInfoById(AccountId accountId) : base(e => e.Id.Equals(accountId))
     {
-        Select = e => new AccountAuthenticationInfo(e.Id, e.AccountType.Equals(AccountType.Moderator));
+        Select = AccountAuthenticationInfo.GetProjection;
     }
 }
