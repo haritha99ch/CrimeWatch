@@ -13,6 +13,7 @@ public interface IRepository<TEntity, TEntityId>
 
     Task<TEntity> AddAsync(TEntity entity, CancellationToken? cancellationToken = null);
     Task<TEntity?> GetByIdAsync(TEntityId id, CancellationToken? cancellationToken = null);
+    Task<TEntity?> GetByIdAsTrackingAsync(TEntityId id, CancellationToken? cancellationToken = null);
     Task<List<TEntity>> GetAllAsync(CancellationToken? cancellationToken = null);
     Task<bool> ExistByIdAsync(TEntityId id, CancellationToken? cancellationToken = null);
     Task<int> CountAsync(CancellationToken? cancellationToken = null);
