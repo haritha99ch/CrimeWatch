@@ -31,7 +31,7 @@ public class WhenGettingReportEvidences : TestBase
         var query = new GetReportEvidencesByReportIdQuery(testReport.Id);
         var result = await Mediator.Send(query);
 
-        Assert.AreEqual(1, result.GetValue().Count);
+        Assert.AreEqual(testReport.Evidences.Count, result.GetValue().Count);
     }
 
     [TestMethod]
@@ -59,7 +59,8 @@ public class WhenGettingReportEvidences : TestBase
         var query = new GetReportEvidencesByReportIdQuery(testReport.Id);
 
         var result = await Mediator.Send(query);
-        Assert.AreEqual(1, result.GetValue().Count);
+        Assert.AreEqual(testReport.Evidences.Count(e => e.AuthorId!.Equals(testCurrentWitness.Id)),
+            result.GetValue().Count);
     }
 
     [TestMethod]
@@ -88,6 +89,6 @@ public class WhenGettingReportEvidences : TestBase
         var query = new GetReportEvidencesByReportIdQuery(testReport.Id);
 
         var result = await Mediator.Send(query);
-        Assert.AreEqual(2, result.GetValue().Count);
+        Assert.AreEqual(testReport.Evidences.Count, result.GetValue().Count);
     }
 }

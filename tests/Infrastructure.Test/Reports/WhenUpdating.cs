@@ -171,6 +171,7 @@ public class WhenUpdating : TestBase
     public async Task When_Deleting_OwnedEntity()
     {
         var report = DataProvider.GetReportWithAEvidence(WitnessAccount.Id);
+        var initialEvidenceCount = report.Evidences.Count;
         await DbContext.Reports.AddAsync(report);
         await DbContext.SaveChangesAsync();
         DbContext.ChangeTracker.Clear();
@@ -184,7 +185,7 @@ public class WhenUpdating : TestBase
         DbContext.Reports.Update(report);
         await DbContext.SaveChangesAsync();
 
-        report = await DbContext.Reports.Include(e => e.Evidences).FirstOrDefaultAsync();
-        Assert.AreEqual(0, report!.Evidences.Count);
+        report = await DbContext.Reports.Include(e => e.Evidences).FirstOrDefaultAsync(r => r.Id.Equals(report.Id));
+        Assert.AreEqual(initialEvidenceCount - 1, report!.Evidences.Count);
     }
 }
