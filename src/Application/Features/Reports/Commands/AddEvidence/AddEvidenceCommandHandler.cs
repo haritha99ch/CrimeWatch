@@ -12,7 +12,7 @@ internal sealed class AddEvidenceCommandHandler : ICommandHandler<AddEvidenceCom
 
     public async Task<Result<EvidenceDetails>> Handle(AddEvidenceCommand request, CancellationToken cancellationToken)
     {
-        var report = await _reportRepository.GetByIdAsTrackingAsync(request.ReportId, cancellationToken);
+        var report = await _reportRepository.AsTracking().GetByIdAsync(request.ReportId, cancellationToken);
         if (report is null) return ReportNotFoundError.Create();
 
         var evidence = report.AddEvidence(

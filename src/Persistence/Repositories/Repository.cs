@@ -15,6 +15,7 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
     private readonly ApplicationDbContext _context;
     private DbSet<TEntity> DbSet => _context.Set<TEntity>();
     private readonly Func<TEntityId, Expression<Func<TEntity, bool>>> _predicateById = id => e => e.Id.Equals(id);
+    private bool _tracking;
 
     public Repository(ApplicationDbContext context)
     {
@@ -36,17 +37,11 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
             TEntityId id,
             CancellationToken? cancellationToken = null
         ) =>
-        await DbSet.AsNoTracking()
+        await (_tracking ? DbSet.AsTracking() : DbSet.AsNoTracking())
             .FirstOrDefaultAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
 
-    public async Task<TEntity?> GetByIdAsTrackingAsync(
-            TEntityId id,
-            CancellationToken? cancellationToken = null
-        ) =>
-        await DbSet.FirstOrDefaultAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
-
     public async Task<List<TEntity>> GetAllAsync(CancellationToken? cancellationToken = null)
-        => await DbSet.AsNoTracking().ToListAsync();
+        => await DbSet.AsNoTracking().ToListAsync(cancellationToken ?? CancellationToken.None);
 
     public async Task<bool> ExistByIdAsync(TEntityId id, CancellationToken? cancellationToken = null) =>
         await DbSet.AsNoTracking()
@@ -91,8 +86,7 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
         )
         where TSpecification : Specification<TEntity>
     {
-        var entity = await DbSet
-            .AsNoTracking()
+        var entity = await (_tracking ? DbSet.AsTracking() : DbSet.AsNoTracking())
             .AddSpecification(specification)
             .FirstOrDefaultAsync(cancellationToken ?? CancellationToken.None);
         return entity;
@@ -171,6 +165,12 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
     #endregion
 
 
+    public IRepository<TEntity, TEntityId> AsTracking()
+    {
+        _tracking = true;
+        return this;
+    }
+
     private async Task SaveChangesAsync(CancellationToken? cancellationToken = null)
     {
         await _context.SaveChangesAsync(cancellationToken ?? CancellationToken.None);
@@ -179,5 +179,6 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
     private void ClearChangeTracker()
     {
         _context.ChangeTracker.Clear();
+        _tracking = false;
     }
 }
