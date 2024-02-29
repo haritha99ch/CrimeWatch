@@ -43,24 +43,23 @@ public abstract record Specification<TEntity, TResult>
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
     public Pagination? Pagination { get; private set; }
-    public Select<TEntity, TResult> Select { get; protected init; } = default!;
+    public Select<TEntity, TResult> Select { get; private set; } = default!;
 
     protected Specification(Expression<Func<TEntity, bool>>? criteria = null)
     {
         Criteria = criteria;
     }
 
-    protected void AddInclude(
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include
-        ) => Includes.Add(include);
+    protected void AddInclude(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include)
+        => Includes.Add(include);
 
-    protected void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression) =>
-        OrderBy = orderByExpression;
+    protected void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression) => OrderBy = orderByExpression;
 
-    protected void AddOrderByDescending(
-            Expression<Func<TEntity, object>> orderByDescendingExpression
-        ) => OrderByDescending = orderByDescendingExpression;
+    protected void AddOrderByDescending(Expression<Func<TEntity, object>> orderByDescendingExpression)
+        => OrderByDescending = orderByDescendingExpression;
 
     protected void AddPagination(Pagination? pagination) => Pagination = pagination;
+    protected void ProjectTo(Expression<Func<TEntity, TResult>> select) => Select = select;
+    protected void ProjectTo(Expression<Func<TEntity, List<TResult>>> select) => Select = select;
 
 }

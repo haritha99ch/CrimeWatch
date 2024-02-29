@@ -13,14 +13,14 @@ internal record EvidenceDetailsListByReportId : Specification<Report, EvidenceDe
         : base(e => e.Id.Equals(reportId))
     {
         pagination ??= new(0, int.MaxValue);
-        Select = new(r => r.Evidences
+        ProjectTo(r => r.Evidences
             .AsQueryable()
             .Where(e => moderated
                 || e.Status.Equals(Status.Approved)
                 || e.Author != null && e.Author.Id.Equals(currentUser))
             .Skip(pagination.Skip)
             .Take(pagination.Take)
-            .Select(EvidenceDetails.GetProjection)
+            .Select(EvidenceDetails.Projection)
             .ToList());
     }
 

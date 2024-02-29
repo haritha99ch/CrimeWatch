@@ -6,22 +6,21 @@ public class Select<TEntity, TResult>
     private readonly Expression<Func<TEntity, TResult>>? _select;
     private readonly Expression<Func<TEntity, List<TResult>>>? _selectFromList;
 
-    public Select(Expression<Func<TEntity, TResult>> select)
+    private Select(Expression<Func<TEntity, TResult>> select)
     {
         _select = select;
         _selectFromList = null;
     }
 
-    public Select(Expression<Func<TEntity, List<TResult>>> selectFromList)
+    private Select(Expression<Func<TEntity, List<TResult>>> selectFromList)
     {
         _selectFromList = selectFromList;
         _select = null;
     }
 
     public static implicit operator Select<TEntity, TResult>(Expression<Func<TEntity, TResult>> select) => new(select);
-    public static implicit operator Select<TEntity, TResult>(
-            Expression<Func<TEntity, List<TResult>>> selectFromList
-        ) => new(selectFromList);
+    public static implicit operator Select<TEntity, TResult>(Expression<Func<TEntity, List<TResult>>> selectFromList)
+        => new(selectFromList);
 
     public Query<TResult> Handle(
             Func<Expression<Func<TEntity, TResult>>, Query<TResult>> onSelect,

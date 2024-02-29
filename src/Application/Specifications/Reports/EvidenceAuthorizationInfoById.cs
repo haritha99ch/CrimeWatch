@@ -6,11 +6,10 @@ internal record EvidenceAuthorizationInfoById : Specification<Report, EvidenceAu
     public EvidenceAuthorizationInfoById(ReportId reportId, EvidenceId evidenceId)
         : base(r => r.Id.Equals(reportId))
     {
-        Select = new(r => r.Evidences
+        ProjectTo(r => r.Evidences
             .AsQueryable()
             .Where(e => e.Id.Equals(evidenceId))
-            .Select(EvidenceAuthorizationInfo.GetProjection)
-            .FirstOrDefault()!
-        );
+            .Select(EvidenceAuthorizationInfo.Projection)
+            .FirstOrDefault()!);
     }
 }

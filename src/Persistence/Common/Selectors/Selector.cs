@@ -13,6 +13,6 @@ public abstract record Selector<TEntity, TResult>
     /// <summary>
     ///     Static property to get the selector from derived classes.
     /// </summary>
-    public static Expression<Func<TEntity, TResult>> GetProjection
+    public static Expression<Func<TEntity, TResult>> Projection
         => ((TResult)RuntimeHelpers.GetUninitializedObject(typeof(TResult))).SetProjection();
 }

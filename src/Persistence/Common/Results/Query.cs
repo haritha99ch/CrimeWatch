@@ -20,14 +20,16 @@ public readonly struct Query<TResult>
             Action<IQueryable<List<TResult>>> onListQuery
         )
     {
-        if (!IsList)
+        if (IsList)
+        {
+            if (_results is null) throw new("Result has no value");
+            onListQuery(_results);
+        }
+        else
         {
             if (_result is null) throw new("Result has no value");
             onQuery(_result);
-            return;
         }
-        if (_results is null) throw new("Result has no value");
-        onListQuery(_results);
     }
 
     internal void Handle(Action<IQueryable<TResult>> onQuery)
