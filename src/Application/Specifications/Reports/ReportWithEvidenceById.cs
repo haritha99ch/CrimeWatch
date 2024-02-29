@@ -4,8 +4,15 @@ using Persistence.Common.Specifications;
 namespace Application.Specifications.Reports;
 internal record ReportWithEvidenceById : Specification<Report>
 {
-    public ReportWithEvidenceById(ReportId reportId, EvidenceId evidenceId) : base(e => e.Id.Equals(reportId))
+    public ReportWithEvidenceById(ReportId reportId, EvidenceId evidenceId, bool includeImages = false) : base(e
+        => e.Id.Equals(reportId))
     {
-        AddInclude(q => q.Include(r => r.Evidences.AsQueryable().Where(e => e.Id.Equals(evidenceId))));
+        if (includeImages)
+            AddInclude(q => q
+                .Include(r => r.Evidences.Where(e => e.Id.Equals(evidenceId)))
+                .ThenInclude(e => e.MediaItems));
+        else
+            AddInclude(q => q
+                .Include(r => r.Evidences.Where(e => e.Id.Equals(evidenceId))));
     }
 }

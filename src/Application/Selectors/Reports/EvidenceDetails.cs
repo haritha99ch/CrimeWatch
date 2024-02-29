@@ -39,6 +39,7 @@ public record EvidenceDetails(
             e.Description,
             e.Location,
             e.MediaItems
+                .AsQueryable()
                 .Select(m => new MediaViewItem(m.Url, m.MediaType))
                 .ToList());
 

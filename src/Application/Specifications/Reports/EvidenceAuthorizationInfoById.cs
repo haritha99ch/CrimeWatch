@@ -10,6 +10,6 @@ internal record EvidenceAuthorizationInfoById : Specification<Report, EvidenceAu
             .AsQueryable()
             .Where(e => e.Id.Equals(evidenceId))
             .Select(EvidenceAuthorizationInfo.Projection)
-            .FirstOrDefault()!);
+            .First());
     }
 }
