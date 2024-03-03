@@ -156,10 +156,6 @@ public sealed record Report : AggregateRoot<ReportId>
 
     public bool AddBookmark(AccountId accountId)
     {
-        if (Bookmarks.Any(e => e.AccountId.Equals(accountId)))
-        {
-            throw new("Bookmark is already added");
-        }
         var bookmark = Bookmark.Create(accountId);
         Bookmarks.Add(bookmark);
         BookmarksCount++;
