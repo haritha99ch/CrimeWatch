@@ -165,10 +165,6 @@ public sealed record Report : AggregateRoot<ReportId>
 
     public bool RemoveBookmark(AccountId accountId)
     {
-        if (!Bookmarks.Any(e => e.AccountId.Equals(accountId)))
-        {
-            throw new("No bookmark was added to remove");
-        }
         Bookmarks.Remove(Bookmarks.FirstOrDefault(e => e.AccountId.Equals(accountId))!);
         BookmarksCount--;
         RaiseDomainEvent(new ReportBookmarkRemovedEvent(this, accountId));

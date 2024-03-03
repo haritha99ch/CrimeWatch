@@ -7,7 +7,6 @@ namespace Application.Common.Validators;
 /// <typeparam name="TRequest"></typeparam>
 /// <summary>
 /// </summary>
-/// <typeparam name="TRequest"></typeparam>
 public abstract class ApplicationValidator<TRequest> : AbstractValidator<TRequest>
     where TRequest : IBaseRequest
 {
