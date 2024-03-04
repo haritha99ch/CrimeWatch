@@ -55,10 +55,10 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
             CancellationToken? cancellationToken = null
         )
     {
-        DbSet.Update(entity);
+        var entry = DbSet.Update(entity);
         await SaveChangesAsync(cancellationToken);
         ClearChangeTracker();
-        return entity;
+        return entry.Entity;
     }
 
     public async Task<bool> DeleteByIdAsync(
