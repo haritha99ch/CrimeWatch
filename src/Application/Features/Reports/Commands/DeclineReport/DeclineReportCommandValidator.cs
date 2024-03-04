@@ -2,13 +2,13 @@
 using Application.Specifications.Reports;
 using FluentValidation;
 
-namespace Application.Features.Reports.Commands.ApproveReport;
-internal sealed class ApproveReportCommandValidator : ApplicationValidator<ApproveReportCommand>
+namespace Application.Features.Reports.Commands.DeclineReport;
+internal sealed class DeclineReportCommandValidator : ApplicationValidator<DeclineReportCommand>
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IRepository<Report, ReportId> _reportRepository;
 
-    public ApproveReportCommandValidator(
+    public DeclineReportCommandValidator(
             IAuthenticationService authenticationService,
             IRepository<Report, ReportId> reportRepository
         )
@@ -40,7 +40,7 @@ internal sealed class ApproveReportCommandValidator : ApplicationValidator<Appro
         if (!isAuthenticated) return false;
         if (!isModerator)
         {
-            validationError = UnauthorizedError.Create(message: "Only moderators can approve reports.");
+            validationError = UnauthorizedError.Create(message: "Only moderators can decline reports.");
             return false;
         }
         var report = await _reportRepository.GetOneAsync<ReportAuthorizationInfoById, ReportAuthorizationInfo>(
@@ -48,16 +48,18 @@ internal sealed class ApproveReportCommandValidator : ApplicationValidator<Appro
             cancellationToken);
         if (report is null)
         {
-            validationError = ReportNotFoundError.Create(message: "Report is not found to approve.");
+            validationError = ReportNotFoundError.Create(message: "Report is not found to decline.");
             return false;
         }
-        if (!report.Status.Equals(Status.UnderReview))
+
+        if (!report.Status.Equals(Status.Approved) && !report.Status.Equals(Status.UnderReview))
         {
-            validationError = ReportIsNoUnderReviewError.Create(message: "Report must be under reviewed to approve.");
+            validationError = ReportIsNoUnderReviewError.Create(message: "Report must be under reviewed to declined.");
             return false;
         }
+
         if (report.ModeratorId == null || report.ModeratorId.Equals(currentUser)) return true;
-        validationError = UnauthorizedError.Create(message: "Only moderator reviewing the report can approve.");
+        validationError = UnauthorizedError.Create(message: "Only moderator reviewing the report can decline.");
         return false;
     }
 }
