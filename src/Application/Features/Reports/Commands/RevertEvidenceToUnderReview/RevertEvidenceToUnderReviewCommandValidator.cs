@@ -2,13 +2,14 @@
 using Application.Specifications.Reports;
 using FluentValidation;
 
-namespace Application.Features.Reports.Commands.ApproveEvidence;
-internal sealed class ApproveEvidenceCommandValidator : ApplicationValidator<ApproveEvidenceCommand>
+namespace Application.Features.Reports.Commands.RevertEvidenceToUnderReview;
+internal sealed class RevertEvidenceToUnderReviewCommandValidator
+    : ApplicationValidator<RevertEvidenceToUnderReviewCommand>
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IRepository<Report, ReportId> _reportRepository;
 
-    public ApproveEvidenceCommandValidator(
+    public RevertEvidenceToUnderReviewCommandValidator(
             IAuthenticationService authenticationService,
             IRepository<Report, ReportId> reportRepository
         )
@@ -20,7 +21,10 @@ internal sealed class ApproveEvidenceCommandValidator : ApplicationValidator<App
             .MustAsync(IsAuthorizedAsync)
             .WithState(_ => validationError);
     }
-    private async Task<bool> IsAuthorizedAsync(ApproveEvidenceCommand request, CancellationToken cancellationToken)
+    private async Task<bool> IsAuthorizedAsync(
+            RevertEvidenceToUnderReviewCommand request,
+            CancellationToken cancellationToken
+        )
     {
         var authResult = await _authenticationService.GetAuthenticationResultAsync(cancellationToken);
         var currentUser = new AccountId(new());
@@ -40,7 +44,7 @@ internal sealed class ApproveEvidenceCommandValidator : ApplicationValidator<App
         if (!isAuthenticated) return false;
         if (!isModerator)
         {
-            validationError = UnauthorizedError.Create(message: "Only moderators can approve Evidence.");
+            validationError = UnauthorizedError.Create(message: "Only moderators can review evidence.");
             return false;
         }
         var evidence = await _reportRepository.GetOneAsync<EvidenceAuthorizationInfoById, EvidenceAuthorizationInfo>(
@@ -48,17 +52,17 @@ internal sealed class ApproveEvidenceCommandValidator : ApplicationValidator<App
             cancellationToken);
         if (evidence is null)
         {
-            validationError = EvidenceNotFoundError.Create(message: "Evidence is not found to approve.");
+            validationError = EvidenceNotFoundError.Create(message: "Evidence is not found to review.");
             return false;
         }
-        if (!evidence.Status.Equals(Status.UnderReview))
+        if (evidence.Status.Equals(Status.UnderReview))
         {
-            validationError =
-                EvidenceIsNoUnderReviewError.Create(message: "Evidence must be under reviewed to approve.");
+            validationError = EvidenceIsUnderReviewError.Create();
             return false;
         }
         if (evidence.ModeratorId == null || evidence.ModeratorId.Equals(currentUser)) return true;
-        validationError = UnauthorizedError.Create(message: "Only moderator reviewing the Evidence can approve.");
+        validationError = UnauthorizedError
+            .Create(message: "Only moderator reviewing the evidence can revert to review.");
         return false;
     }
 
