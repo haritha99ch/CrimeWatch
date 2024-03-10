@@ -1,4 +1,5 @@
-﻿using Infrastructure;
+﻿using ApplicationSettings;
+using Infrastructure;
 using Infrastructure.Context;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +15,7 @@ public class App
     {
         _host = Microsoft.Extensions.Hosting.Host
             .CreateDefaultBuilder()
+            .ConfigureAppConfiguration(config => config.AddApplicationSettings())
             .ConfigureServices(
                 (_, services) =>
                 {

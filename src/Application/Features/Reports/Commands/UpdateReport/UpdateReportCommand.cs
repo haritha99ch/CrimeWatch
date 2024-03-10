@@ -1,4 +1,5 @@
 ﻿using Domain.AggregateModels.ReportAggregate.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Features.Reports.Commands.UpdateReport;
 public sealed record UpdateReportCommand(
@@ -12,5 +13,5 @@ public sealed record UpdateReportCommand(
         string Province,
         List<ViolationType> ViolationTypes,
         MediaItem? MediaItem,
-        MediaUpload? NewMediaItem = null
+        IFormFile? NewMediaItem = null
     ) : ICommand<Report>;

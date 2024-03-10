@@ -32,9 +32,7 @@ public class WhenUpdatingEvidence : TestBase
         var updatedStreet2 = DataProvider.Street2;
         var city = report.Location.City;
         var province = report.Location.Province;
-        var newMediaItems = Enumerable.Range(1, 3)
-            .Select(_ => DataProvider.TestMediaItem)
-            .ToList();
+        var newMediaItems = Enumerable.Range(1, 3).Select(_ => DataProvider.File).ToList();
         var exitingMediaItems = report.Evidences[0].MediaItems;
         exitingMediaItems.RemoveAt(1);
         var expectingMediaItemCount = exitingMediaItems.Count + newMediaItems.Count;
@@ -87,9 +85,7 @@ public class WhenUpdatingEvidence : TestBase
         var updatedStreet2 = DataProvider.Street2;
         var city = report.Location.City;
         var province = report.Location.Province;
-        var newMediaItems = Enumerable.Range(1, 3)
-            .Select(_ => DataProvider.TestMediaItem)
-            .ToList();
+        var newMediaItems = Enumerable.Range(1, 3).Select(_ => DataProvider.File);
         var exitingMediaItems = report.Evidences[0].MediaItems;
 
         // Act

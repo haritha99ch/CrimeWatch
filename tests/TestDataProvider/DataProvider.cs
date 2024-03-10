@@ -9,6 +9,7 @@ using Domain.AggregateModels.ReportAggregate.Entities;
 using Domain.AggregateModels.ReportAggregate.Enums;
 using Domain.AggregateModels.ReportAggregate.ValueObjects;
 using Domain.Common.Models;
+using Microsoft.AspNetCore.Http;
 using Person = Bogus.Person;
 using PersonEntity = Domain.AggregateModels.AccountAggregate.Entities.Person;
 
@@ -38,6 +39,7 @@ public static class DataProvider
     public static string Caption => new Lorem().Sentence();
     public static string Description => new Lorem().Paragraphs();
     public static string MediaItemUrl => new Internet().Url();
+    public static IFormFile File => new MockFormFile(Array.Empty<byte>(), new Randomizer().Enum<MediaType>());
     public static AccountId AccountId => new(Guid.NewGuid());
     public static AccountId AuthorId => AccountId;
     public static AccountId ModeratorId => AccountId;
@@ -256,6 +258,7 @@ public static class DataProvider
     private static MediaUpload GetMediaUpload()
     {
         var faker = new Faker<MediaUpload>()
+            .RuleFor(m => m.FileName, value: "FileName.png")
             .RuleFor(m => m.Url, MediaItemUrl)
             .RuleFor(m => m.MediaType, MediaType);
         return faker.Generate();
@@ -265,6 +268,7 @@ public static class DataProvider
     {
         var faker = new Faker<MediaItem>()
             .RuleFor(m => m.Id, () => new(Guid.NewGuid()))
+            .RuleFor(m => m.FileName, value: "FileName.png")
             .RuleFor(m => m.Url, MediaItemUrl)
             .RuleFor(m => m.MediaType, MediaType)
             .RuleFor(m => m.CreatedAt, DateTime.Now);

@@ -1,6 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Infrastructure.Contracts.Services;
+using Infrastructure.Types.Files;
 
 namespace Infrastructure.Services;
 public class BlobStorageClient : IBlobStorageClient
@@ -12,7 +13,7 @@ public class BlobStorageClient : IBlobStorageClient
         _blobServiceClient = blobServiceClient;
     }
 
-    public async Task<string> UploadFileAsync(
+    public async Task<FileUpload> UploadFileAsync(
             string containerName,
             string fileName,
             Stream fileStream,
@@ -26,17 +27,17 @@ public class BlobStorageClient : IBlobStorageClient
 
         var blobClient = clientContainer.GetBlobClient(fileName);
         await blobClient.UploadAsync(fileStream, true, cancellationToken);
-        return blobClient.Uri.AbsoluteUri;
+        return new(blobClient.Name, blobClient.Uri.AbsoluteUri);
     }
 
     public async Task<bool> DeleteFileByUriAsync(
-            string uri,
             string containerName,
+            string fileName,
             CancellationToken cancellationToken
         )
     {
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
-        var blobClient = containerClient.GetBlobClient(uri);
+        var blobClient = containerClient.GetBlobClient(fileName);
         try
         {
             await blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken);

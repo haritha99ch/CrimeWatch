@@ -33,7 +33,7 @@ public class WhenCreatingReport : TestBase
         var city = DataProvider.City;
         var province = DataProvider.Province;
         var authorId = testAccount.Id;
-        var mediaItemUpload = DataProvider.TestMediaItem;
+        var file = DataProvider.File;
         var violationTypes = DataProvider.ViolationTypes;
 
         // Act
@@ -47,7 +47,7 @@ public class WhenCreatingReport : TestBase
             city,
             province,
             violationTypes,
-            mediaItemUpload);
+            file);
         var result = await Mediator.Send(command);
         var report = result.GetValue();
 
@@ -82,7 +82,7 @@ public class WhenCreatingReport : TestBase
         var city = DataProvider.City;
         var province = DataProvider.Province;
         var authorId = testAccount.Id;
-        var mediaItemUpload = DataProvider.TestMediaItem;
+        var file = DataProvider.File;
         var violationTypes = DataProvider.ViolationTypes;
 
         // Act
@@ -96,7 +96,7 @@ public class WhenCreatingReport : TestBase
             city,
             province,
             violationTypes,
-            mediaItemUpload);
+            file);
         var result = await Mediator.Send(command);
         var error = result.GetError();
 

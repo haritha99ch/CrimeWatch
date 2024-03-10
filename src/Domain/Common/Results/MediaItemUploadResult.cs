@@ -19,7 +19,7 @@ public readonly struct MediaItemUploadResult
 
     public static implicit operator MediaItemUploadResult(Exception failed) => new(failed);
 
-    public TResult Match<TResult>(
+    public TResult Handle<TResult>(
             Func<MediaUpload, TResult> onMediaUpload,
             Func<Exception, TResult> onFailed
         ) => _failed is not null ? onFailed(_failed) : onMediaUpload(_mediaUpload!);

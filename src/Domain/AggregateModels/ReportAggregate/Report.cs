@@ -44,7 +44,7 @@ public sealed record Report : AggregateRoot<ReportId>
             Caption = caption,
             Description = description,
             Location = Location.Create(no, street1, street2, city, province),
-            MediaItem = MediaItem.Create(mediaItem.Url, mediaItem.MediaType),
+            MediaItem = MediaItem.Create(mediaItem.FileName, mediaItem.Url, mediaItem.MediaType),
             ViolationTypes = violationTypes,
             Status = Status.Pending,
             CreatedAt = DateTime.Now

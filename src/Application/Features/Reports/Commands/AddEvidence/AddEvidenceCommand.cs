@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Reports.Commands.AddEvidence;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Application.Features.Reports.Commands.AddEvidence;
 public sealed record AddEvidenceCommand(
         ReportId ReportId,
         AccountId AuthorId,
@@ -9,5 +11,5 @@ public sealed record AddEvidenceCommand(
         string? Street2,
         string City,
         string Province,
-        IEnumerable<MediaUpload> MediaItems
+        IEnumerable<IFormFile> MediaItems
     ) : ICommand<EvidenceDetails>;

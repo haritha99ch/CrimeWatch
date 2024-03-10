@@ -24,9 +24,7 @@ public class WhenAddingEvidence : TestBase
         var testWitness = DataProvider.TestAccountForWitness;
         var evidenceAdder = DataProvider.TestAccountForWitness;
         var testReport = DataProvider.GetReportWithAEvidence(testWitness.Id);
-        var mediaItemsForEvidence = Enumerable.Range(1, 3)
-            .Select(_ => DataProvider.TestMediaItem)
-            .ToList();
+        var mediaItemsForEvidence = Enumerable.Range(1, 3).Select(_ => DataProvider.File);
         testReport.SetApproved();
         await DbContext.Accounts.AddRangeAsync([testWitness, evidenceAdder]);
         await DbContext.Reports.AddAsync(testReport);
@@ -56,9 +54,7 @@ public class WhenAddingEvidence : TestBase
         var testWitness = DataProvider.TestAccountForWitness;
         var evidenceAdder = DataProvider.TestAccountForWitness;
         var testReport = DataProvider.GetReportWithAEvidence(testWitness.Id);
-        var mediaItemsForEvidence = Enumerable.Range(1, 3)
-            .Select(_ => DataProvider.TestMediaItem)
-            .ToList();
+        var mediaItemsForEvidence = Enumerable.Range(1, 3).Select(_ => DataProvider.File);
         await DbContext.Accounts.AddRangeAsync([testWitness, evidenceAdder]);
         await DbContext.Reports.AddAsync(testReport);
         await SaveAndClearChangeTrackerAsync();
@@ -87,9 +83,7 @@ public class WhenAddingEvidence : TestBase
         var testWitness = DataProvider.TestAccountForWitness;
         var evidenceAdder = DataProvider.TestAccountForWitness;
         var testReport = DataProvider.GetReportWithAEvidence(testWitness.Id);
-        var mediaItemsForEvidence = Enumerable.Range(1, 3)
-            .Select(_ => DataProvider.TestMediaItem)
-            .ToList();
+        var mediaItemsForEvidence = Enumerable.Range(1, 3).Select(_ => DataProvider.File);
         await DbContext.Accounts.AddRangeAsync([testWitness, evidenceAdder]);
         await DbContext.Reports.AddAsync(testReport);
         await SaveAndClearChangeTrackerAsync();

@@ -1,12 +1,12 @@
 ﻿using ApplicationSettings;
 using ApplicationSettings.Helpers;
 using ApplicationSettings.Options;
+using Azure.Storage.Blobs;
 using Infrastructure.Context;
 using Infrastructure.Contracts.Services;
 using Infrastructure.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;
@@ -28,6 +28,7 @@ public static class Configure
         )
     {
         serviceCollection.ConfigureSqlDbContext(instanceName);
+        serviceCollection.ConfigureBlobStorageClient();
     }
 
     /// <summary>
@@ -84,7 +85,15 @@ public static class Configure
     {
         serviceCollection.ConfigureBlobStorageOptions();
         var blobStorageOptions = serviceCollection.GetRequiredOptions<BlobStorageOptions>();
-        serviceCollection.AddAzureClients(builder => builder.AddBlobServiceClient(blobStorageOptions.ConnectionString));
+
+        serviceCollection.AddSingleton(e => new BlobServiceClient(blobStorageOptions.ConnectionString,
+            new()
+            {
+                Retry =
+                {
+                    MaxRetries = blobStorageOptions.MaximumRetryCount
+                }
+            }));
         serviceCollection.AddScoped<IBlobStorageClient, BlobStorageClient>();
     }
 }

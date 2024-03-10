@@ -13,8 +13,8 @@ public sealed record Evidence : Entity<EvidenceId>
     public required Location Location { get; init; }
     public required Status Status { get; set; }
 
-    public List<MediaItem> MediaItems { get; private set; } = new();
-    public List<Comment> Comments { get; } = new();
+    public List<MediaItem> MediaItems { get; private set; } = [];
+    public List<Comment> Comments { get; } = [];
 
     public Account? Author { get; init; }
     public Account? Moderator { get; init; }
@@ -29,18 +29,17 @@ public sealed record Evidence : Entity<EvidenceId>
             string city,
             string province,
             IEnumerable<MediaUpload> mediaItems
-        ) =>
-        new()
-        {
-            AuthorId = authorId,
-            Caption = caption,
-            Description = description,
-            Location = Location.Create(no, street1, street2, city, province),
-            MediaItems = MapMediaUploadsToEntities(mediaItems),
-            Status = Status.Pending,
-            CreatedAt = DateTime.Now,
-            Id = new(Guid.NewGuid())
-        };
+        ) => new()
+    {
+        AuthorId = authorId,
+        Caption = caption,
+        Description = description,
+        Location = Location.Create(no, street1, street2, city, province),
+        MediaItems = MapMediaUploadsToEntities(mediaItems),
+        Status = Status.Pending,
+        CreatedAt = DateTime.Now,
+        Id = new(Guid.NewGuid())
+    };
 
     public bool Update(
             string caption,
@@ -142,6 +141,6 @@ public sealed record Evidence : Entity<EvidenceId>
 
     private static List<MediaItem> MapMediaUploadsToEntities(IEnumerable<MediaUpload> mediaItems)
     {
-        return mediaItems.Select(e => MediaItem.Create(e.Url, e.MediaType)).ToList();
+        return mediaItems.Select(e => MediaItem.Create(e.FileName, e.Url, e.MediaType)).ToList();
     }
 }

@@ -4,13 +4,15 @@ using Domain.AggregateModels.ReportAggregate.ValueObjects;
 namespace Domain.AggregateModels.ReportAggregate.Entities;
 public sealed record MediaItem : Entity<MediaItemId>
 {
+    public required string FileName { get; set; }
     public required string Url { get; set; }
     public required MediaType MediaType { get; set; }
 
-    public static MediaItem Create(string url, MediaType mediaType) =>
+    public static MediaItem Create(string fileName, string url, MediaType mediaType) =>
         new()
         {
             Id = new(Guid.NewGuid()),
+            FileName = fileName,
             Url = url,
             MediaType = mediaType,
             CreatedAt = DateTime.Now

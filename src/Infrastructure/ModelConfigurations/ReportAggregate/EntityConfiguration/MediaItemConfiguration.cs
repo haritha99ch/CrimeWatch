@@ -13,6 +13,8 @@ internal static class MediaItemConfiguration
         builder.HasKey(m => m.Id);
         builder.Property(m => m.Id).HasConversion(id => id.Value, value => new(value));
 
+        builder.Property(m => m.FileName).IsRequired();
+
         builder.Property(m => m.Url).IsRequired();
 
         builder.Property(m => m.MediaType).IsRequired();
@@ -28,6 +30,8 @@ internal static class MediaItemConfiguration
 
         builder.HasKey(m => m.Id);
         builder.Property(m => m.Id).HasConversion(id => id.Value, value => new(value));
+
+        builder.Property(m => m.FileName).IsRequired();
 
         builder.Property(m => m.Url).IsRequired();
 

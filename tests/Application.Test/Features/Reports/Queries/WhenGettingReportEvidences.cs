@@ -49,7 +49,7 @@ public class WhenGettingReportEvidences : TestBase
             evidence.Location.Street2,
             evidence.Location.City,
             evidence.Location.Province,
-            evidence.MediaItems.ConvertAll(e => MediaUpload.Create(e.Url, e.MediaType)));
+            evidence.MediaItems.ConvertAll(e => MediaUpload.Create(e.FileName, e.Url, e.MediaType)));
         testReport.SetApproved();
         await DbContext.Accounts.AddRangeAsync([testWitness, testCurrentWitness]);
         await DbContext.Reports.AddAsync(testReport);
@@ -79,7 +79,7 @@ public class WhenGettingReportEvidences : TestBase
             evidence.Location.Street2,
             evidence.Location.City,
             evidence.Location.Province,
-            evidence.MediaItems.ConvertAll(e => MediaUpload.Create(e.Url, e.MediaType)));
+            evidence.MediaItems.ConvertAll(e => MediaUpload.Create(e.FileName, e.Url, e.MediaType)));
         testReport.SetApproved();
         await DbContext.Accounts.AddRangeAsync([testWitness, testCurrentWitness, testModerator]);
         await DbContext.Reports.AddAsync(testReport);

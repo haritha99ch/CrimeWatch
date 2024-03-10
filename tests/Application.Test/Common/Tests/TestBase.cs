@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Persistence.Contracts.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -20,6 +21,7 @@ public abstract class TestBase
     protected ApplicationDbContext DbContext => _app.DbContext;
 
     protected ISender Mediator => _app.GetRequiredService<ISender>();
+    private IFileStorageService _fileStorageService => _app.GetRequiredService<IFileStorageService>();
     private IOptions<JwtOptions> _jwtOptionsInstance =>
         _app.GetRequiredService<IOptions<JwtOptions>>();
     private JwtOptions _jwtOptions => _jwtOptionsInstance.Value;
@@ -35,6 +37,7 @@ public abstract class TestBase
     protected virtual async Task CleanupAsync()
     {
         await DbContext.Database.EnsureDeletedAsync();
+        await _fileStorageService.DeleteContainerAsync(string.Empty, CancellationToken.None);
     }
 
     protected async Task SaveAndClearChangeTrackerAsync()

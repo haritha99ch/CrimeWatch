@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Reports.Commands.CreateReport;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Application.Features.Reports.Commands.CreateReport;
 public sealed record CreateReportCommand(
         AccountId AuthorId,
         string Caption,
@@ -9,5 +11,5 @@ public sealed record CreateReportCommand(
         string City,
         string Province,
         List<ViolationType> ViolationTypes,
-        MediaUpload MediaItem
+        IFormFile MediaItem
     ) : ICommand<Report>;

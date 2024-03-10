@@ -1,4 +1,5 @@
-﻿using ApplicationSettings;
+﻿using Application.Test.Service;
+using ApplicationSettings;
 using ApplicationSettings.Options;
 using Infrastructure;
 using Infrastructure.Context;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Moq;
 using Persistence;
+using Persistence.Contracts.Services;
 
 namespace Application.Test.Common.Host;
 public class App
@@ -24,8 +26,11 @@ public class App
             .ConfigureServices(
                 (_, services) =>
                 {
-                    services.AddInfrastructure("application-test");
+                    services.AddInfrastructure(instanceName: "application-test");
                     services.AddPersistence();
+                    services
+                        .AddScoped<IFileStorageService,
+                            AzureBlobStorageTestService>(); // Use Test project implementation.
 
                     // Mock HttpContextAccessor
                     var mockHttpContextAccessor = new Mock<IHttpContextAccessor>();

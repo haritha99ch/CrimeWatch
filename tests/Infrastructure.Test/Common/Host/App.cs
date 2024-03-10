@@ -1,4 +1,5 @@
-﻿using Infrastructure.Context;
+﻿using ApplicationSettings;
+using Infrastructure.Context;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Test.Common.Host;
@@ -11,6 +12,7 @@ public class App
     {
         var host = Microsoft.Extensions.Hosting.Host
             .CreateDefaultBuilder()
+            .ConfigureAppConfiguration((_, config) => config.AddApplicationSettings())
             .ConfigureServices((_, services) => services.AddInfrastructure("test-crime-watch-db"))
             .Build();
 

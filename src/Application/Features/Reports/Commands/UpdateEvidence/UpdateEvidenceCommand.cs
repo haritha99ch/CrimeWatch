@@ -1,4 +1,5 @@
 ﻿using Domain.AggregateModels.ReportAggregate.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Features.Reports.Commands.UpdateEvidence;
 public sealed record UpdateEvidenceCommand(
@@ -12,5 +13,5 @@ public sealed record UpdateEvidenceCommand(
         string City,
         string Province,
         List<MediaItem>? MediaItems,
-        List<MediaUpload>? NewMediaItems = null
+        IEnumerable<IFormFile>? NewMediaItems = null
     ) : ICommand<EvidenceDetails>;

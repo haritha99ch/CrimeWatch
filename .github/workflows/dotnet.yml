@@ -17,45 +17,58 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-            
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Install Node.js v18.0.0
-      uses: actions/setup-node@v2
-      with:
-        node-version: 18.0.0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Cache NuGet packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
+      - name: Install Node.js v18.0.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.0.0
 
-    - name: Restore dependencies .NET
-      run: dotnet restore
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
-    - name: Cache npm dependencies
-      uses: actions/cache@v3
-      with:
-        path: src/crimewatch.web.client/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('src/crimewatch.web.client/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      - name: Install Azurite
+        run: npm install -g azurite
 
-    - name: Restore dependencies npm
-      run: |
-        cd src/crimewatch.web.client/
-        npm install
-      
-    - name: Build
-      run: dotnet build --no-restore
-      
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Setting User Secrets
+        env:
+          BLOBSTORAGEOPTIONS_CONNECTIONSTRING: ${{ secrets.BLOBSTORAGEOPTIONS_CONNECTIONSTRING }}
+        run: |
+          dotnet user-secrets set "BlobStorageOptions:ConnectionString" $env:BLOBSTORAGEOPTIONS_CONNECTIONSTRING --project .\src\ApplicationSettings\
+        shell: pwsh
+
+      - name: Restore dependencies .NET
+        run: dotnet restore
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: src/crimewatch.web.client/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('src/crimewatch.web.client/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Restore dependencies npm
+        run: |
+          cd src/crimewatch.web.client/
+          npm install
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: |
+          mkdir azurite
+          azurite --skipApiVersionCheck --location ./azurite ./azurite/debug.log &
+          dotnet test --no-build --verbosity normal
