@@ -1,4 +1,6 @@
-﻿namespace Application.Test.Features.Accounts.Commands;
+﻿using Application.Features.Accounts.Commands.CreateAccountForWitness;
+
+namespace Application.Test.Features.Accounts.Commands;
 [TestClass]
 public class WhenCreatingAccountForWitness : TestBase
 {
@@ -31,7 +33,7 @@ public class WhenCreatingAccountForWitness : TestBase
             firstName,
             lastName,
             gender,
-            birthDay,
+            birthDay.ToDateTime(TimeOnly.MinValue),
             email,
             password,
             phoneNumber);

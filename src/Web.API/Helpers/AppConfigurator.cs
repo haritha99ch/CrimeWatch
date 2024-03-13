@@ -2,6 +2,7 @@
 using ApplicationSettings;
 using Infrastructure;
 using Persistence;
+using Web.API.Middlewares;
 
 namespace Web.API.Helpers;
 internal static class AppConfigurator
@@ -17,5 +18,6 @@ internal static class AppConfigurator
         serviceCollection.AddPersistence();
         serviceCollection.AddHttpContextAccessor();
         serviceCollection.AddApplication();
+        serviceCollection.AddTransient<ErrorHandlingMiddleWare>();
     }
 }

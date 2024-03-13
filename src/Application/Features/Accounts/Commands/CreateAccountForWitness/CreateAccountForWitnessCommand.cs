@@ -1,10 +1,10 @@
-﻿namespace Application;
+﻿namespace Application.Features.Accounts.Commands.CreateAccountForWitness;
 public sealed record CreateAccountForWitnessCommand(
         string Nic,
         string FirstName,
         string LastName,
         Gender Gender,
-        DateOnly BirthDay,
+        DateTime BirthDay,
         string Email,
         string Password,
         string PhoneNumber

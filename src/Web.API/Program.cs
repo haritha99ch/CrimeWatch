@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Web.API.Helpers;
+using Web.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.ConfigureConfiguration();
@@ -51,6 +52,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandlingMiddleWare>();
 
 app.UseHttpsRedirection();
 

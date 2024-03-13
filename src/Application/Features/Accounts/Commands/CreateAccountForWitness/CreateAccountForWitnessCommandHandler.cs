@@ -19,7 +19,7 @@ internal sealed class CreateAccountForWitnessCommandHandler
             request.FirstName,
             request.LastName,
             request.Gender,
-            request.BirthDay,
+            new(request.BirthDay.Year, request.BirthDay.Month, request.BirthDay.Day),
             request.Email,
             request.Password,
             request.PhoneNumber);
