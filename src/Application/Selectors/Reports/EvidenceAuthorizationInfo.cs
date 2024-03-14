@@ -1,5 +1,4 @@
 ﻿using Domain.AggregateModels.ReportAggregate.Entities;
-using Persistence.Common.Selectors;
 using System.Linq.Expressions;
 
 namespace Application.Selectors.Reports;
@@ -8,9 +7,9 @@ public record EvidenceAuthorizationInfo(
         AccountId? AuthorId,
         AccountId? ModeratorId,
         Status Status
-    ) : Selector<Evidence, EvidenceAuthorizationInfo>, ISelector
+    ) : ISelector<Evidence, EvidenceAuthorizationInfo>
 {
-    protected override Expression<Func<Evidence, EvidenceAuthorizationInfo>> SetProjection()
+    public Expression<Func<Evidence, EvidenceAuthorizationInfo>> SetProjection()
         => e => new(e.Id, e.AuthorId, e.ModeratorId, e.Status);
 
 }

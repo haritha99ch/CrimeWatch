@@ -8,6 +8,6 @@ public record ReportDetailsList : Specification<Report, ReportDetails>
             || e.Status.Equals(Status.Approved)
             || e.AuthorId != null && e.AuthorId.Equals(currentUser))
     {
-        ProjectTo(ReportDetails.Projection);
+        ProjectTo(GetProjection<Report, ReportDetails>());
     }
 }

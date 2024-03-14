@@ -5,6 +5,6 @@ internal record ReportDetailsById : Specification<Report, ReportDetails>
 {
     public ReportDetailsById(ReportId reportId) : base(e => e.Id.Equals(reportId))
     {
-        ProjectTo(ReportDetails.Projection);
+        ProjectTo(GetProjection<Report, ReportDetails>());
     }
 }

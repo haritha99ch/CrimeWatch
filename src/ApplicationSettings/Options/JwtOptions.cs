@@ -2,11 +2,11 @@
 public class JwtOptions : IApplicationOptions
 {
     [Required]
-    public string Secret { get; set; } = default!;
+    public string Secret { get; init; } = default!;
 
     [Required]
-    public string Issuer { get; set; } = default!;
+    public string Issuer { get; init; } = default!;
 
     [Required]
-    public string Audience { get; set; } = default!;
+    public string Audience { get; init; } = default!;
 }

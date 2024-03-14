@@ -1,5 +1,4 @@
 ﻿using Domain.AggregateModels.ReportAggregate.Entities;
-using Persistence.Common.Selectors;
 using Shared.Dto.MediaItems;
 using System.Linq.Expressions;
 
@@ -12,9 +11,9 @@ public record EvidenceDetails(
         string Description,
         Location Location,
         List<MediaViewItem> MediaItems
-    ) : Selector<Evidence, EvidenceDetails>, ISelector
+    ) : ISelector<Evidence, EvidenceDetails>
 {
-    protected override Expression<Func<Evidence, EvidenceDetails>> SetProjection()
+    public Expression<Func<Evidence, EvidenceDetails>> SetProjection()
         => e => new(
             e.Id,
             e.AuthorId == null

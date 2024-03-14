@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Common.Specifications;
 using Persistence.Common.Specifications.Helpers;
 using Persistence.Contracts.Repositories;
-using Persistence.Contracts.Selectors;
 using System.Linq.Expressions;
 
 namespace Persistence.Repositories;
@@ -96,7 +95,6 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
             TSpecification specification,
             CancellationToken? cancellationToken = null
         )
-        where TResult : ISelector
         where TSpecification : Specification<TEntity, TResult>
     {
         var queryResult = DbSet.AsNoTracking().AddSpecification(specification);

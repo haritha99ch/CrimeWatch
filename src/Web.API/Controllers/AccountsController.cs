@@ -1,5 +1,6 @@
 ﻿using Application.Features.Accounts.Commands.CreateAccountForModerator;
 using Application.Features.Accounts.Commands.CreateAccountForWitness;
+using Application.Features.Accounts.Queries.SignInToAccount;
 using Domain.AggregateModels.AccountAggregate;
 using Domain.AggregateModels.AccountAggregate.Entities;
 using MediatR;
@@ -36,4 +37,13 @@ public class AccountsController : ControllerBase
         return result.Handle(Ok, e => e.ToProblemDetails());
     }
 
+    [HttpPost]
+    public async Task<ActionResult<string>> SignIn(
+            [FromBody] SignInToAccountQuery query,
+            CancellationToken cancellationToken
+        )
+    {
+        var result = await _mediatr.Send(query, cancellationToken);
+        return result.Handle(Ok, e => e.ToProblemDetails());
+    }
 }

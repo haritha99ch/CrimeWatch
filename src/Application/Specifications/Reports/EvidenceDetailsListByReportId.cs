@@ -1,4 +1,5 @@
-﻿using Persistence.Common.Specifications;
+﻿using Domain.AggregateModels.ReportAggregate.Entities;
+using Persistence.Common.Specifications;
 using Persistence.Common.Specifications.Types;
 
 namespace Application.Specifications.Reports;
@@ -20,7 +21,7 @@ internal record EvidenceDetailsListByReportId : Specification<Report, EvidenceDe
                 || e.Author != null && e.Author.Id.Equals(currentUser))
             .Skip(pagination.Skip)
             .Take(pagination.Take)
-            .Select(EvidenceDetails.Projection)
+            .Select(GetProjection<Evidence, EvidenceDetails>())
             .ToList());
     }
 

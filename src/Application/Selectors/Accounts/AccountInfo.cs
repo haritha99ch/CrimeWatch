@@ -1,11 +1,10 @@
-﻿using Persistence.Common.Selectors;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Application.Selectors.Accounts;
 public record AccountInfo(string FullName, string Email, string PhoneNumber, bool IsModerator)
-    : Selector<Account, AccountInfo>, ISelector
+    : ISelector<Account, AccountInfo>
 {
-    protected override Expression<Func<Account, AccountInfo>> SetProjection()
+    public Expression<Func<Account, AccountInfo>> SetProjection()
         => e =>
             new(
                 $"{e.Person!.FirstName} {e.Person.LastName}",

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 
 namespace Application.Selectors.Reports;
-public record BookmarkInfo(AccountId AccountId) : Selector<Bookmark, BookmarkInfo>, ISelector
+public record BookmarkInfo(AccountId AccountId) : ISelector<Bookmark, BookmarkInfo>
 {
-    protected override Expression<Func<Bookmark, BookmarkInfo>> SetProjection() => e => new(e.AccountId);
+    public Expression<Func<Bookmark, BookmarkInfo>> SetProjection() => e => new(e.AccountId);
 }

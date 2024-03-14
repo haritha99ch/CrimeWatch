@@ -1,6 +1,5 @@
 ﻿using Domain.Common.Models;
 using Persistence.Common.Specifications;
-using Persistence.Contracts.Selectors;
 
 namespace Persistence.Contracts.Repositories;
 public interface IRepository<TEntity, TEntityId>
@@ -34,7 +33,6 @@ public interface IRepository<TEntity, TEntityId>
             TSpecification specification,
             CancellationToken? cancellationToken = null
         )
-        where TResult : ISelector
         where TSpecification : Specification<TEntity, TResult>;
 
     Task<List<TEntity>> GetManyAsync<TSpecification>(

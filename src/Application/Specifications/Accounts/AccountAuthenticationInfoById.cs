@@ -5,6 +5,6 @@ internal record AccountAuthenticationInfoById : Specification<Account, AccountAu
 {
     public AccountAuthenticationInfoById(AccountId accountId) : base(e => e.Id.Equals(accountId))
     {
-        ProjectTo(AccountAuthenticationInfo.Projection);
+        ProjectTo(GetProjection<Account, AccountAuthenticationInfo>());
     }
 }

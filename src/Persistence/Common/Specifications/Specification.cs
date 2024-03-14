@@ -1,8 +1,11 @@
-﻿using Domain.Contracts.Models;
+﻿using Domain.Common.Models;
+using Domain.Contracts.Models;
 using Microsoft.EntityFrameworkCore.Query;
 using Persistence.Common.Results;
 using Persistence.Common.Specifications.Types;
+using Persistence.Contracts.Selectors;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace Persistence.Common.Specifications;
 public abstract record Specification<TEntity>
@@ -44,6 +47,10 @@ public abstract record Specification<TEntity, TResult>
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
     public Pagination? Pagination { get; private set; }
     public Select<TEntity, TResult> Select { get; private set; } = default!;
+    protected Expression<Func<TPEntity, TPResult>> GetProjection<TPEntity, TPResult>()
+        where TPEntity : Entity
+        where TPResult : ISelector<TPEntity, TPResult>
+        => ((TPResult)RuntimeHelpers.GetUninitializedObject(typeof(TPResult))).Projection;
 
     protected Specification(Expression<Func<TEntity, bool>>? criteria = null)
     {

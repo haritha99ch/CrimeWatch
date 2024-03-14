@@ -1,4 +1,5 @@
-﻿using Persistence.Common.Specifications;
+﻿using Domain.AggregateModels.ReportAggregate.Entities;
+using Persistence.Common.Specifications;
 
 namespace Application.Specifications.Reports;
 internal record EvidenceAuthorizationInfoById : Specification<Report, EvidenceAuthorizationInfo>
@@ -9,7 +10,7 @@ internal record EvidenceAuthorizationInfoById : Specification<Report, EvidenceAu
         ProjectTo(r => r.Evidences
             .AsQueryable()
             .Where(e => e.Id.Equals(evidenceId))
-            .Select(EvidenceAuthorizationInfo.Projection)
+            .Select(GetProjection<Evidence, EvidenceAuthorizationInfo>())
             .First());
     }
 }

@@ -5,6 +5,6 @@ internal record ReportAuthorizationInfoById : Specification<Report, ReportAuthor
 {
     public ReportAuthorizationInfoById(ReportId reportId) : base(e => e.Id.Equals(reportId))
     {
-        ProjectTo(ReportAuthorizationInfo.Projection);
+        ProjectTo(GetProjection<Report, ReportAuthorizationInfo>());
     }
 }
