@@ -1,20 +1,8 @@
-﻿using Shared.Dto.MediaItems;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Application.Selectors.Reports;
-public record ReportListItemDetails(
-        ReportId ReportId,
-        WitnessDetailsForReportDetails? AuthorDetails,
-        ModeratorDetailsForReportDetails? ModeratorDetails,
-        string Caption,
-        string Description,
-        Location Location,
-        Status Status,
-        int BookmarksCount,
-        bool IsBookmarkedByCurrentUser, // Handle in request handler
-        MediaViewItem MediaItem
-    ) : ISelector<Report, ReportAuthorizationInfo>
+public sealed class ReportListItemDetails : ReportDto.ReportListItemDetails, ISelector<Report, ReportListItemDetails>
 {
-    public Expression<Func<Report, ReportAuthorizationInfo>> SetProjection()
+    public Expression<Func<Report, ReportListItemDetails>> SetProjection()
         => throw new NotImplementedException();
 }

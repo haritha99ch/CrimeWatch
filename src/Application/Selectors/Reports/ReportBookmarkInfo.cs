@@ -1,2 +1,2 @@
 ﻿namespace Application.Selectors.Reports;
-public record ReportBookmarkInfo(Status ReportStatus, bool AlreadyBookmarked);
+public sealed class ReportBookmarkInfo : ReportDto.ReportBookmarkInfo;

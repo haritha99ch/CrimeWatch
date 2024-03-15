@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 
 namespace Application.Selectors.Reports;
-public record BookmarkInfo(AccountId AccountId) : ISelector<Bookmark, BookmarkInfo>
+public sealed class BookmarkInfo : ReportDto.BookmarkInfo, ISelector<Bookmark, BookmarkInfo>
 {
-    public Expression<Func<Bookmark, BookmarkInfo>> SetProjection() => e => new(e.AccountId);
+    public Expression<Func<Bookmark, BookmarkInfo>> SetProjection() => e => new() { AccountId = e.AccountId };
 }

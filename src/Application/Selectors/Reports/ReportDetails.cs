@@ -1,24 +1,13 @@
-﻿using Shared.Dto.MediaItems;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Application.Selectors.Reports;
-public record ReportDetails(
-        ReportId ReportId,
-        WitnessDetailsForReportDetails? AuthorDetails,
-        ModeratorDetailsForReportDetails? ModeratorDetails,
-        string Caption,
-        string Description,
-        Location Location,
-        Status Status,
-        int BookmarksCount,
-        bool IsBookmarkedByCurrentUser, // Handle in request handler
-        MediaViewItem MediaItem
-    ) : ISelector<Report, ReportDetails>
+public sealed class ReportDetails : ReportDto.ReportDetails, ISelector<Report, ReportDetails>
 {
     public Expression<Func<Report, ReportDetails>> SetProjection()
-        => e => new(
-            e.Id,
-            e.AuthorId == null
+        => e => new()
+        {
+            ReportId = e.Id,
+            AuthorDetails = e.AuthorId == null
                 ? null
                 : new(
                     e.AuthorId,
@@ -26,7 +15,7 @@ public record ReportDetails(
                     e.Author.Email,
                     e.Author.PhoneNumber
                 ),
-            e.ModeratorId == null
+            ModeratorDetails = e.ModeratorId == null
                 ? null
                 : new(
                     e.ModeratorId,
@@ -36,12 +25,12 @@ public record ReportDetails(
                     e.Moderator.Moderator!.City,
                     e.Moderator.Moderator.Province
                 ),
-            e.Caption,
-            e.Description,
-            e.Location,
-            e.Status,
-            e.BookmarksCount,
-            false,
-            new(e.MediaItem!.Url, e.MediaItem.MediaType)
-        );
+            Caption = e.Caption,
+            Description = e.Description,
+            Location = e.Location,
+            Status = e.Status,
+            BookmarksCount = e.BookmarksCount,
+            IsBookmarkedByCurrentUser = false,
+            MediaItem = e.MediaItem != null ? new(e.MediaItem!.Url, e.MediaItem.MediaType) : null
+        };
 }

@@ -6,7 +6,11 @@ internal record ReportBookmarkInfoById : Specification<Report, ReportBookmarkInf
     public ReportBookmarkInfoById(ReportId reportId, AccountId accountId) : base(e => e.Id.Equals(reportId))
     {
         ProjectTo(
-            r => new(r.Status, r.Bookmarks.AsQueryable().Any(b => b.AccountId.Equals(accountId)))
+            r => new()
+            {
+                ReportStatus = r.Status,
+                AlreadyBookmarked = r.Bookmarks.AsQueryable().Any(b => b.AccountId.Equals(accountId))
+            }
         );
     }
 }
