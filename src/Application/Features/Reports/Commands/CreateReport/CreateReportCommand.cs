@@ -12,4 +12,4 @@ public sealed record CreateReportCommand(
         string Province,
         List<ViolationType> ViolationTypes,
         IFormFile MediaItem
-    ) : ICommand<Report>;
+    ) : ICommand<ReportDetails>;

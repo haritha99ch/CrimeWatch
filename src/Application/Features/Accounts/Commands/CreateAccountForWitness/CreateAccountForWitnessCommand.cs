@@ -8,4 +8,4 @@ public sealed record CreateAccountForWitnessCommand(
         string Email,
         string Password,
         string PhoneNumber
-    ) : ICommand<Account>;
+    ) : ICommand<AccountInfo>;

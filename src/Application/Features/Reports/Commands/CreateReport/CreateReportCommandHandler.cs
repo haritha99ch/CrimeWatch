@@ -1,8 +1,9 @@
 ﻿using Application.Errors.Files;
 using Persistence.Contracts.Services;
+using Persistence.Helpers.Selectors;
 
 namespace Application.Features.Reports.Commands.CreateReport;
-internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, Report>
+internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, ReportDetails>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
     private readonly IFileStorageService _fileStorageService;
@@ -16,7 +17,7 @@ internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportC
         _fileStorageService = fileStorageService;
     }
 
-    public async Task<Result<Report>> Handle(
+    public async Task<Result<ReportDetails>> Handle(
             CreateReportCommand request,
             CancellationToken cancellationToken
         )
@@ -48,6 +49,8 @@ internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportC
             request.Province,
             request.ViolationTypes,
             mediaUpload);
-        return await _reportRepository.AddAsync(report, cancellationToken);
+
+        report = await _reportRepository.AddAsync(report, cancellationToken);
+        return report.Adapt<Report, ReportDetails>();
     }
 }

@@ -54,7 +54,6 @@ public class WhenCreatingReport : TestBase
         // Assert
         Assert.IsNotNull(report);
         Assert.IsNotNull(report.MediaItem);
-        Assert.AreEqual(authorId, report.AuthorId);
         Assert.AreEqual(caption, report.Caption);
         Assert.AreEqual(description, report.Description);
         Assert.AreEqual(no, report.Location.No);
@@ -62,7 +61,6 @@ public class WhenCreatingReport : TestBase
         Assert.AreEqual(street2, report.Location.Street2);
         Assert.AreEqual(city, report.Location.City);
         Assert.AreEqual(province, report.Location.Province);
-        Assert.AreEqual(violationTypes, report.ViolationTypes);
     }
 
     [TestMethod]

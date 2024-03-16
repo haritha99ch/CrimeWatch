@@ -11,4 +11,4 @@ public sealed record CreateAccountForModeratorCommand(
         string Email,
         string Password,
         string PhoneNumber
-    ) : ICommand<Account>;
+    ) : ICommand<AccountInfo>;

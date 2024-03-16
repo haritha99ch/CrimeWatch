@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Accounts.Commands.CreateAccountForWitness;
+﻿using Persistence.Helpers.Selectors;
+
+namespace Application.Features.Accounts.Commands.CreateAccountForWitness;
 internal sealed class CreateAccountForWitnessCommandHandler
-    : ICommandHandler<CreateAccountForWitnessCommand, Account>
+    : ICommandHandler<CreateAccountForWitnessCommand, AccountInfo>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
 
@@ -9,7 +11,7 @@ internal sealed class CreateAccountForWitnessCommandHandler
         _accountRepository = accountRepository;
     }
 
-    public async Task<Result<Account>> Handle(
+    public async Task<Result<AccountInfo>> Handle(
             CreateAccountForWitnessCommand request,
             CancellationToken cancellationToken
         )
@@ -23,6 +25,7 @@ internal sealed class CreateAccountForWitnessCommandHandler
             request.Email,
             request.Password,
             request.PhoneNumber);
-        return await _accountRepository.AddAsync(account, cancellationToken);
+        account = await _accountRepository.AddAsync(account, cancellationToken);
+        return account.Adapt<Account, AccountInfo>();
     }
 }

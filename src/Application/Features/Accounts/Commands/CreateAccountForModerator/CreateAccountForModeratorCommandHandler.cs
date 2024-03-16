@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Accounts.Commands.CreateAccountForModerator;
+﻿using Persistence.Helpers.Selectors;
+
+namespace Application.Features.Accounts.Commands.CreateAccountForModerator;
 public sealed class CreateAccountForModeratorCommandHandler
-    : ICommandHandler<CreateAccountForModeratorCommand, Account>
+    : ICommandHandler<CreateAccountForModeratorCommand, AccountInfo>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
 
@@ -11,7 +13,7 @@ public sealed class CreateAccountForModeratorCommandHandler
         _accountRepository = accountRepository;
     }
 
-    public async Task<Result<Account>> Handle(
+    public async Task<Result<AccountInfo>> Handle(
             CreateAccountForModeratorCommand request,
             CancellationToken cancellationToken
         )
@@ -29,6 +31,7 @@ public sealed class CreateAccountForModeratorCommandHandler
             request.Password,
             request.PhoneNumber);
 
-        return await _accountRepository.AddAsync(account, cancellationToken);
+        account = await _accountRepository.AddAsync(account, cancellationToken);
+        return account.Adapt<Account, AccountInfo>();
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Application.Features.Accounts.Commands.CreateAccountForModerator;
 using Application.Features.Accounts.Commands.CreateAccountForWitness;
 using Application.Features.Accounts.Queries.SignInToAccount;
-using Domain.AggregateModels.AccountAggregate;
 using Domain.AggregateModels.AccountAggregate.Entities;
 using MediatR;
+using Shared.Dto.Accounts;
 using Web.API.Helpers.Controllers;
 
 namespace Web.API.Controllers;
@@ -18,7 +18,7 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost] [Route($"{nameof(Moderator)}")]
-    public async Task<ActionResult<Account>> Create(
+    public async Task<ActionResult<AccountInfo>> Create(
             [FromBody] CreateAccountForModeratorCommand command,
             CancellationToken cancellationToken
         )
@@ -28,7 +28,7 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost] [Route($"{nameof(Witness)}")]
-    public async Task<ActionResult<Account>> Create(
+    public async Task<ActionResult<AccountInfo>> Create(
             [FromBody] CreateAccountForWitnessCommand command,
             CancellationToken cancellationToken
         )
