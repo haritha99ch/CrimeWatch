@@ -1,6 +1,4 @@
-﻿using Persistence.Helpers.Selectors;
-
-namespace Application.Features.Accounts.Commands.CreateAccountForWitness;
+﻿namespace Application.Features.Accounts.Commands.CreateAccountForWitness;
 internal sealed class CreateAccountForWitnessCommandHandler
     : ICommandHandler<CreateAccountForWitnessCommand, AccountInfo>
 {

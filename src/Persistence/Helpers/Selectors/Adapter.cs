@@ -8,7 +8,7 @@ public static class Adapter
         where TEntity : Entity
         where TResult : ISelector<TEntity, TResult>
     {
-        var projector = Selector<TEntity, TResult>.GetProjection().Compile();
+        var projector = ISelector<TEntity, TResult>.GetProjection<TEntity, TResult>().Compile();
         return projector(entity);
     }
 }

@@ -20,22 +20,13 @@ public readonly struct Query<TResult>
             Action<IQueryable<List<TResult>>> onListQuery
         )
     {
-        if (IsList)
-        {
-            if (_results is null) throw new("Result has no value");
-            onListQuery(_results);
-        }
-        else
-        {
-            if (_result is null) throw new("Result has no value");
-            onQuery(_result);
-        }
+        if (IsList) onListQuery(_results ?? throw new InvalidOperationException("Results list is null."));
+        else onQuery(_result ?? throw new InvalidOperationException("Result is null."));
     }
 
     internal void Handle(Action<IQueryable<TResult>> onQuery)
     {
-        if (IsList) throw new("Is a List");
-        if (_result is null) throw new("Result has no value");
-        onQuery(_result);
+        if (IsList) throw new InvalidOperationException("Cannot handle a list result.");
+        onQuery(_result ?? throw new InvalidOperationException("Result is null."));
     }
 }

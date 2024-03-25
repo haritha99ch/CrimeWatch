@@ -1,6 +1,5 @@
 ﻿using Application.Errors.Files;
 using Persistence.Contracts.Services;
-using Persistence.Helpers.Selectors;
 
 namespace Application.Features.Reports.Commands.CreateReport;
 internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, ReportDetails>
@@ -51,6 +50,7 @@ internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportC
             mediaUpload);
 
         report = await _reportRepository.AddAsync(report, cancellationToken);
-        return report.Adapt<Report, ReportDetails>();
+        var i = report.Adapt<Report, ReportDetails>();
+        return i;
     }
 }

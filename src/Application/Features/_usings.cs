@@ -16,3 +16,4 @@ global using Domain.AggregateModels.ReportAggregate.ValueObjects;
 global using Application.Contracts.Services;
 global using Application.Selectors.Reports;
 global using Application.Selectors.Accounts;
+global using Persistence.Helpers.Selectors;

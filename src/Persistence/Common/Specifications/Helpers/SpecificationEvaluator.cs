@@ -53,8 +53,9 @@ public static class SpecificationEvaluator
         {
             query = query.Skip(pagination.Skip).Take(pagination.Take);
         }
-        return specification.Select.Handle(
-            e => new(query.Select(e)),
-            e => new(query.Select(e)));
+        if (specification.SelectSingle is { } selectSingle) return new(query.Select(selectSingle));
+        if (specification.SelectList is { } selectList) return new(query.Select(selectList));
+        throw new NullReferenceException(
+            $"Both {nameof(specification.SelectSingle)} and {nameof(specification.SelectList)} cannot be null.");
     }
 }

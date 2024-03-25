@@ -1,6 +1,4 @@
-﻿using Persistence.Helpers.Selectors;
-
-namespace Application.Features.Accounts.Commands.CreateAccountForModerator;
+﻿namespace Application.Features.Accounts.Commands.CreateAccountForModerator;
 public sealed class CreateAccountForModeratorCommandHandler
     : ICommandHandler<CreateAccountForModeratorCommand, AccountInfo>
 {

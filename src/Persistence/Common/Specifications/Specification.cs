@@ -1,10 +1,8 @@
 ﻿using Domain.Common.Models;
 using Domain.Contracts.Models;
 using Microsoft.EntityFrameworkCore.Query;
-using Persistence.Common.Results;
 using Persistence.Common.Specifications.Types;
 using Persistence.Contracts.Selectors;
-using Persistence.Helpers.Selectors;
 using System.Linq.Expressions;
 
 namespace Persistence.Common.Specifications;
@@ -46,11 +44,12 @@ public abstract record Specification<TEntity, TResult>
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
     public Pagination? Pagination { get; private set; }
-    public Select<TEntity, TResult> Select { get; private set; } = default!;
+    public Expression<Func<TEntity, TResult>>? SelectSingle { get; private set; }
+    public Expression<Func<TEntity, List<TResult>>>? SelectList { get; private set; }
     protected Expression<Func<TPEntity, TPResult>> GetProjection<TPEntity, TPResult>()
         where TPEntity : Entity
         where TPResult : ISelector<TPEntity, TPResult>
-        => Selector<TPEntity, TPResult>.GetProjection();
+        => ISelector<TPEntity, TPResult>.GetProjection<TPEntity, TPResult>();
 
     protected Specification(Expression<Func<TEntity, bool>>? criteria = null)
     {
@@ -66,7 +65,6 @@ public abstract record Specification<TEntity, TResult>
         => OrderByDescending = orderByDescendingExpression;
 
     protected void AddPagination(Pagination? pagination) => Pagination = pagination;
-    protected void ProjectTo(Expression<Func<TEntity, TResult>> select) => Select = select;
-    protected void ProjectTo(Expression<Func<TEntity, List<TResult>>> select) => Select = select;
-
+    protected void ProjectTo(Expression<Func<TEntity, TResult>> select) => SelectSingle = select;
+    protected void ProjectTo(Expression<Func<TEntity, List<TResult>>> select) => SelectList = select;
 }
