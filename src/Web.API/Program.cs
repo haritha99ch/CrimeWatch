@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Web.API.Helpers;
 using Web.API.Middlewares;
@@ -8,7 +7,7 @@ builder.Configuration.ConfigureConfiguration();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+builder.Services.AddJwtAuthentication();
 
 builder.Services.ConfigureServices();
 

@@ -1,8 +1,11 @@
 ﻿using Application.Features.Accounts.Commands.CreateAccountForModerator;
 using Application.Features.Accounts.Commands.CreateAccountForWitness;
+using Application.Features.Accounts.Queries.GetAccountById;
+using Application.Features.Accounts.Queries.GetAccountInfoById;
 using Application.Features.Accounts.Queries.SignInToAccount;
 using Domain.AggregateModels.AccountAggregate.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Shared.Dto.Accounts;
 using Web.API.Helpers.Controllers;
 
@@ -42,6 +45,23 @@ public class AccountsController : ControllerBase
             [FromBody] SignInToAccountQuery query,
             CancellationToken cancellationToken
         )
+    {
+        var result = await _mediatr.Send(query, cancellationToken);
+        return result.Handle(Ok, e => e.ToProblemDetails());
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<AccountInfo>> GetInfoById(
+            GetAccountInfoByIdQuery query,
+            CancellationToken cancellationToken
+        )
+    {
+        var result = await _mediatr.Send(query, cancellationToken);
+        return result.Handle(Ok, e => e.ToProblemDetails());
+    }
+
+    [HttpGet] [Authorize]
+    public async Task<ActionResult<AccountInfo>> GetById(GetAccountByIdQuery query, CancellationToken cancellationToken)
     {
         var result = await _mediatr.Send(query, cancellationToken);
         return result.Handle(Ok, e => e.ToProblemDetails());
