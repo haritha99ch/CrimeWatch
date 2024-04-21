@@ -2,7 +2,7 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.Reports;
-internal sealed record ReportWithBookmarkById : Specification<Report>
+internal sealed class ReportWithBookmarkById : Specification<Report>
 {
     public ReportWithBookmarkById(ReportId reportId, AccountId accountId) : base(e => e.Id.Equals(reportId))
     {

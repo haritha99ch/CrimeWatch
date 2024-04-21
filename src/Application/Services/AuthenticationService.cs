@@ -4,6 +4,7 @@ using ApplicationSettings.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Models.Accounts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -68,7 +69,7 @@ internal class AuthenticationService : IAuthenticationService
             CancellationToken cancellationToken
         )
     {
-        ArgumentNullException.ThrowIfNull(HttpContext, paramName: "Not an API");
+        ArgumentNullException.ThrowIfNull(HttpContext, "Not an API");
         var claims = HttpContext.User.Claims.ToList();
         var accountIdValue = claims
             .Where(

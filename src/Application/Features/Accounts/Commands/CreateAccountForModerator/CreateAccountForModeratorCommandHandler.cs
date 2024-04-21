@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Accounts.Commands.CreateAccountForModerator;
 public sealed class CreateAccountForModeratorCommandHandler
-    : ICommandHandler<CreateAccountForModeratorCommand, AccountInfo>
+    : ICommandHandler<CreateAccountForModeratorCommand, Account>
 {
     private readonly IRepository<Account, AccountId> _accountRepository;
 
@@ -11,7 +11,7 @@ public sealed class CreateAccountForModeratorCommandHandler
         _accountRepository = accountRepository;
     }
 
-    public async Task<Result<AccountInfo>> Handle(
+    public async Task<Result<Account>> Handle(
             CreateAccountForModeratorCommand request,
             CancellationToken cancellationToken
         )
@@ -30,6 +30,6 @@ public sealed class CreateAccountForModeratorCommandHandler
             request.PhoneNumber);
 
         account = await _accountRepository.AddAsync(account, cancellationToken);
-        return account.Adapt<Account, AccountInfo>();
+        return account;
     }
 }

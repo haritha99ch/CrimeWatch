@@ -1,12 +1,11 @@
-﻿using Domain.Common.Models;
-using Domain.Contracts.Models;
+﻿using Domain.Contracts.Models;
 using Microsoft.EntityFrameworkCore.Query;
-using Persistence.Common.Specifications.Types;
-using Persistence.Contracts.Selectors;
+using Persistence.Common.Utilities;
+using Shared.Contracts.Selectors;
 using System.Linq.Expressions;
 
 namespace Persistence.Common.Specifications;
-public abstract record Specification<TEntity>
+public abstract class Specification<TEntity>
     where TEntity : IAggregateRoot
 {
     public Expression<Func<TEntity, bool>>? Criteria { get; }
@@ -35,21 +34,17 @@ public abstract record Specification<TEntity>
     protected void AddPagination(Pagination pagination) => Pagination = pagination;
 }
 
-public abstract record Specification<TEntity, TResult>
-    where TEntity : IAggregateRoot
+public abstract class Specification<TEntity, TResult>
+    where TEntity : IAggregateRoot where TResult : ISelector
 {
     public Expression<Func<TEntity, bool>>? Criteria { get; }
     public List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>> Includes { get; } = [];
-
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
     public Pagination? Pagination { get; private set; }
-    public Expression<Func<TEntity, TResult>>? SelectSingle { get; private set; }
-    public Expression<Func<TEntity, List<TResult>>>? SelectList { get; private set; }
-    protected Expression<Func<TPEntity, TPResult>> GetProjection<TPEntity, TPResult>()
-        where TPEntity : Entity
-        where TPResult : ISelector<TPEntity, TPResult>
-        => ISelector<TPEntity, TPResult>.GetProjection<TPEntity, TPResult>();
+    public Expression<Func<TEntity, TResult>>? SelectSingle { get; }
+    public Expression<Func<TEntity, List<TResult>>>? SelectList { get; }
+    public Select<TEntity, TResult> Select { get; set; }
 
     protected Specification(Expression<Func<TEntity, bool>>? criteria = null)
     {
@@ -65,6 +60,6 @@ public abstract record Specification<TEntity, TResult>
         => OrderByDescending = orderByDescendingExpression;
 
     protected void AddPagination(Pagination? pagination) => Pagination = pagination;
-    protected void ProjectTo(Expression<Func<TEntity, TResult>> select) => SelectSingle = select;
-    protected void ProjectTo(Expression<Func<TEntity, List<TResult>>> select) => SelectList = select;
+    protected void ProjectTo(Expression<Func<TEntity, TResult>> select) => Select = select;
+    protected void ProjectTo(Expression<Func<TEntity, IEnumerable<TResult>>> select) => Select = select;
 }

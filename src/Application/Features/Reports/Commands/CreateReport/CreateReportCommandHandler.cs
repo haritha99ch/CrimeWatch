@@ -2,7 +2,7 @@
 using Persistence.Contracts.Services;
 
 namespace Application.Features.Reports.Commands.CreateReport;
-internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, ReportDetails>
+internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportCommand, Report>
 {
     private readonly IRepository<Report, ReportId> _reportRepository;
     private readonly IFileStorageService _fileStorageService;
@@ -16,13 +16,13 @@ internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportC
         _fileStorageService = fileStorageService;
     }
 
-    public async Task<Result<ReportDetails>> Handle(
+    public async Task<Result<Report>> Handle(
             CreateReportCommand request,
             CancellationToken cancellationToken
         )
     {
         var fileUploadResult = await _fileStorageService
-            .UploadFileAsync(request.AuthorId.Value.ToString(), request.MediaItem, cancellationToken);
+            .UploadFileAsync(request.AuthorId.Value.ToString(), request.MediaItem!, cancellationToken);
         MediaUpload mediaUpload = default!;
         Error error = default!;
         var successFullUpload = fileUploadResult.Handle(
@@ -46,11 +46,10 @@ internal sealed class CreateReportCommandHandler : ICommandHandler<CreateReportC
             request.Street2,
             request.City,
             request.Province,
-            request.ViolationTypes,
+            request.ViolationTypes!,
             mediaUpload);
 
         report = await _reportRepository.AddAsync(report, cancellationToken);
-        var i = report.Adapt<Report, ReportDetails>();
-        return i;
+        return report;
     }
 }

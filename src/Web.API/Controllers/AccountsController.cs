@@ -6,7 +6,7 @@ using Application.Features.Accounts.Queries.SignInToAccount;
 using Domain.AggregateModels.AccountAggregate.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Shared.Dto.Accounts;
+using Shared.Models.Accounts;
 using Web.API.Helpers.Controllers;
 
 namespace Web.API.Controllers;

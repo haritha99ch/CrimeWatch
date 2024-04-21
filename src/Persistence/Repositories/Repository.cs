@@ -2,8 +2,9 @@
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Common.Specifications;
-using Persistence.Common.Specifications.Helpers;
 using Persistence.Contracts.Repositories;
+using Persistence.Helpers;
+using Shared.Contracts.Selectors;
 using System.Linq.Expressions;
 
 namespace Persistence.Repositories;
@@ -24,9 +25,9 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
 
     #region Basic
 
-    public async Task<TEntity> AddAsync(TEntity entity, CancellationToken? cancellationToken = null)
+    public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        var entityEntry = await DbSet.AddAsync(entity, cancellationToken ?? CancellationToken.None);
+        var entityEntry = await DbSet.AddAsync(entity, cancellationToken);
         await SaveChangesAsync(cancellationToken);
         ClearChangeTracker();
         return entityEntry.Entity;
@@ -34,24 +35,24 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
 
     public async Task<TEntity?> GetByIdAsync(
             TEntityId id,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         ) =>
         await (_tracking ? DbSet.AsTracking() : DbSet.AsNoTracking())
-            .FirstOrDefaultAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
+            .FirstOrDefaultAsync(_predicateById(id), cancellationToken);
 
-    public async Task<List<TEntity>> GetAllAsync(CancellationToken? cancellationToken = null)
-        => await DbSet.AsNoTracking().ToListAsync(cancellationToken ?? CancellationToken.None);
+    public async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+        => await DbSet.AsNoTracking().ToListAsync(cancellationToken);
 
-    public async Task<bool> ExistByIdAsync(TEntityId id, CancellationToken? cancellationToken = null) =>
+    public async Task<bool> ExistByIdAsync(TEntityId id, CancellationToken cancellationToken = default) =>
         await DbSet.AsNoTracking()
-            .AnyAsync(_predicateById(id), cancellationToken ?? CancellationToken.None);
+            .AnyAsync(_predicateById(id), cancellationToken);
 
-    public async Task<int> CountAsync(CancellationToken? cancellationToken = null)
-        => await DbSet.AsNoTracking().CountAsync(cancellationToken ?? CancellationToken.None);
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+        => await DbSet.AsNoTracking().CountAsync(cancellationToken);
 
     public async Task<TEntity> UpdateAsync(
             TEntity entity,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
     {
         var entry = DbSet.Update(entity);
@@ -62,12 +63,12 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
 
     public async Task<bool> DeleteByIdAsync(
             TEntityId id,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
     {
         var deleted =
             await DbSet.Where(_predicateById(id))
-                .ExecuteDeleteAsync(cancellationToken ?? CancellationToken.None)
+                .ExecuteDeleteAsync(cancellationToken)
             > 0;
         await SaveChangesAsync(cancellationToken);
         ClearChangeTracker();
@@ -81,70 +82,57 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
 
     public async Task<TEntity?> GetOneAsync<TSpecification>(
             TSpecification specification,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
         where TSpecification : Specification<TEntity>
     {
         var entity = await (_tracking ? DbSet.AsTracking() : DbSet.AsNoTracking())
             .AddSpecification(specification)
-            .FirstOrDefaultAsync(cancellationToken ?? CancellationToken.None);
+            .FirstOrDefaultAsync(cancellationToken);
         return entity;
     }
 
     public async Task<TResult?> GetOneAsync<TSpecification, TResult>(
             TSpecification specification,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
-        where TSpecification : Specification<TEntity, TResult>
-    {
-        var queryResult = DbSet.AsNoTracking().AddSpecification(specification);
-        IQueryable<TResult> queryable = default!;
-        queryResult.Handle(e => { queryable = e; });
-        return await queryable.FirstOrDefaultAsync();
-    }
+        where TSpecification : Specification<TEntity, TResult> where TResult : ISelector
+        => await DbSet.AsNoTracking()
+            .AddSpecification(specification)
+            .FirstOrDefaultAsync(cancellationToken);
 
     public async Task<List<TEntity>> GetManyAsync<TSpecification>(
             TSpecification specification,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
         where TSpecification : Specification<TEntity> =>
         await DbSet.AsNoTracking()
             .AddSpecification(specification)
-            .ToListAsync(cancellationToken ?? CancellationToken.None);
+            .ToListAsync(cancellationToken);
 
     public async Task<List<TResult>> GetManyAsync<TSpecification, TResult>(
             TSpecification specification,
-            CancellationToken? cancellationToken = null
-        ) where TSpecification : Specification<TEntity, TResult>
-    {
-        var queryResult = DbSet.AsNoTracking().AddSpecification(specification);
-        IQueryable<TResult>? queryable = default;
-        IQueryable<List<TResult>>? listQueryable = default;
-        queryResult.Handle(e => { queryable = e; },
-            e => { listQueryable = e; });
-
-        return queryable is not null
-            ? await queryable.ToListAsync()
-            : await listQueryable!.FirstOrDefaultAsync() ?? [];
-    }
+            CancellationToken cancellationToken = default
+        ) where TSpecification : Specification<TEntity, TResult> where TResult : ISelector
+        => await DbSet.AsNoTracking().AddSpecification(specification).ToListAsync(cancellationToken);
 
     public async Task<int> CountAsync<TSpecification>(
             TSpecification specification,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
         where TSpecification : Specification<TEntity> =>
         await DbSet.AsNoTracking()
             .AddSpecification(specification)
-            .CountAsync(cancellationToken ?? CancellationToken.None);
+            .CountAsync(cancellationToken);
 
     public async Task<bool> DeleteAsync<TSpecification>(
             TSpecification specification,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
         where TSpecification : Specification<TEntity>
     {
         var deleted = await DbSet.AddSpecification(specification)
-                .ExecuteDeleteAsync(cancellationToken ?? CancellationToken.None)
+                .ExecuteDeleteAsync(cancellationToken)
             > 0;
         await SaveChangesAsync(cancellationToken);
         ClearChangeTracker();
@@ -153,12 +141,12 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
 
     public async Task<bool> ExistAsync<TSpecification>(
             TSpecification specification,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         )
         where TSpecification : Specification<TEntity> =>
         await DbSet.AsNoTracking()
             .AddSpecification(specification)
-            .AnyAsync(cancellationToken ?? CancellationToken.None);
+            .AnyAsync(cancellationToken);
 
     #endregion
 
@@ -169,9 +157,9 @@ internal class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
         return this;
     }
 
-    private async Task SaveChangesAsync(CancellationToken? cancellationToken = null)
+    private async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        await _context.SaveChangesAsync(cancellationToken ?? CancellationToken.None);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     private void ClearChangeTracker()

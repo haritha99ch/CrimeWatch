@@ -2,7 +2,7 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.Reports;
-internal record ReportWithEvidenceById : Specification<Report>
+internal class ReportWithEvidenceById : Specification<Report>
 {
     public ReportWithEvidenceById(ReportId reportId, EvidenceId evidenceId, bool includeImages = false) : base(e
         => e.Id.Equals(reportId))

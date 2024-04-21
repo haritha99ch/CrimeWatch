@@ -1,7 +1,6 @@
 ﻿using Application.Common.Validators;
 using Application.Specifications.Reports;
 using FluentValidation;
-using ReportAuthorizationInfo = Application.Selectors.Reports.ReportAuthorizationInfo;
 
 namespace Application.Features.Reports.Commands.AddEvidence;
 internal sealed class AddEvidenceCommandValidator : ApplicationValidator<AddEvidenceCommand>
@@ -44,8 +43,8 @@ internal sealed class AddEvidenceCommandValidator : ApplicationValidator<AddEvid
         if (report is not null)
         {
             if (report.Status.Equals(Status.Approved)) return true;
-            validationError = UnauthorizedError.Create(title: "Unauthorized to update",
-                message: "Report is not approved to update.");
+            validationError = UnauthorizedError.Create("Unauthorized to update",
+                "Report is not approved to update.");
             return false;
         }
         validationError = ReportNotFoundError.Create(message: "Report not found to add evidence");

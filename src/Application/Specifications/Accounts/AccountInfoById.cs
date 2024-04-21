@@ -1,11 +1,17 @@
 ﻿using Persistence.Common.Specifications;
 
 namespace Application.Specifications.Accounts;
-internal record AccountInfoById : Specification<Account, AccountInfo>
+internal sealed class AccountInfoById : Specification<Account, AccountInfo>
 {
     public AccountInfoById(AccountId accountId) : base(e => e.Id.Equals(accountId))
     {
-        ProjectTo(GetProjection<Account, AccountInfo>());
+        ProjectTo(e => new()
+        {
+            FullName = $"{e.Person!.FirstName} {e.Person.LastName}",
+            Email = e.Email,
+            PhoneNumber = e.PhoneNumber,
+            IsModerator = e.AccountType.Equals(AccountType.Moderator)
+        });
     }
 
 }

@@ -2,7 +2,7 @@
 using Persistence.Common.Specifications;
 
 namespace Application.Specifications.Accounts;
-internal sealed record ModeratorAccountToUpdateById : Specification<Account>
+internal sealed class ModeratorAccountToUpdateById : Specification<Account>
 {
     internal ModeratorAccountToUpdateById(AccountId accountId)
         : base(e => e.Id.Equals(accountId))

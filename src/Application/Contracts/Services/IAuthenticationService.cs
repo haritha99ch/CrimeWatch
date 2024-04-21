@@ -1,4 +1,6 @@
-﻿namespace Application.Contracts.Services;
+﻿using Shared.Models.Accounts;
+
+namespace Application.Contracts.Services;
 public interface IAuthenticationService
 {
     Task<Result<string>> AuthenticateAndGetTokenAsync(

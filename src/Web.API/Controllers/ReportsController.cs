@@ -1,9 +1,11 @@
 ﻿using Application.Features.Reports.Commands.CreateReport;
+using Application.Features.Reports.Queries.GetReports;
 using MediatR;
-using Shared.Dto.Reports;
+using Shared.Models.Reports;
 using Web.API.Helpers.Controllers;
 
 namespace Web.API.Controllers;
+[Route("api/[controller]/[action]")]
 public class ReportsController : ControllerBase
 {
     private readonly ISender _mediatr;
@@ -15,11 +17,18 @@ public class ReportsController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<ReportDetails>> Create(
-            [FromBody] CreateReportCommand command,
+            CreateReportCommand command,
             CancellationToken cancellationToken
         )
     {
         var result = await _mediatr.Send(command, cancellationToken);
+        return result.Handle(Ok, e => e.ToProblemDetails());
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<ReportDetails>>> Get(GetReportsQuery query, CancellationToken cancellationToken)
+    {
+        var result = await _mediatr.Send(query, cancellationToken);
         return result.Handle(Ok, e => e.ToProblemDetails());
     }
 }

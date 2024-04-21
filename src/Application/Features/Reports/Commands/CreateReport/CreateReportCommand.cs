@@ -10,6 +10,6 @@ public sealed record CreateReportCommand(
         string Street2,
         string City,
         string Province,
-        List<ViolationType> ViolationTypes,
-        IFormFile MediaItem
-    ) : ICommand<ReportDetails>;
+        List<ViolationType>? ViolationTypes,
+        IFormFile? MediaItem
+    ) : ICommand<Report>;

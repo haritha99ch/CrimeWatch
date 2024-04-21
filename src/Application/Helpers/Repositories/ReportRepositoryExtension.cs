@@ -6,6 +6,6 @@ public static class ReportRepositoryExtension
     public async static Task<ReportDetails?> GetReportDetailsById(
             this IRepository<Report, ReportId> reportRepository,
             ReportId reportId,
-            CancellationToken? cancellationToken = null
+            CancellationToken cancellationToken = default
         ) => await reportRepository.GetOneAsync<ReportDetailsById, ReportDetails>(new(reportId), cancellationToken);
 }
